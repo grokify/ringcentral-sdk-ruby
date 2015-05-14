@@ -192,8 +192,3 @@ License
 RingCentral SDK is available under an MIT-style license. See {file:LICENSE.txt} for details.
 
 RingCentral SDK &copy; 2015 by John Wang
-
-Warranty
-========
-
-This software is provided “as is” and without any express or implied warranties, including, without limitation, the implied warranties of merchantibility and fitness for a particular purpose.
