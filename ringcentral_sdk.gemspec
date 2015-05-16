@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
     'lib/ringcentral_sdk/sdk.rb',
     'test/test_setup.rb'
   ]
-  s.add_dependency 'faraday', '~> 0', '>= 0'
+  s.add_dependency 'faraday', '~> 0.9', '>= 0.9'
   s.add_dependency 'faraday_middleware', '~> 0', '>= 0'
   s.add_dependency 'mime', '~> 0', '>= 0'
   s.add_dependency 'mime-types', '~> 2.5', '>= 2.5'
