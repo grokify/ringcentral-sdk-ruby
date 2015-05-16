@@ -1,7 +1,6 @@
 RingCentral SDK
 ===============
 
-[![Build Status](https://img.shields.io/travis/grokify/ringcentral-ruby-sdk/master.svg?style=flat-square)](https://travis-ci.org/grokify/ringcentral-sdk-ruby)
 [![Documentation](https://img.shields.io/badge/documentation-rubydoc-blue.svg?style=flat-square)](http://www.rubydoc.info/gems/ringcentral_sdk/)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/grokify/ringcentral-sdk-ruby/master/LICENSE.txt)
 
