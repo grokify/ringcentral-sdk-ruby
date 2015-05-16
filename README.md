@@ -2,7 +2,7 @@ RingCentral SDK
 ===============
 
 [![Build Status](https://img.shields.io/travis/headzoo/surf/master.svg?style=flat-square)](https://travis-ci.org/grokify/ringcentral-sdk-ruby)
-[![Documentation](https://img.shields.io/badge/documentation-readthedocs-blue.svg?style=flat-square)](http://www.gosurf.io)
+[![Documentation](https://img.shields.io/badge/documentation-rubydoc-blue.svg?style=flat-square)](http://www.rubydoc.info/gems/ringcentral_sdk/0.0.3)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/grokify/ringcentral-sdk-ruby/master/LICENSE.txt)
 
 This is an unofficial Ruby SDK for the RingCentral Connect Platform REST API (https://developers.ringcentral.com).
