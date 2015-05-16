@@ -22,7 +22,7 @@ module RingCentralSdk::Platform
       @app_key    = app_key
       @app_secret = app_secret
       @server_url = server_url
-      @auth       = RingCentralSdk::Platform::Auth.new
+      @_auth       = RingCentralSdk::Platform::Auth.new
 
       @client     = Faraday.new(:url => get_api_version_url()) do |conn|
         conn.request  :json
@@ -39,7 +39,7 @@ module RingCentralSdk::Platform
 
     def authorize(username='',extension='',password='',remember=false)
 
-      response = auth_call({}, {
+      response = _auth_call({}, {
         :grant_type        => 'password',
         :username          => username,
         :extension         => extension.is_a?(String) || extension.is_a?(Integer) ? extension : '',
@@ -48,8 +48,8 @@ module RingCentralSdk::Platform
         :refresh_token_ttl => remember ? REFRESH_TOKEN_TTL_REMEMBER : REFRESH_TOKEN_TTL
       })
 
-      @auth.set_data( response.body )
-      @auth.remember = remember
+      @_auth.set_data( response.body )
+      @_auth.remember = remember
 
       if response.body.has_key?("access_token") && response.body["access_token"].is_a?(String)
         @client.headers['Authorization'] = 'Bearer ' + response.body["access_token"]
@@ -58,22 +58,25 @@ module RingCentralSdk::Platform
       return response
     end
 
+    def refresh()
+      unless @_auth.
+
+    end
+
     def get_api_key()
-      if @app_key.is_a?(String) && @app_secret.is_a?(String)
-         return Base64.encode64(@app_key + ":" + @app_secret).gsub(/[\s\r\n]/,"")
-       else
-         return ''
-       end
+      api_key = (@app_key.is_a?(String) && @app_secret.is_a?(String)) \
+        ? Base64.encode64(@app_key + ":" + @app_secret).gsub(/[\s\r\n]/,"") : ''
+      return api_key
     end
 
     def get_auth_header()
-      if @auth.token_type.is_a?(String) && @auth.access_token.is_a?(String)
-        return @auth.token_type + ' ' + @auth.access_token
+      if @_auth.token_type.is_a?(String) && @_auth.access_token.is_a?(String)
+        return @_auth.token_type + ' ' + @_auth.access_token
       end
       return ''
     end
 
-    def auth_call(queryParams={},body={})
+    def _auth_call(queryParams={},body={})
       return @client.post do |req|
         req.url TOKEN_ENDPOINT
         req.headers['Authorization'] = 'Basic ' + get_api_key()
@@ -84,6 +87,6 @@ module RingCentralSdk::Platform
       end
     end
 
-    private :auth_call, :get_api_key, :get_api_version_url, :get_auth_header
+    private :_auth_call, :get_api_key, :get_api_version_url, :get_auth_header
   end
 end

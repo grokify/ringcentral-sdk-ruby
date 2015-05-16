@@ -1,6 +1,10 @@
 RingCentral SDK
 ===============
 
+[![Build Status](https://img.shields.io/travis/headzoo/surf/master.svg?style=flat-square)](https://travis-ci.org/headzoo/surf)
+[![Documentation](https://img.shields.io/badge/documentation-readthedocs-blue.svg?style=flat-square)](http://www.gosurf.io)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/headzoo/surf/master/LICENSE.md)
+
 This is an unofficial Ruby SDK for the RingCentral Connect Platform REST API (https://developers.ringcentral.com).
 
 The core SDK objects follow the general design of the [official RingCentral SDKs](https://github.com/ringcentral). The SDK helper additions are included to make it easier to interact with features of the API.
@@ -75,7 +79,7 @@ client = rcsdk.platform.client
 
 ## Create SMS Message
 
-SMS and other requests are directly without helpers.
+SMS and other requests can be easily sent directly without helpers.
 
 ```ruby
 # Send SMS - POST request
@@ -97,9 +101,9 @@ A fax helper is included that can be used to create the `multipart/mixed` HTTP r
 
 This consists of instantiating a fax helper object and then executing a Faraday POST request.
 
-```ruby
-# 1) Fax Helper for Text Message
+### 1) Fax Helper for Text Message
 
+```ruby
 fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
   { account_id => '~', extension_id => '~' }, # Can be nil or {} for defaults '~'
   {
@@ -110,12 +114,14 @@ fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
   },
   :text => 'RingCentral Fax via Ruby!'
 )
-# send the fax using Faraday below
+# send the fax using Faraday as shown below
+```
 
-# 2) Fax Helper for File as Raw Bytes (e.g. PDF or TIFF)
+### 2) Fax Helper for File as Raw Bytes (e.g. PDF or TIFF)
 
-# Sending a file as a plain octet-stream is useful in
-# production as it can decrease file size by 30%.
+Sending a file as a plain octet-stream is useful in production as it can decrease file size by 30%.
+
+```ruby
 
 fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
   { account_id => '~', extension_id => '~' }, # Can be nil or {} for defaults '~'
@@ -127,13 +133,13 @@ fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
   },
   :file_name     => '/path/to/my_file.pdf'
 )
-# send the fax using Faraday below
+# send the fax using Faraday as shown below
 
-# 3) Fax Helper for File Base64 Encoded (e.g. PDF or TIFF)
+### 3) Fax Helper for File Base64 Encoded (e.g. PDF or TIFF)
 
-# Sending a file base64 encoded is useful for debugging
-# purposes as the file can be copy and pasted.
+Sending a file base64 encoded is useful for debugging purposes as the file can be copy and pasted.
 
+```ruby
 fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
   { account_id => '~', extension_id => '~' }, # Can be nil or {} for defaults '~'
     {
@@ -145,10 +151,12 @@ fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
   :file_name     => '/path/to/my_file.tif',
   :base64_encode => true
 )
-# send the fax using Faraday below
+# send the fax using Faraday as shown below
+```
 
-# Sending the fax
+### Sending the fax
 
+```ruby
 response = client.post do |req|
   req.url fax.url
   req.headers['Content-Type'] = fax.content_type
