@@ -134,6 +134,7 @@ fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
   :file_name     => '/path/to/my_file.pdf'
 )
 # send the fax using Faraday as shown below
+```
 
 ### 3) Fax Helper for File Base64 Encoded (e.g. PDF or TIFF)
 

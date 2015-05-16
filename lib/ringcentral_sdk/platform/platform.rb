@@ -58,10 +58,8 @@ module RingCentralSdk::Platform
       return response
     end
 
-    def refresh()
-      unless @_auth.
-
-    end
+    #def refresh()
+    #end
 
     def get_api_key()
       api_key = (@app_key.is_a?(String) && @app_secret.is_a?(String)) \
