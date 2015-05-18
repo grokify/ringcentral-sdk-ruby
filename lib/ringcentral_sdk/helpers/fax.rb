@@ -100,10 +100,10 @@ module RingCentralSdk::Helpers
           account_id = @path_params[:account_id]
         end
         if @path_params.has_key?(:extension_id) && @path_params[:extension_id].length>0
-          account_id = @path_params[:extension_id]
+          extension_id = @path_params[:extension_id]
         end
       end
-      url = "account/#{account_id}/extension/#{extension_id}/fax"
+      url = "account/#{account_id.to_s}/extension/#{extension_id.to_s}/fax"
       return url
     end
 

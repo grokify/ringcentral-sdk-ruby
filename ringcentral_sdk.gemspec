@@ -27,4 +27,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'faraday_middleware', '~> 0', '>= 0'
   s.add_dependency 'mime', '~> 0', '>= 0'
   s.add_dependency 'mime-types', '~> 2.5', '>= 2.5'
+  s.add_dependency 'multi_json', '~> 0', '>= 0'
 end
