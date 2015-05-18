@@ -16,16 +16,19 @@ module RingCentralSdk::Platform
       return unless data.is_a?(Hash)
 
       @access_token = data["access_token"] ? data["access_token"] : ''
+      @expire_time  = data["expire_time"]  ? data["expire_time"]  : 0
       @token_type   = data["token_type"]   ? data["token_type"]   : ''
 
+      @data = data
     end
 
     def is_access_token_valid()
-      return _is_token_date_valid(@data[:expire_time])
+      return _is_token_date_valid(@expire_time)
     end
 
-    def _is_token_date_valid(token_date)
-      return token_date > Time.now
+    def _is_token_date_valid(token_date=nil)
+      return false unless token_date.is_a?(Integer)
+      return token_date > Time.now.to_i
     end
 
   end
