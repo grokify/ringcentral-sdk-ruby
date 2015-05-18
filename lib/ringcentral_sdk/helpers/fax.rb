@@ -96,11 +96,19 @@ module RingCentralSdk::Helpers
       account_id   = "~"
       extension_id = "~"
       if @path_params.is_a?(Hash)
-        if @path_params.has_key?(:account_id) && @path_params[:account_id].length>0
-          account_id = @path_params[:account_id]
+        if @path_params.has_key?(:account_id)
+          if @path_params[:account_id].is_a?(String) && @path_params[:account_id].length>0
+            account_id = @path_params[:account_id]
+          elsif @path_params[:account_id].is_a?(Integer) && @path_params[:account_id]>0
+            account_id = @path_params[:account_id].to_s
+          end
         end
-        if @path_params.has_key?(:extension_id) && @path_params[:extension_id].length>0
-          extension_id = @path_params[:extension_id]
+        if @path_params.has_key?(:extension_id)
+          if @path_params[:extension_id].is_a?(String) && @path_params[:extension_id].length>0
+            extension_id = @path_params[:extension_id]
+          elsif @path_params[:extension_id].is_a?(Integer) && @path_params[:extension_id]>0
+            extension_id = @path_params[:extension_id].to_s
+          end
         end
       end
       url = "account/#{account_id.to_s}/extension/#{extension_id.to_s}/fax"

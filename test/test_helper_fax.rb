@@ -30,5 +30,18 @@ class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
 
     assert_equal 'account/111111111/extension/222222222/fax', fax2.url()
 
+    fax3 = RingCentralSdk::Helpers::CreateFaxRequest.new(
+      { :account_id => 111111111, :extension_id => 222222222 }, # Can be nil or {} for defaults '~'
+      {
+        # phone numbers are in E.164 format with or without leading '+'
+        :to            => [{ :phoneNumber => '+16505551212' }],
+        :faxResolution => 'High',
+        :coverPageText => 'RingCentral fax demo using Ruby SDK!'
+      },
+      :text => 'RingCentral fax demo using Ruby SDK!'
+    )
+
+    assert_equal 'account/111111111/extension/222222222/fax', fax3.url()
+
   end
 end
