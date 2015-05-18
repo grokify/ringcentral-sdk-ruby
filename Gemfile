@@ -6,5 +6,6 @@ gem 'faraday_middleware'
 gem 'mime'
 gem 'mime-types', '~> 2.5'
 gem 'rake'
+gem 'test-unit'
 
 # vim:ft=ruby
