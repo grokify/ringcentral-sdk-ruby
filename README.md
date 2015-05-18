@@ -28,7 +28,21 @@ The following items are still needed for this SDK. Contributions are most welcom
 Installation
 ============
 
-## RubyGems
+## Via Bundler
+
+Add this line to your application's Gemfile:
+
+```ruby
+gem 'ringcentral_sdk'
+```
+
+And then execute:
+
+```sh
+$ bundle
+```
+
+## Via RubyGems
 
 ```sh
 $ gem install ringcentral_sdk
