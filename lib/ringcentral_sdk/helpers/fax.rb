@@ -96,10 +96,10 @@ module RingCentralSdk::Helpers
       account_id   = "~"
       extension_id = "~"
       if @path_params.is_a?(Hash)
-        if @path_params.has?(:account_id) && @path_params[:account_id].length>0
+        if @path_params.has_key?(:account_id) && @path_params[:account_id].length>0
           account_id = @path_params[:account_id]
         end
-        if @path_params.has?(:extension_id) && @path_params[:extension_id].length>0
+        if @path_params.has_key?(:extension_id) && @path_params[:extension_id].length>0
           account_id = @path_params[:extension_id]
         end
       end

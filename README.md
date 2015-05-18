@@ -121,7 +121,7 @@ This consists of instantiating a fax helper object and then executing a Faraday 
 
 ```ruby
 fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
-  { account_id => '~', extension_id => '~' }, # Can be nil or {} for defaults '~'
+  { :account_id => '~', :extension_id => '~' }, # Can be nil or {} for defaults '~'
   {
     # phone numbers are in E.164 format with or without leading '+'
     :to            => [{ :phoneNumber => '+16505551212' }],
@@ -140,7 +140,7 @@ Sending a file as a plain octet-stream is useful in production as it can decreas
 ```ruby
 
 fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
-  { account_id => '~', extension_id => '~' }, # Can be nil or {} for defaults '~'
+  { :account_id => '~', :extension_id => '~' }, # Can be nil or {} for defaults '~'
   {
     # phone numbers are in E.164 format with or without leading '+'
     :to            => [{ :phoneNumber => '+16505551212' }],
@@ -158,7 +158,7 @@ Sending a file base64 encoded is useful for debugging purposes as the file can b
 
 ```ruby
 fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
-  { account_id => '~', extension_id => '~' }, # Can be nil or {} for defaults '~'
+  { :account_id => '~', :extension_id => '~' }, # Can be nil or {} for defaults '~'
     {
     # phone numbers are in E.164 format with or without leading '+'
     :to            => [{ :phoneNumber => '+16505551212' }],
