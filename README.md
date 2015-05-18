@@ -2,7 +2,7 @@ RingCentral SDK
 ===============
 
 [![Build Status](https://img.shields.io/travis/grokify/ringcentral-sdk-ruby/master.svg)](https://travis-ci.org/grokify/ringcentral-sdk-ruby)
-[![Code Climate](https://codeclimate.com/github/grokify/ringcentral-sdk-ruby.png)](https://codeclimate.com/github/grokify/ringcentral-sdk-ruby)
+[![Code Climate](https://codeclimate.com/github/grokify/ringcentral-sdk-ruby/badges/gpa.svg)](https://codeclimate.com/github/grokify/ringcentral-sdk-ruby)
 [![Coverage Status](https://coveralls.io/repos/grokify/ringcentral-sdk-ruby/badge.svg?branch=master)](https://coveralls.io/r/grokify/ringcentral-sdk-ruby?branch=master)
 [![Documentation](https://img.shields.io/badge/documentation-rubydoc-blue.svg)](http://www.rubydoc.info/gems/ringcentral_sdk/)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/grokify/ringcentral-sdk-ruby/master/LICENSE.txt)
