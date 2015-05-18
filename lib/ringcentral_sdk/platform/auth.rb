@@ -13,13 +13,14 @@ module RingCentralSdk::Platform
       @remember = nil
     end
     def set_data(data={})
-      return unless data.is_a?(Hash)
+      return false unless data.is_a?(Hash)
 
       @access_token = data["access_token"] ? data["access_token"] : ''
       @expire_time  = data["expire_time"]  ? data["expire_time"]  : 0
       @token_type   = data["token_type"]   ? data["token_type"]   : ''
 
       @data = data
+      return true
     end
 
     def is_access_token_valid()
