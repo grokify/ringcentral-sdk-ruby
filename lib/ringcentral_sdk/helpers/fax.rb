@@ -60,12 +60,18 @@ module RingCentralSdk::Helpers
       content_type = (content_type.is_a?(String) && content_type =~ /^[^\/\s]+\/[^\/\s]+/) \
         ? content_type : MIME::Types.type_for(file_name).first.content_type
 
+      base_name   = File.basename(file_name)
       file_base64 = Base64.encode64(File.binread(file_name))
 
       base64_part = MIME::Text.new(file_base64)
       base64_part.headers.delete('Content-Id')
       base64_part.headers.set('Content-Type', content_type)
       base64_part.headers.set('Content-Transfer-Encoding','base64')
+      if base_name.is_a?(String) && base_name.length>0
+        base64_part.headers.set('Content-Disposition', "attachment; filename=\"#{base_name}\"")
+      else
+        base64_part.headers.set('Content-Disposition', 'attachment')
+      end
 
       @msg.add(base64_part)
       return true

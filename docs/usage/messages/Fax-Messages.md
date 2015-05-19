@@ -127,6 +127,7 @@ Content-Type: application/json
 --Boundary_9j36hcowhyoi7683x02z56wq64
 Content-Type: application/pdf
 Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="test_file.pdf"
 
 JVBERi0xLjMKJcTl8uXrp/Og0MTGCjQgMCBvYmoKPDwgL0xlbmd0aCA1IDAg
 [...]
