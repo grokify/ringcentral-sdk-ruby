@@ -30,4 +30,4 @@ The [Quickstart Guide](quickstart.md) can get you started using the API fast.
 
 ## Helpers
 
-In addition to the core SDK which maps to the official RingCentral SDKs, a fax helper is provided. More information is available in the [Fax Messages](usage/Fax-Messages.md) page.
+In addition to the core SDK which maps to the official RingCentral SDKs, a fax helper is provided. More information is available in the [Fax Messages](usage/messages/Fax-Messages.md) page.
