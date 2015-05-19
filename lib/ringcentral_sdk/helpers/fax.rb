@@ -1,10 +1,10 @@
 require 'base64'
 require 'mime'
-require 'mime-types'
+require 'mime/types'
 require 'multi_json'
 
 module RingCentralSdk::Helpers
-  class CreateFaxRequest
+  class CreateFaxRequest < RingCentralSdk::Helpers::Request
     attr_reader :msg
 
     def initialize(path_params=nil,metadata=nil,options=nil)
@@ -90,6 +90,10 @@ module RingCentralSdk::Helpers
 
       @msg.add(file_part)
       return true
+    end
+
+    def method()
+      return 'post'
     end
 
     def url()

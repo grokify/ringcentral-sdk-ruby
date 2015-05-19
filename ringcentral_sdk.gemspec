@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
     'lib/ringcentral_sdk.rb',
     'lib/ringcentral_sdk/helpers.rb',
     'lib/ringcentral_sdk/helpers/fax.rb',
+    'lib/ringcentral_sdk/helpers/request.rb',
     'lib/ringcentral_sdk/platform.rb',
     'lib/ringcentral_sdk/platform/auth.rb',
     'lib/ringcentral_sdk/platform/parser.rb',

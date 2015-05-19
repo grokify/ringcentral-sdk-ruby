@@ -85,6 +85,22 @@ module RingCentralSdk::Platform
       end
     end
 
+    def request(helper=nil)
+      unless helper.is_a?(RingCentralSdk::Helpers::Request)
+        raise 'Request is not a RingCentralSdk::Helpers::Request'
+      end
+
+      if helper.method.downcase == 'post'
+        resp       =  @client.post do |req|
+          req.url helper.url
+          req.headers['Content-Type'] = helper.content_type if helper.content_type
+          req.body = helper.body if helper.body
+        end
+        return resp
+      end
+      return nil
+    end
+    
     private :_auth_call, :get_api_key, :get_api_version_url, :get_auth_header
   end
 end
