@@ -64,7 +64,7 @@ module RingCentralSdk::Helpers
 
       base64_part = MIME::Text.new(file_base64)
       base64_part.headers.delete('Content-Id')
-      base64_part.headers.set('Content-Type',content_type)
+      base64_part.headers.set('Content-Type', content_type)
       base64_part.headers.set('Content-Transfer-Encoding','base64')
 
       @msg.add(base64_part)
@@ -76,12 +76,15 @@ module RingCentralSdk::Helpers
         return false
       end
 
+      content_type = (content_type.is_a?(String) && content_type =~ /^[^\/\s]+\/[^\/\s]+/) \
+        ? content_type : MIME::Types.type_for(file_name).first.content_type
+
       base_name  = File.basename(file_name)
       file_bytes = File.binread(file_name)
 
       file_part  = MIME::Application.new(file_bytes)
       file_part.headers.delete('Content-Id')
-      file_part.headers.set('Content-Type','application/octet-stream')
+      file_part.headers.set('Content-Type', content_type)
       if base_name.is_a?(String) && base_name.length>0
         file_part.headers.set('Content-Disposition', "attachment; filename=\"#{base_name}\"")
       else
