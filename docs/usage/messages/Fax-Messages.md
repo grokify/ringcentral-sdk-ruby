@@ -68,7 +68,7 @@ response = RingCentralSdk::Sdk.new(
     {
       :to            => [{ :phoneNumber => '+16505551212' }],
       :faxResolution => 'High',
-      :coverPageText => 'RingCentral fax TIF example using Ruby!'
+      :coverPageText => 'RingCentral fax TIFF example using Ruby!'
     },
     :file_name     => '/path/to/my_file.tif',
     :encode_base64 => true
