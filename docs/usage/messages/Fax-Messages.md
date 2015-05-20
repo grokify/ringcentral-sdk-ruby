@@ -12,8 +12,7 @@ A fax request helper is included in this SDK to make creating faxes easier.
 require 'ringcentral_sdk'
 
 response = RingCentralSdk::Sdk.new(
-  'myAppKey', 'myAppSecret',
-  RingCentralSdk::Sdk::RC_SERVER_SANDBOX,
+  'myAppKey', 'myAppSecret', RingCentralSdk::Sdk::RC_SERVER_SANDBOX,
   'myUsername', 'myExtension', 'myPassword'
 ).request(
   RingCentralSdk::Helpers::CreateFaxRequest.new(
@@ -36,8 +35,7 @@ By default, creating a fax creates a `multipart/mixed` message with the body as 
 require 'ringcentral_sdk'
 
 response = RingCentralSdk::Sdk.new(
-  'myAppKey', 'myAppSecret',
-  RingCentralSdk::Sdk::RC_SERVER_SANDBOX,
+  'myAppKey', 'myAppSecret', RingCentralSdk::Sdk::RC_SERVER_SANDBOX,
   'myUsername', 'myExtension', 'myPassword'
 ).request(
   RingCentralSdk::Helpers::CreateFaxRequest.new(
@@ -61,8 +59,7 @@ can be desirable for better debugging.
 require 'ringcentral_sdk'
 
 response = RingCentralSdk::Sdk.new(
-  'myAppKey', 'myAppSecret',
-  RingCentralSdk::Sdk::RC_SERVER_SANDBOX,
+  'myAppKey', 'myAppSecret', RingCentralSdk::Sdk::RC_SERVER_SANDBOX,
   'myUsername', 'myExtension', 'myPassword'
 ).request(
   RingCentralSdk::Helpers::CreateFaxRequest.new(
