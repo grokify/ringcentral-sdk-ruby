@@ -66,7 +66,7 @@ module RingCentralSdk::Helpers
     end
 
     def add_file(file_name=nil, content_type=nil, base64_encode=false)
-      if not File.file?(file_name.to_s)
+      unless File.file?(file_name.to_s)
         raise "File \"#{file_name.to_s}\" does not exist or cannot be read"
       end
 
