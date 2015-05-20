@@ -20,11 +20,7 @@ module RingCentralSdk::Helpers
 
       if options.is_a?(Hash)
         if options.has_key?(:file_name)
-          if options.has_key?(:base64_encode) && options[:base64_encode]
-            add_file_base64(options[:file_name],options[:file_content_type])
-          else
-            add_file_octet_stream(options[:file_name])
-          end
+          add_file(options[:file_name], options[:file_content_type], options[:base64_encode])
         elsif options.has_key?(:text)
           add_file_text(options[:text])
         end
@@ -62,56 +58,39 @@ module RingCentralSdk::Helpers
       return meta
     end
 
-    def add_file_text(text=nil,charset='UTF-8')
+    def add_file_text(text=nil, charset='UTF-8')
       return unless text.is_a?(String)
       text_part = MIME::Text.new(text,'plain')
       text_part.headers.delete('Content-Id')
       @msg.add(text_part)
     end
 
-    def add_file_base64(file_name=nil,content_type=nil)
-      unless file_name.is_a?(String) && File.file?(file_name)
-        return false
+    def add_file(file_name=nil, content_type=nil, base64_encode=false)
+      unless File.file?(file_name.to_s)
+        raise "File \"#{file_name.to_s}\" does not exist or cannot be read"
       end
 
       content_type = (content_type.is_a?(String) && content_type =~ /^[^\/\s]+\/[^\/\s]+/) \
-        ? content_type : MIME::Types.type_for(file_name).first.content_type
+        ? content_type : MIME::Types.type_for(file_name).first.content_type || 'application/octet-stream'
 
-      base_name   = File.basename(file_name)
-      file_base64 = Base64.encode64(File.binread(file_name))
-
-      base64_part = MIME::Text.new(file_base64)
-      base64_part.headers.delete('Content-Id')
-      base64_part.headers.set('Content-Type', content_type)
-      base64_part.headers.set('Content-Transfer-Encoding','base64')
-      if base_name.is_a?(String) && base_name.length>0
-        base64_part.headers.set('Content-Disposition', "attachment; filename=\"#{base_name}\"")
-      else
-        base64_part.headers.set('Content-Disposition', 'attachment')
-      end
-
-      @msg.add(base64_part)
-      return true
-    end
-
-    def add_file_octet_stream(file_name=nil)
-      unless file_name.is_a?(String) && File.file?(file_name)
-        return false
-      end
-
-      content_type = (content_type.is_a?(String) && content_type =~ /^[^\/\s]+\/[^\/\s]+/) \
-        ? content_type : MIME::Types.type_for(file_name).first.content_type
-
-      base_name  = File.basename(file_name)
-      file_bytes = File.binread(file_name)
-
-      file_part  = MIME::Application.new(file_bytes)
+      file_part  = base64_encode \
+        ? MIME::Text.new(Base64.encode64(File.binread(file_name))) \
+        : MIME::Application.new(File.binread(file_name))
+      
       file_part.headers.delete('Content-Id')
       file_part.headers.set('Content-Type', content_type)
+
+      # Add file name
+      base_name  = File.basename(file_name)
       if base_name.is_a?(String) && base_name.length>0
         file_part.headers.set('Content-Disposition', "attachment; filename=\"#{base_name}\"")
       else
         file_part.headers.set('Content-Disposition', 'attachment')
+      end
+
+      # Base64 Encoding
+      if base64_encode
+        file_part.headers.set('Content-Transfer-Encoding','base64')
       end
 
       @msg.add(file_part)
