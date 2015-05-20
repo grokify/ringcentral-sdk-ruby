@@ -4,7 +4,11 @@ The RingCentral create fax message API consumes a `multipart/mixed` HTTP request
 
 A fax request helper is included in this SDK to make creating faxes easier.
 
-**Note:** The `sdk.request()` and `sdk.platform.request()` methods only take request helpers as arguments. Request helpers are subclasses of `RingCentral::Helpers::Request` and provide the `method`, `url`, `content_type`, and `body` methods. The latter three of which can be sent directly to the Faraday client object.
+**Notes**
+
+1. Authorization occurs separately from the individual API requests. To do bulk requests, instantiate a `RingCentralSdk::Sdk` object and then call the `.request()` method or `.platform.client` Faraday client to make multiple requests using the OAuth `access_token`.
+1. Request helpers are subclasses of `RingCentral::Helpers::Request` that provide the `method`, `url`, `content_type`, and `body` methods. These can be used by the Faraday client object or the helper class can be passed directly to the `sdk.request()` and `sdk.platform.request()` methods.
+1. The `sdk.request()` and `sdk.platform.request()` methods only take request helpers as arguments and will raise an exception otherwise.
 
 ## Faxing a Text Message
 
