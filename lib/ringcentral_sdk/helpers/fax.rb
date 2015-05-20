@@ -66,7 +66,7 @@ module RingCentralSdk::Helpers
     end
 
     def add_file(file_name=nil, content_type=nil, base64_encode=false)
-      unless File.file?(file_name.to_s)
+      if not File.file?(file_name.to_s)
         raise "File \"#{file_name.to_s}\" does not exist or cannot be read"
       end
 
@@ -102,25 +102,20 @@ module RingCentralSdk::Helpers
     end
 
     def url()
+      vals = {:account_id => '~', :extension_id => '~'}
       account_id   = "~"
       extension_id = "~"
       if @path_params.is_a?(Hash)
-        if @path_params.has_key?(:account_id)
-          if @path_params[:account_id].is_a?(String) && @path_params[:account_id].length>0
-            account_id = @path_params[:account_id]
-          elsif @path_params[:account_id].is_a?(Integer) && @path_params[:account_id]>0
-            account_id = @path_params[:account_id].to_s
-          end
-        end
-        if @path_params.has_key?(:extension_id)
-          if @path_params[:extension_id].is_a?(String) && @path_params[:extension_id].length>0
-            extension_id = @path_params[:extension_id]
-          elsif @path_params[:extension_id].is_a?(Integer) && @path_params[:extension_id]>0
-            extension_id = @path_params[:extension_id].to_s
+        vals.keys.each do |key|
+          next unless @path_params.has_key?(key)
+          if @path_params[key].is_a?(String) && @path_params[key].length>0
+            vals[key] = @path_params[key]
+          elsif @path_params[key].is_a?(Integer) && @path_params[key]>0
+            vals[key] = @path_params[key].to_s
           end
         end
       end
-      url = "account/#{account_id.to_s}/extension/#{extension_id.to_s}/fax"
+      url = "account/#{vals[:account_id].to_s}/extension/#{vals[:extension_id].to_s}/fax"
       return url
     end
 
