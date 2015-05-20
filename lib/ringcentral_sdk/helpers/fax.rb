@@ -66,35 +66,40 @@ module RingCentralSdk::Helpers
     end
 
     def add_file(file_name=nil, content_type=nil, base64_encode=false)
+      file_part = get_file_part(file_name, content_type, base64_encode)
+
+      @msg.add(file_part)
+      return true
+    end
+
+    def get_file_part(file_name=nil, content_type=nil, base64_encode=false)
+
       unless File.file?(file_name.to_s)
         raise "File \"#{file_name.to_s}\" does not exist or cannot be read"
       end
 
-      content_type = (content_type.is_a?(String) && content_type =~ /^[^\/\s]+\/[^\/\s]+/) \
-        ? content_type : MIME::Types.type_for(file_name).first.content_type || 'application/octet-stream'
-
       file_part  = base64_encode \
         ? MIME::Text.new(Base64.encode64(File.binread(file_name))) \
         : MIME::Application.new(File.binread(file_name))
-      
       file_part.headers.delete('Content-Id')
-      file_part.headers.set('Content-Type', content_type)
+      file_part.headers.set('Content-Type', get_file_content_type(file_name, content_type))
+      file_part.headers.set('Content-Disposition', get_attachment_content_disposition(file_name))
+      file_part.headers.set('Content-Transfer-Encoding','base64') if base64_encode
+      return file_part
+    end
 
-      # Add file name
+    def get_file_content_type(file_name=nil, content_type=nil)
+      return (content_type.is_a?(String) && content_type =~ /^[^\/\s]+\/[^\/\s]+/) \
+        ? content_type : MIME::Types.type_for(file_name).first.content_type || 'application/octet-stream'
+    end
+
+    def get_attachment_content_disposition(file_name=nil)
       base_name  = File.basename(file_name)
       if base_name.is_a?(String) && base_name.length>0
-        file_part.headers.set('Content-Disposition', "attachment; filename=\"#{base_name}\"")
+        return "attachment; filename=\"#{base_name}\""
       else
-        file_part.headers.set('Content-Disposition', 'attachment')
+        return 'attachment'
       end
-
-      # Base64 Encoding
-      if base64_encode
-        file_part.headers.set('Content-Transfer-Encoding','base64')
-      end
-
-      @msg.add(file_part)
-      return true
     end
 
     def method()
