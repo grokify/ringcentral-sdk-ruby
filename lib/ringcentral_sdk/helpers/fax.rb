@@ -102,9 +102,9 @@ module RingCentralSdk::Helpers
     end
 
     def url()
+
       vals = {:account_id => '~', :extension_id => '~'}
-      account_id   = "~"
-      extension_id = "~"
+
       if @path_params.is_a?(Hash)
         vals.keys.each do |key|
           next unless @path_params.has_key?(key)
@@ -115,8 +115,9 @@ module RingCentralSdk::Helpers
           end
         end
       end
-      url = "account/#{vals[:account_id].to_s}/extension/#{vals[:extension_id].to_s}/fax"
-      return url
+
+      return "account/#{vals[:account_id].to_s}/extension/#{vals[:extension_id].to_s}/fax"
+
     end
 
     def content_type()
