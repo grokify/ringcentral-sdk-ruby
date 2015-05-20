@@ -31,10 +31,9 @@ module RingCentralSdk::Helpers
       end
     end
 
-    def add_metadata(json=nil)
-      if json.is_a?(Hash)
-        json = MultiJson.encode(json)
-      end
+    def add_metadata(meta=nil)
+      meta = inflate_metadata(meta)
+      json = MultiJson.encode(meta)
       if json.is_a?(String)
         json_part = MIME::Text.new(json)
         json_part.headers.delete('Content-Id')
@@ -43,6 +42,24 @@ module RingCentralSdk::Helpers
         return true
       end
       return false
+    end
+
+    def inflate_metadata(meta=nil)
+      if meta.is_a?(String)
+        meta = MultiJson.decode(meta,:symbolize_keys=>true)
+      end
+      if meta.is_a?(Hash)
+        inf = RingCentralSdk::Helpers::Inflator::ContactInfo.new
+
+        if meta.has_key?(:to)
+          meta[:to] = inf.inflate_to_array( meta[:to] )
+        elsif meta.has_key?("to")
+          meta["to"] = inf.inflate_to_array( meta["to"] )
+        else
+          meta[:to] = inf.inflate_to_array( nil )
+        end
+      end
+      return meta
     end
 
     def add_file_text(text=nil,charset='UTF-8')
