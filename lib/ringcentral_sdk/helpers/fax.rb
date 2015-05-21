@@ -7,7 +7,7 @@ module RingCentralSdk::Helpers
   class CreateFaxRequest < RingCentralSdk::Helpers::Request
     attr_reader :msg
 
-    def initialize(path_params=nil,metadata=nil,options=nil)
+    def initialize(path_params=nil, metadata=nil, options=nil)
 
       @msg = MIME::Multipart::Mixed.new
       @msg.headers.delete('Content-Id')
@@ -84,7 +84,7 @@ module RingCentralSdk::Helpers
       file_part.headers.delete('Content-Id')
       file_part.headers.set('Content-Type', get_file_content_type(file_name, content_type))
       file_part.headers.set('Content-Disposition', get_attachment_content_disposition(file_name))
-      file_part.headers.set('Content-Transfer-Encoding','base64') if base64_encode
+      file_part.headers.set('Content-Transfer-Encoding', 'base64') if base64_encode
       return file_part
     end
 
@@ -94,7 +94,7 @@ module RingCentralSdk::Helpers
     end
 
     def get_attachment_content_disposition(file_name=nil)
-      base_name  = File.basename(file_name)
+      base_name = File.basename(file_name)
       if base_name.is_a?(String) && base_name.length>0
         return "attachment; filename=\"#{base_name}\""
       else

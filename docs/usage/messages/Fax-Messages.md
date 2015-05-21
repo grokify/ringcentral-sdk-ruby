@@ -23,7 +23,6 @@ response = RingCentralSdk::Sdk.new(
     nil, # for authz user or { :account_id => '~', :extension_id => '~' }
     {
       :to            => '+16505551212', # inflates to [{ :phoneNumber => '+16505551212' }],
-      :faxResolution => 'High',
       :coverPageText => 'RingCentral fax text example using Ruby!'
     },
     :text     => 'RingCentral fax text example using Ruby!'
@@ -46,7 +45,6 @@ response = RingCentralSdk::Sdk.new(
     nil, # for authz user or { :account_id => '~', :extension_id => '~' }
     {
       :to            => { :phoneNumber => '+16505551212' }, # inflates to [{ :phoneNumber => '+16505551212' }],
-      :faxResolution => 'High',
       :coverPageText => 'RingCentral fax PDF example using Ruby!'
     },
     :file_name     => '/path/to/my_file.pdf'
@@ -70,7 +68,6 @@ response = RingCentralSdk::Sdk.new(
     nil, # for authz user or { :account_id => '~', :extension_id => '~' }
     {
       :to            => [{ :phoneNumber => '+16505551212' }],
-      :faxResolution => 'High',
       :coverPageText => 'RingCentral fax TIFF example using Ruby!'
     },
     :file_name     => '/path/to/my_file.tif',

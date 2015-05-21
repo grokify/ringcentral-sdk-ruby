@@ -125,7 +125,6 @@ fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
   {
     # phone numbers are in E.164 format with or without leading '+'
     :to            => [{ :phoneNumber => '+16505551212' }],
-    :faxResolution => 'High',
     :coverPageText => 'RingCentral fax text demo using Ruby!'
   },
   :text => 'RingCentral Fax via Ruby!'
@@ -144,7 +143,6 @@ fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
   {
     # phone numbers are in E.164 format with or without leading '+'
     :to            => [{ :phoneNumber => '+16505551212' }],
-    :faxResolution => 'High',
     :coverPageText => 'RingCentral fax PDF demo using Ruby!'
   },
   :file_name     => '/path/to/my_file.pdf'
