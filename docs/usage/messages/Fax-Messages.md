@@ -134,3 +134,25 @@ ZWYKMjQ0MjcKJSVFT0YK
 
 --Boundary_9j36hcowhyoi7683x02z56wq64--
 ```
+
+## FAQ
+
+### Why does faxPageCount change?
+
+When a fax request is first submitted the `faxPageCount` is set to 0 when when `messageStatus` is set to `Queued` because the fax hasn't been rendered yet so the number of pages haven't been counted. When the fax is successfully rendered and sent with `messageStatus` set to `Sent` the `faxPageCount` will be properly populated. In the event that the message is not successfully sent and the `messageStatus` is set to `SendingFailed`, the `faxPageCount` property may or may not be sent depending on the type of failure.
+
+### How can I view sent faxes in the Service Web Portal?
+
+Yes, faxes sent via the API can be viewed in the Service Web Portal (https://service.ringcentral.com) in both `Messages > Sent Items` and in the `Call Log`. The rendered fax documents can be downloaded from `Messages > Sent Items`.
+
+### How can I retrieve a sent fax via API?
+
+When sending a fax via the API, the fax message `messageId` and rendered fax `attachmentId` can be used in the message store end points to retrieve the message information or attachment.
+
+### Is it possible to find out why a fax failed?
+
+If a fax transmission fails, the reason is reported in the Call Log Record's `result` property. It is also presented in the Service Web Portal.
+
+
+
+
