@@ -51,15 +51,14 @@ module RingCentralSdk::Platform
       @_auth.set_data( response.body )
       @_auth.remember = remember
 
-      if response.body.has_key?("access_token") && response.body["access_token"].is_a?(String)
-        @client.headers['Authorization'] = 'Bearer ' + response.body["access_token"]
+      if response.body.is_a?(Hash)
+        if response.body.has_key?("access_token") && response.body["access_token"].is_a?(String)
+          @client.headers['Authorization'] = 'Bearer ' + response.body["access_token"]
+        end
       end
 
       return response
     end
-
-    #def refresh()
-    #end
 
     def get_api_key()
       api_key = (@app_key.is_a?(String) && @app_secret.is_a?(String)) \
