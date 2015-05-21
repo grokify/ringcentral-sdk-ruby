@@ -160,7 +160,6 @@ fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
     {
     # phone numbers are in E.164 format with or without leading '+'
     :to            => [{ :phoneNumber => '+16505551212' }],
-    :faxResolution => 'High',
     :coverPageText => 'RingCentral fax TIFF base64 demo using Ruby!'
   },
   :file_name     => '/path/to/my_file.tif',
