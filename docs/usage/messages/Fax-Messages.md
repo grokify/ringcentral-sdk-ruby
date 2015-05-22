@@ -152,7 +152,3 @@ When sending a fax via the API, the fax message `messageId` and rendered fax `at
 ### Is it possible to find out why a fax failed?
 
 If a fax transmission fails, the reason is reported in the Call Log Record's `result` property. It is also presented in the Service Web Portal.
-
-
-
-

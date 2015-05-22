@@ -13,5 +13,11 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     assert_equal "bXlfYXBwX2tleTpteV9hcHBfc2VjcmV0", platform.send(:get_api_key)
     #assert_equal "Basic bXlfYXBwX2tleTpteV9hcHBfc2VjcmV0", platform.send(:get_auth_header)
 
+    rcsdk = RingCentralSdk::Sdk.new(
+      nil,
+      nil,
+      RingCentralSdk::Sdk::RC_SERVER_SANDBOX
+    )
+
   end
 end

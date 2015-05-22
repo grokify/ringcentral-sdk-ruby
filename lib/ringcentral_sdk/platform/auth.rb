@@ -15,9 +15,9 @@ module RingCentralSdk::Platform
     def set_data(data={})
       return false unless data.is_a?(Hash)
 
-      @access_token = data["access_token"] ? data["access_token"] : ''
-      @expire_time  = data["expire_time"]  ? data["expire_time"]  : 0
-      @token_type   = data["token_type"]   ? data["token_type"]   : ''
+      @access_token = data.has_key?("access_token") ? data["access_token"] : ''
+      @expire_time  = data.has_key?("expire_time")  ? data["expire_time"]  : 0
+      @token_type   = data.has_key?("token_type")   ? data["token_type"]   : ''
 
       @data = data
       return true
