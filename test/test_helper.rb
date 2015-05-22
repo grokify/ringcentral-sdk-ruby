@@ -1,7 +1,8 @@
-require 'test/unit'
-require 'ringcentral_sdk'
 require 'coveralls'
 Coveralls.wear!
+
+require 'test/unit'
+require 'ringcentral_sdk'
 
 rcsdk = RingCentralSdk::Sdk.new(
   "myAppKey",
