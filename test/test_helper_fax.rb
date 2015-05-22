@@ -47,6 +47,12 @@ class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
     assert_equal 'attachment', fax.get_attachment_content_disposition()
     assert_equal 'attachment; filename="example.pdf"', fax.get_attachment_content_disposition('example.pdf')
     assert_equal 'attachment; filename="example.pdf"', fax.get_attachment_content_disposition('/path/to/example.pdf')
+    assert_equal 'post', fax.method()
+
+    content_type = fax.content_type()
+    content_type_prefix = content_type =~ /^(multipart\/mixed;\s+boundary=).*$/ \
+      ? $1 : ''
+    assert_equal 'multipart/mixed; boundary=', content_type_prefix
 
   end
 end
