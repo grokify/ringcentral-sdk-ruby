@@ -7,7 +7,7 @@ class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
       nil, # Can be nil or {} for defaults '~'
       {
         # phone numbers are in E.164 format with or without leading '+'
-        :to            => [{ :phoneNumber => '+16505551212' }],
+        :to            => '+16505551212',
         :faxResolution => 'High',
         :coverPageText => 'RingCentral fax demo using Ruby SDK!'
       },
@@ -21,7 +21,7 @@ class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
       { :account_id => '111111111', :extension_id => '222222222' }, # Can be nil or {} for defaults '~'
       {
         # phone numbers are in E.164 format with or without leading '+'
-        :to            => [{ :phoneNumber => '+16505551212' }],
+        "to"           => { :phoneNumber => '+16505551212' },
         :faxResolution => 'High',
         :coverPageText => 'RingCentral fax demo using Ruby SDK!'
       },
@@ -34,7 +34,7 @@ class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
       { :account_id => 111111111, :extension_id => 222222222 }, # Can be nil or {} for defaults '~'
       {
         # phone numbers are in E.164 format with or without leading '+'
-        :to            => [{ :phoneNumber => '+16505551212' }],
+        :to           => [{ :phoneNumber => '+16505551212' }],
         :faxResolution => 'High',
         :coverPageText => 'RingCentral fax demo using Ruby SDK!'
       },
