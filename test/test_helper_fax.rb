@@ -48,8 +48,14 @@ class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
       '{"to":"+16505551212","coverPageText":"RingCentral fax demo using Ruby SDK!"}',
       :text => 'RingCentral fax demo using Ruby SDK!'
     )
-
     assert_equal 'account/111111111/extension/222222222/fax', fax4.url()
+
+    fax5 = RingCentralSdk::Helpers::CreateFaxRequest.new(
+      { :account_id => 111111111, :extension_id => 222222222 }, # Can be nil or {} for defaults '~'
+      '{"coverPageText":"RingCentral fax demo using Ruby SDK!"}',
+      :text => 'RingCentral fax demo using Ruby SDK!'
+    )
+    assert_equal 'account/111111111/extension/222222222/fax', fax5.url()
 
     assert_equal 'application/pdf', fax.get_file_content_type('example.pdf')
     assert_equal 'attachment', fax.get_attachment_content_disposition()

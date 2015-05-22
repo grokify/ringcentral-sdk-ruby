@@ -131,15 +131,15 @@ module RingCentralSdk::Helpers
     end
 
     # Experimental
-    def _add_file(file_name=nil)
-      if file_name.is_a?(String) && File.file?(file_name)
-        file_msg = MIME::DiscreteMediaFactory.create(file_name)
-        file_msg.headers.delete('Content-Id')
-        @msg.add(file_msg)
-        return true
-      end
-      return false
-    end
-    private :_add_file
+    #def _add_file(file_name=nil)
+    #  if file_name.is_a?(String) && File.file?(file_name)
+    #    file_msg = MIME::DiscreteMediaFactory.create(file_name)
+    #    file_msg.headers.delete('Content-Id')
+    #    @msg.add(file_msg)
+    #    return true
+    #  end
+    #  return false
+    #end
+    #private :_add_file
   end
 end
