@@ -30,14 +30,11 @@ module RingCentralSdk::Helpers
     def add_metadata(meta=nil)
       meta = inflate_metadata(meta)
       json = MultiJson.encode(meta)
-      if json.is_a?(String)
-        json_part = MIME::Text.new(json)
-        json_part.headers.delete('Content-Id')
-        json_part.headers.set('Content-Type','application/json')
-        @msg.add(json_part)
-        return true
-      end
-      return false
+      json_part = MIME::Text.new(json)
+      json_part.headers.delete('Content-Id')
+      json_part.headers.set('Content-Type','application/json')
+      @msg.add(json_part)
+      return true
     end
 
     def inflate_metadata(meta=nil)
@@ -94,7 +91,7 @@ module RingCentralSdk::Helpers
     end
 
     def get_attachment_content_disposition(file_name=nil)
-      base_name = File.basename(file_name)
+      base_name = File.basename(file_name.to_s)
       if base_name.is_a?(String) && base_name.length>0
         return "attachment; filename=\"#{base_name}\""
       else

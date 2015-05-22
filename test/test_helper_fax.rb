@@ -43,5 +43,10 @@ class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
 
     assert_equal 'account/111111111/extension/222222222/fax', fax3.url()
 
+    assert_equal 'application/pdf', fax.get_file_content_type('example.pdf')
+    assert_equal 'attachment', fax.get_attachment_content_disposition()
+    assert_equal 'attachment; filename="example.pdf"', fax.get_attachment_content_disposition('example.pdf')
+    assert_equal 'attachment; filename="example.pdf"', fax.get_attachment_content_disposition('/path/to/example.pdf')
+
   end
 end
