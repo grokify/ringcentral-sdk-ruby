@@ -50,9 +50,17 @@ class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
     assert_equal 'post', fax.method()
 
     content_type = fax.content_type()
-    content_type_prefix = content_type =~ /^(multipart\/mixed;\s+boundary=).*$/ \
-      ? $1 : ''
+    content_type_prefix = ''
+    boundary = ''
+    if content_type =~ /^(multipart\/mixed;\s+boundary=)(.*)$/
+      content_type_prefix = $1
+      boundary = $2
+    end
     assert_equal 'multipart/mixed; boundary=', content_type_prefix
+
+    lines = fax.body.split(/\r?\n/)
+    assert_equal '--' + boundary, lines[0]
+    assert_equal '--' + boundary + '--', lines[-1]
 
   end
 end
