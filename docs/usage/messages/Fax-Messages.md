@@ -137,7 +137,7 @@ ZWYKMjQ0MjcKJSVFT0YK
 
 ## FAQ
 
-### Why does faxPageCount change?
+### Why can the faxPageCount change?
 
 When a fax request is first submitted the `faxPageCount` is set to 0 when when `messageStatus` is set to `Queued` because the fax hasn't been rendered yet so the number of pages haven't been counted. When the fax is successfully rendered and sent with `messageStatus` set to `Sent` the `faxPageCount` will be properly populated. In the event that the message is not successfully sent and the `messageStatus` is set to `SendingFailed`, the `faxPageCount` property may or may not be sent depending on the type of failure.
 
@@ -152,3 +152,11 @@ When sending a fax via the API, the fax message `messageId` and rendered fax `at
 ### Is it possible to find out why a fax failed?
 
 If a fax transmission fails, the reason is reported in the Call Log Record's `result` property. It is also presented in the Service Web Portal.
+
+### Do I need multple sandbox accounts to support multiple fax numbers?
+
+This depends on how you intend your application to work with the multiple fax numbers.
+
+If you intend the multiple fax numbers to be owned by a single production RingCentral customer, then you only need a single Sandbox Account to represent the single Production Account. Within a single Sandbox (or Production) Account, you can create multiple Direct Numbers for fax that can be either Company Numbers (no extension) or a Direct Extension Number (associated with an extension).
+
+If you intend the multiple fax numbers to be owned by and associated with multiple production RingCentral Customers, then you can create multiple Sandbox Accounts to represent the multiple Production Accounts.
