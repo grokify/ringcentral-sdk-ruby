@@ -149,7 +149,7 @@ Yes, faxes sent via the API can be viewed in the Service Web Portal (https://ser
 
 When sending a fax via the API, the fax message `messageId` and rendered fax `attachmentId` can be used in the message store end points to retrieve the message information or attachment.
 
-### Will retriving a rendered fax attachment change the read status?
+### Will retrieving a rendered fax attachment change the read status?
 
 Retrieving a fax attachment file via the API will not change the read status to `Read` from `Unread`. This is desirable as retrieving the fax document may be for archival and other purposes that should not indicate the fax was read. To change the status use the Update Message API call.
 
