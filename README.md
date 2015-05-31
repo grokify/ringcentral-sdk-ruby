@@ -14,8 +14,8 @@ RingCentral SDK
 1. [Overview](#overview)
 2. [Installation](#installation)
 3. [Usage](#usage)
-  2. [SMS Example](#sms-example)
-  1. [Fax Example](#fax-example)
+  1. [SMS Example](#sms-example)
+  2. [Fax Example](#fax-example)
 4. [Change Log](#change-log)
 5. [Links](#links)
 6. [Contributions](#contributions)
@@ -42,6 +42,13 @@ The following items are still needed for this SDK. Contributions are most welcom
 
 * Subscriptions
 * Mock tests
+
+## Documentation
+
+More documentation is available on [Read the Docs](http://ringcentral-sdk-ruby.readthedocs.org/)
+and [RubyDoc](http://www.rubydoc.info/gems/ringcentral_sdk/). The documentation included here
+is a brief documentation or code specifc documention via RubyDoc / YARD and User Guide information
+via Read the Docs / mkdocs.
 
 ## Installation
 
