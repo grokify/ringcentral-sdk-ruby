@@ -139,7 +139,7 @@ client = rcsdk.platform.client
 SMS and other requests can be easily sent directly without helpers.
 
 ```ruby
-# Send SMS - POST request
+# SMS Example
 
 response = client.post do |req|
   req.url 'account/~/extension/~/sms'
@@ -166,6 +166,8 @@ be used with the standard faraday client or helper `.request()` method that take
 helper object in its entirety.
 
 ```ruby
+# Fax example using request helper
+
 fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
   nil, # auto-inflates to [{:account_id => '~', :extension_id => '~'}]
   {
@@ -176,8 +178,9 @@ fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
   :file_name     => '/path/to/my_file.pdf'
 )
 
-# sending request via request helper method
-response = platform.request(fax)
+# sending request via request helper methods
+response = sdk.request(fax)
+response = sdk.platform.request(fax)
 
 # sending request via standard Faraday client
 response = client.post do |req|
