@@ -1,5 +1,10 @@
 site_name: RingCentral SDK for Ruby
 
 pages:
-- Introduction: 'index.md'
-    - 'QuickStart': 'quickstart.md'
+# Introduction:
+- ['index.md', 'About', 'RingCentral SDK']
+- ['quickstart.md', 'About', 'Quickstart']
+
+## User Guide:
+- ['usage/authorization/Authorization.md', 'User Guide', 'Authorization']
+- ['usage/messages/Fax-Messages.md', 'User Guide', 'Fax Messages']
