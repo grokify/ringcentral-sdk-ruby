@@ -16,6 +16,7 @@ This SDK is an early stage library and subject to breaking changes.
 ## Included
 
 * OAuth authorization
+* OAuth token refresh
 * Faraday client with OAuth bearer token handling
 * Fax helper to create multipart/mixed messages
 
@@ -23,9 +24,8 @@ This SDK is an early stage library and subject to breaking changes.
 
 The following items are still needed for this SDK. Contributions are most welcome.
 
-* Token refresh
 * Subscriptions
-* Additional tests
+* Mock tests
 
 Installation
 ============
