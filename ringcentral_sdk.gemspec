@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'ringcentral_sdk'
-  s.version     = '0.1.0'
+  s.version     = '0.1.1'
   s.date        = '2015-05-31'
   s.summary     = 'RingCentral SDK - Unofficial Ruby SDK for the RingCentral Connect Platform API'
   s.description = 'An unofficial Ruby SDK for the RingCentral Connect Platform API'
@@ -31,4 +31,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'mime-types', '~> 2.5', '>= 2.5'
   s.add_dependency 'multi_json', '>= 0'
   s.add_dependency 'oauth2', '>= 0'
+  s.add_dependency 'test-unit', '>= 0'
 end

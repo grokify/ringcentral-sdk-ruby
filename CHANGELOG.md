@@ -1,5 +1,7 @@
 CHANGELOG
 ---------
+- **2015-05-31**: 0.1.1
+  - Add Ruby 2.2.2 support
 - **2015-05-31**: 0.1.0
   - Add OAuth token refresh
   - Add OAuth2::AccessToken support
