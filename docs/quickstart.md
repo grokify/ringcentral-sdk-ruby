@@ -2,6 +2,9 @@
 
 ## Usage
 
+More detailed information on initialization and authorization is available in the
+[Authorization section](usage/authorization/Authorization.md)
+
 ### Initialize
 
 ```ruby

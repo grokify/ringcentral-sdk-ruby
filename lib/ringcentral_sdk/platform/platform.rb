@@ -17,21 +17,16 @@ module RingCentralSdk::Platform
     API_VERSION       = 'v1.0'
     URL_PREFIX        = '/restapi'
 
-    attr_reader :client
+    attr_reader   :client
+    attr_accessor :server_url
 
-    def initialize(app_key='',app_secret='',server_url='https://platform.devtest.ringcentral.com')
+    def initialize(app_key='', app_secret='', server_url=RingCentralSdk::Sdk::RC_SERVER_SANDBOX)
 
       @app_key    = app_key
       @app_secret = app_secret
       @server_url = server_url
-      @_auth       = RingCentralSdk::Platform::Auth.new
-
-      @client     = Faraday.new(:url => get_api_version_url()) do |conn|
-        conn.request  :json
-        conn.request  :url_encoded
-        conn.response :json, :content_type => 'application/json'
-        conn.adapter  Faraday.default_adapter
-      end
+      @token      = nil
+      @client     = nil
 
     end
 
@@ -39,15 +34,22 @@ module RingCentralSdk::Platform
       return @server_url + URL_PREFIX + '/' + API_VERSION 
     end
 
-    def authorize(username='',extension='',password='',remember=false)
+    def authorize(username='', extension='', password='', remember=false)
 
-      @oauth2 = OAuth2::Client.new(@app_key, @app_secret,
+      oauth2 = OAuth2::Client.new(@app_key, @app_secret,
         :site      => @server_url,
         :token_url => TOKEN_ENDPOINT)
 
-      @token = @oauth2.password.get_token(username, password, {
+      token = oauth2.password.get_token(username, password, {
         :extension => extension,
         :headers   => { 'Authorization' => 'Basic ' + get_api_key() } })
+
+      authorized(token)
+
+    end
+
+    def authorized(token=nil)
+      @token = token
 
       @client = Faraday.new(:url => get_api_version_url()) do |conn|
         conn.request  :oauth2_refresh, @token
@@ -88,6 +90,6 @@ module RingCentralSdk::Platform
       return nil
     end
     
-    private :get_api_key, :get_api_version_url
+    private :get_api_version_url
   end
 end

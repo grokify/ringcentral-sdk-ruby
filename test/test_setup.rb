@@ -11,7 +11,6 @@ class RingCentralSdkTest < Test::Unit::TestCase
 
     assert_equal "RingCentralSdk::Sdk", rcsdk.class.name
     assert_equal "RingCentralSdk::Platform::Platform", rcsdk.platform.class.name
-    assert_equal "Faraday::Connection", rcsdk.platform.client.class.name
 
   end
 end
