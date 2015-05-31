@@ -12,6 +12,9 @@ RingCentral SDK
 ## Table of contents
 
 1. [Overview](#overview)
+  1. [Included](#included)
+  2. [To Do](#to-do)
+  3. [Documentation](#overview)
 2. [Installation](#installation)
 3. [Usage](#usage)
   1. [SMS Example](#sms-example)
@@ -43,7 +46,7 @@ The following items are still needed for this SDK. Contributions are most welcom
 * Subscriptions
 * Mock tests
 
-## Documentation
+### Documentation
 
 More documentation is available on [Read the Docs](http://ringcentral-sdk-ruby.readthedocs.org/)
 and [RubyDoc](http://www.rubydoc.info/gems/ringcentral_sdk/). The documentation included here
