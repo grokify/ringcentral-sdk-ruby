@@ -2,6 +2,14 @@
 
 Unofficial SDK for RingCentral Connect Platform in Ruby.
 
+## Table of Contents
+
+1. [Introduction](index.md)
+2. [Quickstart](quickstart.md)
+3. User GUide
+  1. [Authorization](usage/authorization/Authorization.md)
+  2. [Fax Messages](usage/messages/Fax-Messages.md)
+
 ## Installation
 
 ### Via Bundler
