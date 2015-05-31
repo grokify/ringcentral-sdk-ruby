@@ -17,7 +17,6 @@ module RingCentralSdk::Platform
     API_VERSION       = 'v1.0'
     URL_PREFIX        = '/restapi'
 
-    attr_reader   :client
     attr_accessor :server_url
 
     def initialize(app_key='', app_secret='', server_url=RingCentralSdk::Sdk::RC_SERVER_SANDBOX)
@@ -65,13 +64,6 @@ module RingCentralSdk::Platform
       api_key = (@app_key.is_a?(String) && @app_secret.is_a?(String)) \
         ? Base64.strict_encode64("#{@app_key}:#{@app_secret}") : ''
       return api_key
-    end
-
-    def get_auth_header()
-      if @_auth.token_type.is_a?(String) && @_auth.access_token.is_a?(String)
-        return @_auth.token_type + ' ' + @_auth.access_token
-      end
-      return ''
     end
 
     def request(helper=nil)
