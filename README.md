@@ -49,9 +49,16 @@ The following items are still needed for this SDK. Contributions are most welcom
 ### Documentation
 
 More documentation is available on [Read the Docs](http://ringcentral-sdk-ruby.readthedocs.org/)
-and [RubyDoc](http://www.rubydoc.info/gems/ringcentral_sdk/). The documentation included here
-is a brief documentation or code specifc documention via RubyDoc / YARD and User Guide information
-via Read the Docs / mkdocs.
+and [RubyDoc](http://www.rubydoc.info/gems/ringcentral_sdk/). The documentation philosophy is to
+use RubyDoc / YARD for brief documentation and code specific docs while using Read the Docs for
+user guide / tutorial / FAQ style documentation.
+
+In addition the documentation for this Ruby SDK, refer to the official RingCentral guides for
+more information on individual API calls:
+
+1. [API Developer and Reference Guide](https://developers.ringcentral.com/api-docs/latest/index.html) for information on specific APIs.
+1. [API Explorer](http://ringcentral.github.io/api-explorer/)
+1. [CTI Tutorial](http://ringcentral.github.io/cti-tutorial/)
 
 ## Installation
 
@@ -79,9 +86,7 @@ $ gem install ringcentral_sdk
 
 This provides a very basic guide to using the SDK. Please use the following resources for more information:
 
-1. [API Developer and Reference Guide](https://developers.ringcentral.com/api-docs/latest/index.html) for information on specific APIs.
-1. [API Explorer](http://ringcentral.github.io/api-explorer/)
-1. [CTI Tutorial](http://ringcentral.github.io/cti-tutorial/)
+1. [API Developer and Reference Guide](https://developers.ringcentral.com/api-docs/latest/index.html)
 
 ### Initialization
 
