@@ -1,1 +1,8 @@
 site_name: RingCentral SDK for Ruby
+
+pages:
+- Introduction: 'index.md'
+    - 'QuickStart': 'quickstart.md'
+- User Guide:
+    - 'Authorization': 'usage/authorization/Authorization.md'
+    - 'Fax': 'usage/messages/Fax-Messages.md'

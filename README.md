@@ -11,6 +11,8 @@ This is an unofficial Ruby SDK for the RingCentral Connect Platform REST API (ht
 
 The core SDK objects follow the general design of the [official RingCentral SDKs](https://github.com/ringcentral). The SDK helper additions are included to make it easier to interact with features of the API.
 
+Preliminary documentation can be found on [Read the Docs](http://ringcentral-sdk-ruby.readthedocs.org/).
+
 This SDK is an early stage library and subject to breaking changes.
 
 ## Included
