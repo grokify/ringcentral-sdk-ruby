@@ -36,7 +36,7 @@ sdk = RingCentralSdk::Sdk.new(
 )
 ```
 
-With chaining:
+With chaining and request helper:
 
 ```ruby
 response = RingCentralSdk::Sdk.new(
@@ -56,8 +56,8 @@ response = RingCentralSdk::Sdk.new(
 
 ## Generic Approach
 
-Using the generic approach, any `OAuth2::AccessToken` can be provided, allowing you more
-flexibility.
+Using the generic authorization approach, any `OAuth2::AccessToken` can be
+provided, allowing you more flexibility.
 
 ```ruby
 sdk = RingCentralSdk::Sdk.new(
@@ -74,3 +74,8 @@ token = oauth2.password.get_token('my_username', 'my_password', {
 
 sdk.platform.authorized(token)
 ```
+
+## Implementation
+
+The SDK currently provides a configured `faraday` client to make client requests.
+Token management is managed by the `oauth2` gem using a `OAuth2::AccessToken`.

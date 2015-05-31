@@ -9,31 +9,43 @@ RingCentral SDK
 [![Docs](https://img.shields.io/badge/docs-rubydoc-blue.svg)](http://www.rubydoc.info/gems/ringcentral_sdk/)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/grokify/ringcentral-sdk-ruby/master/LICENSE.txt)
 
-This is an unofficial Ruby SDK for the RingCentral Connect Platform REST API (https://developers.ringcentral.com).
+## Table of contents
 
-The core SDK objects follow the general design of the [official RingCentral SDKs](https://github.com/ringcentral). The SDK helper additions are included to make it easier to interact with features of the API.
+1. [Overview](#overview)
+2. [Installation](#installation)
+3. [Usage](#usage)
+  2. [SMS Example](#sms-example)
+  1. [Fax Example](#fax-example)
+4. [Change Log](#change-log)
+5. [Links](#links)
+6. [Contributions](#contributions)
+7. [License](#license)
 
-Preliminary documentation can be found on [Read the Docs](http://ringcentral-sdk-ruby.readthedocs.org/).
+## Overview
+
+This is an unofficial Ruby SDK for the RingCentral for Developers Platform REST API (https://developers.ringcentral.com).
+
+The core SDK objects follow the general design of the [official RingCentral SDKs](https://github.com/ringcentral). Additional functionality is provided for ease of use including request helpers and generalized OAuth2 support.
 
 This SDK is an early stage library and subject to breaking changes.
 
-## Included
+### Included
 
 * OAuth2 authorization & token refresh via INTRIDEA OAuth2::AccessToken
 * Generic API requests handled via Faraday client
 * Fax request helper to create multipart/mixed messages
+* Docs via [Read the Docs](http://ringcentral-sdk-ruby.readthedocs.org/) and [RubyDoc](http://www.rubydoc.info/gems/ringcentral_sdk/)
 
-## To Do
+### To Do
 
 The following items are still needed for this SDK. Contributions are most welcome.
 
 * Subscriptions
 * Mock tests
 
-Installation
-============
+## Installation
 
-## Via Bundler
+### Via Bundler
 
 Add this line to your application's Gemfile:
 
@@ -47,16 +59,21 @@ And then execute:
 $ bundle
 ```
 
-## Via RubyGems
+### Via RubyGems
 
 ```sh
 $ gem install ringcentral_sdk
 ```
 
-Usage
-=====
+## Usage
 
-## Initialization
+This provides a very basic guide to using the SDK. Please use the following resources for more information:
+
+1. [API Developer and Reference Guide](https://developers.ringcentral.com/api-docs/latest/index.html) for information on specific APIs.
+1. [API Explorer](http://ringcentral.github.io/api-explorer/)
+1. [CTI Tutorial](http://ringcentral.github.io/cti-tutorial/)
+
+### Initialization
 
 The RingCentral server URLs can be populated manually or via the included constants:
 
@@ -64,7 +81,7 @@ The RingCentral server URLs can be populated manually or via the included consta
 * `RingCentralSdk::Sdk::RC_SERVER_SANDBOX`
 
 ```ruby
-## Initialization ##
+### Initialization ##
 
 require 'ringcentral_sdk'
 
@@ -76,7 +93,7 @@ rcsdk = RingCentralSdk::Sdk.new(
 platform = rcsdk.platform
 ```
 
-## Authentication
+### Authorization
 
 ```ruby
 # Initialize using user phone number without extension number
@@ -88,7 +105,7 @@ platform.authorize("myUsername", nil, "myPassword")
 platform.authorize("myUsername", "myExtension", "myPassword")
 ```
 
-## Creating Requests
+### Creating Requests
 
 Requests are made using the inclued Faraday client.
 
@@ -96,7 +113,7 @@ Requests are made using the inclued Faraday client.
 client = rcsdk.platform.client
 ```
 
-## Create SMS Message
+#### SMS Example
 
 SMS and other requests can be easily sent directly without helpers.
 
@@ -114,35 +131,22 @@ response = client.post do |req|
 end
 ```
 
-## Create Fax Message
+#### Fax Example
 
-A fax helper is included that can be used to create the `multipart/mixed` HTTP request.
+Request helpers are subclasses of `RingCentralSdk::Helpers::Request` and provide standard methods
+that can be called by the `.request()` method of the SDK and Platform objects. This enables the
+requisite information for Faraday to be generated in a standard way.
 
-This consists of instantiating a fax helper object and then executing a Faraday POST request.
+To create your own request helpers, please take a look at the fax one shown below:
 
-### 1) Fax Helper for Text Message
+The fax helper is included to help create the `multipart/mixed` HTTP request. This consists of
+instantiating a fax helper object and then executing a Faraday POST request. The helper can then
+be used with the standard faraday client or helper `.request()` method that takes the request
+helper object in its entirety.
 
 ```ruby
 fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
-  { :account_id => '~', :extension_id => '~' }, # Can be nil or {} for defaults '~'
-  {
-    # phone numbers are in E.164 format with or without leading '+'
-    :to            => [{ :phoneNumber => '+16505551212' }],
-    :coverPageText => 'RingCentral fax text demo using Ruby!'
-  },
-  :text => 'RingCentral Fax via Ruby!'
-)
-# send the fax using Faraday as shown below
-```
-
-### 2) Fax Helper for File as Raw Bytes (e.g. PDF or TIFF)
-
-Sending a file as a plain octet-stream is useful in production as it can decrease file size by 30%.
-
-```ruby
-
-fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
-  { :account_id => '~', :extension_id => '~' }, # Can be nil or {} for defaults '~'
+  nil, # auto-inflates to [{:account_id => '~', :extension_id => '~'}]
   {
     # phone numbers are in E.164 format with or without leading '+'
     :to            => [{ :phoneNumber => '+16505551212' }],
@@ -150,30 +154,11 @@ fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
   },
   :file_name     => '/path/to/my_file.pdf'
 )
-# send the fax using Faraday as shown below
-```
 
-### 3) Fax Helper for File Base64 Encoded (e.g. PDF or TIFF)
+# sending request via request helper method
+response = platform.request(fax)
 
-Sending a file base64 encoded is useful for debugging purposes as the file can be copy and pasted.
-
-```ruby
-fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
-  { :account_id => '~', :extension_id => '~' }, # Can be nil or {} for defaults '~'
-    {
-    # phone numbers are in E.164 format with or without leading '+'
-    :to            => [{ :phoneNumber => '+16505551212' }],
-    :coverPageText => 'RingCentral fax TIFF base64 demo using Ruby!'
-  },
-  :file_name     => '/path/to/my_file.tif',
-  :base64_encode => true
-)
-# send the fax using Faraday as shown below
-```
-
-### Sending the fax
-
-```ruby
+# sending request via standard Faraday client
 response = client.post do |req|
   req.url fax.url
   req.headers['Content-Type'] = fax.content_type
@@ -181,14 +166,28 @@ response = client.post do |req|
 end
 ```
 
-Change Log
-==========
+## Change Log
 
-- **2015-05-13**: 0.0.3
-  - Initial public release
+- **2015-05-31**: 0.1.1
+  - Add Ruby 2.2.2 support
+- **2015-05-31**: 0.1.0
+  - Add OAuth token refresh
+  - Add OAuth2::AccessToken support
+  - Add Code Climate hook
+- **2015-05-19**: 0.0.4
+  - Add RingCentralSdk::Helpers::Request as request helpers base class 
+  - Add sdk.request() and platform.request() methods added to handle request helpers
+  - Fax helper uses file mime-type in preference to generic octet-stream
+  - Initial mkdocs and Read the Docs effort added
+  - Travis CI and Coveralls hooks added
+- **2015-05-14**: 0.0.3
+  - First public release
+- **2015-03-08**: 0.0.2
+  - Convert methods from camelCase to under_scores
+- **2015-03-07**: 0.0.1
+  - Initial release
 
-Links
-=====
+## Links
 
 Project Repo
 
@@ -206,13 +205,13 @@ RingCentral Official SDKs
 
 * https://github.com/ringcentral
 
-Problems, Comments, Suggestions?
-================================
+## Contributions
 
-All of the above are most welcome. johncwang@gmail.com
+Any reports of problems, comments or suggestions are most welcome.
 
-License
-=======
+Please report these on [Github](https://github.com/grokify/ringcentral-sdk-ruby)
+
+## License
 
 RingCentral SDK is available under an MIT-style license. See {file:LICENSE.txt} for details.
 
