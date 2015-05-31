@@ -19,10 +19,9 @@ This SDK is an early stage library and subject to breaking changes.
 
 ## Included
 
-* OAuth authorization
-* OAuth token refresh
-* Faraday client with OAuth bearer token handling
-* Fax helper to create multipart/mixed messages
+* OAuth2 authorization & token refresh via INTRIDEA OAuth2::AccessToken
+* Generic API requests handled via Faraday client
+* Fax request helper to create multipart/mixed messages
 
 ## To Do
 
