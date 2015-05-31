@@ -16,9 +16,14 @@ RingCentral SDK
   2. [To Do](#to-do)
 2. [Documentation](#documentation)
 3. [Installation](#installation)
-4. [Usage](#usage)
-  1. [SMS Example](#sms-example)
-  2. [Fax Example](#fax-example)
+4. [Getting Started](#getting-started)
+  1. [Installation](#installation)
+  2. [Usage](#usage)
+    1. [Instantiation](#instantiation)
+    1. [Authorization](#authorization)
+    1. [API Requests](#api-requests)
+      1. [SMS Example](#sms-example)
+      2. [Fax Example](#fax-example)
 5. [Change Log](#change-log)
 6. [Links](#links)
 7. [Contributions](#contributions)
@@ -60,9 +65,11 @@ more information on individual API calls:
 1. [API Explorer](http://ringcentral.github.io/api-explorer/)
 1. [CTI Tutorial](http://ringcentral.github.io/cti-tutorial/)
 
-## Installation
+## Getting Started
 
-### Via Bundler
+### Installation
+
+#### Via Bundler
 
 Add this line to your application's Gemfile:
 
@@ -76,19 +83,19 @@ And then execute:
 $ bundle
 ```
 
-### Via RubyGems
+#### Via RubyGems
 
 ```sh
 $ gem install ringcentral_sdk
 ```
 
-## Usage
+### Usage
 
 This provides a very basic guide to using the SDK. Please use the following resources for more information:
 
 1. [API Developer and Reference Guide](https://developers.ringcentral.com/api-docs/latest/index.html)
 
-### Initialization
+#### Instantiation
 
 The RingCentral server URLs can be populated manually or via the included constants:
 
@@ -96,8 +103,6 @@ The RingCentral server URLs can be populated manually or via the included consta
 * `RingCentralSdk::Sdk::RC_SERVER_SANDBOX`
 
 ```ruby
-### Initialization ##
-
 require 'ringcentral_sdk'
 
 rcsdk = RingCentralSdk::Sdk.new(
@@ -108,7 +113,7 @@ rcsdk = RingCentralSdk::Sdk.new(
 platform = rcsdk.platform
 ```
 
-### Authorization
+#### Authorization
 
 ```ruby
 # Initialize using user phone number without extension number
@@ -120,15 +125,16 @@ platform.authorize("myUsername", nil, "myPassword")
 platform.authorize("myUsername", "myExtension", "myPassword")
 ```
 
-### Creating Requests
+#### API Requests
 
-Requests are made using the inclued Faraday client.
+Requests are made using the inclued Faraday client which you can
+retrieve by calling `rcsdk.platform.client` or using it directly.
 
 ```ruby
 client = rcsdk.platform.client
 ```
 
-#### SMS Example
+##### SMS Example
 
 SMS and other requests can be easily sent directly without helpers.
 
@@ -146,7 +152,7 @@ response = client.post do |req|
 end
 ```
 
-#### Fax Example
+##### Fax Example
 
 Request helpers are subclasses of `RingCentralSdk::Helpers::Request` and provide standard methods
 that can be called by the `.request()` method of the SDK and Platform objects. This enables the
