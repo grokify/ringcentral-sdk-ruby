@@ -1,5 +1,15 @@
 CHANGELOG
 ---------
+- **2015-05-31**: 0.1.0
+  - Add OAuth token refresh
+  - Add OAuth2::AccessToken support
+  - Add Code Climate hook
+- **2015-05-19**: 0.0.4
+  - Request helpers are now subclasses
+  - sdk.request() and platform.request() methods added to handle request helpers
+  - Fax helper uses file mime-type in preference to generic octet-stream
+  - Initial mkdocs and Read the Docs effort added
+  - Travis CI and Coveralls hooks added
 - **2015-05-14**: 0.0.3
   - First public release
 - **2015-03-08**: 0.0.2
