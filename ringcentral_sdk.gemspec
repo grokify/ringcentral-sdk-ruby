@@ -20,8 +20,6 @@ Gem::Specification.new do |s|
     'lib/ringcentral_sdk/helpers/inflator/contact_info.rb',
     'lib/ringcentral_sdk/helpers/request.rb',
     'lib/ringcentral_sdk/platform.rb',
-    'lib/ringcentral_sdk/platform/auth.rb',
-    'lib/ringcentral_sdk/platform/parser.rb',
     'lib/ringcentral_sdk/platform/platform.rb',
     'lib/ringcentral_sdk/sdk.rb',
     'test/test_setup.rb'
