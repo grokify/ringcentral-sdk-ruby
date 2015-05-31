@@ -51,7 +51,7 @@ The following items are still needed for this SDK. Contributions are most welcom
 * Subscriptions
 * Mock tests
 
-### Documentation
+## Documentation
 
 More documentation is available on [Read the Docs](http://ringcentral-sdk-ruby.readthedocs.org/)
 and [RubyDoc](http://www.rubydoc.info/gems/ringcentral_sdk/). The documentation philosophy is to
@@ -65,11 +65,9 @@ more information on individual API calls:
 1. [API Explorer](http://ringcentral.github.io/api-explorer/)
 1. [CTI Tutorial](http://ringcentral.github.io/cti-tutorial/)
 
-## Getting Started
+## Installation
 
-### Installation
-
-#### Via Bundler
+### Via Bundler
 
 Add this line to your application's Gemfile:
 
@@ -83,19 +81,19 @@ And then execute:
 $ bundle
 ```
 
-#### Via RubyGems
+### Via RubyGems
 
 ```sh
 $ gem install ringcentral_sdk
 ```
 
-### Usage
+## Usage
 
 This provides a very basic guide to using the SDK. Please use the following resources for more information:
 
 1. [API Developer and Reference Guide](https://developers.ringcentral.com/api-docs/latest/index.html)
 
-#### Instantiation
+### Instantiation
 
 The RingCentral server URLs can be populated manually or via the included constants:
 
@@ -113,7 +111,7 @@ rcsdk = RingCentralSdk::Sdk.new(
 platform = rcsdk.platform
 ```
 
-#### Authorization
+### Authorization
 
 ```ruby
 # Initialize using user phone number without extension number
@@ -125,7 +123,7 @@ platform.authorize("myUsername", nil, "myPassword")
 platform.authorize("myUsername", "myExtension", "myPassword")
 ```
 
-#### API Requests
+### API Requests
 
 Requests are made using the inclued Faraday client which you can
 retrieve by calling `rcsdk.platform.client` or using it directly.
@@ -134,7 +132,7 @@ retrieve by calling `rcsdk.platform.client` or using it directly.
 client = rcsdk.platform.client
 ```
 
-##### SMS Example
+#### SMS Example
 
 SMS and other requests can be easily sent directly without helpers.
 
@@ -152,7 +150,7 @@ response = client.post do |req|
 end
 ```
 
-##### Fax Example
+#### Fax Example
 
 Request helpers are subclasses of `RingCentralSdk::Helpers::Request` and provide standard methods
 that can be called by the `.request()` method of the SDK and Platform objects. This enables the
