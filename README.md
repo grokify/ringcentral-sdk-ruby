@@ -14,15 +14,15 @@ RingCentral SDK
 1. [Overview](#overview)
   1. [Included](#included)
   2. [To Do](#to-do)
-  3. [Documentation](#overview)
-2. [Installation](#installation)
-3. [Usage](#usage)
+2. [Documentation](#documentation)
+3. [Installation](#installation)
+4. [Usage](#usage)
   1. [SMS Example](#sms-example)
   2. [Fax Example](#fax-example)
-4. [Change Log](#change-log)
-5. [Links](#links)
-6. [Contributions](#contributions)
-7. [License](#license)
+5. [Change Log](#change-log)
+6. [Links](#links)
+7. [Contributions](#contributions)
+8. [License](#license)
 
 ## Overview
 
