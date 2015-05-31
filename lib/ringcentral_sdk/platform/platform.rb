@@ -1,6 +1,8 @@
 require 'base64'
 require 'faraday'
 require 'faraday_middleware'
+require 'faraday_middleware/oauth2_refresh'
+require 'oauth2'
 
 module RingCentralSdk::Platform
   class Platform
@@ -39,25 +41,22 @@ module RingCentralSdk::Platform
 
     def authorize(username='',extension='',password='',remember=false)
 
-      response = _auth_call({}, {
-        :grant_type        => 'password',
-        :username          => username,
-        :extension         => extension.is_a?(String) || extension.is_a?(Integer) ? extension : '',
-        :password          => password,
-        :access_token_ttl  => ACCESS_TOKEN_TTL,
-        :refresh_token_ttl => remember ? REFRESH_TOKEN_TTL_REMEMBER : REFRESH_TOKEN_TTL
-      })
+      @oauth2 = OAuth2::Client.new(@app_key, @app_secret,
+        :site      => @server_url,
+        :token_url => TOKEN_ENDPOINT)
 
-      @_auth.set_data( response.body )
-      @_auth.remember = remember
+      @token = @oauth2.password.get_token(username, password, {
+        :extension => extension,
+        :headers   => { 'Authorization' => 'Basic ' + get_api_key() } })
 
-      if response.body.is_a?(Hash)
-        if response.body.has_key?("access_token") && response.body["access_token"].is_a?(String)
-          @client.headers['Authorization'] = 'Bearer ' + response.body["access_token"]
-        end
+      @client = Faraday.new(:url => get_api_version_url()) do |conn|
+        conn.request  :oauth2_refresh, @token
+        conn.request  :json
+        conn.request  :url_encoded
+        conn.response :json, :content_type => 'application/json'
+        conn.adapter  Faraday.default_adapter
       end
 
-      return response
     end
 
     def get_api_key()
@@ -71,17 +70,6 @@ module RingCentralSdk::Platform
         return @_auth.token_type + ' ' + @_auth.access_token
       end
       return ''
-    end
-
-    def _auth_call(queryParams={},body={})
-      return @client.post do |req|
-        req.url TOKEN_ENDPOINT
-        req.headers['Authorization'] = 'Basic ' + get_api_key()
-        req.headers['Content-Type']  = 'application/x-www-form-urlencoded;charset=UTF-8'
-        if body.is_a?(Hash) && body.size > 0
-          req.body = body
-        end
-      end
     end
 
     def request(helper=nil)
@@ -100,6 +88,6 @@ module RingCentralSdk::Platform
       return nil
     end
     
-    private :_auth_call, :get_api_key, :get_api_version_url, :get_auth_header
+    private :get_api_key, :get_api_version_url
   end
 end

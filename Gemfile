@@ -3,6 +3,7 @@ source ENV['GEM_SOURCE'] || "https://rubygems.org"
 gem 'coveralls', require: false 
 gem 'faraday', '~> 0.9.0'
 gem 'faraday_middleware'
+gem 'faraday_middleware-oauth2_refresh'
 gem 'mime'
 gem 'mime-types', '~> 2.5'
 gem 'multi_json'
