@@ -12,4 +12,8 @@ gem 'rake'
 gem 'simplecov'
 gem 'test-unit'
 
+platforms :ruby_18 do
+  gem 'mime-types', '~> 1.25'
+end
+
 # vim:ft=ruby
