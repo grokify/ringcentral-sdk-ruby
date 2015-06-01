@@ -75,9 +75,14 @@ module RingCentralSdk::Helpers
         raise "File \"#{file_name.to_s}\" does not exist or cannot be read"
       end
 
+      file_bytes = RUBY_VERSION < '1.9' \
+        ? File.open(file_name, 'rb')        { |f| f.read } \
+        : File.open(file_name, 'rb:BINARY') { |f| f.read }
+
       file_part  = base64_encode \
-        ? MIME::Text.new(Base64.encode64(File.binread(file_name))) \
-        : MIME::Application.new(File.binread(file_name))
+        ? MIME::Text.new(Base64.encode64(file_bytes)) \
+        : MIME::Application.new(file_bytes)
+
       file_part.headers.delete('Content-Id')
       file_part.headers.set('Content-Type', get_file_content_type(file_name, content_type))
       file_part.headers.set('Content-Disposition', get_attachment_content_disposition(file_name))
