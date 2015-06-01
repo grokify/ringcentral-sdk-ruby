@@ -24,12 +24,12 @@ Gem::Specification.new do |s|
     'lib/ringcentral_sdk/sdk.rb',
     'test/test_setup.rb'
   ]
-  #s.required_ruby_version = '>= 1.8.7'
+  s.required_ruby_version = '>= 1.8.7'
   s.add_dependency 'faraday', '~> 0.9', '>= 0.9'
   s.add_dependency 'faraday_middleware', '~> 0', '>= 0'
   s.add_dependency 'faraday_middleware-oauth2_refresh', '>= 0'
   s.add_dependency 'mime', '>= 0'
-  s.add_dependency 'mime-types', '~> 2.5', '>= 2.5'
+  s.add_dependency 'mime-types', '>= 1.25', # >= 1.9 '~> 2.5', '>= 2.5'
   s.add_dependency 'multi_json', '>= 0'
   s.add_dependency 'oauth2', '>= 0'
   s.add_dependency 'test-unit', '>= 0'
