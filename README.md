@@ -37,8 +37,8 @@ This SDK is an early stage library and subject to breaking changes.
 
 ### Included
 
-* OAuth2 authorization & token refresh via INTRIDEA OAuth2::AccessToken
-* Generic API requests handled via Faraday client
+* OAuth2 authorization & token refresh via INTRIDEA `OAuth2::AccessToken`
+* Generic API requests handled via `Faraday` client
 * Fax request helper to create multipart/mixed messages
 * Docs via [Read the Docs](http://ringcentral-sdk-ruby.readthedocs.org/) and [RubyDoc](http://www.rubydoc.info/gems/ringcentral_sdk/)
 
