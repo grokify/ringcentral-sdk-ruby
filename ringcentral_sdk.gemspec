@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'ringcentral_sdk'
-  s.version     = '0.1.1'
+  s.version     = '0.1.2'
   s.date        = '2015-05-31'
   s.summary     = 'RingCentral SDK - Unofficial Ruby SDK for the RingCentral Connect Platform API'
   s.description = 'An unofficial Ruby SDK for the RingCentral Connect Platform API'
