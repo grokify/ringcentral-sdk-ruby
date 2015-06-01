@@ -5,7 +5,6 @@ gem 'faraday', '~> 0.9.0'
 gem 'faraday_middleware'
 gem 'faraday_middleware-oauth2_refresh'
 gem 'mime'
-gem 'mime-types', '~> 2.5'
 gem 'multi_json'
 gem 'oauth2'
 gem 'rake'
@@ -14,6 +13,7 @@ gem 'test-unit'
 
 platforms :ruby_18 do
   gem 'mime-types', '~> 1.25'
+  # gem 'mime-types', '~> 2.5'
 end
 
 # vim:ft=ruby
