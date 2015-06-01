@@ -30,6 +30,9 @@ platform.authorize("myUsername", nil, "myPassword")
 platform.authorize("myUsername", "myExtension", "myPassword")
 ```
 
+See the [Authorization section](usage/authorization/Authorization.md) for more examples, including
+how to use an `OAuth2::AccessToken` directly.
+
 ## Creating Requests
 
 Requests are made using the inclued Faraday client which adds the requisite OAuth bearer token.
