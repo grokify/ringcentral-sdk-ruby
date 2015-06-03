@@ -71,13 +71,7 @@ module RingCentralSdk::Helpers
 
     def get_file_part(file_name=nil, content_type=nil, base64_encode=false)
 
-      unless File.file?(file_name.to_s)
-        raise "File \"#{file_name.to_s}\" does not exist or cannot be read"
-      end
-
-      file_bytes = RUBY_VERSION < '1.9' \
-        ? File.open(file_name, 'rb')        { |f| f.read } \
-        : File.open(file_name, 'rb:BINARY') { |f| f.read }
+      file_bytes = get_file_bytes(file_name)
 
       file_part  = base64_encode \
         ? MIME::Text.new(Base64.encode64(file_bytes)) \
@@ -88,6 +82,20 @@ module RingCentralSdk::Helpers
       file_part.headers.set('Content-Disposition', get_attachment_content_disposition(file_name))
       file_part.headers.set('Content-Transfer-Encoding', 'base64') if base64_encode
       return file_part
+    end
+
+    def get_file_bytes(file_name=nil)
+
+      unless File.file?(file_name.to_s)
+        raise "File \"#{file_name.to_s}\" does not exist or cannot be read"
+      end
+
+      file_bytes = RUBY_VERSION < '1.9' \
+        ? File.open(file_name, 'rb')        { |f| f.read } \
+        : File.open(file_name, 'rb:BINARY') { |f| f.read }
+
+      return file_bytes
+
     end
 
     def get_file_content_type(file_name=nil, content_type=nil)
