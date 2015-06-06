@@ -145,6 +145,10 @@ Yes you can. Just add each file as a MIME part. You can mix and match different 
 
 RingCentral supports 29 file types including PDF, TIFF, DOCX, DOC, XLSX, XLS, RTF, HTML, XML and many more. These are listed in the API Developer Guide.
 
+### Is providing a filename in the Content-Disposition header necessary?
+
+A filename isn't necessary but if you provide one, it will be displayed in the RingCentral Online Account Portal.
+
 ### Why can the faxPageCount change?
 
 When a fax request is first submitted the `faxPageCount` is set to 0 when when `messageStatus` is set to `Queued` because the fax hasn't been rendered yet so the number of pages haven't been counted. When the fax is successfully rendered and sent with `messageStatus` set to `Sent` the `faxPageCount` will be properly populated. In the event that the message is not successfully sent and the `messageStatus` is set to `SendingFailed`, the `faxPageCount` property may or may not be sent depending on the type of failure.
