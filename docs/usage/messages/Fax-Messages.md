@@ -143,7 +143,7 @@ Yes you can. Just add each file as a MIME part. You can mix and match different 
 
 ### What file types are supported for faxes?
 
-RingCentral supports 29 file types including PDF, TIFF, DOCX, DOC, XLSX, XLS, RTF, HTML, XML and many more. These are listed in the [API Developer Guide](https://developers.ringcentral.com/api-docs/).
+RingCentral supports 29 file types including PDF, TIFF, DOCX, DOC, XLSX, XLS, RTF, HTML, XML and many more. These are listed in the [API Developer Guide](https://developers.ringcentral.com/api-docs/) along with the accepted MIME types.
 
 ### Is providing a filename in the Content-Disposition header necessary?
 
