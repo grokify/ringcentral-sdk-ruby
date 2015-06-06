@@ -139,7 +139,7 @@ ZWYKMjQ0MjcKJSVFT0YK
 
 ### Can I send multiple files as one fax?
 
-Yes you can. Just add each file as a MIME part. You can mix and match different MIME types.
+Yes you can. Just add each file as a MIME part. You can mix and match different MIME types. The Ruby fax helper has an `.add_file()` method that can be used in succession to add multiple files.
 
 ### What file types are supported for faxes?
 
