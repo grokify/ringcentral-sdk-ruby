@@ -183,7 +183,7 @@ res = rcsdk.platform.client.get do |req|
 end
 
 if res.status == 200
-  File.open(file, 'wb') { |fp| fp.write(res.body) }
+  File.open('path/to/myfile.pdf', 'wb') { |fp| fp.write(res.body) }
 end
 ```
 
