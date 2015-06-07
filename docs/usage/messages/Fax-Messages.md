@@ -135,6 +135,58 @@ ZWYKMjQ0MjcKJSVFT0YK
 --Boundary_9j36hcowhyoi7683x02z56wq64--
 ```
 
+## HTTP Response Example
+
+Below is an example of a HTTP response from a create fax message request.
+
+```json
+{
+  "uri" : "https://platform.devtest.ringcentral.com/restapi/v1.0/account/111111111/extension/222222222/message-store/333333333",
+  "id" : 4444444444,
+  "to" : [ {
+    "phoneNumber" : "+16505551212",
+    "location" : "Redwood City, CA"
+  } ],
+  "type" : "Fax",
+  "creationTime" : "2015-05-09T16:11:58.000Z",
+  "readStatus" : "Unread",
+  "priority" : "Normal",
+  "attachments" : [ {
+    "id" : 4444444444,
+    "uri" : "https://platform.devtest.ringcentral.com/restapi/v1.0/account/111111111/extension/222222222/message-store/333333333/content/4444444444",
+    "type" : "RenderedDocument",
+    "contentType" : "image/tiff"
+  } ],
+  "direction" : "Outbound",
+  "availability" : "Alive",
+  "messageStatus" : "Queued",
+  "faxResolution" : "High",
+  "faxPageCount" : 0,
+  "lastModifiedTime" : "2015-05-09T16:11:58.519Z"
+}
+```
+
+## Retrieve Fax Message Status
+
+Initially, a fax message record will include property `messageStatus` set to `Queued` as shown above in the HTTP response example. To verify a fax has been set correctly poll the messaage `uri` provided for an updated `messageStatus`. Upon success, the `messageStatus` property will be updated to `"messageStatus" : "Sent"`.
+
+One approach to handling this is to poll the message store API or the individual message end point to receive updates on `messageStatus`.
+
+## Retrieve Fax Message
+
+To down load a fax mssage from the message store, simply send a `GET` request to the message store URI and save the output as a binary file.
+
+```ruby
+
+res = rcsdk.platform.client.get do |req|
+  req.url 'account/111111111/extension/222222222/message-store/333333333/content/4444444444'
+end
+
+if res.status == 200
+  File.open(file, 'wb') { |fp| fp.write(res.body) }
+end
+```
+
 ## FAQ
 
 ### Can I send multiple files as one fax?
