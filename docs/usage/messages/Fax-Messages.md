@@ -201,6 +201,10 @@ RingCentral supports 29 file types including PDF, TIFF, DOCX, DOC, XLSX, XLS, RT
 
 A filename isn't necessary but if you provide one, it will be displayed in the [RingCentral Online Account Portal](https://service.ringcentral.com).
 
+### How can I check the status of a fax message?
+
+Faxes are queued by RingCentral and a successful response will include the property `"messageStatus" : "Queued"`. To verify a fax has been set correctly poll the messaage store `uri` property provided in the response for an updated `messageStatus`. Upon success, the `messageStatus` property will be updated to `"messageStatus" : "Sent"`.
+
 ### Why can the faxPageCount change?
 
 When a fax request is first submitted the `faxPageCount` is set to 0 when when `messageStatus` is set to `Queued` because the fax hasn't been rendered yet so the number of pages haven't been counted. When the fax is successfully rendered and sent with `messageStatus` set to `Sent` the `faxPageCount` will be properly populated. In the event that the message is not successfully sent and the `messageStatus` is set to `SendingFailed`, the `faxPageCount` property may or may not be sent depending on the type of failure.
