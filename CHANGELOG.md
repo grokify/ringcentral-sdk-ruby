@@ -1,5 +1,7 @@
 CHANGELOG
 ---------
+- **2015-08-29**: 0.1.3
+  - Add `platform.client` getter
 - **2015-05-31**: 0.1.2
   - Add Ruby 1.8.7 support
   - Add CI for Ruby 2.2.0 & 2.1.6: 2.2.2, 2.2.0, 2.1.6, 2.1.0, 2.0.0, 1.9.3, 1.8.7

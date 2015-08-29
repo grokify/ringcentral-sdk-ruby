@@ -19,6 +19,8 @@ module RingCentralSdk::Platform
 
     attr_accessor :server_url
 
+    attr_reader :client
+
     def initialize(app_key='', app_secret='', server_url=RingCentralSdk::Sdk::RC_SERVER_SANDBOX)
 
       @app_key    = app_key
