@@ -75,6 +75,38 @@ token = oauth2.password.get_token('my_username', 'my_password', {
 sdk.platform.authorized(token)
 ```
 
+## Token Reuse
+
+To reuse an access token between sessions, you can save the hash of the token, 
+store it, and then reuse it in another SDK instance.
+
+```ruby
+sdk = RingCentralSdk::Sdk.new(
+  'my_app_key', 'my_app_secret', RingCentralSdk::Sdk::RC_SERVER_SANDBOX
+)
+sdk.platform.authorize( 'my_username', 'my_extension', 'my_password' )
+
+# Save token
+token_hash = sdk.platform.token.to_hash
+
+# New SDK Instance
+sdk = RingCentralSdk::Sdk.new(
+  'my_app_key', 'my_app_secret', RingCentralSdk::Sdk::RC_SERVER_SANDBOX
+)
+
+# Load token as hash
+sdk.platform.set_token(token_hash)
+
+# Load token as OAuth2::AccessToken object
+oauth2 = OAuth2::Client.new(@app_key, @app_secret,
+  :site      => sdk.platform.server_url,
+  :token_url => sdk.platform.class::TOKEN_ENDPOINT)
+
+token = OAuth2::AccessToken::from_hash(oauth2client,token_hash)
+
+sdk.platform.set_token(token)
+```
+
 ## Implementation
 
 The SDK currently provides a configured `faraday` client to make client requests.
