@@ -122,7 +122,7 @@ platform.authorize("myUsername", nil, "myPassword")
 platform.authorize("myUsername", "myExtension", "myPassword")
 ```
 
-See [the authoriation docs](http://ringcentral-sdk-ruby.readthedocs.org/en/latest/usage/authorization/Authorization/) for more info including token reuse.
+See [the authorization docs](http://ringcentral-sdk-ruby.readthedocs.org/en/latest/usage/authorization/Authorization/) for more info including token reuse.
 
 ### API Requests
 
