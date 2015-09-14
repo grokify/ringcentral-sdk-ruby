@@ -189,27 +189,7 @@ end
 
 ## Change Log
 
-- **2015-05-31**: 0.1.2
-  - Add Ruby 1.8.7 support
-  - Add CI for Ruby 2.2.0 & 2.1.6: 2.2.2, 2.2.0, 2.1.6, 2.1.0, 2.0.0, 1.9.3, 1.8.7
-- **2015-05-31**: 0.1.1
-  - Add Ruby 2.2.2 support
-- **2015-05-31**: 0.1.0
-  - Add OAuth token refresh
-  - Add OAuth2::AccessToken support
-  - Add Code Climate hook
-- **2015-05-19**: 0.0.4
-  - Add RingCentralSdk::Helpers::Request as request helpers base class 
-  - Add sdk.request() and platform.request() methods added to handle request helpers
-  - Fax helper uses file mime-type in preference to generic octet-stream
-  - Initial mkdocs and Read the Docs effort added
-  - Travis CI and Coveralls hooks added
-- **2015-05-14**: 0.0.3
-  - First public release
-- **2015-03-08**: 0.0.2
-  - Convert methods from camelCase to under_scores
-- **2015-03-07**: 0.0.1
-  - Initial release
+See [CHANGELOG.md](CHANGELOG.md)
 
 ## Links
 

@@ -3,7 +3,7 @@ CHANGELOG
 - **2015-09-14**: 0.1.4
   - Add OAuth2 token reuse support
 - **2015-08-29**: 0.1.3
-  - Add `platform.client` getter
+  - Add `attr_reader` for `platform.client`
 - **2015-05-31**: 0.1.2
   - Add Ruby 1.8.7 support
   - Add CI for Ruby 2.2.0 & 2.1.6: 2.2.2, 2.2.0, 2.1.6, 2.1.0, 2.0.0, 1.9.3, 1.8.7
@@ -11,14 +11,14 @@ CHANGELOG
   - Add Ruby 2.2.2 support
 - **2015-05-31**: 0.1.0
   - Add OAuth2 token refresh
-  - Add OAuth2::AccessToken support
+  - Add `OAuth2::AccessToken` support
   - Add Code Climate hook
 - **2015-05-19**: 0.0.4
-  - Request helpers are now subclasses
-  - sdk.request() and platform.request() methods added to handle request helpers
-  - Fax helper uses file mime-type in preference to generic octet-stream
-  - Initial mkdocs and Read the Docs effort added
-  - Travis CI and Coveralls hooks added
+  - Add `RingCentralSdk::Helpers::Request` as request helpers base class
+  - Add `sdk.request()` and `platform.request()` methods to handle request helpers
+  - Update fax helper to use file mime-type in preference to generic octet-stream
+  - Add mkdocs and Read the Docs documentation
+  - Add Travis CI and Coveralls hooks
 - **2015-05-14**: 0.0.3
   - First public release
 - **2015-03-08**: 0.0.2
