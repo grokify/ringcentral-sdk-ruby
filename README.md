@@ -140,6 +140,7 @@ rcsdk2 = RingCentralSdk::Sdk.new(
   "myAppSecret",
   RingCentralSdk::Sdk::RC_SERVER_SANDBOX
 )
+# set_token() accepts a hash or OAuth2::AccessToken object
 rcsdk2.platform.set_token(token_hash)
 ```
 
