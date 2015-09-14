@@ -48,8 +48,7 @@ module RingCentralSdk::Platform
 
     def set_token(token)
       if token.is_a?(Hash)
-        oauth2client = get_oauth2_client()
-        token = OAuth2::AccessToken::from_hash(oauth2client, token)
+        token = OAuth2::AccessToken::from_hash(get_oauth2_client(), token)
       end
 
       unless token.is_a?(OAuth2::AccessToken)
