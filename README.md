@@ -214,9 +214,9 @@ end
 
 ## Versioning
 
-This project is currently in development and the API can change. During development (Version 0.x.x), versioning a minor version change indicates backward incompatibility.
+This project is currently in development and the API can change. During development (Version 0.x.x), breaking changes will be indicated by a change in minor version (second number).
 
-Once the project is version 1.0.0 or above, it will use [semantic versioning](http://semver.org/).
+Once the project is version 1.0.0 or above, it will use [semantic versioning](http://semver.org/). At this time, breaking changes will be indicated by a change in major version.
 
 ## Change Log
 
