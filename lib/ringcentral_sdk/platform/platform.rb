@@ -19,16 +19,15 @@ module RingCentralSdk::Platform
 
     attr_accessor :server_url
 
-    attr_reader :client
+    attr_reader   :client
+    attr_reader   :token
 
     def initialize(app_key='', app_secret='', server_url=RingCentralSdk::Sdk::RC_SERVER_SANDBOX)
-
       @app_key    = app_key
       @app_secret = app_secret
       @server_url = server_url
       @token      = nil
       @client     = nil
-
     end
 
     def get_api_version_url()
@@ -36,17 +35,25 @@ module RingCentralSdk::Platform
     end
 
     def authorize(username='', extension='', password='', remember=false)
+      oauth2client = get_oauth2_client()
 
-      oauth2 = OAuth2::Client.new(@app_key, @app_secret,
-        :site      => @server_url,
-        :token_url => TOKEN_ENDPOINT)
-
-      token = oauth2.password.get_token(username, password, {
+      token = oauth2client.password.get_token(username, password, {
         :extension => extension,
         :headers   => { 'Authorization' => 'Basic ' + get_api_key() } })
 
       authorized(token)
+    end
 
+    def set_token(token=nil)
+      if token.is_a?(OAuth2::AccessToken)
+        authorized(token)
+      elsif token.is_a?(Hash)
+        oauth2client = get_oauth2_client()
+        oauth2token  = OAuth2::AccessToken::from_hash(oauth2client, token)
+        authorized(oauth2token)
+      else
+        raise "Invalid Token"
+      end
     end
 
     def authorized(token=nil)
@@ -59,7 +66,12 @@ module RingCentralSdk::Platform
         conn.response :json, :content_type => 'application/json'
         conn.adapter  Faraday.default_adapter
       end
+    end
 
+    def get_oauth2_client()
+      return OAuth2::Client.new(@app_key, @app_secret,
+        :site      => @server_url,
+        :token_url => TOKEN_ENDPOINT)
     end
 
     def get_api_key()

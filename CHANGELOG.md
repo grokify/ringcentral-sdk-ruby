@@ -1,5 +1,7 @@
 CHANGELOG
 ---------
+- **2015-09-14**: 0.1.4
+  - Add OAuth token reuse support
 - **2015-08-29**: 0.1.3
   - Add `platform.client` getter
 - **2015-05-31**: 0.1.2
