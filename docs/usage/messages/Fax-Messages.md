@@ -197,6 +197,10 @@ Yes you can. Just add each file as a MIME part. You can mix and match different 
 
 RingCentral supports 29 file types including PDF, TIFF, DOCX, DOC, XLSX, XLS, RTF, HTML, XML and many more. These are listed in the [API Developer Guide](https://developers.ringcentral.com/api-docs/) along with the accepted MIME types.
 
+### Is there a limit on fax file size?
+
+Fax files are limited to 20 MB or 200 pages.
+
 ### Is providing a filename in the Content-Disposition header necessary?
 
 A filename isn't necessary but if you provide one, it will be displayed in the [RingCentral Online Account Portal](https://service.ringcentral.com).
@@ -224,6 +228,10 @@ Retrieving a fax attachment file via the API will not change the read status to 
 ### Is it possible to find out why a fax failed?
 
 If a fax transmission fails, the reason is reported in the Call Log Record's `result` property. It is also presented in the Service Web Portal.
+
+### Why does my PDF fax have rendering issues.
+
+Some faxes may use unsupported features and require flattening before sending them to the RingCentral API. Some PDF flattening tools include [GraphicsMagick](http://www.graphicsmagick.org/) / [ImageMagick](http://www.imagemagick.org/) and [Ghostscript](http://www.ghostscript.com/).
 
 ### Do I need multple sandbox accounts to support multiple fax numbers?
 

@@ -25,7 +25,7 @@ class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
         :faxResolution => 'High',
         :coverPageText => 'RingCentral fax demo using Ruby SDK!'
       },
-      :file_name => './examples/test_file.pdf'
+      :file_name => './scripts/test_file.pdf'
     )
 
     assert_equal 'account/111111111/extension/222222222/fax', fax2.url()
