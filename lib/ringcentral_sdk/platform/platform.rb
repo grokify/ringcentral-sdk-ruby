@@ -21,6 +21,7 @@ module RingCentralSdk::Platform
 
     attr_reader   :client
     attr_reader   :token
+    attr_reader   :ua
 
     def initialize(app_key='', app_secret='', server_url=RingCentralSdk::Sdk::RC_SERVER_SANDBOX)
       @app_key    = app_key
@@ -28,6 +29,7 @@ module RingCentralSdk::Platform
       @server_url = server_url
       @token      = nil
       @client     = nil
+      @user_agent = get_user_agent()
     end
 
     def get_api_version_url()
@@ -41,28 +43,27 @@ module RingCentralSdk::Platform
         :extension => extension,
         :headers   => { 'Authorization' => 'Basic ' + get_api_key() } })
 
-      authorized(token)
+      set_token(token)
     end
 
-    def set_token(token=nil)
-      if token.is_a?(OAuth2::AccessToken)
-        authorized(token)
-      elsif token.is_a?(Hash)
+    def set_token(token)
+      if token.is_a?(Hash)
         oauth2client = get_oauth2_client()
-        oauth2token  = OAuth2::AccessToken::from_hash(oauth2client, token)
-        authorized(oauth2token)
-      else
-        raise "Invalid Token"
+        token = OAuth2::AccessToken::from_hash(oauth2client, token)
       end
-    end
 
-    def authorized(token=nil)
-      @token = token
+      unless token.is_a?(OAuth2::AccessToken)
+        raise "Token is a OAuth2::AccessToken"
+      end
+
+      @token  = token
 
       @client = Faraday.new(:url => get_api_version_url()) do |conn|
         conn.request  :oauth2_refresh, @token
         conn.request  :json
         conn.request  :url_encoded
+        conn.headers['User-Agent'] = @user_agent
+        conn.headers['Rc-User-Agent'] = @user_agent
         conn.response :json, :content_type => 'application/json'
         conn.adapter  Faraday.default_adapter
       end
@@ -95,7 +96,16 @@ module RingCentralSdk::Platform
       end
       return nil
     end
-    
+
+    def get_user_agent()
+      ua = "ringcentral-sdk-ruby/#{RingCentralSdk::VERSION} %s/%s %s" % [
+        (RUBY_ENGINE rescue nil or "ruby"),
+        RUBY_VERSION,
+        RUBY_PLATFORM
+      ]
+      return ua.strip
+    end
+
     private :get_api_version_url
   end
 end

@@ -1,7 +1,9 @@
+require File.expand_path('../lib/ringcentral_sdk/version', __FILE__)
+
 Gem::Specification.new do |s|
   s.name        = 'ringcentral_sdk'
-  s.version     = '0.1.4'
-  s.date        = '2015-09-13'
+  s.version     = RingCentralSdk::VERSION
+  s.date        = '2015-09-14'
   s.summary     = 'RingCentral SDK - Unofficial Ruby SDK for the RingCentral Connect Platform API'
   s.description = 'An unofficial Ruby SDK for the RingCentral Connect Platform API'
   s.authors     = ['John Wang']
@@ -22,6 +24,7 @@ Gem::Specification.new do |s|
     'lib/ringcentral_sdk/platform.rb',
     'lib/ringcentral_sdk/platform/platform.rb',
     'lib/ringcentral_sdk/sdk.rb',
+    'lib/ringcentral_sdk/version.rb',
     'test/test_setup.rb'
   ]
   # s.required_ruby_version = '>= 1.8.7' # 1.8.7+ is tested

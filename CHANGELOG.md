@@ -1,5 +1,10 @@
 CHANGELOG
 ---------
+- **2015-09-14**: 0.2.0
+  - Refactor platform class to remove `authorized` method in favor of `set_token`
+  - Add `User-Agent` header support
+  - Add `RingCentralSdk::VERSION`
+  - Update `README.md` to include token reuse
 - **2015-09-14**: 0.1.4
   - Add OAuth2 token reuse support
 - **2015-08-29**: 0.1.3

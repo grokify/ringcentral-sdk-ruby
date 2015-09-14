@@ -122,6 +122,29 @@ platform.authorize("myUsername", nil, "myPassword")
 platform.authorize("myUsername", "myExtension", "myPassword")
 ```
 
+#### Authentication Lifecycle
+
+The platform class performs token refresh procedure automatically if needed. To save the access and refresh tokens between instances of the SDK, you can save and reuse the token as follows:
+
+```ruby
+# Retrieve and save access token when program is to be stopped:
+
+token_hash = sdk.platform.token.to_hash
+
+After you have saved the token hash, e.g. as JSON, you can reload it in another instance of the SDK as follows:
+
+```ruby
+# Reuse token_hash in new SDK instance
+rcsdk = RingCentralSdk::Sdk.new(
+  "myAppKey",
+  "myAppSecret",
+  RingCentralSdk::Sdk::RC_SERVER_SANDBOX
+)
+sdk2.platform.set_token(token_hash)
+```
+
+Important! You have to manually maintain synchronization of SDK's between requests if you share authentication. When two simultaneous requests will perform refresh, only one will succeed. One of the solutions would be to have semaphor and pause other pending requests while one of them is performing refresh.
+
 See [the authorization docs](http://ringcentral-sdk-ruby.readthedocs.org/en/latest/usage/authorization/Authorization/) for more info including token reuse.
 
 ### API Requests
