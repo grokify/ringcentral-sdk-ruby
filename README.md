@@ -237,6 +237,6 @@ Please report these on [Github](https://github.com/grokify/ringcentral-sdk-ruby)
 
 ## License
 
-RingCentral SDK is available under an MIT-style license. See {file:LICENSE.txt} for details.
+RingCentral SDK is available under an MIT-style license. See [LICENSE.txt](LICENSE.txt) for details.
 
 RingCentral SDK &copy; 2015 by John Wang

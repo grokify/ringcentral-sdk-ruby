@@ -1,7 +1,7 @@
 CHANGELOG
 ---------
 - **2015-09-14**: 0.1.4
-  - Add OAuth token reuse support
+  - Add OAuth2 token reuse support
 - **2015-08-29**: 0.1.3
   - Add `platform.client` getter
 - **2015-05-31**: 0.1.2
@@ -10,7 +10,7 @@ CHANGELOG
 - **2015-05-31**: 0.1.1
   - Add Ruby 2.2.2 support
 - **2015-05-31**: 0.1.0
-  - Add OAuth token refresh
+  - Add OAuth2 token refresh
   - Add OAuth2::AccessToken support
   - Add Code Climate hook
 - **2015-05-19**: 0.0.4
