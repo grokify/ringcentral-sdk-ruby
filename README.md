@@ -127,7 +127,8 @@ platform.authorize("myUsername", "myExtension", "myPassword")
 The platform class performs token refresh procedure automatically if needed. To save the access and refresh tokens between instances of the SDK, you can save and reuse the token as follows:
 
 ```ruby
-# Retrieve and save access token when program is to be stopped:
+# Retrieve and save access token when program is to be stopped
+# `token` is an `OAuth2::AccessToken` object
 token_hash = rcsdk.platform.token.to_hash
 ```
 
@@ -163,7 +164,6 @@ SMS and other requests can be easily sent directly without helpers.
 
 ```ruby
 # SMS Example
-
 response = client.post do |req|
   req.url 'account/~/extension/~/sms'
   req.headers['Content-Type'] = 'application/json'
@@ -190,7 +190,6 @@ helper object in its entirety.
 
 ```ruby
 # Fax example using request helper
-
 fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
   nil, # auto-inflates to [{:account_id => '~', :extension_id => '~'}]
   {
