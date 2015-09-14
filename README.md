@@ -130,6 +130,7 @@ The platform class performs token refresh procedure automatically if needed. To 
 # Retrieve and save access token when program is to be stopped:
 
 token_hash = sdk.platform.token.to_hash
+```
 
 After you have saved the token hash, e.g. as JSON, you can reload it in another instance of the SDK as follows:
 
@@ -211,6 +212,12 @@ response = client.post do |req|
   req.body = fax.body
 end
 ```
+
+## Versioning
+
+This project is currently in development and the API can change. During development (Version 0.x.x), versioning a minor version change indicates backward incompatibility.
+
+Once the project is version 1.0.0 or above, it will use [semantic versioning](http://semver.org/).
 
 ## Change Log
 
