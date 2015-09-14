@@ -99,8 +99,8 @@ sdk2.platform.set_token(token_hash)
 
 # Method 2: Load token as OAuth2::AccessToken object
 oauth2 = OAuth2::Client.new(@app_key, @app_secret,
-  :site      => sdk.platform.server_url,
-  :token_url => sdk.platform.class::TOKEN_ENDPOINT)
+  :site      => sdk2.platform.server_url,
+  :token_url => sdk2.platform.class::TOKEN_ENDPOINT)
 
 token = OAuth2::AccessToken::from_hash(oauth2, token_hash)
 
