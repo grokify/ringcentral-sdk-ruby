@@ -113,13 +113,12 @@ platform = rcsdk.platform
 ### Authorization
 
 ```ruby
-# Initialize using user phone number without extension number
-
-platform.authorize("myUsername", nil, "myPassword")
-
 # Initialize using main phone number and extension number
-
 platform.authorize("myUsername", "myExtension", "myPassword")
+
+# Initialize using user phone number without extension number
+# Extension defaults to company admin extension
+platform.authorize("myUsername", nil, "myPassword")
 ```
 
 #### Authentication Lifecycle
