@@ -128,19 +128,19 @@ The platform class performs token refresh procedure automatically if needed. To 
 
 ```ruby
 # Retrieve and save access token when program is to be stopped:
-token_hash = sdk.platform.token.to_hash
+token_hash = rcsdk.platform.token.to_hash
 ```
 
 After you have saved the token hash, e.g. as JSON, you can reload it in another instance of the SDK as follows:
 
 ```ruby
-# Reuse token_hash in new SDK instance
-rcsdk = RingCentralSdk::Sdk.new(
+# Reuse token_hash in another SDK instance
+rcsdk2 = RingCentralSdk::Sdk.new(
   "myAppKey",
   "myAppSecret",
   RingCentralSdk::Sdk::RC_SERVER_SANDBOX
 )
-sdk2.platform.set_token(token_hash)
+rcsdk2.platform.set_token(token_hash)
 ```
 
 Important! You have to manually maintain synchronization of SDK's between requests if you share authentication. When two simultaneous requests will perform refresh, only one will succeed. One of the solutions would be to have semaphor and pause other pending requests while one of them is performing refresh.
