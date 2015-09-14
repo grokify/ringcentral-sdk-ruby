@@ -52,7 +52,7 @@ module RingCentralSdk::Platform
       end
 
       unless token.is_a?(OAuth2::AccessToken)
-        raise "Token is a OAuth2::AccessToken"
+        raise "Token is not a OAuth2::AccessToken"
       end
 
       @token  = token
