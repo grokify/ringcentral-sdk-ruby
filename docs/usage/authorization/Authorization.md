@@ -90,21 +90,21 @@ sdk.platform.authorize( 'my_username', 'my_extension', 'my_password' )
 token_hash = sdk.platform.token.to_hash
 
 # New SDK Instance
-sdk = RingCentralSdk::Sdk.new(
+sdk2 = RingCentralSdk::Sdk.new(
   'my_app_key', 'my_app_secret', RingCentralSdk::Sdk::RC_SERVER_SANDBOX
 )
 
-# Load token as hash
-sdk.platform.set_token(token_hash)
+# Method 1: Load token as hash
+sdk2.platform.set_token(token_hash)
 
-# Load token as OAuth2::AccessToken object
+# Method 2: Load token as OAuth2::AccessToken object
 oauth2 = OAuth2::Client.new(@app_key, @app_secret,
   :site      => sdk.platform.server_url,
   :token_url => sdk.platform.class::TOKEN_ENDPOINT)
 
 token = OAuth2::AccessToken::from_hash(oauth2, token_hash)
 
-sdk.platform.set_token(token)
+sdk2.platform.set_token(token)
 ```
 
 ## Implementation
