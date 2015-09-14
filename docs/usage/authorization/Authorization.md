@@ -102,7 +102,7 @@ oauth2 = OAuth2::Client.new(@app_key, @app_secret,
   :site      => sdk.platform.server_url,
   :token_url => sdk.platform.class::TOKEN_ENDPOINT)
 
-token = OAuth2::AccessToken::from_hash(oauth2client,token_hash)
+token = OAuth2::AccessToken::from_hash(oauth2, token_hash)
 
 sdk.platform.set_token(token)
 ```
