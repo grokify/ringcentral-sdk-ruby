@@ -128,7 +128,6 @@ The platform class performs token refresh procedure automatically if needed. To 
 
 ```ruby
 # Retrieve and save access token when program is to be stopped:
-
 token_hash = sdk.platform.token.to_hash
 ```
 
