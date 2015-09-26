@@ -8,7 +8,7 @@ Unofficial SDK for RingCentral Connect Platform in Ruby.
 2. [Quickstart](quickstart.md)
 3. User Guide
   1. [Authorization](usage/authorization/Authorization.md)
-  1. [Call Recording](usage/authorization/Call-Recordings.md)
+  1. [Call Recording](usage/messages/Call-Recordings.md)
   2. [Fax Messages](usage/messages/Fax-Messages.md)
 
 ## Installation
