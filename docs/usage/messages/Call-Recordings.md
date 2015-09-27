@@ -9,6 +9,9 @@ Calls with recordings can be identified using the Call Log API and locating reco
 The below example uses a filter to locate voice calls with call recordings and then downloads the file for each recording.
 
 ```ruby
+require 'json'
+require 'ringcentral_sdk'
+
 rcsdk = RingCentralSdk::Sdk.new(
   'myAppKey', 'myAppSecret', RingCentralSdk::Sdk::RC_SERVER_SANDBOX
 )
