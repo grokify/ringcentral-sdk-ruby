@@ -10,4 +10,5 @@ pages:
 
 ## User Guide:
 - ['usage/authorization/Authorization.md', 'User Guide', 'Authorization']
+- ['usage/messages/Call-Recordings.md', 'User Guide', 'Call Recordings']
 - ['usage/messages/Fax-Messages.md', 'User Guide', 'Fax Messages']
