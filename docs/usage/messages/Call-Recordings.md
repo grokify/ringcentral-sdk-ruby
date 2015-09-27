@@ -28,10 +28,10 @@ response.body['records'].each do |record|
     req.url record['recording']['contentUri']
   end
   # Save call recording
-  filenameMp3 = 'recording_' + record['id'] + '.mp3'
-  File.open(filenameMp3, 'wb') { |fp| fp.write(response_file.body) }
+  file_mp3 = 'recording_' + record['id'] + '.mp3'
+  File.open(file_mp3, 'wb') { |fp| fp.write(response_file.body) }
   # Save call log record (call recording metadata) using 'json'
-  filenameJson = 'recording_' + record['id'] + '.json'
-  File.open(filenameJson, 'wb') { |fp| fp.write(record.to_json) }
+  file_meta = 'recording_' + record['id'] + '.json'
+  File.open(file_meta, 'wb') { |fp| fp.write(record.to_json) }
 end
 ```
