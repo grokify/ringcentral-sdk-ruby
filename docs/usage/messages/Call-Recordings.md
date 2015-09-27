@@ -15,10 +15,7 @@ rcsdk = RingCentralSdk::Sdk.new(
 rcsdk.platform.authorize('myUsername', 'myExtension', 'myPassword')
 
 response = rcsdk.platform.client.get do |req|
-  params = {
-    :type =>  'Voice',
-    :withRecording => true
-  }
+  params = {:type =>  'Voice', :withRecording => true}
   req.url 'account/~/extension/~/call-log', params
 end
 
