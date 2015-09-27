@@ -23,10 +23,15 @@ response = rcsdk.platform.client.get do |req|
 end
 
 response.body['records'].each do |record|
+  # Retrieve call recording
   response_file = rcsdk.platform.client.get do |req|
     req.url record['recording']['contentUri']
   end
-  filename = 'recording_' + record['id'] + '.mp3'
-  File.open(filename, 'wb') { |fp| fp.write(response_file.body) }
+  # Save call recording
+  filenameMp3 = 'recording_' + record['id'] + '.mp3'
+  File.open(filenameMp3, 'wb') { |fp| fp.write(response_file.body) }
+  # Save call log record (call recording metadata)
+  filenameJson = 'recording_' + record['id'] + '.json'
+  File.open(filenameJson, 'wb') { |fp| fp.write(record.to_json) }
 end
 ```
