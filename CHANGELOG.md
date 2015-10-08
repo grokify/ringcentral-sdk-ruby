@@ -2,6 +2,8 @@ CHANGELOG
 ---------
 - **2015-10-07**: 0.3.0
   - Add subscription support via PubNub
+  - Add `ruby-head`, `jruby`, `jruby-head`, and `rbx-2` to Travis CI
+  - Remove Ruby 1.8.7 support due to `hitimes` requirement in `pubnub` and `eventmachine`
 - **2015-09-14**: 0.2.0
   - Refactor platform class to remove `authorized` method in favor of `set_token`
   - Add `User-Agent` header support
