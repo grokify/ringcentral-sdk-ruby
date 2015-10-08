@@ -174,7 +174,7 @@ module RingCentralSdk
     end
 
     def _subscribe_at_pubnub()
-      unless alive()
+      if ! alive()
         raise 'Subscription is not alive'
       end
 
@@ -187,29 +187,13 @@ module RingCentralSdk
       	notify_observers('GOT_PUBNUB_MESSAGE_NOTIFY')
       }
 
-      error = lambda { |envelope|
-        puts('ERROR : ' + envelope.msg.to_s) # FIXME Handle this
-      }
-
-      connect = lambda { |envelope|
-        puts('CONNECTED')
-      }
-
-      reconnect = lambda { |envelope|
-        puts('RECONNECTED')
-      }
-
-      disconnect = lambda { |envelope|
-        puts('DISCONNECTED')
-      }
-
       @_pubnub.subscribe(
         :channel    => @_subscription['deliveryMode']['address'],
         :callback   => callback,
-        :error      => error,
-        :connect    => connect,
-        :reconnect  => reconnect,
-        :disconnect => disconnect
+        :error      => lambda { |envelope| puts('ERROR: ' + envelope.msg.to_s) },
+        :connect    => lambda { |envelope| puts('CONNECTED') },
+        :reconnect  => lambda { |envelope| puts('RECONNECTED') },
+        :disconnect => lambda { |envelope| puts('DISCONNECTED') }
       )
     end
 
