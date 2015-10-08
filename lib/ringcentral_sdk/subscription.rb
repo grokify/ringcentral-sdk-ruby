@@ -1,7 +1,7 @@
 require 'base64'
 require 'multi_json'
 require 'observer'
-require 'timers' # Also see http://ruby-doc.org/stdlib-2.2.3/libdoc/timeout/rdoc/Timeout.html
+require 'timers'
 
 module RingCentralSdk
   class Subscription
