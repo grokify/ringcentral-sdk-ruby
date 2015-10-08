@@ -222,14 +222,14 @@ sub = rcsdk.create_subscription()
 
 sub.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
 
-class MyListener
+class MyObserver
   def update(message)
     puts "Subscription Message Received"
     puts JSON.dump(message)
   end
 end
 
-sub.add_observer(MyListener.new())
+sub.add_observer(MyObserver.new())
 
 sub.destroy() # end the subscription
 ```
