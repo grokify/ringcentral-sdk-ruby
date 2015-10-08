@@ -36,8 +36,29 @@ module RingCentralSdk::Platform
       return @server_url + URL_PREFIX + '/' + API_VERSION 
     end
 
+    def create_url(url, add_server=false, add_method=nil, add_token=false)
+      built_url = ''
+      has_http = !url.index('http://').nil? && !url.index('https://').nil?
+
+      if add_server && ! has_http
+        built_url += @server_url
+      end
+
+      if url.index(URL_PREFIX).nil? && ! has_http
+        built_url += URL_PREFIX + '/' + API_VERSION
+      end
+
+      built_url += url
+
+      return built_url
+    end
+
+    def login(username, extension, password)
+      return authorize(username, extension, password)
+    end
+
     def authorize(username='', extension='', password='', remember=false)
-      oauth2client = get_oauth2_client()
+      oauth2client = new_oauth2_client()
 
       token = oauth2client.password.get_token(username, password, {
         :extension => extension,
@@ -48,7 +69,7 @@ module RingCentralSdk::Platform
 
     def set_token(token)
       if token.is_a?(Hash)
-        token = OAuth2::AccessToken::from_hash(get_oauth2_client(), token)
+        token = OAuth2::AccessToken::from_hash(new_oauth2_client(), token)
       end
 
       unless token.is_a?(OAuth2::AccessToken)
@@ -68,7 +89,7 @@ module RingCentralSdk::Platform
       end
     end
 
-    def get_oauth2_client()
+    def new_oauth2_client()
       return OAuth2::Client.new(@app_key, @app_secret,
         :site      => @server_url,
         :token_url => TOKEN_ENDPOINT)

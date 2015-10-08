@@ -24,6 +24,7 @@ RingCentral SDK
   1. [API Requests](#api-requests)
     1. [SMS Example](#sms-example)
     2. [Fax Example](#fax-example)
+  1. [Subscriptions](#subscriptions)
 5. [Change Log](#change-log)
 6. [Links](#links)
 7. [Contributions](#contributions)
@@ -212,9 +213,30 @@ response = client.post do |req|
 end
 ```
 
+### Subscriptions
+
+To make subscriptions with RingCentral, use the SDK object to create subscription Observer object and then add observers to it.
+
+```ruby
+sub = rcsdk.create_subscription()
+
+sub.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
+
+class MyListener
+  def update(message)
+    puts "Subscription Message Received"
+    puts JSON.dump(message)
+  end
+end
+
+sub.add_observer(MyListener.new())
+
+sub.destroy() # end the subscription
+```
+
 ## Versioning
 
-This project is currently in development and the API can change. During development (Version 0.x.x), breaking changes will be indicated by a change in minor version (second number).
+This project is currently in development and the API can change. During initial development (Version 0.x.x), minor version changes will indicate either substantial feature inclusion or breaking changes.
 
 Once the project is version 1.0.0 or above, it will use [semantic versioning](http://semver.org/). At this time, breaking changes will be indicated by a change in major version.
 

@@ -1,3 +1,3 @@
 module RingCentralSdk::Platform
-	autoload :Platform, 'ringcentral_sdk/platform/platform'
+  autoload :Platform, 'ringcentral_sdk/platform/platform'
 end
