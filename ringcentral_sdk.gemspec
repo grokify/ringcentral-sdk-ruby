@@ -38,5 +38,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'mime-types', '>= 1.25' # >= 1.9 '~> 2.5', '>= 2.5'
   s.add_dependency 'multi_json', '>= 0'
   s.add_dependency 'oauth2', '>= 0'
+  s.add_dependency 'pubnub', '~> 3.7.3'
   s.add_dependency 'test-unit', '>= 0'
+  s.add_dependency 'timers', '>= 0'
 end

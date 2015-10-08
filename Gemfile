@@ -7,9 +7,11 @@ gem 'faraday_middleware-oauth2_refresh'
 gem 'mime'
 gem 'multi_json'
 gem 'oauth2'
+gem 'pubnub', '~> 3.7.3'
 gem 'rake'
 gem 'simplecov'
 gem 'test-unit'
+gem 'timers'
 
 platforms :ruby_18 do
   gem 'mime-types', '~> 1.25'
