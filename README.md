@@ -42,8 +42,9 @@ This SDK is an early stage library and subject to breaking changes.
 
 ### Included
 
-* OAuth2 authorization & token refresh via INTRIDEA `OAuth2::AccessToken`
+* OAuth2 authorization code and password grant flows including token refresh via INTRIDEA `OAuth2::AccessToken`
 * Generic API requests handled via `Faraday` client
+* Subscription support via PubNub with auto-decryption
 * Fax request helper to create `multipart/mixed` messages
 * Docs via [Read the Docs](http://ringcentral-sdk-ruby.readthedocs.org/) and [RubyDoc](http://www.rubydoc.info/gems/ringcentral_sdk/)
 
@@ -51,7 +52,6 @@ This SDK is an early stage library and subject to breaking changes.
 
 The following items are still needed for this SDK. Contributions are most welcome.
 
-* Subscriptions
 * Mock tests
 
 ## Documentation
@@ -66,7 +66,7 @@ more information on individual API calls:
 
 1. [API Developer and Reference Guide](https://developers.ringcentral.com/api-docs/latest/index.html) for information on specific APIs.
 1. [API Explorer](http://ringcentral.github.io/api-explorer/)
-1. [CTI Tutorial](http://ringcentral.github.io/cti-tutorial/)
+1. [CTI Tutorial](http://ringcentral.github.io/rc-tutorials/)
 
 ## Installation
 
