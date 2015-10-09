@@ -6,12 +6,13 @@ module RingCentralSdk
 
     attr_reader :platform
 
-    def initialize(app_key=nil,app_secret=nil,server_url=nil,username=nil,extension=nil,password=nil)
+    def initialize(app_key=nil,app_secret=nil,server_url=nil,opts={})
       use_pubnub_mock = false
 
-      @platform = RingCentralSdk::Platform::Platform.new(app_key, app_secret, server_url)
-      if not username.nil? and not password.nil?
-        @platform.authorize(username, extension, password)
+      @platform = RingCentralSdk::Platform::Platform.new(app_key, app_secret, server_url, opts)
+      if opts.has_key?(:username) && opts.has_key?(:password)
+        extension = opts.has_key?(:extension) ? opts[:extension] : ''
+        @platform.authorize(opts[:username], extension, opts[:password])
       end
 
       @_pubnub_factory = RingCentralSdk::PubnubFactory.new(use_pubnub_mock)

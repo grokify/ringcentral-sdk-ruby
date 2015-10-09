@@ -114,6 +114,10 @@ platform = rcsdk.platform
 
 ### Authorization
 
+#### 2-Legged OAuth 2.0
+
+A 2-legged OAuth 2.0 flow can be used for server side apps where the app and resource owners are the same.
+
 ```ruby
 # Initialize using main phone number and extension number
 platform.authorize("myUsername", "myExtension", "myPassword")
@@ -121,6 +125,22 @@ platform.authorize("myUsername", "myExtension", "myPassword")
 # Initialize using user phone number without extension number
 # Extension defaults to company admin extension
 platform.authorize("myUsername", nil, "myPassword")
+```
+
+#### 3-Legged OAuth 2.0
+
+A 3-legged OAuth 2.0 flow is desirable for web apps and public apps.
+
+```ruby
+# Retrieve OAuth authorize url
+auth_url = rcsdk.platform.oauth2client.auth_code.authorize_url({
+  :redirect_uri => 'my_registered_oauth_url' # mandatory
+  :display      => '' # optional: page|popup|touch|mobile, default 'page'
+  :prompt       => '' # optional: sso|login|consent, default is 'login sso consent'
+  :state        => '' # optional
+  :brand_id     => '' # optional: string|number
+})
+# Open browser window to authUrl and retrieve authorize_code from redirect uri.
 ```
 
 #### Authentication Lifecycle

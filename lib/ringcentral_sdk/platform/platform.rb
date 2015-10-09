@@ -12,6 +12,7 @@ module RingCentralSdk::Platform
     REFRESH_TOKEN_TTL_REMEMBER = 604800 # 1 week
     ACCOUNT_PREFIX    = '/account/'
     ACCOUNT_ID        = '~'
+    AUTHZ_ENDPOINT    = '/restapi/oauth/authorize'
     TOKEN_ENDPOINT    = '/restapi/oauth/token'
     REVOKE_ENDPOINT   = '/restapi/oauth/revoke'
     API_VERSION       = 'v1.0'
@@ -20,16 +21,20 @@ module RingCentralSdk::Platform
     attr_accessor :server_url
 
     attr_reader   :client
+    attr_reader   :oauth2client
     attr_reader   :token
     attr_reader   :user_agent
+    attr_reader   :redirect_uri
 
-    def initialize(app_key='', app_secret='', server_url=RingCentralSdk::Sdk::RC_SERVER_SANDBOX)
-      @app_key    = app_key
-      @app_secret = app_secret
-      @server_url = server_url
-      @token      = nil
-      @client     = nil
-      @user_agent = get_user_agent()
+    def initialize(app_key='', app_secret='', server_url=RingCentralSdk::Sdk::RC_SERVER_SANDBOX, opts={})
+      @app_key      = app_key
+      @app_secret   = app_secret
+      @server_url   = server_url
+      @token        = nil
+      @client       = nil
+      @redirect_uri = opts.has_key?(:redirect_uri) ? opts[:redirect_uri] : ''
+      @user_agent   = get_user_agent()
+      @oauth2client = new_oauth2_client()
     end
 
     def get_api_version_url()
@@ -58,18 +63,32 @@ module RingCentralSdk::Platform
     end
 
     def authorize(username='', extension='', password='', remember=false)
-      oauth2client = new_oauth2_client()
-
-      token = oauth2client.password.get_token(username, password, {
+      token = @oauth2client.password.get_token(username, password, {
         :extension => extension,
         :headers   => { 'Authorization' => 'Basic ' + get_api_key() } })
-
       set_token(token)
+      return token
+    end
+
+    def authorize_url(opts={})
+      if ! opts.has_key?(:redirect_uri) && @redirect_uri.length>0
+        opts[:redirect_uri] = @redirect_uri
+      end
+      @oauth2client.auth_code.authorize_url(opts)
+    end
+
+    def authorize_code(code, opts={})
+      if ! opts.has_key?(:redirect_uri) && @redirect_uri.length>0
+        opts[:redirect_uri] = @redirect_uri
+      end
+      token = @oauth2client.auth_code.get_token(code, opts)
+      set_token(token)
+      return token
     end
 
     def set_token(token)
       if token.is_a?(Hash)
-        token = OAuth2::AccessToken::from_hash(new_oauth2_client(), token)
+        token = OAuth2::AccessToken::from_hash(@oauth2client, token)
       end
 
       unless token.is_a?(OAuth2::AccessToken)
@@ -91,8 +110,9 @@ module RingCentralSdk::Platform
 
     def new_oauth2_client()
       return OAuth2::Client.new(@app_key, @app_secret,
-        :site      => @server_url,
-        :token_url => TOKEN_ENDPOINT)
+        :site          => @server_url,
+        :authorize_url => AUTHZ_ENDPOINT,
+        :token_url     => TOKEN_ENDPOINT)
     end
 
     def get_api_key()

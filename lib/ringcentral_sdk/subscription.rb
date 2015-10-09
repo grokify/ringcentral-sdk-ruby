@@ -43,7 +43,7 @@ module RingCentralSdk
     end
 
     def register(events=nil)
-      return alive() ? renew(events) : subscribe(events)
+      return alive?() ? renew(events) : subscribe(events)
     end
 
     def add_events(events)
@@ -95,7 +95,7 @@ module RingCentralSdk
     def renew(events=nil)
       set_events(events) if events.is_a?(Array)
 
-      unless alive()
+      unless alive?()
         raise 'Subscription is not alive'
       end
 
@@ -126,7 +126,7 @@ module RingCentralSdk
     end
 
     def remove()
-      unless alive()
+      unless alive?()
         raise 'Subscription is not alive'
       end
 
@@ -145,7 +145,7 @@ module RingCentralSdk
       end
     end
 
-    def alive()
+    def alive?()
       s = @_subscription
       return (s.has_key?('deliveryMode') && s['deliveryMode']) && \
         (s['deliveryMode'].has_key?('subscriberKey') && s['deliveryMode']['subscriberKey']) && \
@@ -174,7 +174,7 @@ module RingCentralSdk
     end
 
     def _subscribe_at_pubnub()
-      if ! alive()
+      if ! alive?()
         raise 'Subscription is not alive'
       end
 
@@ -204,18 +204,12 @@ module RingCentralSdk
     end
 
     def _decrypt(message)
-      unless alive()
+      unless alive?()
         raise 'Subscription is not alive'
       end
 
-      delivery_mode = @_subscription['deliveryMode']
-
-      is_encrypted  = delivery_mode.has_key?('encryption') && \
-        delivery_mode['encryption']                        && \
-        delivery_mode.has_key?('encryptionKey')            && \
-        delivery_mode['encryptionKey']
-
-      if is_encrypted
+      if _encrypted?()
+        delivery_mode = @_subscription['deliveryMode']
         key = Base64.decode64(delivery_mode['encryptionKey'])
         ciphertext = Base64.decode64(message)
 
@@ -231,8 +225,17 @@ module RingCentralSdk
       return message
     end
 
+    def _encrypted?()
+      delivery_mode = @_subscription['deliveryMode']
+      is_encrypted  = delivery_mode.has_key?('encryption') && \
+        delivery_mode['encryption']                        && \
+        delivery_mode.has_key?('encryptionKey')            && \
+        delivery_mode['encryptionKey']
+      return is_encrypted
+    end
+
     def _unsubscribe_at_pubnub()
-      if @_pubnub && alive()
+      if @_pubnub && alive?()
         @_pubnub.unsubscribe(@_subscription['deliveryMode']['address'])
       end
     end
