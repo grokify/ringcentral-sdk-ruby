@@ -1,7 +1,7 @@
 RingCentral 3-Legged OAuth Demo in Ruby
 =======================================
 
-# Overview
+## Overview
 
 This is a quick 3-legged OAuth demo that runs using Sinatra.
 
