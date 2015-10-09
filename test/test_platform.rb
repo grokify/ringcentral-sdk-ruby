@@ -30,5 +30,13 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     assert_equal 'OAuth2::AccessToken', rcsdk.platform.token.class.name
     assert_equal 'Faraday::Connection', rcsdk.platform.client.class.name
 
+    assert_raise do
+      rcsdk.platform.request()
+    end
+
+    assert_raise do
+      rcsdk.platform.set_token('test')
+    end
+
   end
 end
