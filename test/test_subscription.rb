@@ -41,6 +41,8 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     sub_data = sub.subscription()
     assert_equal sub_data['deliveryMode']['encryption'], true
 
+    assert_equal nil, sub.pubnub()
+
     sub.destroy()
     sub_data = sub.subscription()
     assert_equal sub_data['deliveryMode']['encryption'], false
