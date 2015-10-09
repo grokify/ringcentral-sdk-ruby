@@ -12,5 +12,9 @@ class RingCentralSdkTest < Test::Unit::TestCase
     assert_equal "RingCentralSdk::Sdk", rcsdk.class.name
     assert_equal "RingCentralSdk::Platform::Platform", rcsdk.platform.class.name
 
+    assert_raise do
+      rcsdk.request(nil)
+    end
+
   end
 end
