@@ -140,7 +140,7 @@ auth_url = rcsdk.platform.authorize_url({
   :state        => '' # optional
   :brand_id     => '' # optional: string|number
 })
-# Open browser window to authUrl and retrieve authorize_code from redirect uri.
+# Open browser window to authorization url and retrieve authorize code from redirect uri.
 ```
 
 On your redirect page, you can exchange your authorization code for an access token using the following:
