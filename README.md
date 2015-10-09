@@ -21,8 +21,8 @@ RingCentral SDK
 2. [Usage](#usage)
   1. [Instantiation](#instantiation)
   1. [Authorization](#authorization)
-    1. 2-Legged OAuth 2.0
-    1. 3-Legged OAuth 2.0
+    1. [Authorization Code Grant](#authorization-code-grant)
+    1. [Password Grant](#password-grant)
   1. [API Requests](#api-requests)
     1. [SMS Example](#sms-example)
     2. [Fax Example](#fax-example)
@@ -116,7 +116,7 @@ platform = rcsdk.platform
 
 ### Authorization
 
-#### OAuth Authorization Code Grant
+#### Authorization Code Grant
 
 A 3-legged OAuth 2.0 flow using an authorization code grant is desirable for web apps and public apps.
 
@@ -150,7 +150,7 @@ code  = params['code'] # retrieve GET 'code' parameter in Sinatra
 token = rcsdk.platform.authorize_code(code)
 ```
 
-#### OAuth Password Grant
+#### Password Grant
 
 A 2-legged OAuth 2.0 flow using a password grant can be used for server side apps where the app and resource owners are the same.
 
