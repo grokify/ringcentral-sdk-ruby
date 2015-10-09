@@ -1,5 +1,8 @@
 CHANGELOG
 ---------
+- **2015-10-08**: 0.4.0
+  - Add 3-Legged OAuth support via platform `authorize_url` and `authorize_code` methods
+  - Add `oauth2-sinatra` demo app in `scripts` directory
 - **2015-10-07**: 0.3.0
   - Add subscription support via PubNub
   - Add `ruby-head`, `jruby`, `jruby-head`, and `rbx-2` to Travis CI
