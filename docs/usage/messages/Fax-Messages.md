@@ -17,7 +17,7 @@ require 'ringcentral_sdk'
 
 response = RingCentralSdk::Sdk.new(
   'myAppKey', 'myAppSecret', RingCentralSdk::Sdk::RC_SERVER_SANDBOX,
-  'myUsername', 'myExtension', 'myPassword'
+  {:username => 'myUsername', :extension => 'myExtension', :password => 'myPassword'}
 ).request(
   RingCentralSdk::Helpers::CreateFaxRequest.new(
     nil, # for authz user or { :account_id => '~', :extension_id => '~' }
@@ -39,7 +39,7 @@ require 'ringcentral_sdk'
 
 response = RingCentralSdk::Sdk.new(
   'myAppKey', 'myAppSecret', RingCentralSdk::Sdk::RC_SERVER_SANDBOX,
-  'myUsername', 'myExtension', 'myPassword'
+  {:username => 'myUsername', :extension => 'myExtension', :password => 'myPassword'}
 ).request(
   RingCentralSdk::Helpers::CreateFaxRequest.new(
     nil, # for authz user or { :account_id => '~', :extension_id => '~' }
@@ -62,7 +62,7 @@ require 'ringcentral_sdk'
 
 response = RingCentralSdk::Sdk.new(
   'myAppKey', 'myAppSecret', RingCentralSdk::Sdk::RC_SERVER_SANDBOX,
-  'myUsername', 'myExtension', 'myPassword'
+  {:username => 'myUsername', :extension => 'myExtension', :password => 'myPassword'}
 ).request(
   RingCentralSdk::Helpers::CreateFaxRequest.new(
     nil, # for authz user or { :account_id => '~', :extension_id => '~' }
