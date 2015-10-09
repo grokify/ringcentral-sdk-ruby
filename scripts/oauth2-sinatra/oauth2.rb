@@ -19,10 +19,9 @@ rcsdk = RingCentralSdk::Sdk.new(
 )
 
 get '/' do
-  auth_url = rcsdk.platform.authorize_url()
   erb :index, :locals => {
-  	:authorize_url => auth_url,
-  	:redirect_uri  => redirect_uri
+    :authorize_url => rcsdk.platform.authorize_url(),
+    :redirect_uri  => redirect_uri
   }
 end
 
@@ -34,7 +33,7 @@ get '/oauth' do
     token_json = MultiJson.encode(token.to_hash, :pretty=>true)
   end
   erb :oauth, :locals => {
-  	:code  => code,
-  	:token => token_json
+    :code  => code,
+    :token => token_json
   }
 end
