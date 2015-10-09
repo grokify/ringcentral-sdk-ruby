@@ -147,7 +147,7 @@ On your redirect page, you can exchange your authorization code for an access to
 
 ```ruby
 code  = params['code'] # retrieve GET 'code' parameter in Sinatra
-token = rcsdk.platform.authorize_code(code)
+rcsdk.platform.authorize_code(code)
 ```
 
 #### Password Grant
