@@ -38,5 +38,9 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
       rcsdk.platform.set_token('test')
     end
 
+    assert_equal '/restapi/v1.0/subscribe', rcsdk.platform.create_url('subscribe')
+    assert_equal '/restapi/v1.0/subscribe', rcsdk.platform.create_url('/subscribe')
+    assert_equal RingCentralSdk::Sdk::RC_SERVER_SANDBOX + '/restapi/v1.0/subscribe', rcsdk.platform.create_url('subscribe', true)
+
   end
 end

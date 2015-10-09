@@ -50,10 +50,22 @@ module RingCentralSdk::Platform
       end
 
       if url.index(URL_PREFIX).nil? && ! has_http
-        built_url += URL_PREFIX + '/' + API_VERSION
+        built_url += URL_PREFIX + '/' + API_VERSION + '/'
       end
 
-      built_url += url
+      if url.index('/') == 0
+        if built_url =~ /\/$/
+          built_url += url.gsub(/^\//, '')
+        else
+          built_url += url
+        end
+      else # no /
+        if built_url =~ /\/$/
+          built_url += url
+        else
+          built_url += '/' + url
+        end
+      end
 
       return built_url
     end
