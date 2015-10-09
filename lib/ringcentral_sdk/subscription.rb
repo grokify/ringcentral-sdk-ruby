@@ -9,10 +9,12 @@ module RingCentralSdk
 
     RENEW_HANDICAP = 60
 
+    attr_reader :event_filters
+
     def initialize(platform, pubnub_factory)
       @_platform = platform
       @_pubnub_factory = pubnub_factory
-      @_event_filters = []
+      @event_filters = []
       @_timeout = nil
       @_subscription = nil_subscription()
       @_pubnub = nil
@@ -50,20 +52,20 @@ module RingCentralSdk
       unless events.is_a?(Array)
         raise 'Events is not an array.'
       end
-      @_event_filters.push(events) if events.length>0
+      @event_filters.push(events) if events.length>0
     end
 
     def set_events(events)
       unless events.is_a?(Array)
         raise 'Events is not an array.'
       end
-      @_event_filters.push(*events) if events.length>0
+      @event_filters = events
     end
 
     def subscribe(events=nil)
       set_events(events) if events.is_a?(Array)
 
-      if !@_event_filters.is_a?(Array) || @_event_filters.length ==0
+      if !@event_filters.is_a?(Array) || @event_filters.length ==0
         raise 'Events are undefined'
       end
 
@@ -99,7 +101,7 @@ module RingCentralSdk
         raise 'Subscription is not alive'
       end
 
-      if !@_event_filters.is_a?(Array) || @_event_filters.length ==0
+      if !@event_filters.is_a?(Array) || @event_filters.length ==0
         raise 'Events are undefined'
       end
  
@@ -149,7 +151,10 @@ module RingCentralSdk
       s = @_subscription
       return (s.has_key?('deliveryMode') && s['deliveryMode']) && \
         (s['deliveryMode'].has_key?('subscriberKey') && s['deliveryMode']['subscriberKey']) && \
-        (s['deliveryMode'].has_key?('address') && s['deliveryMode']['address'])
+        (
+          s['deliveryMode'].has_key?('address') && s['deliveryMode']['address'] && \
+          s['deliveryMode']['address'].length>0) \
+        ? true : false
     end
 
     def subscription()
@@ -242,7 +247,7 @@ module RingCentralSdk
 
     def _get_full_events_filter()
       full_events_filter = []
-      @_event_filters.each do |filter|
+      @event_filters.each do |filter|
         if filter.to_s
           full_events_filter.push(@_platform.create_url(filter.to_s))
         end
