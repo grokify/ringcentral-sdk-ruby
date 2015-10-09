@@ -105,8 +105,8 @@ The RingCentral server URLs can be populated manually or via the included consta
 require 'ringcentral_sdk'
 
 rcsdk = RingCentralSdk::Sdk.new(
-  "myAppKey",
-  "myAppSecret",
+  'myAppKey',
+  'myAppSecret',
   RingCentralSdk::Sdk::RC_SERVER_SANDBOX
 )
 platform = rcsdk.platform
@@ -136,14 +136,15 @@ In addition to the synopsis below, an example Sinatra app is available in the sc
 ```ruby
 # Initialize SDK with OAuth redirect URI
 rcsdk = RingCentralSdk::Sdk.new(
-  "myAppKey",
-  "myAppSecret",
+  'myAppKey',
+  'myAppSecret',
   RingCentralSdk::Sdk::RC_SERVER_SANDBOX,
   {:redirect_uri => 'http://example.com/oauth'}
 )
 # Retrieve OAuth authorize url
+auth_url = rcsdk.platform.authorize_url()
 auth_url = rcsdk.platform.authorize_url({
-  :redirect_uri => 'my_registered_oauth_url' # mandatory
+  :redirect_uri => 'my_registered_oauth_url' # optional override of default URL
   :display      => '' # optional: page|popup|touch|mobile, default 'page'
   :prompt       => '' # optional: sso|login|consent, default is 'login sso consent'
   :state        => '' # optional
