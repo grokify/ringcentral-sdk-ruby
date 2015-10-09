@@ -131,6 +131,8 @@ platform.authorize("myUsername", nil, "myPassword")
 
 A 3-legged OAuth 2.0 flow is desirable for web apps and public apps.
 
+In addition to the synopsis below, an example Sinatra app is available in the scripts directory at [scripts/oauth2-sinatra](scripts/oauth2-sinatra).
+
 ```ruby
 # Initialize SDK with OAuth redirect URI
 rcsdk = RingCentralSdk::Sdk.new(
