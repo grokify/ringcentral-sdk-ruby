@@ -21,8 +21,8 @@ RingCentral SDK
 2. [Usage](#usage)
   1. [Instantiation](#instantiation)
   1. [Authorization](#authorization)
-    1. [2-Legged OAuth 2.0](#2-legged-oauth-2.0)
-    1. [3-Legged OAuth 2.0](#3-legged-oauth-2.0)
+    1. 2-Legged OAuth 2.0
+    1. 3-Legged OAuth 2.0
   1. [API Requests](#api-requests)
     1. [SMS Example](#sms-example)
     2. [Fax Example](#fax-example)
