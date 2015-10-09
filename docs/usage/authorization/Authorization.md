@@ -1,11 +1,11 @@
 # Authorization
 
 This RingCentral SDK for Ruby has several methods for authentication and accessing
-resources. This allows you to select the best method for your use case.
+resources. This allows you to select the best method for your use case. This page covers the following sections:
 
-1. Reference Approach - single user via password strategy used by RC Official SDKs
-1. Simple Approach - single user via password strategy - less verbose
-1. Generic Approach - accepts any `OAuth2::AccessToken`
+1. Authorization Code Grant - 3-legged OAuth for end users supporting SSO
+1. Password Grant - 2-legged OAuth for servers no supporting SSO
+1. Token Reuse - saving and reusing a token between SDK instances
 
 ## Authorization Code Grant
 
