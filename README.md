@@ -116,22 +116,9 @@ platform = rcsdk.platform
 
 ### Authorization
 
-#### 2-Legged OAuth 2.0
+#### OAuth Authorization Code Grant
 
-A 2-legged OAuth 2.0 flow can be used for server side apps where the app and resource owners are the same.
-
-```ruby
-# Initialize using main phone number and extension number
-platform.authorize("myUsername", "myExtension", "myPassword")
-
-# Initialize using user phone number without extension number
-# Extension defaults to company admin extension
-platform.authorize("myUsername", nil, "myPassword")
-```
-
-#### 3-Legged OAuth 2.0
-
-A 3-legged OAuth 2.0 flow is desirable for web apps and public apps.
+A 3-legged OAuth 2.0 flow using an authorization code grant is desirable for web apps and public apps.
 
 In addition to the synopsis below, an example Sinatra app is available in the scripts directory at [scripts/oauth2-sinatra](scripts/oauth2-sinatra).
 
@@ -143,8 +130,9 @@ rcsdk = RingCentralSdk::Sdk.new(
   RingCentralSdk::Sdk::RC_SERVER_SANDBOX,
   {:redirect_uri => 'http://example.com/oauth'}
 )
-# Retrieve OAuth authorize url
+# Retrieve OAuth authorize url using default redirect URL
 auth_url = rcsdk.platform.authorize_url()
+# Retrieve OAuth authorize url using override redirect URL
 auth_url = rcsdk.platform.authorize_url({
   :redirect_uri => 'my_registered_oauth_url' # optional override of default URL
   :display      => '' # optional: page|popup|touch|mobile, default 'page'
@@ -158,8 +146,21 @@ auth_url = rcsdk.platform.authorize_url({
 On your redirect page, you can exchange your authorization code for an access token using the following:
 
 ```ruby
-code  = params['code'] # in Sinatra
+code  = params['code'] # retrieve GET 'code' parameter in Sinatra
 token = rcsdk.platform.authorize_code(code)
+```
+
+#### OAuth Password Grant
+
+A 2-legged OAuth 2.0 flow using a password grant can be used for server side apps where the app and resource owners are the same.
+
+```ruby
+# Initialize using main phone number and extension number
+platform.authorize("myUsername", "myExtension", "myPassword")
+
+# Initialize using user phone number without extension number
+# Extension defaults to company admin extension
+platform.authorize("myUsername", nil, "myPassword")
 ```
 
 #### Authentication Lifecycle

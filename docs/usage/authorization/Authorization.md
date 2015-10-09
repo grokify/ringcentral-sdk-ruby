@@ -7,7 +7,47 @@ resources. This allows you to select the best method for your use case.
 1. Simple Approach - single user via password strategy - less verbose
 1. Generic Approach - accepts any `OAuth2::AccessToken`
 
-## Reference Approach
+## Authorization Code Grant
+
+The authorization code grant OAuth 2.0 strategy allows users to securely grant access to their RingCentral resources to your application. This approach is recommend for end-user applications as it supports RingCentral customers that have deployed Single Sign-On (SSO) with third-party Identity Providers (IdPs).
+
+In this case, your application will direct the user to a RingCentral URL where they will authenticate after which your app will receive an authorization code that can be exchanged for an access token.
+
+In addition to the synopsis below, an example Sinatra app is available in the repo's `scripts` directory at [scripts/oauth2-sinatra](https://github.com/grokify/ringcentral-sdk-ruby/tree/master/scripts/oauth2-sinatra).
+
+```ruby
+# Initialize SDK with OAuth redirect URI
+rcsdk = RingCentralSdk::Sdk.new(
+  'myAppKey',
+  'myAppSecret',
+  RingCentralSdk::Sdk::RC_SERVER_SANDBOX,
+  {:redirect_uri => 'http://example.com/oauth'}
+)
+# Retrieve OAuth authorize url using default redirect URL
+auth_url = rcsdk.platform.authorize_url()
+# Retrieve OAuth authorize url using override redirect URL
+auth_url = rcsdk.platform.authorize_url({
+  :redirect_uri => 'my_registered_oauth_url' # optional override of default URL
+  :display      => '' # optional: page|popup|touch|mobile, default 'page'
+  :prompt       => '' # optional: sso|login|consent, default is 'login sso consent'
+  :state        => '' # optional
+  :brand_id     => '' # optional: string|number
+})
+# Open browser window to authUrl and retrieve authorize_code from redirect uri.
+```
+
+On your redirect page, you can exchange your authorization code for an access token using the following:
+
+```ruby
+code  = params['code'] # retrieve GET 'code' parameter in Sinatra
+token = rcsdk.platform.authorize_code(code)
+```
+
+## Password Grant
+
+The password grant OAuth 2.0 strategy allows apps that have the user's password credentials to entire them directly on the user's behalf. This is useful for server applications and does not support IdPs for SSO.
+
+### Reference Approach
 
 This is the reference OAuth2 password strategy authorization used by the official
 RingCentral SDKs:
@@ -22,7 +62,7 @@ platform = sdk.platform
 platform.authorize( 'my_username', 'my_extension', 'my_password' )
 ```
 
-## Simple Approach
+### Simple Approach
 
 A simple approach is provided as optional parameters in the the SDK's constructor
 method which will execute the OAuth2 password stategy when present. This is useful
@@ -32,7 +72,7 @@ for single queries where you do not need to reuse the SDK object.
 sdk = RingCentralSdk::Sdk.new(
   'my_app_key', 'my_app_secret',
   RingCentralSdk::Sdk::RC_SERVER_SANDBOX, # or RingCentralSdk::Sdk::RC_SERVER_PRODUCTION
-  'my_username', 'my_extension', 'my_password'
+  {:username => 'my_username', :extension => 'my_extension', :password => 'my_password'}
 )
 ```
 
@@ -41,7 +81,7 @@ With chaining and request helper:
 ```ruby
 response = RingCentralSdk::Sdk.new(
   'my_app_key', 'my_app_secret', RingCentralSdk::Sdk::RC_SERVER_SANDBOX,
-  'my_username', 'my_extension', 'my_password'
+  {:username => 'my_username', :extension => 'my_extension', :password => 'my_password'}
 ).request(
   RingCentralSdk::Helpers::CreateFaxRequest.new(
     nil, # for authz user or { :account_id => '~', :extension_id => '~' }
@@ -54,7 +94,7 @@ response = RingCentralSdk::Sdk.new(
 )
 ```
 
-## Generic Approach
+### Generic Approach
 
 Using the generic authorization approach, any `OAuth2::AccessToken` can be
 provided, allowing you more flexibility.
