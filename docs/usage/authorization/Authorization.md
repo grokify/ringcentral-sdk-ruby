@@ -27,11 +27,11 @@ rcsdk = RingCentralSdk::Sdk.new(
 auth_url = rcsdk.platform.authorize_url()
 # Retrieve OAuth authorize url using override redirect URL
 auth_url = rcsdk.platform.authorize_url({
-  :redirect_uri => 'my_registered_oauth_url' # optional override of default URL
-  :display      => '' # optional: page|popup|touch|mobile, default 'page'
-  :prompt       => '' # optional: sso|login|consent, default is 'login sso consent'
-  :state        => '' # optional
-  :brand_id     => '' # optional: string|number
+  :redirect_uri => 'my_registered_oauth_url', # optional override of default URL
+  :display      => '', # optional: page|popup|touch|mobile, default 'page'
+  :prompt       => '', # optional: sso|login|consent, default is 'login sso consent'
+  :state        => '', # optional
+  :brand_id     => ''  # optional: string|number
 })
 # Open browser window to authUrl and retrieve authorize_code from redirect uri.
 ```
