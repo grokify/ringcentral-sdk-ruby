@@ -71,15 +71,15 @@ module RingCentralSdk::Platform
     end
 
     def authorize_url(opts={})
-      if ! opts.has_key?(:redirect_uri) && @redirect_uri.length>0
-        opts[:redirect_uri] = @redirect_uri
+      if ! opts.has_key?(:redirect_uri) && @redirect_uri.to_s.length>0
+        opts[:redirect_uri] = @redirect_uri.to_s
       end
       @oauth2client.auth_code.authorize_url(opts)
     end
 
     def authorize_code(code, opts={})
-      if ! opts.has_key?(:redirect_uri) && @redirect_uri.length>0
-        opts[:redirect_uri] = @redirect_uri
+      if ! opts.has_key?(:redirect_uri) && @redirect_uri.to_s.length>0
+        opts[:redirect_uri] = @redirect_uri.to_s
       end
       token = @oauth2client.auth_code.get_token(code, opts)
       set_token(token)
