@@ -19,5 +19,16 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
       RingCentralSdk::Sdk::RC_SERVER_SANDBOX
     )
 
+    url = rcsdk.platform.authorize_url({:redirect_uri => 'http://localhost:4567/oauth'})
+
+    assert_equal 0, url.index(RingCentralSdk::Sdk::RC_SERVER_SANDBOX)
+
+    token_data = {:access_token => 'test_token'}
+
+    rcsdk.platform.set_token(token_data)
+
+    assert_equal 'OAuth2::AccessToken', rcsdk.platform.token.class.name
+    assert_equal 'Faraday::Connection', rcsdk.platform.client.class.name
+
   end
 end
