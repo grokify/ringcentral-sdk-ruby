@@ -170,12 +170,11 @@ module RingCentralSdk
     def reset()
       _clear_timeout()
       _unsubscribe_at_pubnub()
-      _subscription = nil
+      @_subscription = nil_subscription()
     end
 
     def destroy()
       reset()
-      off()
     end
 
     def _subscribe_at_pubnub()
