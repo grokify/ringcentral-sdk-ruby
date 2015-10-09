@@ -5,9 +5,9 @@ RingCentral 3-Legged OAuth Demo in Ruby
 
 This is a quick 3-legged OAuth demo that runs using Sinatra.
 
-# Installation
+## Installation
 
-## Via Bundler
+### Via Bundler
 
 ```bash
 $ git clone https://github.com/grokify/ringcentral-sdk-ruby
@@ -15,7 +15,7 @@ $ cd ringcentral-sdk-ruby/scripts/oauth2-sinatra
 $ bundle
 ```
 
-## Via Ruby Gems
+### Via Ruby Gems
 
 ```bash
 $ gem install ringcentral_sdk
@@ -23,7 +23,7 @@ $ gem install sinatra
 $ git clone https://github.com/grokify/ringcentral-sdk-ruby
 ```
 
-# Configuration
+## Configuration
 
 Edit the `oauth2.rb` file to add your application key and application secret.
 
@@ -32,7 +32,7 @@ $ cd ringcentral-sdk-ruby/scripts/oauth2-sinatra
 $ vi oauth2.rb
 ```
 
-# Running the Demo
+## Running the Demo
 
 Open the web page:
 
