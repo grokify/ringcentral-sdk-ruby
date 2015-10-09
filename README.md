@@ -132,8 +132,15 @@ platform.authorize("myUsername", nil, "myPassword")
 A 3-legged OAuth 2.0 flow is desirable for web apps and public apps.
 
 ```ruby
+# Initialize SDK with OAuth redirect URI
+rcsdk = RingCentralSdk::Sdk.new(
+  "myAppKey",
+  "myAppSecret",
+  RingCentralSdk::Sdk::RC_SERVER_SANDBOX,
+  {:redirect_uri => 'http://example.com/oauth'}
+)
 # Retrieve OAuth authorize url
-auth_url = rcsdk.platform.oauth2client.auth_code.authorize_url({
+auth_url = rcsdk.platform.authorize_url({
   :redirect_uri => 'my_registered_oauth_url' # mandatory
   :display      => '' # optional: page|popup|touch|mobile, default 'page'
   :prompt       => '' # optional: sso|login|consent, default is 'login sso consent'
@@ -141,6 +148,13 @@ auth_url = rcsdk.platform.oauth2client.auth_code.authorize_url({
   :brand_id     => '' # optional: string|number
 })
 # Open browser window to authUrl and retrieve authorize_code from redirect uri.
+```
+
+On your redirect page, you can exchange your authorization code for an access token using the following:
+
+```ruby
+code  = params['code'] # in Sinatra
+token = rcsdk.platform.authorize_code(code)
 ```
 
 #### Authentication Lifecycle
