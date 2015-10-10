@@ -116,11 +116,22 @@ platform = rcsdk.platform
 
 ### Authorization
 
+#### Password Grant
+
+The 2-legged OAuth 2.0 flow using a password grant is designed for server applications where the app and resource owners are the same.
+
+```ruby
+# Initialize using main phone number and extension number
+platform.authorize('myUsername', 'myExtension', 'myPassword')
+
+# Initialize using user phone number without extension number
+# Extension defaults to company admin extension
+platform.authorize('myUsername', nil, 'myPassword')
+```
+
 #### Authorization Code Grant
 
-A 3-legged OAuth 2.0 flow using an authorization code grant is desirable for web apps and public apps.
-
-In addition to the synopsis below, an example Sinatra app is available in the scripts directory at [scripts/oauth2-sinatra](scripts/oauth2-sinatra).
+The 3-legged OAuth 2.0 flow using an authorization code grant is designed for web apps and public apps where authorization needs to be granted by a 3rd party resource owner.
 
 ```ruby
 # Initialize SDK with OAuth redirect URI
@@ -150,18 +161,7 @@ code  = params['code'] # retrieve GET 'code' parameter in Sinatra
 rcsdk.platform.authorize_code(code)
 ```
 
-#### Password Grant
-
-A 2-legged OAuth 2.0 flow using a password grant can be used for server side apps where the app and resource owners are the same.
-
-```ruby
-# Initialize using main phone number and extension number
-platform.authorize("myUsername", "myExtension", "myPassword")
-
-# Initialize using user phone number without extension number
-# Extension defaults to company admin extension
-platform.authorize("myUsername", nil, "myPassword")
-```
+For a complete working example, a demo Sinatra app is available in the scripts directory at [scripts/oauth2-sinatra](scripts/oauth2-sinatra).
 
 #### Authentication Lifecycle
 
@@ -178,8 +178,8 @@ After you have saved the token hash, e.g. as JSON, you can reload it in another 
 ```ruby
 # Reuse token_hash in another SDK instance
 rcsdk2 = RingCentralSdk::Sdk.new(
-  "myAppKey",
-  "myAppSecret",
+  'myAppKey',
+  'myAppSecret',
   RingCentralSdk::Sdk::RC_SERVER_SANDBOX
 )
 # set_token() accepts a hash or OAuth2::AccessToken object
