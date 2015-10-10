@@ -21,8 +21,8 @@ RingCentral SDK
 2. [Usage](#usage)
   1. [Instantiation](#instantiation)
   1. [Authorization](#authorization)
-    1. [Authorization Code Grant](#authorization-code-grant)
     1. [Password Grant](#password-grant)
+    1. [Authorization Code Grant](#authorization-code-grant)
   1. [API Requests](#api-requests)
     1. [SMS Example](#sms-example)
     2. [Fax Example](#fax-example)
@@ -44,7 +44,7 @@ This SDK is an early stage library and subject to breaking changes.
 
 * OAuth2 authorization code and password grant flows including token refresh via INTRIDEA `OAuth2::AccessToken`
 * Generic API requests handled via `Faraday` client
-* Subscription support via PubNub with auto-decryption
+* Subscription support via `Pubnub` with auto-decryption
 * Fax request helper to create `multipart/mixed` messages
 * Docs via [Read the Docs](http://ringcentral-sdk-ruby.readthedocs.org/) and [RubyDoc](http://www.rubydoc.info/gems/ringcentral_sdk/)
 
