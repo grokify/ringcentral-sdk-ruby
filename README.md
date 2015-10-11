@@ -66,7 +66,7 @@ more information on individual API calls:
 
 1. [API Developer and Reference Guide](https://developers.ringcentral.com/api-docs/latest/index.html) for information on specific APIs.
 1. [API Explorer](http://ringcentral.github.io/api-explorer/)
-1. [CTI Tutorial](http://ringcentral.github.io/rc-tutorials/)
+1. [Dev Tutorial](http://ringcentral.github.io/tutorial/)
 
 ## Installation
 
