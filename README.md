@@ -34,7 +34,7 @@ RingCentral SDK
 
 ## Overview
 
-This is an unofficial Ruby SDK for the RingCentral for Developers Platform REST API (https://developers.ringcentral.com).
+This is a Ruby SDK for the RingCentral for Developers Platform REST API (https://developers.ringcentral.com).
 
 The core SDK objects follow the general design of the [official RingCentral SDKs](https://github.com/ringcentral). Additional functionality is provided for ease of use including request helpers and generalized OAuth2 support.
 
