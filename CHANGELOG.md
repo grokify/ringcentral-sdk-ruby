@@ -3,6 +3,9 @@ CHANGELOG
 - **2015-10-08**: 0.4.0
   - Add 3-Legged OAuth support via platform `authorize_url` and `authorize_code` methods
   - Add `oauth2-sinatra` demo app in `scripts` directory
+  - Add `call_recording_download.rb` demo script
+  - Add `rc-credentials.json` separate demo credentials file
+  - Update `fax_send.rb` demo script with name change
   - Change SDK initialization by converting optional params to options hash
 - **2015-10-07**: 0.3.0
   - Add subscription support via PubNub
