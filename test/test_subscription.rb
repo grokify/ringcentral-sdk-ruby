@@ -37,7 +37,11 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
       sub.subscribe(nil)
     end
 
-    sub.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
+    assert_raise do
+      sub.renew(nil)
+    end
+
+    # sub.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
 
     sub_data = sub.subscription()
     assert_equal sub_data['deliveryMode']['transportType'], 'PubNub'
