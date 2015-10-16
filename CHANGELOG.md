@@ -6,7 +6,8 @@ CHANGELOG
   - Add `call_recording_download.rb` demo script
   - Add `rc-credentials.json` separate demo credentials file
   - Update `fax_send.rb` demo script with name change
-  - Change SDK initialization by converting optional params to options hash
+  - Modify SDK initialization by converting optional params to options hash
+  - Refactor `RingCentralSdk::Platform::Platform` to `RingCentralSdk::Platform`
 - **2015-10-07**: 0.3.0
   - Add subscription support via PubNub
   - Add `ruby-head`, `jruby`, `jruby-head`, and `rbx-2` to Travis CI
