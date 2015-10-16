@@ -9,7 +9,7 @@ module RingCentralSdk
     def initialize(app_key=nil,app_secret=nil,server_url=nil,opts={})
       use_pubnub_mock = false
 
-      @platform = RingCentralSdk::Platform::Platform.new(app_key, app_secret, server_url, opts)
+      @platform = RingCentralSdk::Platform.new(app_key, app_secret, server_url, opts)
       if opts.has_key?(:username) && opts.has_key?(:password)
         extension = opts.has_key?(:extension) ? opts[:extension] : ''
         @platform.authorize(opts[:username], extension, opts[:password])
