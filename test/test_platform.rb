@@ -1,5 +1,6 @@
 require './test/test_helper.rb'
 
+require 'faraday'
 require 'oauth2'
 
 class RingCentralSdkPlatformTest < Test::Unit::TestCase
@@ -76,12 +77,6 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     assert_equal RingCentralSdk::Sdk::RC_SERVER_SANDBOX + '/restapi/v1.0/subscribe', @rcsdk.platform.create_url('subscribe', true)
   end
 
-  def test_request
-    assert_raise do
-      @rcsdk.platform.request()
-    end
-  end
-
   def test_authorize_code
     rcsdk = new_rcsdk()
     rcsdk.platform.set_oauth2_client()
@@ -144,6 +139,38 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     token = rcsdk.platform.authorize('my_test_username', 'my_test_extension', 'my_test_password')
     assert_equal 'OAuth2::AccessToken', token.class.name
     assert_equal 'OAuth2::AccessToken', rcsdk.platform.token.class.name
+  end
+
+  def test_request
+    assert_raise do
+      @rcsdk.platform.request()
+    end
+
+    rcsdk = new_rcsdk()
+    rcsdk.platform.set_oauth2_client()
+
+    stub_token_hash = data_auth_token
+    stub_token = OAuth2::AccessToken::from_hash(rcsdk.platform.oauth2client, stub_token_hash)
+
+    rcsdk.platform.oauth2client.password.stubs(:get_token).returns(stub_token)
+
+    token = rcsdk.platform.authorize('my_test_username', 'my_test_extension', 'my_test_password')
+
+    #@rcsdk.platform.client.stubs(:post).returns(Faraday::Response.new)
+    Faraday::Connection.any_instance.stubs(:post).returns(Faraday::Response.new)
+
+    fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
+      nil, # Can be nil or {} for defaults '~'
+      {
+        # phone numbers are in E.164 format with or without leading '+'
+        :to            => '+16505551212',
+        :faxResolution => 'High',
+        :coverPageText => 'RingCentral fax demo using Ruby SDK!'
+      },
+      :text => 'RingCentral fax demo using Ruby SDK!'
+    )
+    res = rcsdk.platform.request(fax)
+    assert_equal 'Faraday::Response', res.class.name
   end
 
   def new_rcsdk(opts={})
