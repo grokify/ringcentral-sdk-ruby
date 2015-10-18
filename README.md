@@ -53,8 +53,6 @@ This SDK is an early stage library and subject to breaking changes.
 
 There are no major to do items at this time.
 
-### Requirements
-
 ## Documentation
 
 More documentation is available on [Read the Docs](http://ringcentral-sdk-ruby.readthedocs.org/)
