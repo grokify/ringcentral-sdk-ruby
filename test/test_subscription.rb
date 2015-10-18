@@ -70,6 +70,79 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
 
   end
 
+  def get_rcsdk_authorized
+    rcsdk = RingCentralSdk.new(
+      'myAppKey',
+      'myAppSecret',
+      RingCentralSdk::RC_SERVER_SANDBOX
+    )
+    rcsdk.set_oauth2_client()
+
+    stub_token_hash = data_test_auth_token
+    stub_token = OAuth2::AccessToken::from_hash(rcsdk.oauth2client, stub_token_hash)
+
+    rcsdk.oauth2client.password.stubs(:get_token).returns(stub_token)
+
+    token = rcsdk.authorize('my_test_username', 'my_test_extension', 'my_test_password')
+    return rcsdk
+  end
+
+  def test_subscribe
+    # Get RCSDK Authroized
+    rcsdk = get_rcsdk_authorized()
+    # Stub Subscribe RC Response
+    data = data_test_subscribe()
+    response = Faraday::Response.new
+    response.stubs(:body).returns(data)
+    rcsdk.client.stubs(:post).returns(response)
+    rcsdk.client.stubs(:put).returns(response)
+    # Stub Pubnub Response
+    Pubnub::Client.any_instance.stubs(:subscribe).returns(nil)
+    # Create Subscription
+    sub = rcsdk.create_subscription()
+    # Test subscribe()
+    sub.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
+    # Test renew()
+    sub.renew(['/restapi/v1.0/account/~/extension/~/presence'])
+  end
+
+  def data_test_auth_token
+    json = '{
+  "access_token": "my_test_access_token",
+  "token_type": "bearer",
+  "expires_in": 3599,
+  "refresh_token": "my_test_refresh_token",
+  "refresh_token_expires_in": 604799,
+  "scope": "ReadCallLog DirectRingOut EditCallLog ReadAccounts Contacts EditExtensions ReadContacts SMS EditPresence RingOut EditCustomData ReadPresence EditPaymentInfo Interoperability Accounts NumberLookup InternalMessages ReadCallRecording EditAccounts Faxes EditReportingSettings ReadClientInfo EditMessages VoipCalling ReadMessages",
+  "owner_id": "1234567890"
+      }'
+    data = JSON.parse(json, :symbolize_names=>true)
+    return data
+  end
+
+  def data_test_subscribe
+    json = '{
+  "id": "mySubscriptionId",
+  "creationTime": "2015-10-18T16:41:30.048Z",
+  "status": "Active",
+  "uri": "https://platform.devtest.ringcentral.com/restapi/v1.0/subscription/mySubscriptionId",
+  "eventFilters": [
+    "/restapi/v1.0/account/1234567890/extension/1234567890/presence"
+  ],
+  "expirationTime": "2015-10-18T16:56:30.048Z",
+  "expiresIn": 899,
+  "deliveryMode": {
+    "transportType": "PubNub",
+    "encryption": true,
+    "address": "1234567890_deadbeef",
+    "subscriberKey": "sub-c-deadbeef",
+    "encryptionAlgorithm": "AES",
+    "encryptionKey": "myBase64EncryptionKey"
+  }
+}'
+    return JSON.parse(json)
+  end
+
   def test_pubnub
     sub = @rcsdk.create_subscription()
     pub = sub.new_pubnub()
