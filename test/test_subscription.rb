@@ -69,4 +69,11 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     assert_equal sub_data['deliveryMode']['encryption'], false
 
   end
+
+  def test_pubnub
+    sub = @rcsdk.create_subscription()
+    pub = sub.new_pubnub()
+
+    assert_equal 'Pubnub::Client', pub.class.name
+  end
 end

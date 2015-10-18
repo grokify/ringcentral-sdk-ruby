@@ -2,6 +2,7 @@ require 'base64'
 require 'logger'
 require 'multi_json'
 require 'observer'
+require 'pubnub'
 require 'timers'
 
 module RingCentralSdk
