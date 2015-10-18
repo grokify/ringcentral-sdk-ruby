@@ -8,5 +8,5 @@ require 'ringcentral_sdk'
 rcsdk = RingCentralSdk::Sdk.new(
   'my_app_key',
   'my_app_secret',
-  RingCentralSdk::Sdk::RC_SERVER_SANDBOX
+  RingCentralSdk::RC_SERVER_SANDBOX
 )

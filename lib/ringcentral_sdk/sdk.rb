@@ -1,9 +1,6 @@
 module RingCentralSdk
   class Sdk
-
-    RC_SERVER_PRODUCTION = 'https://platform.ringcentral.com'
-    RC_SERVER_SANDBOX    = 'https://platform.devtest.ringcentral.com'
-
+    
     attr_reader :platform
 
     def initialize(app_key=nil, app_secret=nil, server_url=nil, opts={})

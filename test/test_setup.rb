@@ -2,13 +2,11 @@ require './test/test_helper.rb'
 
 class RingCentralSdkTest < Test::Unit::TestCase
   def setup
-
-    @rcsdk = RingCentralSdk::Sdk.new(
+    @rcsdk = RingCentralSdk.new(
       'my_app_key',
       'my_app_secret',
-      RingCentralSdk::Sdk::RC_SERVER_SANDBOX
+      RingCentralSdk::RC_SERVER_SANDBOX
     )
-
   end
 
   def test_main
@@ -18,6 +16,13 @@ class RingCentralSdkTest < Test::Unit::TestCase
     assert_raise do
       @rcsdk.request(nil)
     end
+
+    rcsdk = RingCentralSdk::Sdk.new(
+      'my_app_key',
+      'my_app_secret',
+      RingCentralSdk::RC_SERVER_SANDBOX
+    )
+    assert_equal 'RingCentralSdk::Sdk', rcsdk.class.name
   end
 
   def test_login
@@ -28,7 +33,7 @@ class RingCentralSdkTest < Test::Unit::TestCase
     rcsdk = RingCentralSdk::Sdk.new(
       'my_app_key',
       'my_app_secret',
-      RingCentralSdk::Sdk::RC_SERVER_SANDBOX,
+      RingCentralSdk::RC_SERVER_SANDBOX,
       {:username => 'my_username', :password => 'my_password'}
     )
   end

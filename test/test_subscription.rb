@@ -5,7 +5,7 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     @rcsdk = RingCentralSdk::Sdk.new(
       'myAppKey',
       'myAppSecret',
-      RingCentralSdk::Sdk::RC_SERVER_SANDBOX
+      RingCentralSdk::RC_SERVER_SANDBOX
     )
   end
 

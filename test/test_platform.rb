@@ -5,10 +5,10 @@ require 'oauth2'
 
 class RingCentralSdkPlatformTest < Test::Unit::TestCase
   def setup
-    @rcsdk = RingCentralSdk::Sdk.new(
+    @rcsdk = RingCentralSdk.new(
       'my_app_key',
       'my_app_secret',
-      RingCentralSdk::Sdk::RC_SERVER_SANDBOX
+      RingCentralSdk::RC_SERVER_SANDBOX
     )
   end
 
@@ -27,7 +27,7 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     oauth2client = OAuth2::Client.new(
       'my_app_key',
       'my_app_secret',
-      :site      => RingCentralSdk::Sdk::RC_SERVER_SANDBOX,
+      :site      => RingCentralSdk::RC_SERVER_SANDBOX,
       :token_url => rcsdk.platform.class::TOKEN_ENDPOINT)
     rcsdk.platform.set_oauth2_client(oauth2client)
     assert_equal true, rcsdk.platform.oauth2client.is_a?(OAuth2::Client) 
@@ -54,27 +54,27 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     rcsdk = RingCentralSdk::Sdk.new(
       'my_app_key',
       'my_app_secret',
-      RingCentralSdk::Sdk::RC_SERVER_PRODUCTION,
+      RingCentralSdk::RC_SERVER_PRODUCTION,
       {:redirect_uri => 'http://localhost:4567/oauth'}
     )
     authorize_url = rcsdk.platform.authorize_url()
 
     assert_equal true, authorize_url.is_a?(String)
-    assert_equal 0, authorize_url.index(RingCentralSdk::Sdk::RC_SERVER_PRODUCTION)
+    assert_equal 0, authorize_url.index(RingCentralSdk::RC_SERVER_PRODUCTION)
     assert_equal true, (authorize_url.index('localhost') > 0) ? true : false
   end
 
   def test_authorize_url_explicit
     authorize_url = @rcsdk.platform.authorize_url({:redirect_uri => 'http://localhost:4567/oauth'})
 
-    assert_equal 0, authorize_url.index(RingCentralSdk::Sdk::RC_SERVER_SANDBOX)
+    assert_equal 0, authorize_url.index(RingCentralSdk::RC_SERVER_SANDBOX)
     assert_equal true, (authorize_url.index('localhost') > 0) ? true : false
   end
 
   def test_create_url
     assert_equal '/restapi/v1.0/subscribe', @rcsdk.platform.create_url('subscribe')
     assert_equal '/restapi/v1.0/subscribe', @rcsdk.platform.create_url('/subscribe')
-    assert_equal RingCentralSdk::Sdk::RC_SERVER_SANDBOX + '/restapi/v1.0/subscribe', @rcsdk.platform.create_url('subscribe', true)
+    assert_equal RingCentralSdk::RC_SERVER_SANDBOX + '/restapi/v1.0/subscribe', @rcsdk.platform.create_url('subscribe', true)
   end
 
   def test_authorize_code
@@ -177,7 +177,7 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     return RingCentralSdk::Sdk.new(
       'my_app_key',
       'my_app_secret',
-      RingCentralSdk::Sdk::RC_SERVER_PRODUCTION,
+      RingCentralSdk::RC_SERVER_PRODUCTION,
       opts
     )
   end

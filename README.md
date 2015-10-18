@@ -105,7 +105,7 @@ The RingCentral server URLs can be populated manually or via the included consta
 ```ruby
 require 'ringcentral_sdk'
 
-rcsdk = RingCentralSdk::Sdk.new(
+rcsdk = RingCentralSdk.new(
   'myAppKey',
   'myAppSecret',
   RingCentralSdk::Sdk::RC_SERVER_SANDBOX

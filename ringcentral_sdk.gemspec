@@ -1,16 +1,20 @@
-require File.expand_path('../lib/ringcentral_sdk/version', __FILE__)
+lib = "ringcentral_sdk"
+lib_file = File.expand_path("../lib/#{lib}.rb", __FILE__)
+File.read(lib_file) =~ /\bVERSION\s*=\s*["'](.+?)["']/
+version = $1
+#require File.expand_path('../lib/ringcentral_sdk/version', __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = 'ringcentral_sdk'
-  s.version     = RingCentralSdk::VERSION
-  s.date        = '2015-10-15'
+  s.version     = version
+  s.date        = '2015-10-18'
   s.summary     = 'RingCentral SDK - Ruby SDK for the RingCentral Connect Platform API'
   s.description = 'A Ruby SDK for the RingCentral Connect Platform API'
   s.authors     = ['John Wang']
   s.email       = 'johncwang@gmail.com'
   s.homepage    = 'https://github.com/grokify/'
   s.licenses    = ['MIT']
-  s.files       = Dir['lib/ *.rb'] # + Dir['bin/*']
+  s.files       = Dir['lib/**/**/*'] # + Dir['bin/*']
   s.files      += Dir['[A-Z]*']    + Dir['test/**/*']
   # s.files.reject! { |fn| fn.include? "CVS" }
   # s.required_ruby_version = '>= 1.8.7' # 1.8.7+ is tested
