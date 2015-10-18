@@ -105,12 +105,12 @@ The RingCentral server URLs can be populated manually or via the included consta
 ```ruby
 require 'ringcentral_sdk'
 
+# Returns RingCentralSdk::Platform instance
 rcsdk = RingCentralSdk.new(
   'myAppKey',
   'myAppSecret',
   RingCentralSdk::RC_SERVER_SANDBOX
 )
-platform = rcsdk.platform
 ```
 
 ### Authorization
@@ -121,11 +121,11 @@ The 2-legged OAuth 2.0 flow using a password grant is designed for server applic
 
 ```ruby
 # Initialize using main phone number and extension number
-platform.authorize('myUsername', 'myExtension', 'myPassword')
+rcsdk.authorize('myUsername', 'myExtension', 'myPassword')
 
 # Initialize using user phone number without extension number
 # Extension defaults to company admin extension
-platform.authorize('myUsername', nil, 'myPassword')
+rcsdk.authorize('myUsername', nil, 'myPassword')
 ```
 
 #### Authorization Code Grant
@@ -218,7 +218,7 @@ end
 #### Fax Example
 
 Request helpers are subclasses of `RingCentralSdk::Helpers::Request` and provide standard methods
-that can be called by the `.request()` method of the SDK and Platform objects. This enables the
+that can be called by the `.request()` method of the Platform object. This enables the
 requisite information for Faraday to be generated in a standard way.
 
 To create your own request helpers, please take a look at the fax one shown below:
