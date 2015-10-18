@@ -17,20 +17,20 @@ end
 
 credentials = MultiJson.decode(IO.read(credentials_file))
 
-rcsdk = RingCentralSdk::Sdk.new(
+rcsdk = RingCentralSdk.new(
   credentials['app_key'],
   credentials['app_secret'],
   credentials['server']
 )
 
-rcsdk.platform.authorize(
+rcsdk.authorize(
   credentials['username'],
   credentials['extension'],
   credentials['password']
 )
 
 # Retrieve voice call log records with recordings
-response = rcsdk.platform.client.get do |req|
+response = rcsdk.client.get do |req|
   params = {:type => 'Voice', :withRecording => 'True',:dateFrom=>'2015-01-01'}
   req.url 'account/~/extension/~/call-log', params
 end
@@ -44,7 +44,7 @@ if response.body.has_key?('records')
       next
     end
 
-    response_file = rcsdk.platform.client.get do |req|
+    response_file = rcsdk.client.get do |req|
       req.url record['recording']['contentUri']
     end
 
