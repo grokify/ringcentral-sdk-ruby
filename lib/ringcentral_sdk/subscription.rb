@@ -2,6 +2,7 @@ require 'base64'
 require 'logger'
 require 'multi_json'
 require 'observer'
+require 'openssl'
 require 'pubnub'
 require 'timers'
 
@@ -216,14 +217,13 @@ module RingCentralSdk
 
       if _encrypted?()
         delivery_mode = @_subscription['deliveryMode']
-        key = Base64.decode64(delivery_mode['encryptionKey'])
+
+        cipher = OpenSSL::Cipher::AES.new(128, :ECB)
+        cipher.decrypt
+        cipher.key = Base64.decode64(delivery_mode['encryptionKey'].to_s)
+
         ciphertext = Base64.decode64(message)
-
-        decipher = OpenSSL::Cipher::AES.new(128, :ECB)
-        decipher.decrypt
-        decipher.key = key
-
-        plaintext = decipher.update(ciphertext) + decipher.final
+        plaintext = cipher.update(ciphertext) + cipher.final
 
         message = MultiJson.decode(plaintext)
       end

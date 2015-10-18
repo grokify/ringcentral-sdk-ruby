@@ -124,9 +124,9 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     sub.remove()
     # Test Exceptions
     rcsdk2 = get_rcsdk_authorized()
-    rcsdk2.client.stubs(:post).raises("error")
-    rcsdk2.client.stubs(:put).raises("error")
-    rcsdk2.client.stubs(:delete).raises("error")
+    rcsdk2.client.stubs(:post).raises('error')
+    rcsdk2.client.stubs(:put).raises('error')
+    rcsdk2.client.stubs(:delete).raises('error')
     sub2 = rcsdk2.create_subscription()
     assert_raise do
       sub2.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
@@ -137,6 +137,23 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     assert_raise do
       sub2.remove()
     end
+  end
+
+  def test_decrypt_encrypted
+    rcsdk = get_rcsdk_authorized()
+    sub = rcsdk.create_subscription()
+    data = data_test_subscribe()
+    sub.set_subscription(data)
+    plaintext_src = '{"hello":"world"}'
+    # Encrypt test data
+    cipher = OpenSSL::Cipher::AES.new(128, :ECB)
+    cipher.encrypt
+    cipher.key = Base64.decode64(data['deliveryMode']['encryptionKey'])
+    ciphertext = cipher.update(plaintext_src) + cipher.final
+    ciphertext64 = Base64.encode64(ciphertext)
+    # Decrypt to JSON decoded as hash
+    plaintext_out = sub._decrypt(ciphertext64)
+    assert_equal 'world', plaintext_out['hello']
   end
 
   def data_test_auth_token
@@ -170,7 +187,7 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     "address": "1234567890_deadbeef",
     "subscriberKey": "sub-c-deadbeef",
     "encryptionAlgorithm": "AES",
-    "encryptionKey": "myBase64EncryptionKey"
+    "encryptionKey": "/UjxdHILResI0XWzhXIilQ=="
   }
 }'
     return JSON.parse(json)
