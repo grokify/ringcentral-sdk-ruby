@@ -1,4 +1,5 @@
 require 'base64'
+require 'logger'
 require 'multi_json'
 require 'observer'
 require 'timers'
@@ -11,9 +12,8 @@ module RingCentralSdk
 
     attr_reader :event_filters
 
-    def initialize(platform, pubnub_factory)
+    def initialize(platform)
       @_platform = platform
-      @_pubnub_factory = pubnub_factory
       @event_filters = []
       @_timeout = nil
       @_subscription = nil_subscription()
@@ -183,7 +183,8 @@ module RingCentralSdk
       end
 
       s_key = @_subscription['deliveryMode']['subscriberKey']
-      @_pubnub = @_pubnub_factory.pubnub(s_key, false, '')
+
+      @_pubnub = new_pubnub(s_key, false, '')
 
       callback = lambda { |envelope|
       	_notify(envelope.msg)
@@ -266,6 +267,24 @@ module RingCentralSdk
       if @_timeout.is_a?(Timers::Group)
         @_timeout.cancel()
       end
+    end
+
+    def new_pubnub(subscribe_key='', ssl_on=false, publish_key='', my_logger=nil)
+      my_logger = Logger.new(STDOUT) if my_logger.nil?
+
+      pubnub = Pubnub.new(
+        :subscribe_key    => subscribe_key.to_s,
+        :publish_key      => publish_key.to_s,
+        :error_callback   => lambda { |msg|
+          puts "Error callback says: #{msg.inspect}"
+        },
+        :connect_callback => lambda { |msg|
+          puts "CONNECTED: #{msg.inspect}"
+        },
+        :logger => my_logger
+      )
+
+      return pubnub
     end
 
   end

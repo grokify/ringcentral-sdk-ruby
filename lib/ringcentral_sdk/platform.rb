@@ -129,7 +129,7 @@ module RingCentralSdk
     def set_oauth2_client(client=nil)
       if client.nil?
         @oauth2client = new_oauth2_client()
-      elsif client.is_a?('OAuth2::Client')
+      elsif client.is_a?(OAuth2::Client)
         @oauth2client = client
       else
         raise "client is not an OAuth2::Client"

@@ -5,14 +5,31 @@ require 'oauth2'
 class RingCentralSdkPlatformTest < Test::Unit::TestCase
   def setup
     @rcsdk = RingCentralSdk::Sdk.new(
-      "my_app_key",
-      "my_app_secret",
+      'my_app_key',
+      'my_app_secret',
       RingCentralSdk::Sdk::RC_SERVER_SANDBOX
     )
   end
 
   def test_main
     assert_equal "bXlfYXBwX2tleTpteV9hcHBfc2VjcmV0", @rcsdk.platform.send(:get_api_key)
+  end
+
+  def test_set_client
+    rcsdk = new_rcsdk()
+    assert_equal true, rcsdk.platform.oauth2client.is_a?(OAuth2::Client)
+
+    rcsdk.platform.set_oauth2_client()
+    assert_equal true, rcsdk.platform.oauth2client.is_a?(OAuth2::Client)
+
+    rcsdk = new_rcsdk()
+    oauth2client = OAuth2::Client.new(
+      'my_app_key',
+      'my_app_secret',
+      :site      => RingCentralSdk::Sdk::RC_SERVER_SANDBOX,
+      :token_url => rcsdk.platform.class::TOKEN_ENDPOINT)
+    rcsdk.platform.set_oauth2_client(oauth2client)
+    assert_equal true, rcsdk.platform.oauth2client.is_a?(OAuth2::Client) 
   end
 
   def test_set_token
@@ -75,7 +92,6 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     token = rcsdk.platform.authorize('my_test_username', 'my_test_extension', 'my_test_password')
     assert_equal 'OAuth2::AccessToken', token.class.name
     assert_equal 'OAuth2::AccessToken', rcsdk.platform.token.class.name
-
   end
 
   def new_rcsdk(opts={})

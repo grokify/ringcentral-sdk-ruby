@@ -14,8 +14,6 @@ module RingCentralSdk
         extension = opts.has_key?(:extension) ? opts[:extension] : ''
         @platform.authorize(opts[:username], extension, opts[:password])
       end
-
-      @_pubnub_factory = RingCentralSdk::PubnubFactory.new(use_pubnub_mock)
     end
 
     def request(helper=nil)
@@ -23,7 +21,7 @@ module RingCentralSdk
     end
 
     def create_subscription()
-      return RingCentralSdk::Subscription.new(@platform, @_pubnub_factory)
+      return RingCentralSdk::Subscription.new(@platform)
     end
   end
 end
