@@ -204,7 +204,7 @@ SMS and other requests can be easily sent directly without helpers.
 
 ```ruby
 # SMS Example
-response = client.post do |req|
+response = rcsdk.client.post do |req|
   req.url 'account/~/extension/~/sms'
   req.headers['Content-Type'] = 'application/json'
   req.body = {
@@ -241,10 +241,10 @@ fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
 )
 
 # sending request via request helper methods
-response = sdk.request(fax)
+response = rcsdk.request(fax)
 
 # sending request via standard Faraday client
-response = client.post do |req|
+response = rcsdk.client.post do |req|
   req.url fax.url
   req.headers['Content-Type'] = fax.content_type
   req.body = fax.body
