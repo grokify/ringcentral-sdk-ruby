@@ -110,7 +110,7 @@ module RingCentralSdk
 
       begin
         response = @_platform.client.put do |req|
-          req.url 'subscription' + @_subscription['id']
+          req.url 'subscription/' + @_subscription['id'].to_s
           req.body = {
             :eventFilters => _get_full_events_filter()
           }
@@ -134,6 +134,7 @@ module RingCentralSdk
       end
 
       begin
+        url = 'subscription/' + @_subscription['id'].to_s
         response = @_platform.client.delete do |req|
           req.url = 'subscription' + @_subscription['id']
         end

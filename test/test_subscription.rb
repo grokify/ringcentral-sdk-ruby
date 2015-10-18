@@ -87,7 +87,7 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     return rcsdk
   end
 
-  def test_subscribe
+  def test_subscribe_renew_delete
     # Get RCSDK Authroized
     rcsdk = get_rcsdk_authorized()
     # Stub Subscribe RC Response
@@ -96,14 +96,20 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     response.stubs(:body).returns(data)
     rcsdk.client.stubs(:post).returns(response)
     rcsdk.client.stubs(:put).returns(response)
+    responseDel = Faraday::Response.new
+    responseDel.stubs(:body).returns('')
+    rcsdk.client.stubs(:delete).returns(responseDel)
     # Stub Pubnub Response
     Pubnub::Client.any_instance.stubs(:subscribe).returns(nil)
+    Pubnub::Client.any_instance.stubs(:unsubscribe).returns(nil)
     # Create Subscription
     sub = rcsdk.create_subscription()
     # Test subscribe()
     sub.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
     # Test renew()
     sub.renew(['/restapi/v1.0/account/~/extension/~/presence'])
+    # Test remove()
+    sub.remove()
   end
 
   def data_test_auth_token
