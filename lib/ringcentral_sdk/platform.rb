@@ -170,7 +170,6 @@ module RingCentralSdk
         end
         return resp
       end
-      return nil
     end
 
     def get_user_agent()
