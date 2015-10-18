@@ -49,8 +49,8 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
 
   def test_authorize_url_default
     rcsdk = RingCentralSdk::Sdk.new(
-      "my_app_key",
-      "my_app_secret",
+      'my_app_key',
+      'my_app_secret',
       RingCentralSdk::Sdk::RC_SERVER_PRODUCTION,
       {:redirect_uri => 'http://localhost:4567/oauth'}
     )
@@ -80,7 +80,57 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     end
   end
 
-  def test_get_oauth2_password_get_token
+  def test_authorize_code
+    rcsdk = new_rcsdk()
+    rcsdk.platform.set_oauth2_client()
+
+    stub_token_hash = data_auth_token
+    stub_token = OAuth2::AccessToken::from_hash(rcsdk.platform.oauth2client, stub_token_hash)
+
+    rcsdk.platform.oauth2client.auth_code.stubs(:get_token).returns(stub_token)
+
+    token = rcsdk.platform.authorize_code('my_test_auth_code')
+    assert_equal 'OAuth2::AccessToken', token.class.name
+    assert_equal 'OAuth2::AccessToken', rcsdk.platform.token.class.name
+
+    rcsdk = new_rcsdk({:redirect_uri => 'http://localhost:4567/oauth'})
+    rcsdk.platform.set_oauth2_client()
+
+    stub_token_hash = data_auth_token
+    stub_token = OAuth2::AccessToken::from_hash(rcsdk.platform.oauth2client, stub_token_hash)
+
+    rcsdk.platform.oauth2client.auth_code.stubs(:get_token).returns(stub_token)
+
+    token = rcsdk.platform.authorize_code('my_test_auth_code')
+    assert_equal 'OAuth2::AccessToken', token.class.name
+    assert_equal 'OAuth2::AccessToken', rcsdk.platform.token.class.name
+
+    rcsdk = new_rcsdk()
+    rcsdk.platform.set_oauth2_client()
+
+    stub_token_hash = data_auth_token
+    stub_token = OAuth2::AccessToken::from_hash(rcsdk.platform.oauth2client, stub_token_hash)
+
+    rcsdk.platform.oauth2client.auth_code.stubs(:get_token).returns(stub_token)
+
+    token = rcsdk.platform.authorize_code('my_test_auth_code')
+    assert_equal 'OAuth2::AccessToken', token.class.name
+    assert_equal 'OAuth2::AccessToken', rcsdk.platform.token.class.name
+
+    rcsdk = new_rcsdk()
+    rcsdk.platform.set_oauth2_client()
+
+    stub_token_hash = data_auth_token
+    stub_token = OAuth2::AccessToken::from_hash(rcsdk.platform.oauth2client, stub_token_hash)
+
+    rcsdk.platform.oauth2client.auth_code.stubs(:get_token).returns(stub_token)
+
+    token = rcsdk.platform.authorize_code('my_test_auth_code', {:redirect_uri => 'http://localhost:4567/oauth'})
+    assert_equal 'OAuth2::AccessToken', token.class.name
+    assert_equal 'OAuth2::AccessToken', rcsdk.platform.token.class.name
+  end
+
+  def test_authorize_password
     rcsdk = new_rcsdk()
     rcsdk.platform.set_oauth2_client()
 
@@ -96,8 +146,8 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
 
   def new_rcsdk(opts={})
     return RingCentralSdk::Sdk.new(
-      "my_app_key",
-      "my_app_secret",
+      'my_app_key',
+      'my_app_secret',
       RingCentralSdk::Sdk::RC_SERVER_PRODUCTION,
       opts
     )
