@@ -75,13 +75,14 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     assert_equal '/restapi/v1.0/subscribe', @rcsdk.create_url('subscribe')
     assert_equal '/restapi/v1.0/subscribe', @rcsdk.create_url('/subscribe')
     assert_equal RingCentralSdk::RC_SERVER_SANDBOX + '/restapi/v1.0/subscribe', @rcsdk.create_url('subscribe', true)
+    assert_equal RingCentralSdk::RC_SERVER_SANDBOX + '/restapi/v1.0/subscribe', @rcsdk.create_url('/subscribe', true)
   end
 
   def test_create_urls
     urls = @rcsdk.create_urls(['subscribe'])
     assert_equal '/restapi/v1.0/subscribe', urls[0]
     assert_raise do
-      @rcsdk.create_urls()
+      @rcsdk.create_urls(nil)
     end
   end
 
