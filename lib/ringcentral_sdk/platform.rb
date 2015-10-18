@@ -77,6 +77,17 @@ module RingCentralSdk
       return built_url
     end
 
+    def create_urls(urls, add_server=false, add_method=nil, add_token=false)
+      unless urls.is_a?(Array)
+        raise "URLs is not an array"
+      end
+      built_urls = []
+      urls.each do |url|
+        built_urls.push(create_url(url, add_server, add_method, add_token))
+      end
+      return built_urls
+    end
+
     def authorize_url(opts={})
       if ! opts.has_key?(:redirect_uri) && @redirect_uri.to_s.length>0
         opts[:redirect_uri] = @redirect_uri.to_s

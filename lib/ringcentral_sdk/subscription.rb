@@ -74,7 +74,7 @@ module RingCentralSdk
         response = @_platform.client.post do |req|
           req.url 'subscription'
           req.body = {
-            :eventFilters    => _get_full_events_filter(),
+            :eventFilters    => @_platform.create_urls(@event_filters),
             :deliveryMode    => {
               :transportType => 'PubNub'
             }
@@ -90,7 +90,6 @@ module RingCentralSdk
         changed
         notify_observers(e)
         raise 'Subscribe HTTP Request Error'
-        return nil
       end
 
     end
@@ -112,7 +111,7 @@ module RingCentralSdk
         response = @_platform.client.put do |req|
           req.url 'subscription/' + @_subscription['id'].to_s
           req.body = {
-            :eventFilters => _get_full_events_filter()
+            :eventFilters => @_platform.create_urls(@event_filters),
           }
         end
 
@@ -245,16 +244,6 @@ module RingCentralSdk
       if @_pubnub && alive?()
         @_pubnub.unsubscribe(@_subscription['deliveryMode']['address'])
       end
-    end
-
-    def _get_full_events_filter()
-      full_events_filter = []
-      @event_filters.each do |filter|
-        if filter.to_s
-          full_events_filter.push(@_platform.create_url(filter.to_s))
-        end
-      end
-      return full_events_filter
     end
 
     def _set_timeout()
