@@ -26,9 +26,9 @@ module RingCentralSdk
     attr_reader   :user_agent
     attr_reader   :redirect_uri
 
-    def initialize(app_key='', app_secret='', server_url=RingCentralSdk::RC_SERVER_SANDBOX, opts={})
-      @app_key      = app_key
-      @app_secret   = app_secret
+    def initialize(app_key, app_secret, server_url=RingCentralSdk::RC_SERVER_SANDBOX, opts={})
+      @app_key      = app_key.to_s
+      @app_secret   = app_secret.to_s
       @server_url   = server_url
       @token        = nil
       @client       = nil
@@ -93,7 +93,7 @@ module RingCentralSdk
       return token
     end
 
-    def authorize_password(username='', extension='', password='', remember=false)
+    def authorize_password(username, extension='', password='', remember=false)
       token = @oauth2client.password.get_token(username, password, {
         :extension => extension,
         :headers   => { 'Authorization' => 'Basic ' + get_api_key() } })
