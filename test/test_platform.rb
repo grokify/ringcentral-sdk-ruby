@@ -30,10 +30,13 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
       :token_url => rcsdk.platform.class::TOKEN_ENDPOINT)
     rcsdk.platform.set_oauth2_client(oauth2client)
     assert_equal true, rcsdk.platform.oauth2client.is_a?(OAuth2::Client) 
+
+    assert_raise do
+      @rcsdk.platform.set_oauth2_client('test')
+    end
   end
 
   def test_set_token
-
     token_data = {:access_token => 'test_token'}
 
     @rcsdk.platform.set_token(token_data)
@@ -44,7 +47,6 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     assert_raise do
       @rcsdk.platform.set_token('test')
     end
-
   end
 
   def test_authorize_url_default
