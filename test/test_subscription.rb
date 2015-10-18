@@ -108,6 +108,15 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     sub.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
     # Test renew()
     sub.renew(['/restapi/v1.0/account/~/extension/~/presence'])
+    # Test subscription data
+    id = data['id']
+    data = sub.subscription()
+    assert_equal id.to_s, data['id'].to_s
+    id_new = data['id'] += 'modified'
+    sub.set_subscription(data)
+    assert_equal id_new.to_s, data['id'].to_s
+    # Test register()
+    sub.register(['/restapi/v1.0/account/~/extension/~/presence'])
     # Test remove()
     sub.remove()
   end

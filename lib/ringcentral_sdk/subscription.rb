@@ -90,9 +90,9 @@ module RingCentralSdk
         changed
         notify_observers(e)
         raise 'Subscribe HTTP Request Error'
+        return nil
       end
 
-      return nil
     end
 
     def renew(events=nil)
