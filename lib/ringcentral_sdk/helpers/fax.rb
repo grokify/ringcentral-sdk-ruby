@@ -62,15 +62,14 @@ module RingCentralSdk::Helpers
       @msg.add(text_part)
     end
 
-    def add_file(file_name=nil, content_type=nil, base64_encode=false)
+    def add_file(file_name, content_type=nil, base64_encode=false)
       file_part = get_file_part(file_name, content_type, base64_encode)
 
       @msg.add(file_part)
       return true
     end
 
-    def get_file_part(file_name=nil, content_type=nil, base64_encode=false)
-
+    def get_file_part(file_name, content_type=nil, base64_encode=false)
       file_bytes = get_file_bytes(file_name)
 
       file_part  = base64_encode \
@@ -85,7 +84,6 @@ module RingCentralSdk::Helpers
     end
 
     def get_file_bytes(file_name=nil)
-
       unless File.file?(file_name.to_s)
         raise "File \"#{file_name.to_s}\" does not exist or cannot be read"
       end
@@ -95,7 +93,6 @@ module RingCentralSdk::Helpers
         : File.open(file_name, 'rb:BINARY') { |f| f.read }
 
       return file_bytes
-
     end
 
     def get_file_content_type(file_name=nil, content_type=nil)

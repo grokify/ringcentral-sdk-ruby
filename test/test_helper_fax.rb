@@ -30,6 +30,10 @@ class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
 
     assert_equal 'account/111111111/extension/222222222/fax', fax2.url()
 
+    assert_raise do
+      fax2.add_file('non-existent_file_path')
+    end
+
     fax3 = RingCentralSdk::Helpers::CreateFaxRequest.new(
       { :account_id => 111111111, :extension_id => 222222222 }, # Can be nil or {} for defaults '~'
       {
