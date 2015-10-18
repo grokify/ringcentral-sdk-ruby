@@ -275,6 +275,19 @@ sub.add_observer(MyObserver.new())
 sub.destroy() # end the subscription
 ```
 
+## Supported Ruby Versions
+
+This library supports and is [tested against](https://travis-ci.org/grokify/ringcentral-sdk-ruby) the following Ruby implementations:
+
+* Ruby 2.2.3, 2.2.0
+* Ruby 2.1.7, 2.1.0
+* Ruby 2.0.0
+* Ruby 1.9.3
+* [JRuby](http://jruby.org/)
+* [Rubinius](http://rubini.us/)
+
+Note: Ruby 1.8.7 works except for subscription support which relies on the `pubnub` gem. If there is a need for 1.8.7 support, consider creating a GitHub issue so we can evalute creating a separate library for subscription handling.
+
 ## Versioning
 
 This project is currently in development and the API can change. During initial development (Version 0.x.x), minor version changes will indicate either substantial feature inclusion or breaking changes.
