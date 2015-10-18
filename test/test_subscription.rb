@@ -1,15 +1,16 @@
 require './test/test_helper.rb'
 
 class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
-  def testSetup
-
-    rcsdk = RingCentralSdk::Sdk.new(
+  def setup
+    @rcsdk = RingCentralSdk::Sdk.new(
       'myAppKey',
       'myAppSecret',
       RingCentralSdk::Sdk::RC_SERVER_SANDBOX
     )
+  end
 
-    sub = rcsdk.create_subscription()
+  def test_main
+    sub = @rcsdk.create_subscription()
     assert_equal "RingCentralSdk::Subscription", sub.class.name
 
     assert_equal 0, sub.event_filters.length
@@ -40,6 +41,16 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     assert_raise do
       sub.renew(nil)
     end
+
+    sub.set_events([])
+    
+    assert_raise do
+      sub.subscribe()
+    end
+
+    assert_raise do
+      sub.renew()
+    end   
 
     # sub.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
 
