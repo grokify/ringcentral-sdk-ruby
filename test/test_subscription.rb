@@ -123,18 +123,19 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     # Test remove()
     sub.remove()
     # Test Exceptions
-    rcsdk.client.stubs(:post).raises("error")
-    rcsdk.client.stubs(:put).raises("error")
-    rcsdk.client.stubs(:delete).raises("error")
-    sub = rcsdk.create_subscription()
+    rcsdk2 = get_rcsdk_authorized()
+    rcsdk2.client.stubs(:post).raises("error")
+    rcsdk2.client.stubs(:put).raises("error")
+    rcsdk2.client.stubs(:delete).raises("error")
+    sub2 = rcsdk2.create_subscription()
     assert_raise do
-      sub.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
+      sub2.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
     end
     assert_raise do
-      sub.renew(['/restapi/v1.0/account/~/extension/~/presence'])
+      sub2.renew(['/restapi/v1.0/account/~/extension/~/presence'])
     end
     assert_raise do
-      sub.remove()
+      sub2.remove()
     end
   end
 
