@@ -32,7 +32,10 @@ module RingCentralSdk
       @server_url   = server_url
       @token        = nil
       @client       = nil
-      @redirect_uri = opts.has_key?(:redirect_uri) ? opts[:redirect_uri] : ''
+      @redirect_uri = ''
+      if opts.is_a?(Hash)
+        @redirect_uri = opts.has_key?(:redirect_uri) ? opts[:redirect_uri] : ''
+      end
       @user_agent   = get_user_agent()
       @oauth2client = new_oauth2_client()
     end
@@ -121,6 +124,16 @@ module RingCentralSdk
         :site          => @server_url,
         :authorize_url => AUTHZ_ENDPOINT,
         :token_url     => TOKEN_ENDPOINT)
+    end
+
+    def set_oauth2_client(client=nil)
+      if client.nil?
+        @oauth2client = new_oauth2_client()
+      elsif client.is_a?('OAuth2::Client')
+        @oauth2client = client
+      else
+        raise "client is not an OAuth2::Client"
+      end
     end
 
     def get_api_key()

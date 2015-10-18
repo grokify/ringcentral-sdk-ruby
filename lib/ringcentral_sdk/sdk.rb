@@ -6,7 +6,7 @@ module RingCentralSdk
 
     attr_reader :platform
 
-    def initialize(app_key=nil,app_secret=nil,server_url=nil,opts={})
+    def initialize(app_key=nil, app_secret=nil, server_url=nil, opts={})
       use_pubnub_mock = false
 
       @platform = RingCentralSdk::Platform.new(app_key, app_secret, server_url, opts)
