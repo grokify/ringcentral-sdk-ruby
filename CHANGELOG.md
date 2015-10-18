@@ -4,8 +4,8 @@ CHANGELOG
   - Add stubbed tests via `mocha`
   - Add `RingCentralSdk.new()` sugar method
   - Modify `RingCentralSdk::RC_SERVER_PRODUCTION` url from `RingCentralSdk::Sdk::RC_SERVER_Production`
+  - Remove `lib/ringcentral_sdk/sdk.rb` file and `RingCentralSdk::Sdk` class
   - Remove `lib/ringcentral_sdk/version.rb` file
-  - Remove `RingCentralSdk::Sdk` as it is no longer necessary
 - **2015-10-15**: 0.4.0
   - Add 3-Legged OAuth support via platform `authorize_url` and `authorize_code` methods
   - Add `oauth2-sinatra` demo app in `scripts` directory
