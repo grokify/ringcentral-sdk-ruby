@@ -12,7 +12,7 @@ module RingCentralSdk
   class << self
 
     def new(app_key=nil, app_secret=nil, server_url=nil, opts={})
-      RingCentralSdk::Sdk.new(app_key, app_secret, server_url, opts)
+      RingCentralSdk::Platform.new(app_key, app_secret, server_url, opts)
     end
 
   end

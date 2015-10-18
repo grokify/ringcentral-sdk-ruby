@@ -2,7 +2,7 @@ require './test/test_helper.rb'
 
 class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
   def setup
-    @rcsdk = RingCentralSdk::Sdk.new(
+    @rcsdk = RingCentralSdk.new(
       'myAppKey',
       'myAppSecret',
       RingCentralSdk::RC_SERVER_SANDBOX

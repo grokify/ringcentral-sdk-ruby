@@ -99,8 +99,8 @@ This provides a very basic guide to using the SDK. Please use the following reso
 
 The RingCentral server URLs can be populated manually or via the included constants:
 
-* `RingCentralSdk::Sdk::RC_SERVER_PRODUCTION`
-* `RingCentralSdk::Sdk::RC_SERVER_SANDBOX`
+* `RingCentralSdk::RC_SERVER_PRODUCTION`
+* `RingCentralSdk::RC_SERVER_SANDBOX`
 
 ```ruby
 require 'ringcentral_sdk'
@@ -108,7 +108,7 @@ require 'ringcentral_sdk'
 rcsdk = RingCentralSdk.new(
   'myAppKey',
   'myAppSecret',
-  RingCentralSdk::Sdk::RC_SERVER_SANDBOX
+  RingCentralSdk::RC_SERVER_SANDBOX
 )
 platform = rcsdk.platform
 ```
@@ -134,16 +134,16 @@ The 3-legged OAuth 2.0 flow using an authorization code grant is designed for we
 
 ```ruby
 # Initialize SDK with OAuth redirect URI
-rcsdk = RingCentralSdk::Sdk.new(
+rcsdk = RingCentralSdk.new(
   'myAppKey',
   'myAppSecret',
-  RingCentralSdk::Sdk::RC_SERVER_SANDBOX,
+  RingCentralSdk::RC_SERVER_SANDBOX,
   {:redirect_uri => 'http://example.com/oauth'}
 )
 # Retrieve OAuth authorize url using default redirect URL
-auth_url = rcsdk.platform.authorize_url()
+auth_url = rcsdk.authorize_url()
 # Retrieve OAuth authorize url using override redirect URL
-auth_url = rcsdk.platform.authorize_url({
+auth_url = rcsdk.authorize_url({
   :redirect_uri => 'my_registered_oauth_url', # optional override of default URL
   :display      => '', # optional: page|popup|touch|mobile, default 'page'
   :prompt       => '', # optional: sso|login|consent, default is 'login sso consent'
@@ -157,7 +157,7 @@ On your redirect page, you can exchange your authorization code for an access to
 
 ```ruby
 code  = params['code'] # retrieve GET 'code' parameter in Sinatra
-rcsdk.platform.authorize_code(code)
+rcsdk.authorize_code(code)
 ```
 
 For a complete working example, a demo Sinatra app is available in the scripts directory at [scripts/oauth2-sinatra](scripts/oauth2-sinatra).
@@ -169,20 +169,20 @@ The platform class performs token refresh procedure automatically if needed. To 
 ```ruby
 # Retrieve and save access token when program is to be stopped
 # `token` is an `OAuth2::AccessToken` object
-token_hash = rcsdk.platform.token.to_hash
+token_hash = rcsdk.token.to_hash
 ```
 
 After you have saved the token hash, e.g. as JSON, you can reload it in another instance of the SDK as follows:
 
 ```ruby
 # Reuse token_hash in another SDK instance
-rcsdk2 = RingCentralSdk::Sdk.new(
+rcsdk2 = RingCentralSdk.new(
   'myAppKey',
   'myAppSecret',
-  RingCentralSdk::Sdk::RC_SERVER_SANDBOX
+  RingCentralSdk::RC_SERVER_SANDBOX
 )
 # set_token() accepts a hash or OAuth2::AccessToken object
-rcsdk2.platform.set_token(token_hash)
+rcsdk2.set_token(token_hash)
 ```
 
 Important! You have to manually maintain synchronization of SDK's between requests if you share authentication. When two simultaneous requests will perform refresh, only one will succeed. One of the solutions would be to have semaphor and pause other pending requests while one of them is performing refresh.
@@ -192,10 +192,10 @@ See [the authorization docs](http://ringcentral-sdk-ruby.readthedocs.org/en/late
 ### API Requests
 
 Requests are made using the inclued Faraday client which you can
-retrieve by calling `rcsdk.platform.client` or using it directly.
+retrieve by calling `rcsdk.client` or using it directly.
 
 ```ruby
-client = rcsdk.platform.client
+client = rcsdk.client
 ```
 
 #### SMS Example
@@ -242,7 +242,6 @@ fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
 
 # sending request via request helper methods
 response = sdk.request(fax)
-response = sdk.platform.request(fax)
 
 # sending request via standard Faraday client
 response = client.post do |req|

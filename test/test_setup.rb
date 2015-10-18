@@ -10,27 +10,26 @@ class RingCentralSdkTest < Test::Unit::TestCase
   end
 
   def test_main
-    assert_equal 'RingCentralSdk::Sdk', @rcsdk.class.name
-    assert_equal 'RingCentralSdk::Platform', @rcsdk.platform.class.name
+    assert_equal 'RingCentralSdk::Platform', @rcsdk.class.name
 
     assert_raise do
       @rcsdk.request(nil)
     end
 
-    rcsdk = RingCentralSdk::Sdk.new(
+    rcsdk = RingCentralSdk.new(
       'my_app_key',
       'my_app_secret',
       RingCentralSdk::RC_SERVER_SANDBOX
     )
-    assert_equal 'RingCentralSdk::Sdk', rcsdk.class.name
+    assert_equal 'RingCentralSdk::Platform', rcsdk.class.name
   end
 
   def test_login
     stub_token_hash = data_auth_token
-    stub_token = OAuth2::AccessToken::from_hash(@rcsdk.platform.oauth2client, stub_token_hash)
+    stub_token = OAuth2::AccessToken::from_hash(@rcsdk.oauth2client, stub_token_hash)
 
     OAuth2::Strategy::Password.any_instance.stubs(:get_token).returns(stub_token)
-    rcsdk = RingCentralSdk::Sdk.new(
+    rcsdk = RingCentralSdk.new(
       'my_app_key',
       'my_app_secret',
       RingCentralSdk::RC_SERVER_SANDBOX,

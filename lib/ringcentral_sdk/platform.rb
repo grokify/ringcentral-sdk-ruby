@@ -26,18 +26,22 @@ module RingCentralSdk
     attr_reader   :user_agent
     attr_reader   :redirect_uri
 
-    def initialize(app_key='', app_secret='', server_url=RingCentralSdk::Sdk::RC_SERVER_SANDBOX, opts={})
+    def initialize(app_key='', app_secret='', server_url=RingCentralSdk::RC_SERVER_SANDBOX, opts={})
       @app_key      = app_key
       @app_secret   = app_secret
       @server_url   = server_url
       @token        = nil
       @client       = nil
       @redirect_uri = ''
-      if opts.is_a?(Hash)
-        @redirect_uri = opts.has_key?(:redirect_uri) ? opts[:redirect_uri] : ''
-      end
       @user_agent   = get_user_agent()
       @oauth2client = new_oauth2_client()
+      if opts.is_a?(Hash)
+        @redirect_uri = opts.has_key?(:redirect_uri) ? opts[:redirect_uri] : ''
+        if opts.has_key?(:username) && opts.has_key?(:password)
+          extension = opts.has_key?(:extension) ? opts[:extension] : ''
+          authorize_password(opts[:username], extension, opts[:password])
+        end
+      end
     end
 
     def get_api_version_url()
@@ -165,6 +169,10 @@ module RingCentralSdk
         RUBY_PLATFORM
       ]
       return ua.strip
+    end
+
+    def create_subscription()
+      return RingCentralSdk::Subscription.new(self)
     end
 
     alias_method :authorize, :authorize_password
