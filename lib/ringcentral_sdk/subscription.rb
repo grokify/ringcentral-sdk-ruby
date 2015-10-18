@@ -273,7 +273,7 @@ module RingCentralSdk
     def new_pubnub(subscribe_key='', ssl_on=false, publish_key='', my_logger=nil)
       my_logger = Logger.new(STDOUT) if my_logger.nil?
 
-      pubnub = Pubnub.new(
+      return Pubnub.new(
         :subscribe_key    => subscribe_key.to_s,
         :publish_key      => publish_key.to_s,
         :error_callback   => lambda { |msg|
@@ -284,8 +284,6 @@ module RingCentralSdk
         },
         :logger => my_logger
       )
-
-      return pubnub
     end
 
   end
