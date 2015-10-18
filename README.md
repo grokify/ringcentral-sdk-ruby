@@ -46,13 +46,12 @@ This SDK is an early stage library and subject to breaking changes.
 * Generic API requests handled via `Faraday` client
 * Subscription support via `Pubnub` with auto-decryption
 * Fax request helper to create `multipart/mixed` messages
+* Stubbed requests via `mocha`
 * Docs via [Read the Docs](http://ringcentral-sdk-ruby.readthedocs.org/) and [RubyDoc](http://www.rubydoc.info/gems/ringcentral_sdk/)
 
 ### To Do
 
-The following items are still needed for this SDK. Contributions are most welcome.
-
-* Mock tests
+There are no major to do items at this time.
 
 ## Documentation
 

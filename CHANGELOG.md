@@ -1,5 +1,7 @@
 CHANGELOG
 ---------
+- **2015-10-17**: 0.4.1
+  - Add stubbed tests via `mocha`
 - **2015-10-15**: 0.4.0
   - Add 3-Legged OAuth support via platform `authorize_url` and `authorize_code` methods
   - Add `oauth2-sinatra` demo app in `scripts` directory
