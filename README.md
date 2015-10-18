@@ -18,7 +18,7 @@ RingCentral SDK
   2. [To Do](#to-do)
 2. [Documentation](#documentation)
 3. [Installation](#installation)
-2. [Usage](#usage)
+4. [Usage](#usage)
   1. [Instantiation](#instantiation)
   1. [Authorization](#authorization)
     1. [Password Grant](#password-grant)
@@ -27,10 +27,12 @@ RingCentral SDK
     1. [SMS Example](#sms-example)
     2. [Fax Example](#fax-example)
   1. [Subscriptions](#subscriptions)
-5. [Change Log](#change-log)
-6. [Links](#links)
-7. [Contributions](#contributions)
-8. [License](#license)
+5. [Supported Ruby Versions](#supported-ruby-versions)
+6. [Versioning](#versioning)
+7. [Change Log](#change-log)
+8. [Links](#links)
+9. [Contributions](#contributions)
+10. [License](#license)
 
 ## Overview
 
