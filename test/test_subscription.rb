@@ -87,7 +87,7 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     return rcsdk
   end
 
-  def test_subscribe_renew_delete
+  def test_subscribe_renew_delete_with_exceptions
     # Get RCSDK Authroized
     rcsdk = get_rcsdk_authorized()
     # Stub Subscribe RC Response
@@ -108,6 +108,9 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     sub.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
     # Test renew()
     sub.renew(['/restapi/v1.0/account/~/extension/~/presence'])
+    assert_raise do
+      sub.renew([])
+    end
     # Test subscription data
     id = data['id']
     data = sub.subscription()
@@ -119,6 +122,19 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     sub.register(['/restapi/v1.0/account/~/extension/~/presence'])
     # Test remove()
     sub.remove()
+    # Test Exceptions
+    rcsdk.client.stubs(:post).raises("error")
+    assert_raise do
+      sub.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
+    end
+    rcsdk.client.stubs(:put).raises("error")
+    assert_raise do
+      sub.renew(['/restapi/v1.0/account/~/extension/~/presence'])
+    end
+    rcsdk.client.stubs(:delete).raises("error")
+    assert_raise do
+      sub.remove()
+    end
   end
 
   def data_test_auth_token
