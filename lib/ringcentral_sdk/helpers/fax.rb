@@ -88,9 +88,11 @@ module RingCentralSdk::Helpers
         raise "File \"#{file_name.to_s}\" does not exist or cannot be read"
       end
 
-      file_bytes = RUBY_VERSION < '1.9' \
-        ? File.open(file_name, 'rb')        { |f| f.read } \
-        : File.open(file_name, 'rb:BINARY') { |f| f.read }
+      # file_bytes = RUBY_VERSION < '1.9' \ # 1.8.7 removed due to subscription
+      #  ? File.open(file_name, 'rb')        { |f| f.read } \
+      #  : File.open(file_name, 'rb:BINARY') { |f| f.read }
+
+      file_bytes = File.open(file_name, 'rb:BINARY') { |f| f.read }
 
       return file_bytes
     end
