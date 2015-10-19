@@ -29,8 +29,9 @@ RingCentral SDK for Ruby
     3. [Fax Example](#fax-example)
   1. [Subscriptions](#subscriptions)
 5. [Supported Ruby Versions](#supported-ruby-versions)
-6. [Versioning](#versioning)
-7. [Change Log](#change-log)
+6. [Releases](#releases)
+  1. [Versioning](#versioning)
+  1. [Change Log](#change-log)
 8. [Links](#links)
 9. [Contributions](#contributions)
 10. [License](#license)
@@ -313,13 +314,17 @@ This library supports and is [tested against](https://travis-ci.org/grokify/ring
 
 Note: Ruby 1.8.7 works except for subscription support which relies on the `pubnub` gem. If there is a need for 1.8.7 support, consider creating a GitHub issue so we can evalute creating a separate library for subscription handling.
 
-## Versioning
+## Releases
+
+Releases with release notes are availabe on [GitHub releases](https://github.com/grokify/ringcentral-sdk-ruby/releases). Release notes include a high level description of the release as well as lists of non-breaking and breaking changes.
+
+### Versioning
 
 This project is currently in development and the API can change. During initial development (Version 0.x.x), minor version changes will indicate either substantial feature inclusion or breaking changes.
 
 Once the project is version 1.0.0 or above, it will use [semantic versioning](http://semver.org/). At this time, breaking changes will be indicated by a change in major version.
 
-## Change Log
+### Change Log
 
 See [CHANGELOG.md](CHANGELOG.md)
 
