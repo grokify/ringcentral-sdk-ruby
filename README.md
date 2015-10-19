@@ -135,6 +135,8 @@ rcsdk.authorize('myUsername', nil, 'myPassword')
 
 The 3-legged OAuth 2.0 flow using an authorization code grant is designed for web apps and public apps where authorization needs to be granted by a 3rd party resource owner.
 
+Using the default authorization URL:
+
 ```ruby
 # Initialize SDK with OAuth redirect URI
 rcsdk = RingCentralSdk.new(
@@ -145,6 +147,16 @@ rcsdk = RingCentralSdk.new(
 )
 # Retrieve OAuth authorize url using default redirect URL
 auth_url = rcsdk.authorize_url()
+```
+
+Customizing authorize URL:
+
+```ruby
+rcsdk = RingCentralSdk.new(
+  'myAppKey',
+  'myAppSecret',
+  RingCentralSdk::RC_SERVER_SANDBOX
+)
 # Retrieve OAuth authorize url using override redirect URL
 auth_url = rcsdk.authorize_url({
   :redirect_uri => 'my_registered_oauth_url', # optional override of default URL
