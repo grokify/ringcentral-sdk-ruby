@@ -129,7 +129,7 @@ module RingCentralSdk
         conn.request  :url_encoded
         conn.headers['User-Agent'] = @user_agent
         conn.headers['Rc-User-Agent'] = @user_agent
-        conn.response :json, :content_type => 'application/json'
+        conn.response :json, :content_type => /\bjson$/
         conn.adapter  Faraday.default_adapter
       end
     end

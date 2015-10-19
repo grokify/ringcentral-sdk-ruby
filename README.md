@@ -194,9 +194,19 @@ See [the authorization docs](http://ringcentral-sdk-ruby.readthedocs.org/en/late
 
 ### API Requests
 
+API requests can be made via the included `Faraday` client or `RingCentralSdk::Helpers::Request` subclasses. These are described below
+
 #### Generic HTTP Requests
 
-Requests can be made directly using the included `Faraday` client which can be accessed via `rcsdk.client`.
+To make generic API requests, use included `Faraday` client which can be accessed via `rcsdk.client`. Faraday request middleware has been loaded for the following:
+
+* :oauth2_refresh
+* :json
+* :url_encoded
+
+Faraday response middleware is loaded for the following:
+
+* :json
 
 ```ruby
 client = rcsdk.client
