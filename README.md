@@ -285,10 +285,7 @@ end
 To make subscriptions with RingCentral, use the SDK object to create subscription Observer object and then add observers to it.
 
 ```ruby
-sub = rcsdk.create_subscription()
-
-sub.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
-
+# Create an observer object
 class MyObserver
   def update(message)
     puts "Subscription Message Received"
@@ -296,9 +293,13 @@ class MyObserver
   end
 end
 
+# Create an observable subscription and add your observer
+sub = rcsdk.create_subscription()
+sub.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
 sub.add_observer(MyObserver.new())
 
-sub.destroy() # end the subscription
+# End the subscription
+sub.destroy()
 ```
 
 ## Supported Ruby Versions
