@@ -1,15 +1,15 @@
 RingCentral SDK for Ruby
 ========================
 
-[![Gem Version](https://badge.fury.io/rb/ringcentral_sdk.svg)](http://badge.fury.io/rb/ringcentral_sdk)
-[![Build Status](https://img.shields.io/travis/grokify/ringcentral-sdk-ruby/master.svg)](https://travis-ci.org/grokify/ringcentral-sdk-ruby)
+[![Gem Version][gem-version-svg]][gem-version-link]
+[![Build Status][build-status-svg]][build-status-link]
 [![Coverage Status](https://coveralls.io/repos/grokify/ringcentral-sdk-ruby/badge.svg?branch=master)](https://coveralls.io/r/grokify/ringcentral-sdk-ruby?branch=master)
 [![Dependency Status](https://gemnasium.com/grokify/ringcentral-sdk-ruby.svg)](https://gemnasium.com/grokify/ringcentral-sdk-ruby)
 [![Code Climate](https://codeclimate.com/github/grokify/ringcentral-sdk-ruby/badges/gpa.svg)](https://codeclimate.com/github/grokify/ringcentral-sdk-ruby)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/grokify/ringcentral-sdk-ruby/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/grokify/ringcentral-sdk-ruby/?branch=master)
 [![Docs](https://img.shields.io/badge/docs-readthedocs-blue.svg)](http://ringcentral-sdk-ruby.readthedocs.org/)
 [![Docs](https://img.shields.io/badge/docs-rubydoc-blue.svg)](http://www.rubydoc.info/gems/ringcentral_sdk/)
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/grokify/ringcentral-sdk-ruby/master/LICENSE.txt)
+[![License][license-svg]][license-link]
 
 ## Table of contents
 
@@ -358,3 +358,10 @@ Please report these on [Github](https://github.com/grokify/ringcentral-sdk-ruby)
 RingCentral SDK is available under an MIT-style license. See [LICENSE.txt](LICENSE.txt) for details.
 
 RingCentral SDK &copy; 2015 by John Wang
+
+ [gem-version-svg]: https://badge.fury.io/rb/ringcentral_sdk.svg
+ [gem-version-link]: http://badge.fury.io/rb/ringcentral_sdk
+ [build-status-svg]: https://api.travis-ci.org/grokify/ringcentral-sdk-ruby.svg?branch=master
+ [build-status-link]: https://travis-ci.org/grokify/ringcentral-sdk-ruby
+ [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
+ [license-link]: https://github.com/grokify/ringcentral-sdk-ruby/blob/master/LICENSE.txt
