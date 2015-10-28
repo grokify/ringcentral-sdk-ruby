@@ -92,7 +92,7 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     rcsdk = new_rcsdk()
     rcsdk.set_oauth2_client()
 
-    stub_token_hash = data_auth_token
+    stub_token_hash = data_auth_token_with_refresh
     stub_token = OAuth2::AccessToken::from_hash(rcsdk.oauth2client, stub_token_hash)
 
     rcsdk.oauth2client.auth_code.stubs(:get_token).returns(stub_token)
@@ -104,7 +104,7 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     rcsdk = new_rcsdk({:redirect_uri => 'http://localhost:4567/oauth'})
     rcsdk.set_oauth2_client()
 
-    stub_token_hash = data_auth_token
+    stub_token_hash = data_auth_token_with_refresh
     stub_token = OAuth2::AccessToken::from_hash(rcsdk.oauth2client, stub_token_hash)
 
     rcsdk.oauth2client.auth_code.stubs(:get_token).returns(stub_token)
@@ -138,11 +138,11 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     assert_equal 'OAuth2::AccessToken', rcsdk.token.class.name
   end
 
-  def test_authorize_password
+  def test_authorize_password_with_refresh
     rcsdk = new_rcsdk()
     rcsdk.set_oauth2_client()
 
-    stub_token_hash = data_auth_token
+    stub_token_hash = data_auth_token_with_refresh
     stub_token = OAuth2::AccessToken::from_hash(rcsdk.oauth2client, stub_token_hash)
 
     rcsdk.oauth2client.password.stubs(:get_token).returns(stub_token)
@@ -150,6 +150,22 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     token = rcsdk.authorize('my_test_username', 'my_test_extension', 'my_test_password')
     assert_equal 'OAuth2::AccessToken', token.class.name
     assert_equal 'OAuth2::AccessToken', rcsdk.token.class.name
+    assert_equal 'my_test_access_token_with_refresh', rcsdk.token.token
+  end
+
+  def test_authorize_password_without_refresh
+    rcsdk = new_rcsdk()
+    rcsdk.set_oauth2_client()
+
+    stub_token_hash = data_auth_token_without_refresh
+    stub_token = OAuth2::AccessToken::from_hash(rcsdk.oauth2client, stub_token_hash)
+
+    rcsdk.oauth2client.password.stubs(:get_token).returns(stub_token)
+
+    token = rcsdk.authorize('my_test_username', 'my_test_extension', 'my_test_password')
+    assert_equal 'OAuth2::AccessToken', token.class.name
+    assert_equal 'OAuth2::AccessToken', rcsdk.token.class.name
+    assert_equal 'my_test_access_token_without_refresh', rcsdk.token.token
   end
 
   def test_request
@@ -160,7 +176,7 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     rcsdk = new_rcsdk()
     rcsdk.set_oauth2_client()
 
-    stub_token_hash = data_auth_token
+    stub_token_hash = data_auth_token_with_refresh
     stub_token = OAuth2::AccessToken::from_hash(rcsdk.oauth2client, stub_token_hash)
 
     rcsdk.oauth2client.password.stubs(:get_token).returns(stub_token)
@@ -193,9 +209,9 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     )
   end
 
-  def data_auth_token
+  def data_auth_token_with_refresh
     json = '{
-  "access_token": "my_test_access_token",
+  "access_token": "my_test_access_token_with_refresh",
   "token_type": "bearer",
   "expires_in": 3599,
   "refresh_token": "my_test_refresh_token",
@@ -206,4 +222,18 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     data = JSON.parse(json, :symbolize_names=>true)
     return data
   end
+
+  def data_auth_token_without_refresh
+    json = '{
+  "access_token": "my_test_access_token_without_refresh",
+  "token_type": "bearer",
+  "expires_in": 3599,
+  "scope": "ReadCallLog DirectRingOut EditCallLog ReadAccounts Contacts EditExtensions ReadContacts SMS EditPresence RingOut EditCustomData ReadPresence EditPaymentInfo Interoperability Accounts NumberLookup InternalMessages ReadCallRecording EditAccounts Faxes EditReportingSettings ReadClientInfo EditMessages VoipCalling ReadMessages",
+  "owner_id": "1234567890"
+      }'
+    data = JSON.parse(json, :symbolize_names=>true)
+    return data
+  end
+
+  alias_method :data_auth_token, :data_auth_token_with_refresh
 end
