@@ -242,7 +242,9 @@ module RingCentralSdk
 
     def _unsubscribe_at_pubnub()
       if @_pubnub && alive?()
-        @_pubnub.unsubscribe(@_subscription['deliveryMode']['address'])
+        @_pubnub.unsubscribe(channel: @_subscription['deliveryMode']['address']) do |envelope|
+          # puts envelope.message
+        end
       end
     end
 

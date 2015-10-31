@@ -41,49 +41,32 @@ boot = RingCentralSdkBootstrap.new
 boot.load_credentials(ARGV.shift, 'Usage: subscription.rb path/to/credentials.json [extensionId]')
 rcsdk = boot.get_sdk_with_token()
 
-to_phone_number = ARGV.shift
+extension_id = ARGV.shift.to_s
+extension_id = '~' unless extension_id.length>0
 
-unless to_phone_number.to_s.length>0
-  abort("Usage: fax_send.rb rc-credentials.json phone_number my_file.pdf")
-end
-
-file_name = ARGV.shift
-
-unless file_name.to_s.length>0
-  abort("Usage: fax_send.rb rc-credentials.json phone_number my_file.pdf")
-end
-
-unless File.exists?(file_name.to_s)
-  abort("Error: file to fax does not exist for: #{file_name}")
-end
-
-def send_fax(rcsdk, to_phone_number, file_name)
-  fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
-    nil,
-    {
-    	:to            => [{:phoneNumber => to_phone_number}],
-    	:faxResolution => 'High',
-    	:coverPageText => 'RingCentral Fax Base64 using Ruby!'
-    },
-    :file_name       => file_name,
-    :base64_encode   => true
-  )
-
-  puts fax.body
-
-  client = rcsdk.client
-
-  if 1==1
-    response = client.post do |req|
-      req.url fax.url
-      req.headers['Content-Type'] = fax.content_type
-      req.body = fax.body
-    end
-    puts response.body.to_s
+# An example observer object
+class MyObserver
+  def update(message)
+    puts "Subscription Message Received"
+    puts JSON.dump(message)
   end
-
 end
 
-send_fax(rcsdk, to_phone_number, file_name)
+def run_subscription(rcsdk, extension_id='~')
+  # Create an observable subscription and add your observer
+  sub = rcsdk.create_subscription()
+  sub.subscribe(["/restapi/v1.0/account/~/extension/#{extension_id}/presence"])
+
+  sub.add_observer(MyObserver.new())
+
+  puts "Click any key to finish"
+
+  stop_script = gets
+
+  # End the subscription
+  sub.destroy()
+end
+
+run_subscription(rcsdk, extension_id)
 
 puts "DONE"
