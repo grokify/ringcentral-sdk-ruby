@@ -15,10 +15,17 @@ class RingCentralSdkBootstrap
     end
 
     @credentials = MultiJson.decode(IO.read(credentials_filepath), :symbolize_keys=>true)
+
+    @app_index = ARGV.shift
+    @usr_index = ARGV.shift
+    @app_index = @app_index.to_s =~ /^[0-9]+$/ ? @app_index.to_i : 0
+    @usr_index = @usr_index.to_s =~ /^[0-9]+$/ ? @usr_index.to_i : 0
   end
 
-  def get_sdk_with_token(env=:sandbox, app_index=0, resource_owner_index=0)
+  def get_sdk_with_token(env=:sandbox)
     credentials = @credentials
+    app_index = @app_index
+    resource_owner_index = @usr_index
 
     rcsdk = RingCentralSdk.new(
       credentials[env][:applications][app_index][:app_key],
@@ -38,11 +45,8 @@ class RingCentralSdkBootstrap
 end
 
 boot = RingCentralSdkBootstrap.new
-boot.load_credentials(ARGV.shift, 'Usage: subscription.rb path/to/credentials.json [extensionId]')
+boot.load_credentials(ARGV.shift, 'Usage: subscription.rb path/to/credentials.json [app_index] [resource_owner_index]')
 rcsdk = boot.get_sdk_with_token()
-
-extension_id = ARGV.shift.to_s
-extension_id = '~' unless extension_id.length>0
 
 # An example observer object
 class MyObserver
@@ -52,10 +56,10 @@ class MyObserver
   end
 end
 
-def run_subscription(rcsdk, extension_id='~')
+def run_subscription(rcsdk)
   # Create an observable subscription and add your observer
   sub = rcsdk.create_subscription()
-  sub.subscribe(["/restapi/v1.0/account/~/extension/#{extension_id}/presence"])
+  sub.subscribe(["/restapi/v1.0/account/~/extension/~/presence"])
 
   sub.add_observer(MyObserver.new())
 
@@ -67,6 +71,6 @@ def run_subscription(rcsdk, extension_id='~')
   sub.destroy()
 end
 
-run_subscription(rcsdk, extension_id)
+run_subscription(rcsdk)
 
 puts "DONE"
