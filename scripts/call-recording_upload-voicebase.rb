@@ -7,6 +7,17 @@ require 'multi_json'
 require 'ringcentral_sdk'
 require 'pp'
 
+=begin
+  
+This demo uploads MP3 recording files with the file format "recording_.*\.mp3"
+to VoiceBase for text transcription. This is the file format used by the
+call-recording_download.rb script.
+
+This file uses a Ruby port of the PHP demo in the VoiceBase API Developers
+Guide version 1.1.4 PDF page 18.
+
+=end
+
 # Set your credentials in the test credentials file
 
 class RingCentralSdkBootstrap
