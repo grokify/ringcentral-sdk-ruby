@@ -39,7 +39,7 @@ class RingCentralSdkBootstrap
 end
 
 boot = RingCentralSdkBootstrap.new
-boot.load_credentials(ARGV.shift, 'Usage: call-recording_upload-voicebase.rb path/to/credentials.json')
+boot.load_credentials(ARGV.shift, 'Usage: call-recording_transcribe_voicebase.rb path/to/credentials.json')
 
 module VoiceBase
   class Client
