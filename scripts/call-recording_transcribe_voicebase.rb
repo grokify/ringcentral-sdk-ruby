@@ -43,10 +43,10 @@ boot.load_credentials(ARGV.shift, 'Usage: call-recording_transcribe_voicebase.rb
 
 module VoiceBase
   class Client
-    def initialize(api_key, password)
+    def initialize(api_key, password, transcript_type='machine-best')
       @api_key = api_key
       @password = password
-      @transcript_type = 'machine'
+      @transcript_type = transcript_type
       @conn = Faraday.new(:url => 'https://api.voicebase.com/services') do |faraday|
         faraday.request  :multipart               # multipart/form-data
         faraday.response :json
