@@ -4,6 +4,14 @@ require 'multi_json'
 require 'ringcentral_sdk'
 require 'pp'
 
+=begin
+  
+This demo uploads MP3 recording files with the file format "recording_.*\.mp3"
+to VoiceBase for text transcription. This is the file format used by the
+call-recording_download.rb script.
+
+=end
+
 # Set your credentials in the test credentials file
 
 class RingCentralSdkBootstrap
@@ -23,9 +31,8 @@ class RingCentralSdkBootstrap
   def get_sdk_with_token(env=:sandbox, app_index=0, resource_owner_index=0)
     credentials = @credentials
 
-    puts app_index
-    puts resource_owner_index
-    puts app_index.class.name
+    app_index = 0 unless app_index
+    resource_owner_index = 0 unless resource_owner_index
 
     if app_index.to_s =~ /^[0-9]+$/
       app_index = app_index.to_i if app_index.is_a?(String)
@@ -57,7 +64,7 @@ class RingCentralSdkBootstrap
 end
 
 boot = RingCentralSdkBootstrap.new
-boot.load_credentials(ARGV.shift, 'Usage: call_recording_download.rb path/to/credentials.json')
+boot.load_credentials(ARGV.shift, 'Usage: call-recording_download.rb path/to/credentials.json')
 rcsdk = boot.get_sdk_with_token(:sandbox, ARGV.shift, ARGV.shift)
 
 def get_recordings(rcsdk)
