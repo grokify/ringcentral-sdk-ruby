@@ -1,5 +1,11 @@
 CHANGELOG
 ---------
+- **2015-11-10**: 0.5.1
+  - Add call recording transcription demo script via voicebase
+  - Fix PubNub unsubscribe bug
+  - Update tests to support access token without refresh token
+  - Update sample scripts credentials file format to be more scalable
+  - Remove ruby 1.9.3 support due to dependency upgrade
 - **2015-10-18**: 0.5.0
   - Add stubbed tests via `mocha`
   - Add `RingCentralSdk.new()` sugar method
