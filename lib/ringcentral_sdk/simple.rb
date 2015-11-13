@@ -1,5 +1,6 @@
 module RingCentralSdk
   class Simple
+    attr_accessor :rcsdk
 
     def initialize(rcsdk)
       @rcsdk = rcsdk
