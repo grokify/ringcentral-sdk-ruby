@@ -7,10 +7,11 @@ module RingCentralSdk
 
   autoload :Helpers, 'ringcentral_sdk/helpers'
   autoload :Platform, 'ringcentral_sdk/platform'
+  autoload :Simple, 'ringcentral_sdk/simple'
   autoload :Subscription, 'ringcentral_sdk/subscription'
 
   class << self
-    def new(app_key, app_secret, server_url=nil, opts={})
+    def new(app_key, app_secret, server_url=RC_SERVER_SANDBOX, opts={})
       RingCentralSdk::Platform.new(app_key, app_secret, server_url, opts)
     end
   end
