@@ -53,7 +53,7 @@ module RingCentralSdk
     end
 
     def put(opts={})
-      return @rcsdk.client.post do |req|
+      return @rcsdk.client.put do |req|
         req.url build_url(opts[:path])
         if opts.has_key?(:body)
           req.body = opts[:body]
