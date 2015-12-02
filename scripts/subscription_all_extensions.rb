@@ -3,6 +3,14 @@
 require 'multi_json'
 require 'ringcentral_sdk'
 
+=begin 
+
+RingCentralSdkBootstrap is code to load credentials simply from a JSON file.
+
+The core part of the example is below.
+
+=end 
+
 class RingCentralSdkBootstrap
 
   def load_credentials(credentials_filepath, usage_string=nil)
@@ -48,6 +56,13 @@ boot = RingCentralSdkBootstrap.new
 boot.load_credentials(ARGV.shift, 'Usage: subscription.rb path/to/credentials.json [app_index] [resource_owner_index]')
 rcsdk = boot.get_sdk_with_token()
 
+=begin 
+
+get_all_extensions(rcsdk) retrieves all extensions, no matter,
+how many there are.
+
+=end 
+
 def get_all_extensions(rcsdk)
   extension_ids_map = {}
   extensions = []
@@ -78,6 +93,8 @@ def get_all_extensions(rcsdk)
 end
 
 extensions = get_all_extensions(rcsdk)
+
+# Create an array of event_filters from the array of extensions
 
 event_filters = []
 
@@ -111,6 +128,7 @@ def run_subscription(rcsdk, event_filters)
   sub.destroy()
 end
 
+# Make a subscription for all event_filters
 run_subscription(rcsdk, event_filters)
 
 puts "DONE"
