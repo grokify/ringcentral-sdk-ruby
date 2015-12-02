@@ -58,8 +58,7 @@ rcsdk = boot.get_sdk_with_token()
 
 =begin 
 
-get_all_extensions(rcsdk) retrieves all extensions, no matter,
-how many there are.
+get_all_extensions(rcsdk) retrieves all extensions.
 
 =end 
 
