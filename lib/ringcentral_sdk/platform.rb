@@ -157,7 +157,7 @@ module RingCentralSdk
       return api_key
     end
 
-    def request(helper=nil)
+    def send_request(helper=nil)
       unless helper.is_a?(RingCentralSdk::Helpers::Request)
         raise 'Request is not a RingCentralSdk::Helpers::Request'
       end
@@ -187,6 +187,7 @@ module RingCentralSdk
 
     alias_method :authorize, :authorize_password
     alias_method :login, :authorize_password
+    alias_method :request, :send_request
     private :get_api_version_url
   end
 end
