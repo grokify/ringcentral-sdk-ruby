@@ -23,7 +23,7 @@ class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
         # phone numbers are in E.164 format with or without leading '+'
         "to"           => { :phoneNumber => '+16505551212' },
         :faxResolution => 'High',
-        :coverPageText => 'RingCentral fax demo using Ruby SDK!'
+        :coverPageText => 'RingCentral fax demo using Ruby SDK Résolution!'
       },
       :file_name => './scripts/test_file.pdf'
     )
@@ -33,6 +33,9 @@ class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
     assert_raise do
       fax2.add_file('non-existent_file_path')
     end
+
+    # Test UTF-8 metadata and file MIME concatenation
+    body = fax2.body
 
     fax3 = RingCentralSdk::Helpers::CreateFaxRequest.new(
       { :account_id => 111111111, :extension_id => 222222222 }, # Can be nil or {} for defaults '~'

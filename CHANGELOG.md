@@ -1,8 +1,9 @@
 CHANGELOG
 ---------
-- **2015-11-10**: 0.5.1
-  - Add call recording transcription demo script via voicebase
+- **2015-12-08**: 0.5.1
+  - Add call recording transcription demo script via VoiceBase
   - Fix PubNub unsubscribe bug
+  - Fix fax helper to support UTF-8 metadata with file attachment
   - Update tests to support access token without refresh token
   - Update sample scripts credentials file format to be more scalable
   - Remove ruby 1.9.3 support due to dependency upgrade

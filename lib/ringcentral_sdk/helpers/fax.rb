@@ -34,7 +34,7 @@ module RingCentralSdk::Helpers
       json = Base64.encode64(json) if base64_encode
       json_part = MIME::Text.new(json)
       json_part.headers.delete('Content-Id')
-      json_part.headers.set('Content-Type','application/json')
+      json_part.headers.set('Content-Type', 'application/json')
       json_part.headers.set('Content-Transfer-Encoding', 'base64') if base64_encode
       @msg.add(json_part)
       return true
