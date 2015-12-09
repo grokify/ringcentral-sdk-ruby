@@ -6,7 +6,6 @@ CHANGELOG
   - Fix fax helper to support UTF-8 metadata with file attachment
   - Update tests to support access token without refresh token
   - Update sample scripts credentials file format to be more scalable
-  - Remove ruby 1.9.3 support due to dependency upgrade
 - **2015-10-18**: 0.5.0
   - Add stubbed tests via `mocha`
   - Add `RingCentralSdk.new()` sugar method
