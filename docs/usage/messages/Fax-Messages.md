@@ -241,6 +241,6 @@ If you intend the multiple fax numbers to be owned by a single production RingCe
 
 If you intend the multiple fax numbers to be owned by and associated with multiple production RingCentral Customers, then you can create multiple Sandbox Accounts to represent the multiple Production Accounts.
 
-### Is it possible to send a fax without the fax header?
+### Is it possible to send a fax without the fax header line?
 
-Not at this time. In the US, it is unlawful to send a fax with out the header line consisting of the following "the date and time it is sent and an identification of the business, other entity, or individual sending the message and the telephone number of the sending machine or of such business, other entity, or individual." This is specified in [US 47 CFR &#167; 68.318(d)](https://www.law.cornell.edu/cfr/text/47/68.318). Identification as part of advertising is covered under the Telephone Consumer Protection Act of 1991 (TCPA), [47 USC &#167; 227(d)(1)(B)](https://www.law.cornell.edu/uscode/text/47/227).
+Not at this time. In the US, it is unlawful to send a fax with out the header line consisting of the following "the date and time it is sent and an identification of the business, other entity, or individual sending the message and the telephone number of the sending machine or of such business, other entity, or individual." This applies to all faxes based on content and delivery method (e-fax or traditional fax machines). This is specified in [US 47 CFR &#167; 68.318(d)](https://www.law.cornell.edu/cfr/text/47/68.318). For advertising specifically, this is also covered under the Telephone Consumer Protection Act of 1991 (TCPA), [47 USC &#167; 227(d)(1)(B)](https://www.law.cornell.edu/uscode/text/47/227).
