@@ -22,7 +22,7 @@ end
 
 ## Retrieving a List of Valid SMS Sending Numbers
 
-When building an application that sends SMS it is useful to retrieve a list of SMS numbers to pre-select the `from` phone number. This can be done using the `extension/phone-number` endpoint and then selecting the phone numbers with the `SmsSender` feature.
+When building an application that sends SMS it is useful to retrieve a list of SMS numbers to pre-select the `from` phone number. This can be done using the `extension/phone-number` endpoint and then selecting the phone numbers with the `SmsSender` feature. A common UX for this is to present a drop down element to allow the user to select a phone number to send from.
 
 To retrieve a list of phone numbers, make a `GET` request to the `extension/phone-number` endpoint as follows:
 
@@ -34,7 +34,7 @@ response = rcsdk.client.get do |req|
 end
 ```
 
-This will return a list of phone numbers assigned the extension as follows:
+This will return a list of phone numbers assigned the extension as shown below. Filter for the `SmsSender` `feature` and then use the E.164 `phoneNumber` property value.
 
 ```ruby
 {

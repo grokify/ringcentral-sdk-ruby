@@ -13,4 +13,5 @@ pages:
 - ['usage/messages/Call-Recordings.md', 'User Guide', 'Call Recordings']
 - ['usage/messages/SMS-Messages.md', 'User Guide', 'SMS Messages']
 - ['usage/messages/Fax-Messages.md', 'User Guide', 'Fax Messages']
+- ['usage/voice/Click-To-Call.md', 'User Guide', 'Click-To-Call']
 - ['usage/notifications/Subscriptions.md', 'User Guide', 'Subscriptions']
