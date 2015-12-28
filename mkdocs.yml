@@ -8,10 +8,16 @@ pages:
 - ['index.md', 'About', 'RingCentral SDK']
 - ['quickstart.md', 'About', 'Quickstart']
 
-## User Guide:
+## Authorization:
 - ['usage/authorization/Authorization.md', 'User Guide', 'Authorization']
+
+## Messaging:
 - ['usage/messages/Call-Recordings.md', 'User Guide', 'Call Recordings']
 - ['usage/messages/SMS-Messages.md', 'User Guide', 'SMS Messages']
 - ['usage/messages/Fax-Messages.md', 'User Guide', 'Fax Messages']
+
+## Voice:
 - ['usage/voice/Click-To-Call.md', 'User Guide', 'Click-To-Call']
+
+## Notifications:
 - ['usage/notifications/Subscriptions.md', 'User Guide', 'Subscriptions']
