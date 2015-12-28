@@ -2,4 +2,5 @@ coverage
 scripts/credentials.json
 scripts/credentials[0-9].json
 scripts/rc-credentials.json
+scripts/oauth2-sinatra/_*
 *.gem

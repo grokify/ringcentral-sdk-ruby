@@ -99,7 +99,7 @@ event_filters = []
 
 extensions.each do |ext|
   if ext.has_key?('id')
-    event_filter = "/restapi/v1.0/account/~/extension/#{ext['id']}/presence"
+    event_filter = "/restapi/v1.0/account/~/extension/#{ext['id']}/presence?detailedTelephonyState=true"
     event_filters.push event_filter
   end
 end
