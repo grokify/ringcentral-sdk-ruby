@@ -9,15 +9,15 @@ pages:
 - ['quickstart.md', 'About', 'Quickstart']
 
 ## Authorization:
-- ['usage/authorization/Authorization.md', 'User Guide', 'Authorization']
+- ['usage/authorization/Authorization.md', 'Authorization', 'Authorization']
 
 ## Messaging:
-- ['usage/messages/Call-Recordings.md', 'User Guide', 'Call Recordings']
-- ['usage/messages/SMS-Messages.md', 'User Guide', 'SMS Messages']
-- ['usage/messages/Fax-Messages.md', 'User Guide', 'Fax Messages']
+- ['usage/messages/Call-Recordings.md', 'Messaging', 'Call Recordings']
+- ['usage/messages/SMS-Messages.md', 'Messaging', 'SMS Messages']
+- ['usage/messages/Fax-Messages.md', 'Messaging', 'Fax Messages']
 
 ## Voice:
-- ['usage/voice/Click-To-Call.md', 'User Guide', 'Click-To-Call']
+- ['usage/voice/Click-To-Call.md', 'Voice', 'Click-To-Call']
 
 ## Notifications:
-- ['usage/notifications/Subscriptions.md', 'User Guide', 'Subscriptions']
+- ['usage/notifications/Subscriptions.md', 'Notifications', 'Subscriptions']
