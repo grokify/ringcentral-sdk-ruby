@@ -27,7 +27,7 @@ When building an application that sends SMS it is useful to retrieve a list of S
 To retrieve a list of phone numbers, make a `GET` request to the `extension/phone-number` endpoint as follows:
 
 ```ruby
-# SMS Example
+# Phone Number Example
 
 response = rcsdk.client.get do |req|
   req.url 'account/~/extension/~/phone-number'
