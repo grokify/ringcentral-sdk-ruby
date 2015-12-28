@@ -12,12 +12,12 @@ pages:
 - ['usage/authorization/Authorization.md', 'Authorization', 'Authorization']
 
 ## Messaging:
-- ['usage/messages/Call-Recordings.md', 'Messaging', 'Call Recordings']
 - ['usage/messages/SMS-Messages.md', 'Messaging', 'SMS Messages']
 - ['usage/messages/Fax-Messages.md', 'Messaging', 'Fax Messages']
 
 ## Voice:
 - ['usage/voice/Click-To-Call.md', 'Voice', 'Click-To-Call']
+- ['usage/messages/Call-Recordings.md', 'Voice', 'Call Recordings']
 
 ## Notifications:
 - ['usage/notifications/Subscriptions.md', 'Notifications', 'Subscriptions']
