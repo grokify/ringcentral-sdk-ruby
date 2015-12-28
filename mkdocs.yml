@@ -11,5 +11,6 @@ pages:
 ## User Guide:
 - ['usage/authorization/Authorization.md', 'User Guide', 'Authorization']
 - ['usage/messages/Call-Recordings.md', 'User Guide', 'Call Recordings']
+- ['usage/messages/SMS-Messages.md', 'User Guide', 'SMS Messages']
 - ['usage/messages/Fax-Messages.md', 'User Guide', 'Fax Messages']
 - ['usage/notifications/Subscriptions.md', 'User Guide', 'Subscriptions']
