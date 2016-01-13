@@ -33,6 +33,7 @@ matrix:
 notifications:
   email:
     recipients:
+      - johncwang@gmail.com
       - rc_github@ringcentral.glip.com
     on_success: always
     on_failure: always
