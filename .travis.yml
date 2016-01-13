@@ -28,3 +28,10 @@ matrix:
     - rvm: jruby-19mode
     - rvm: jruby-head
     - rvm: rbx-head
+
+notifications:
+  email:
+    recipients:
+      - rc_github@ringcentral.glip.com
+    on_success: always
+    on_failure: always

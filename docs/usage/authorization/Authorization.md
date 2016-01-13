@@ -45,7 +45,7 @@ token = rcsdk.platform.authorize_code(code)
 
 ## Password Grant
 
-The password grant OAuth 2.0 strategy allows apps that have the user's password credentials to entire them directly on the user's behalf. This is useful for server applications and does not support IdPs for SSO.
+The OAuth 2.0 resource owner password credentials (RPOC) grant allows apps that have the user's password credentials to entire them directly on the user's behalf. This is useful for server applications and does not support IdPs for SSO.
 
 ### Reference Approach
 
