@@ -2,12 +2,12 @@ RingCentral SDK for Ruby
 ========================
 
 [![Gem Version][gem-version-svg]][gem-version-link]
-[![Gem Downloads][gem-downloads-svg]][gem-downloads-link]
 [![Build Status][build-status-svg]][build-status-link]
 [![Coverage Status][coverage-status-svg]][coverage-status-link]
 [![Dependency Status][dependency-status-svg]][dependency-status-link]
 [![Code Climate][codeclimate-status-svg]][codeclimate-status-link]
 [![Scrutinizer Code Quality][scrutinizer-status-svg]][scrutinizer-status-link]
+[![Gem Downloads][gem-downloads-svg]][gem-downloads-link]
 [![Docs][docs-readthedocs-svg]][docs-readthedocs-link]
 [![Docs][docs-rubydoc-svg]][docs-rubydoc-link]
 [![License][license-svg]][license-link]
