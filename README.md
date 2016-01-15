@@ -358,7 +358,7 @@ Please report these on [Github](https://github.com/grokify/ringcentral-sdk-ruby)
 
 RingCentral SDK is available under an MIT-style license. See [LICENSE.txt](LICENSE.txt) for details.
 
-RingCentral SDK &copy; 2015 by John Wang
+RingCentral SDK &copy; 2015-2016 by John Wang
 
  [gem-version-svg]: https://badge.fury.io/rb/ringcentral_sdk.svg
  [gem-version-link]: http://badge.fury.io/rb/ringcentral_sdk
