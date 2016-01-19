@@ -63,6 +63,7 @@ get_all_extensions(rcsdk) retrieves all extensions.
 
 =end 
 
+# Get all account extensions
 def get_all_extensions(rcsdk, account_id='~')
   extension_ids_map = {}
   extensions = []
@@ -119,10 +120,11 @@ def run_subscription(rcsdk, event_filters)
   sub = rcsdk.create_subscription()
   sub.subscribe(event_filters)
 
+  # Add observer
   sub.add_observer(MyObserver.new())
 
+  # Run until user clicks key to finish
   puts "Click any key to finish"
-
   stop_script = gets
 
   # End the subscription

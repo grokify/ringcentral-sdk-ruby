@@ -2,7 +2,7 @@
 
 ## Subscribing to All Extensions
 
-A common use case is to subscribe to the presence events on multiple or all extensions of a RingCentral account. This can be done with 2 API calls for accounts with less than 1000 extensions, adding 1 API call per each additional 1000 extensions. The following code from the `scripts/subscription_all_extensions.rb` demo script shows how this can be done.
+A common use case is to subscribe to the presence events on multiple or all extensions of a RingCentral account. This can be done with 2 API calls for accounts with 1000 or fewer extensions, adding 1 API call per each additional 1000 extensions. The following code from the `scripts/subscription_all_extensions.rb` demo script shows how this can be done.
 
 ### Step 1: List All Extensions
 
@@ -11,6 +11,7 @@ To get a list of all extensions, you can call the `/restapi/v1.0/account/~/exten
 The following code will retrieve all extensions at 1000 extensions per API call:
 
 ```ruby
+# Get all account extensions
 def get_all_extensions(rcsdk, account_id='~')
   extension_ids_map = {}
   extensions = []
@@ -92,6 +93,8 @@ def run_subscription(rcsdk, event_filters)
   # End the subscription
   sub.destroy()
 end
+
+run_subscription(rcsdk, event_filters)
 ```
 
 ## FAQ
