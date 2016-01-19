@@ -16,13 +16,13 @@ To create a call queue and add user extensions to the queue, use the RingCentral
 
 To update a user extension's `dndStatus` it is necessary to get the user's `extensionId` unique id property. There are a few possible approaches to this including the following.
 
-#### Step 2, Option 1: Known User Extension ExtensionNumber
+#### Step 2, Option 1: Explicit User Extension Number Set
 
 A user's `extensionNumber` is visible in the RingCentral Online Account Portal and is the extension number dialed to reach the user, e.g. 101, 102, etc. If you know the extension numbers you are interested in, you can query the `account/~/extension` end point for all extensions and then filter on the extension numbers of interest. This can be performed quickly as this endpoint allows retrieval of up to 1000 extensions per API request.
 
 An easy way to implement this would be to configure a set of extension number values in the application which would then retrieve the extensions 1000 at a time to identify the matching extensions via the `extensionNumber` property.
 
-#### Step 2, Option 2: Known the Call Queue ExtensionNumber
+#### Step 2, Option 2: Call Queue Extension Number Only
 
 To more fully automate retrieval of Call Queue members, you can use the API to query the list of users that are members of a Call Queue by department extension number.
 
