@@ -6,17 +6,17 @@ A fax request helper is included in this SDK to make creating faxes easier.
 
 **Notes**
 
-1. Authorization occurs separately from the individual API requests. To do bulk requests, instantiate a `RingCentralSdk::Sdk` object and then call the `.request()` method or `.platform.client` Faraday client to make multiple requests using the OAuth `access_token`.
-1. Request helpers are subclasses of `RingCentral::Helpers::Request` that provide the `method`, `url`, `content_type`, and `body` methods. These can be used by the Faraday client object or the helper class can be passed directly to the `sdk.request()` and `sdk.platform.request()` methods.
-1. The `sdk.request()` and `sdk.platform.request()` methods only take request helpers as arguments and will raise an exception otherwise.
+1. Authorization occurs separately from the individual API requests. To do bulk requests, instantiate a `RingCentralSdk::Platform` object with `RingCentralSdk.new()` and then call the `.request()` method or `.client` Faraday client to make multiple requests using the OAuth `access_token`.
+1. Request helpers are subclasses of `RingCentral::Helpers::Request` that provide the `method`, `url`, `content_type`, and `body` methods. These can be used by the Faraday client object or the helper class can be passed directly to the `sdk.request()` and `rcsdk.request()` methods.
+1. The `rcsdk.request()` and `rcsdk.request()` methods only take request helpers as arguments and will raise an exception otherwise.
 
 ## Faxing a Text Message
 
 ```ruby
 require 'ringcentral_sdk'
 
-response = RingCentralSdk::Sdk.new(
-  'myAppKey', 'myAppSecret', RingCentralSdk::Sdk::RC_SERVER_SANDBOX,
+response = RingCentralSdk.new(
+  'myAppKey', 'myAppSecret', RingCentralSdk::RC_SERVER_SANDBOX,
   {:username => 'myUsername', :extension => 'myExtension', :password => 'myPassword'}
 ).request(
   RingCentralSdk::Helpers::CreateFaxRequest.new(
@@ -37,8 +37,8 @@ By default, creating a fax creates a `multipart/mixed` message with the body as 
 ```ruby
 require 'ringcentral_sdk'
 
-response = RingCentralSdk::Sdk.new(
-  'myAppKey', 'myAppSecret', RingCentralSdk::Sdk::RC_SERVER_SANDBOX,
+response = RingCentralSdk.new(
+  'myAppKey', 'myAppSecret', RingCentralSdk::RC_SERVER_SANDBOX,
   {:username => 'myUsername', :extension => 'myExtension', :password => 'myPassword'}
 ).request(
   RingCentralSdk::Helpers::CreateFaxRequest.new(
@@ -60,8 +60,8 @@ can be desirable for better debugging.
 ```ruby
 require 'ringcentral_sdk'
 
-response = RingCentralSdk::Sdk.new(
-  'myAppKey', 'myAppSecret', RingCentralSdk::Sdk::RC_SERVER_SANDBOX,
+response = RingCentralSdk.new(
+  'myAppKey', 'myAppSecret', RingCentralSdk::RC_SERVER_SANDBOX,
   {:username => 'myUsername', :extension => 'myExtension', :password => 'myPassword'}
 ).request(
   RingCentralSdk::Helpers::CreateFaxRequest.new(
@@ -178,7 +178,7 @@ To down load a fax mssage from the message store, simply send a `GET` request to
 
 ```ruby
 
-res = rcsdk.platform.client.get do |req|
+res = rcsdk.client.get do |req|
   req.url 'account/111111111/extension/222222222/message-store/333333333/content/4444444444'
 end
 
