@@ -4,19 +4,27 @@
 
 A common use case is to subscribe to the presence events on multiple or all extensions of a RingCentral account. This can be done with 2 API calls for accounts with 1000 or fewer extensions, one API call to get extension info for up to 1000 extensions and a second API call to subscribe to those extensions as event filters. Add 1 API call per each additional 1000 extensions.
 
+### Description
+
 To subscribe to presence events for all extensions, create a set of extension presenence event filters including a presence event filter for every extension, and then create a subscription including all the event filters. A presence event filter includes the accound id and extension id. Here is an example of a single presence event filter using the account id for the authorized session:
 
 ```
 /restapi/v1.0/account/~/extension/111111/presence
 ```
 
-A set of presence event filters looks like the following:
+A set of presence event filters in JSON format looks like the following:
 
 ```
 [
   "/restapi/v1.0/account/~/extension/111111/presence",
   "/restapi/v1.0/account/~/extension/222222/presence"
 ]
+```
+
+Detailed presence events can be retrived by adding the `detailedTelephonyState=true` query string parameter
+
+```
+/restapi/v1.0/account/~/extension/111111/presence?detailedTelephonyState=true
 ```
 
 A full set of extension ids can be retrieved via the extension endpoint: `/restapi/v1.0/account/~/extension`. This has been tested with a single subscription API call and a set of over 2000 extensions.
