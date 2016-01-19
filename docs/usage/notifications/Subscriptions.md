@@ -29,7 +29,7 @@ Detailed presence events can be retrived by adding the `detailedTelephonyState=t
 
 A full set of extension ids can be retrieved via the extension endpoint: `/restapi/v1.0/account/~/extension`. This has been tested with a single subscription API call and a set of over 2000 extensions.
 
-The following code steps from the `scripts/subscription_all_extensions.rb` demo script in the Ruby SDK shows how this can be done.
+The following code steps from the `[`scripts/subscription_all_extensions.rb](https://github.com/grokify/ringcentral-sdk-ruby/blob/master/scripts/subscription_all_extensions.rb)` demo script in the Ruby SDK shows how this can be done.
 
 ### Step 1: List All Extensions
 
