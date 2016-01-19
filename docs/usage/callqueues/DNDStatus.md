@@ -79,7 +79,7 @@ A Call Queue is known as a Department via the API so the `DoNotAcceptDepartmentC
 
 Updating a user extension's `dndStatus` is done via the `presence` API endpoint described below. Performing this action in the RingCentral Online Account Portal is described in [KB Article 3770](http://success.ringcentral.com/articles/en_US/RC_Knowledge_Article/3770).
 
-#### Enable a User Extension for Call Queue Participation
+#### Step 3.1: Enable a User Extension for Call Queue Participation
 
 To enable a user from participating in a Call Queue set the user extension's `dndStatus` to `TakeDepartmentCallsOnly` or `TakeAllCalls`
 
@@ -94,7 +94,7 @@ response = rcsdk.client.put do |req|
 end
 ```
 
-#### Disable a User Extension for Call Queue Participation
+#### Step 3.2: Disable a User Extension for Call Queue Participation
 
 To disable a user from participating in a Call Queue set the user extension's `dndStatus` to `DoNotAcceptDepartmentCalls` or `DoNotAcceptAnyCalls`
 
