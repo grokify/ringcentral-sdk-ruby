@@ -2,7 +2,7 @@
 
 ## Subscribing to All Extensions
 
-A common use case is to subscribe to the presence events on multiple or all extensions of a RingCentral account. This can be done easily for many extensions using the following steps.
+A common use case is to subscribe to the presence events on multiple or all extensions of a RingCentral account. This can be done with 2 API calls for accounts with less than 1000 extensions, adding 1 API call per each additional 1000 extensions. The following code from the `scripts/subscription_all_extensions.rb` demo script shows how this can be done.
 
 ### Step 1: List All Extensions
 
