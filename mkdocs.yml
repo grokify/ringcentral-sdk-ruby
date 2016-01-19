@@ -19,5 +19,8 @@ pages:
 - ['usage/voice/Click-To-Call.md', 'Voice', 'Click-To-Call']
 - ['usage/messages/Call-Recordings.md', 'Voice', 'Call Recordings']
 
+## Call Queues:
+- ['usage/callqueues/DNDStatus.md', 'Call Queues', 'DND Status']
+
 ## Notifications:
 - ['usage/notifications/Subscriptions.md', 'Notifications', 'Subscriptions']

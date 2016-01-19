@@ -6,7 +6,7 @@ A common use case is to subscribe to the presence events on multiple or all exte
 
 ### Description
 
-To subscribe to presence events for all extensions, create a set of extension presenence event filters including a presence event filter for every extension, and then create a subscription including all the event filters. A presence event filter includes the accound id and extension id. Here is an example of a single presence event filter using the account id for the authorized session:
+To subscribe to presence events for all extensions, create a set of extension presence event filters including a presence event filter for every extension, and then create a subscription API call for the event filter array. A presence event filter includes the account id and extension id. Here is an example of a single presence event filter using the account id for the authorized session:
 
 ```
 /restapi/v1.0/account/~/extension/111111/presence
