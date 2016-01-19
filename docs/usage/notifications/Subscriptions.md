@@ -1,5 +1,99 @@
 # Notifications: Subscription API
 
+## Subscribing to All Extensions
+
+A common use case is to subscribe to the presence events on multiple or all extensions of a RingCentral account. This can be done easily for many extensions using the following steps.
+
+### Step 1: List All Extensions
+
+To get a list of all extensions, you can call the `/restapi/v1.0/account/~/extension` API endpoint and request extensions up to 1000 per API call. If you have more than 1000 extensions, you can retrieve subsequent pages of extensions using the `navigation.nextPage.uri` property.
+
+The following code will retrieve all extensions at 1000 extensions per API call:
+
+```ruby
+def get_all_extensions(rcsdk, account_id='~')
+  extension_ids_map = {}
+  extensions = []
+  res = rcsdk.client.get do |req|
+    req.url "/restapi/v1.0/account/#{account_id}/extension"
+    req.params['page']    = 1
+    req.params['perPage'] = 1000
+    req.params['status']  = 'Enabled'
+  end
+  res.body['records'].each do |record|
+    if !extension_ids_map.has_key?(record['id'])
+      extensions.push record
+      extension_ids_map[record['id']] = 1
+    end
+  end
+  while res.body.has_key?('navigation') && res.body['navigation'].has_key?('nextPage')
+    res = rcsdk.client.get do |req|
+      req.url res.body['navigation']['nextPage']['uri']
+    end
+    res.body['records'].each do |record|
+      if !extension_ids_map.has_key?(record['id'])
+        extensions.push record
+        extension_ids_map[record['id']] = 1
+      end
+    end
+  end
+  return extensions
+end
+
+extensions = get_all_extensions(rcsdk)
+```
+
+### Step 2: Build an Array of Event Filters
+
+To create an array of extension presence event filters of the following format:
+
+```
+/restapi/v1.0/account/#{account_id}/extension/#{ext['id']}/presence?detailedTelephonyState=true
+```
+
+Convert the array of extension above to an array of event_filters with the following:
+
+```ruby
+# Create an array of event_filters from the array of extensions
+def get_event_filters_for_extensions(extensions, account_id='~')
+  event_filters = []
+
+  extensions.each do |ext|
+    if ext.has_key?('id')
+      event_filter = "/restapi/v1.0/account/#{account_id}/extension/#{ext['id']}" +
+        "/presence?detailedTelephonyState=true"
+      event_filters.push event_filter
+    end
+  end
+  return event_filters
+end
+
+event_filters = get_event_filters_for_extensions(extensions)
+```
+
+### Step 3: Subscribe to Presence Events of Extensions Array
+
+For the array of extension presents event filters, a single subscription API is needed as follows:
+
+```ruby
+# Run the event filters in a single subscription API call
+def run_subscription(rcsdk, event_filters)
+  # Create an observable subscription and add your observer
+  sub = rcsdk.create_subscription()
+  sub.subscribe(event_filters)
+
+  # Add observer
+  sub.add_observer(MyObserver.new())
+
+  # Run until user clicks key to finish
+  puts "Click any key to finish"
+  stop_script = gets
+
+  # End the subscription
+  sub.destroy()
+end
+```
+
 ## FAQ
 
 ### How can I subscribe to all extensions

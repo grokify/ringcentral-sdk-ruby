@@ -1,6 +1,7 @@
 #!ruby
 
 require 'multi_json'
+require 'pp'
 require 'ringcentral_sdk'
 
 =begin 
@@ -62,11 +63,11 @@ get_all_extensions(rcsdk) retrieves all extensions.
 
 =end 
 
-def get_all_extensions(rcsdk)
+def get_all_extensions(rcsdk, account_id='~')
   extension_ids_map = {}
   extensions = []
   res = rcsdk.client.get do |req|
-    req.url '/restapi/v1.0/account/~/extension'
+    req.url "/restapi/v1.0/account/#{account_id}/extension"
     req.params['page']    = 1
     req.params['perPage'] = 1000
     req.params['status']  = 'Enabled'
@@ -91,17 +92,18 @@ def get_all_extensions(rcsdk)
   return extensions
 end
 
-extensions = get_all_extensions(rcsdk)
-
 # Create an array of event_filters from the array of extensions
+def get_event_filters_for_extensions(extensions, account_id='~')
+  event_filters = []
 
-event_filters = []
-
-extensions.each do |ext|
-  if ext.has_key?('id')
-    event_filter = "/restapi/v1.0/account/~/extension/#{ext['id']}/presence?detailedTelephonyState=true"
-    event_filters.push event_filter
+  extensions.each do |ext|
+    if ext.has_key?('id')
+      event_filter = "/restapi/v1.0/account/#{account_id}/extension/#{ext['id']}" +
+        "/presence?detailedTelephonyState=true"
+      event_filters.push event_filter
+    end
   end
+  return event_filters
 end
 
 # An example observer object
@@ -127,6 +129,10 @@ def run_subscription(rcsdk, event_filters)
   sub.destroy()
 end
 
+# Get all extensions
+extensions = get_all_extensions(rcsdk)
+# Get event filters for extensions
+event_filters = get_event_filters_for_extensions(extensions)
 # Make a subscription for all event_filters
 run_subscription(rcsdk, event_filters)
 
