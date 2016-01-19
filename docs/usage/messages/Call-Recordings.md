@@ -8,7 +8,7 @@ Calls with recordings can be identified using the Call Log API and locating reco
 
 ```ruby
 # Make API call (with Access Token added by SDK)
-response = rcsdk.platform.client.get do |req|
+response = rcsdk.client.get do |req|
   req.url 'myRecordingUri'
 end
 # Save call recording to file
@@ -23,13 +23,13 @@ The below example uses a call log record filter to locate voice calls with call 
 require 'json'
 require 'ringcentral_sdk'
 
-rcsdk = RingCentralSdk::Sdk.new(
-  'myAppKey', 'myAppSecret', RingCentralSdk::Sdk::RC_SERVER_SANDBOX
+rcsdk = RingCentralSdk.new(
+  'myAppKey', 'myAppSecret', RingCentralSdk::RC_SERVER_SANDBOX
 )
-rcsdk.platform.authorize('myUsername', 'myExtension', 'myPassword')
+rcsdk.authorize('myUsername', 'myExtension', 'myPassword')
 
 # Retrieve voice call log records with recordings
-response = rcsdk.platform.client.get do |req|
+response = rcsdk.client.get do |req|
   params = {:type => 'Voice', :withRecording => 'True'}
   req.url 'account/~/extension/~/call-log', params
 end
@@ -37,7 +37,7 @@ end
 # Save recording and metadata for each call log record
 response.body['records'].each do |record|
   # Retrieve call recording
-  response_file = rcsdk.platform.client.get do |req|
+  response_file = rcsdk.client.get do |req|
     req.url record['recording']['contentUri']
   end
   # Save call recording
