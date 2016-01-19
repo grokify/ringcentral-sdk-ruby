@@ -71,7 +71,7 @@ end
 extensions = get_all_extensions(rcsdk)
 ```
 
-### Step 2: Build an Array of Event Filters
+### Step 2: Build an Array of Event Filters from Extensions
 
 To create an array of extension presence event filters of the following format:
 
@@ -99,7 +99,7 @@ end
 event_filters = get_event_filters_for_extensions(extensions)
 ```
 
-### Step 3: Subscribe to Presence Events of Extensions Array
+### Step 3: Subscribe to Presence Events for an Array of Extensions
 
 For the array of extension presents event filters, a single subscription API is needed as follows:
 
