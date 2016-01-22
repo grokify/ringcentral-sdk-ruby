@@ -40,7 +40,7 @@ extension_presence.department_calls_enable true
 extension_presence.department_calls_enable false
 
 ## Check Call Queue calls enabled
-extension_presence.department_calls_enabled?
+extension_presence.department_calls_enabled? # true or false
 ```
 
 ## Details

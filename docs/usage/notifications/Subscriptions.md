@@ -31,45 +31,21 @@ A full set of extension ids can be retrieved via the extension endpoint: `/resta
 
 The following code steps from the [`scripts/subscription_all_extensions.rb`](https://github.com/grokify/ringcentral-sdk-ruby/blob/master/scripts/subscription_all_extensions.rb) demo script in the Ruby SDK shows how this can be done.
 
-### Step 1: List All Extensions
+### Step 1: List All Extensions Ids
 
-To get a list of all extensions, you can call the `/restapi/v1.0/account/~/extension` API endpoint and request extensions up to 1000 per API call. If you have more than 1000 extensions, you can retrieve subsequent pages of extensions using the `navigation.nextPage.uri` property.
-
-The following code will retrieve all extensions at 1000 extensions per API call:
+To get a list of all extensions, you can use `RingCentralSdk::Cache::Extensions` to retrieve all extensions of interest.
 
 ```ruby
-# Get all account extensions
-def get_all_extensions(rcsdk, account_id='~')
-  extension_ids_map = {}
-  extensions = []
-  res = rcsdk.client.get do |req|
-    req.url "/restapi/v1.0/account/#{account_id}/extension"
-    req.params['page']    = 1
-    req.params['perPage'] = 1000
-    req.params['status']  = 'Enabled'
-  end
-  res.body['records'].each do |record|
-    if !extension_ids_map.has_key?(record['id'])
-      extensions.push record
-      extension_ids_map[record['id']] = 1
-    end
-  end
-  while res.body.has_key?('navigation') && res.body['navigation'].has_key?('nextPage')
-    res = rcsdk.client.get do |req|
-      req.url res.body['navigation']['nextPage']['uri']
-    end
-    res.body['records'].each do |record|
-      if !extension_ids_map.has_key?(record['id'])
-        extensions.push record
-        extension_ids_map[record['id']] = 1
-      end
-    end
-  end
-  return extensions
-end
-
-extensions = get_all_extensions(rcsdk)
+# Retrieve all Enabled extensions
+extensions = RingCentralSdk::Cache::Extensions.new rcapi
+extensions.retrieve 'account/~/extension', {'status' => 'Enabled'}, true
+extension_ids = extensions.extensions_hash.keys
 ```
+
+The SDK performs this using the following steps:
+
+1. Retrieve extensions using the `account/~/extension` endpoint
+2. If the retrieve all parameter is set to true, follow subsequent `navigation.nextPage.uri` properties until complete
 
 ### Step 2: Build an Array of Event Filters from Extensions
 
@@ -83,12 +59,12 @@ Convert the array of extension above to an array of event_filters with the follo
 
 ```ruby
 # Create an array of event_filters from the array of extensions
-def get_event_filters_for_extensions(extensions, account_id='~')
+def get_event_filters_for_extensions(extension_ids, account_id='~')
   event_filters = []
 
-  extensions.each do |ext|
-    if ext.has_key?('id')
-      event_filter = "/restapi/v1.0/account/#{account_id}/extension/#{ext['id']}" +
+  extension_ids.each do |extension_id|
+    if extension_id
+      event_filter = "/restapi/v1.0/account/#{account_id}/extension/#{extension_id}" +
         "/presence?detailedTelephonyState=true"
       event_filters.push event_filter
     end
@@ -96,7 +72,7 @@ def get_event_filters_for_extensions(extensions, account_id='~')
   return event_filters
 end
 
-event_filters = get_event_filters_for_extensions(extensions)
+event_filters = get_event_filters_for_extensions(extension_ids)
 ```
 
 ### Step 3: Subscribe to Presence Events for an Array of Extensions

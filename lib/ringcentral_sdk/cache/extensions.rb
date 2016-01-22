@@ -20,9 +20,9 @@ module RingCentralSdk::Cache
 
     def retrieve(url="account/#{account_id}/extension", params={}, retrieve_all=true)
       @last_retrieved = Time.now.to_i
-      uri = URI.parse(url)
+      uri = URI.parse url
       if params.length > 0 
-        uri.query = URI.encode_www_form(params)
+        uri.query = URI.encode_www_form params
       end
       res = @rc_api.client.get do |req|
         req.url uri.to_s
@@ -108,7 +108,7 @@ module RingCentralSdk::Cache
       if res.body.has_key?('records')
         res.body['records'].each do |extension|
           if extension.has_key?('id')
-            member = get_extension_by_id(extension['id'])
+            member = get_extension_by_id extension['id']
             if !member.nil?
               members.push member
             end
