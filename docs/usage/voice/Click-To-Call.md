@@ -12,9 +12,12 @@ Both are covered here.
 To initiate a RingOut API call, call the ringout endpoint. While the `from` number is optional, if it is used, it must match one of the configured forwarding numbers with the `CallForwarding` feature.
 
 ```ruby
-# RingOut Example
+# Instantiate client SDK
+rcapi = RingCentralSdk.new ...
+rcapi.login ...
 
-response = rcsdk.client.post do |req|
+# RingOut Example
+response = rcapi.client.post do |req|
   req.url 'account/~/extension/~/ringout'
   req.headers['Content-Type'] = 'application/json'
   req.body = {
@@ -34,8 +37,7 @@ To retrieve a list of phone numbers, make a `GET` request to the `extension/forw
 
 ```ruby
 # Phone Number Example
-
-response = rcsdk.client.get do |req|
+response = rcapi.client.get do |req|
   req.url 'account/~/extension/~/phone-number'
 end
 ```
@@ -65,8 +67,7 @@ To retrieve a list of phone numbers, make a `GET` request to the `extension/phon
 
 ```ruby
 # Phone Number Example
-
-response = rcsdk.client.get do |req|
+response = rcapi.client.get do |req|
   req.url 'account/~/extension/~/phone-number'
 end
 ```

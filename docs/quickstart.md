@@ -10,12 +10,11 @@ More detailed information on initialization and authorization is available in th
 ```ruby
 require 'ringcentral_sdk'
 
-rcsdk = RingCentralSdk::Sdk.new(
+rcapi = RingCentralSdk.new(
   "myAppKey",
   "myAppSecret",
   RingCentralSdk::Sdk::RC_SERVER_SANDBOX
 )
-platform = rcsdk.platform
 ```
 
 ### Authorization
@@ -23,11 +22,11 @@ platform = rcsdk.platform
 ```ruby
 # Initialize using user phone number without extension number
 
-platform.authorize("myUsername", nil, "myPassword")
+rcapi.authorize("myUsername", nil, "myPassword")
 
 # Initialize using main phone number and extension number
 
-platform.authorize("myUsername", "myExtension", "myPassword")
+rcapi.authorize("myUsername", "myExtension", "myPassword")
 ```
 
 See the [Authorization section](usage/authorization/Authorization.md) for more examples, including
@@ -40,7 +39,7 @@ Requests are made using the inclued Faraday client which adds the requisite OAut
 Any API request can be made via this method.
 
 ```ruby
-client = rcsdk.platform.client
+client = rcapi.client
 ```
 ## Create SMS Message
 
@@ -48,8 +47,7 @@ SMS and other requests can be easily sent directly without helpers.
 
 ```ruby
 # Send SMS - POST request
-
-response = client.post do |req|
+response = rcapi.client.post do |req|
   req.url 'account/~/extension/~/sms'
   req.headers['Content-Type'] = 'application/json'
   req.body = {

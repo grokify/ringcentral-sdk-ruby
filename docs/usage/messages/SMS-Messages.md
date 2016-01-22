@@ -7,9 +7,12 @@ Sending and receiving SMS is a core capability of RingCentral. Features include 
 SMS requests can be easily sent directly without helpers.
 
 ```ruby
-# SMS Example
+# Instantiate client SDK
+rcapi = RingCentralSdk.new ...
+rcapi.login ... # OAuth authorization
 
-response = rcsdk.client.post do |req|
+# SMS Example
+response = rcapi.client.post do |req|
   req.url 'account/~/extension/~/sms'
   req.headers['Content-Type'] = 'application/json'
   req.body = {
@@ -29,7 +32,7 @@ To retrieve a list of phone numbers, make a `GET` request to the `extension/phon
 ```ruby
 # Phone Number Example
 
-response = rcsdk.client.get do |req|
+response = rcapi.client.get do |req|
   req.url 'account/~/extension/~/phone-number'
 end
 ```

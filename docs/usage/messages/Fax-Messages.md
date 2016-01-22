@@ -177,7 +177,6 @@ One approach to handling this is to poll the message store API or the individual
 To down load a fax mssage from the message store, simply send a `GET` request to the message store URI and save the output as a binary file.
 
 ```ruby
-
 res = rcsdk.client.get do |req|
   req.url 'account/111111111/extension/222222222/message-store/333333333/content/4444444444'
 end
