@@ -73,7 +73,7 @@ module RingCentralSdk::Helpers
       return @presence_info
     end
 
-    def status_enable_dnd_department_calls(current_status)
+    def status_enable_department_calls(current_status)
       new_status = current_status
 
       new_statuses = {
@@ -88,7 +88,7 @@ module RingCentralSdk::Helpers
       return new_status
     end
 
-    def status_disable_dnd_department_calls(current_status)
+    def status_disable_department_calls(current_status)
       new_status = current_status
 
       new_statuses = {

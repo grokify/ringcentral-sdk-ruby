@@ -34,10 +34,10 @@ extension_id = call_queue_members[0]['id']
 extension_presence = RingCentralSdk::Helpers::ExtensionPresence.new(rcapi, extension_id)
 
 ## Enable Call Queue calls
-extension_presence.enable_dnd_department_calls()
+extension_presence.enable_department_calls()
 
 ## Enable Call Queue calls
-extension_presence.disable_dnd_department_calls()
+extension_presence.disable_department_calls()
 ```
 
 ## Details
@@ -131,7 +131,7 @@ The above is implemented in `RingCentralSdk::Helpers::ExtensionPresence` ([lib/r
 extension_id = 111111
 
 extension_presence = RingCentralSdk::Helpers::ExtensionPresence.new(rcapi, extension_id)
-extension_presence.enable_dnd_department_calls()
+extension_presence.enable_department_calls()
 ```
 
 #### Step 3.2: Disable a User Extension for Call Queue Calls
@@ -148,5 +148,5 @@ The above is implemented in `RingCentralSdk::Helpers::ExtensionPresence` ([lib/r
 extension_id = 111111
 
 extension_presence = RingCentralSdk::Helpers::ExtensionPresence.new(rcapi, extension_id)
-extension_presence.disable_dnd_department_calls()
+extension_presence.disable_department_calls()
 ```
