@@ -1,4 +1,4 @@
-lib = "ringcentral_sdk"
+lib = 'ringcentral_sdk'
 lib_file = File.expand_path("../lib/#{lib}.rb", __FILE__)
 File.read(lib_file) =~ /\bVERSION\s*=\s*["'](.+?)["']/
 version = $1
@@ -7,7 +7,7 @@ version = $1
 Gem::Specification.new do |s|
   s.name        = 'ringcentral_sdk'
   s.version     = version
-  s.date        = '2016-01-15'
+  s.date        = '2016-01-21'
   s.summary     = 'RingCentral SDK - Ruby SDK for the RingCentral Connect Platform API'
   s.description = 'A Ruby SDK for the RingCentral Connect Platform API'
   s.authors     = ['John Wang']

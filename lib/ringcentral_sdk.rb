@@ -1,10 +1,11 @@
 module RingCentralSdk
 
-  VERSION = '0.5.1'
+  VERSION = '0.5.2'
 
   RC_SERVER_PRODUCTION = 'https://platform.ringcentral.com'
   RC_SERVER_SANDBOX    = 'https://platform.devtest.ringcentral.com'
 
+  autoload :Cache, 'ringcentral_sdk/cache'
   autoload :Helpers, 'ringcentral_sdk/helpers'
   autoload :Platform, 'ringcentral_sdk/platform'
   autoload :Simple, 'ringcentral_sdk/simple'
