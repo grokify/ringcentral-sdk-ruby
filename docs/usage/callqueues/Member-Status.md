@@ -20,13 +20,13 @@ rcapi.login(...) # can be ROPC grant or authorization code grant
 # Retrieve a Call Queue Extension by Extension Number to Store in Your App
 call_queue_extension_number = 201
 
-cache = RingCentralSdk::Cache::Extensions.new(rcapi)
-cache.retrieve_all()
+extensions = RingCentralSdk::Cache::Extensions.new(rcapi)
+extensions.retrieve_all()
 
-call_queue = cache.get_extension_by_number(call_queue_extension_number)
+call_queue = extensions.get_extension_by_number(call_queue_extension_number)
 
 # Retrieve Call Queue Members by Call Queue Id to Map to Your User Database
-call_queue_members = cache.get_department_members(call_queue['id'])
+call_queue_members = extensions.get_department_members(call_queue['id'])
 
 # Enable and Disable Call Queue Member Status
 extension_id = call_queue_members[0]['id']
@@ -74,10 +74,10 @@ The above is implemented in `RingCentralSdk::Cache::Extensions` ([lib/ringcentra
 # Retrieve a Call Queue Extension by Extension Number
 call_queue_extension_number = 201
 
-cache = RingCentralSdk::Cache::Extensions.new(rcapi)
-cache.retrieve_all()
+extensions = RingCentralSdk::Cache::Extensions.new(rcapi)
+extensions.retrieve_all()
 
-call_queue = cache.get_extension_by_number(call_queue_extension_number)
+call_queue = extensions.get_extension_by_number(call_queue_extension_number)
 ```
 
 #### Step 2.2. Retrieve the call queue members
@@ -94,8 +94,8 @@ The above is implemented in `RingCentralSdk::Cache::Extensions` ([lib/ringcentra
 
 ```ruby
 # Retrieve Call Queue Members by Call Queue Id
-# Call cache.retrieve_all() first as shown above
-call_queue_members = cache.get_department_members(call_queue['id'])
+# Call extensions.retrieve_all() first as shown above
+call_queue_members = extensions.get_department_members(call_queue['id'])
 ```
 
 #### Step 2.3: Map queue members to your user objects
