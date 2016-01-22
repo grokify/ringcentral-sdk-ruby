@@ -20,7 +20,7 @@ pages:
 - ['usage/messages/Call-Recordings.md', 'Voice', 'Call Recordings']
 
 ## Call Queues:
-- ['usage/callqueues/DNDStatus.md', 'Call Queues', 'DND Status']
+- ['usage/callqueues/Member-Status.md', 'Call Queues', 'Member Status']
 
 ## Notifications:
 - ['usage/notifications/Subscriptions.md', 'Notifications', 'Subscriptions']
