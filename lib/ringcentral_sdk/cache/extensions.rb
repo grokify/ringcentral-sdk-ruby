@@ -18,9 +18,9 @@ module RingCentralSdk::Cache
       @last_retrieved = -1
     end
 
-    def retrieve(url="account/#{account_id}/extension", params={}, retrieve_all=true)
+    def retrieve(params={}, retrieve_all=true)
       @last_retrieved = Time.now.to_i
-      uri = URI.parse url
+      uri = URI.parse "account/#{@account_id}/extension"
       if params.length > 0 
         uri.query = URI.encode_www_form params
       end
@@ -53,7 +53,7 @@ module RingCentralSdk::Cache
     end
 
     def retrieve_all()
-      retrieve("account/#{account_id}/extension", {}, true)
+      retrieve({}, true)
     end
 
     def inflate_num2id()

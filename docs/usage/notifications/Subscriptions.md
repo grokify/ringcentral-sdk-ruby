@@ -42,13 +42,13 @@ rc_api.login ... # Authorize
 
 # Retrieve all Enabled extensions
 extensions = RingCentralSdk::Cache::Extensions.new rc_api
-extensions.retrieve 'account/~/extension', {'status' => 'Enabled'}, true
+extensions.retrieve {'status' => 'Enabled'}, true
 extension_ids = extensions.extensions_hash.keys
 ```
 
 The SDK performs this using the following steps:
 
-1. Retrieve extensions using the `account/~/extension` endpoint
+1. Retrieve extensions using the `account/#{@account_id}/extension` endpoint
 2. If the retrieve all parameter is set to true, follow subsequent `navigation.nextPage.uri` properties until complete
 
 ### Step 2: Build an Array of Event Filters from Extensions
