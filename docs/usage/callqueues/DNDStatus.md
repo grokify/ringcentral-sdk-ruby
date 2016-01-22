@@ -21,10 +21,13 @@ These steps are described below including general steps as well as code using th
 The following presents and overview of the code used. The Details section discusses each of these steps in more detail and identifies the code being used in the SDK for reference.
 
 ```ruby
+# Instantiate client SDK and authorize as administrator
+rcapi = RingCentralSdk.new(...)
+rcapi.login(...) # ROPC grant login (or authorization code login)
+
 # Retrieve a Call Queue Extension by Extension Number to Store in Your App
 call_queue_extension_number = 201
 
-rcapi = RingCentralSdk.new(...)
 cache = RingCentralSdk::Cache::Extensions.new(rcapi)
 cache.retrieve_all()
 
