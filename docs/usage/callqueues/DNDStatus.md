@@ -23,7 +23,7 @@ The following presents and overview of the code used. The Details section discus
 ```ruby
 # Instantiate client SDK and authorize as administrator
 rcapi = RingCentralSdk.new(...)
-rcapi.login(...) # ROPC grant login (or authorization code login)
+rcapi.login(...) # can be ROPC grant or authorization code grant
 
 # Retrieve a Call Queue Extension by Extension Number to Store in Your App
 call_queue_extension_number = 201
