@@ -39,7 +39,7 @@ module RingCentralSdk::Helpers
       current_status = @presence_info['dndStatus']
       new_status = status_enable_dnd_department_calls(current_status)
       if current_status != new_status
-
+        update_presence({:dndStatus => new_status})
       end
     end
 
@@ -64,14 +64,15 @@ module RingCentralSdk::Helpers
         req.headers['Content-Type'] = 'application/json'
         req.body = body
       end
+      @presence_info = res.body
       return res
     end
 
     def status_enable_dnd_department_calls(current_status)
       new_status = current_status
-      if current_status == 'DoNotAcceptAnyCalls'
+      if current_status.to_s == 'DoNotAcceptAnyCalls'
       	new_status = 'TakeDepartmentCallsOnly'
-      elsif current_status == 'DoNotAcceptDepartmentCalls'
+      elsif current_status.to_s == 'DoNotAcceptDepartmentCalls'
       	new_status = 'TakeAllCalls'
       end
       return new_status
@@ -79,9 +80,9 @@ module RingCentralSdk::Helpers
 
     def status_disable_dnd_department_calls(current_status)
       new_status = current_status
-      if current_status == 'TakeAllCalls'
+      if current_status.to_s == 'TakeAllCalls'
       	new_status = 'DoNotAcceptDepartmentCalls'
-      elsif current_status == 'TakeDepartmentCallsOnly'
+      elsif current_status.to_s == 'TakeDepartmentCallsOnly'
       	new_status = 'DoNotAcceptAnyCalls'
       end
       return new_status
