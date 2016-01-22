@@ -24,21 +24,21 @@ module RingCentralSdk::Helpers
 
       @presence_info = res.body
 
-      return @presence_info  
+      return @presence_info
     end
 
     def enable_dnd_department_calls()
       retrieve()
 
       if !@presence_info.has_key?('dndStatus')
-      	raise 'invalid presence info'
+        raise 'invalid presence info'
       end
 
       current_status = @presence_info['dndStatus']
       new_status = status_enable_dnd_department_calls(current_status)
 
       if current_status != new_status
-        update_presence({:dndStatus => new_status})
+        update({:dndStatus => new_status})
       end
     end
 
@@ -46,20 +46,20 @@ module RingCentralSdk::Helpers
       retrieve()
 
       if !@presence_info.has_key?('dndStatus')
-      	raise 'invalid presence info'
+        raise 'invalid presence info'
       end
 
       current_status = @presence_info['dndStatus']
       new_status = status_disable_dnd_department_calls(current_status)
-      
+
       if current_status != new_status
-        update_presence({:dndStatus => new_status})
+        update({:dndStatus => new_status})
       end
     end
 
-    def update_presence(body=nil)
+    def update(body=nil)
       if body.nil?
-      	raise 'cannot update presence with no body'
+        raise 'HTTP request body is required to update presence'
       end
 
       res = @rc_api.client.put do |req|
@@ -70,16 +70,19 @@ module RingCentralSdk::Helpers
       
       @presence_info = res.body
 
-      return res
+      return @presence_info
     end
 
     def status_enable_dnd_department_calls(current_status)
       new_status = current_status
 
-      if current_status.to_s == 'DoNotAcceptAnyCalls'
-      	new_status = 'TakeDepartmentCallsOnly'
-      elsif current_status.to_s == 'DoNotAcceptDepartmentCalls'
-      	new_status = 'TakeAllCalls'
+      new_statuses = {
+        'DoNotAcceptAnyCalls' => 'TakeDepartmentCallsOnly',
+        'DoNotAcceptDepartmentCalls' => 'TakeAllCalls'
+      }
+
+      if new_statuses.has_key?(current_status.to_s)
+        new_status = new_statuses[current_status.to_s]
       end
 
       return new_status
@@ -88,10 +91,13 @@ module RingCentralSdk::Helpers
     def status_disable_dnd_department_calls(current_status)
       new_status = current_status
 
-      if current_status.to_s == 'TakeAllCalls'
-      	new_status = 'DoNotAcceptDepartmentCalls'
-      elsif current_status.to_s == 'TakeDepartmentCallsOnly'
-      	new_status = 'DoNotAcceptAnyCalls'
+      new_statuses = {
+        'TakeAllCalls' => 'DoNotAcceptDepartmentCalls',
+        'TakeDepartmentCallsOnly' => 'DoNotAcceptAnyCalls'
+      }
+
+      if new_statuses.has_key?(current_status.to_s)
+        new_status = new_statuses[current_status.to_s]
       end
 
       return new_status

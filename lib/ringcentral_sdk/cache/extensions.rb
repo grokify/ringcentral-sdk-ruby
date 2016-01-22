@@ -5,18 +5,20 @@ module RingCentralSdk::Cache
   class Extensions
 
     attr_accessor :rc_api
+    attr_accessor :account_id
     attr_reader :extensions_hash
     attr_reader :extensions_num2id
     attr_reader :last_retrieved
 
     def initialize(rc_api)
       @rc_api = rc_api
+      @account_id = '~'
       @extensions_hash = {}
       @extensions_num2id = {}
       @last_retrieved = -1
     end
 
-    def retrieve(url='account/~/extension', params={}, retrieve_all=true)
+    def retrieve(url="account/#{account_id}/extension", params={}, retrieve_all=true)
       @last_retrieved = Time.now.to_i
       uri = URI.parse(url)
       if params.length > 0 
@@ -51,7 +53,7 @@ module RingCentralSdk::Cache
     end
 
     def retrieve_all()
-      retrieve('account/~/extension', {}, true)
+      retrieve("account/#{account_id}/extension", {}, true)
     end
 
     def inflate_num2id()
@@ -100,7 +102,7 @@ module RingCentralSdk::Cache
       members = []
 
       res = @rc_api.client.get do |req|
-        req.url "account/~/department/#{department_id}/members"
+        req.url "account/#{account_id}/department/#{department_id}/members"
       end
 
       if res.body.has_key?('records')
