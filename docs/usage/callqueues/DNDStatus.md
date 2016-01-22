@@ -68,11 +68,12 @@ Create an object to represent a RingCentral call queue object in your applicatio
 
 The retieve the call queue extension information to store with your app.
 
+The above is implemented in `RingCentralSdk::Cache::Extensions` ([lib/ringcentral_sdk/cache/extensions.rb](https://github.com/grokify/ringcentral-sdk-ruby/blob/master/lib/ringcentral_sdk/cache/extensions.rb)) and can be used as follows:
+
 ```ruby
 # Retrieve a Call Queue Extension by Extension Number
 call_queue_extension_number = 201
 
-rcapi = RingCentralSdk.new(...)
 cache = RingCentralSdk::Cache::Extensions.new(rcapi)
 cache.retrieve_all()
 
@@ -93,6 +94,7 @@ The above is implemented in `RingCentralSdk::Cache::Extensions` ([lib/ringcentra
 
 ```ruby
 # Retrieve Call Queue Members by Call Queue Id
+# Call cache.retrieve_all() first as shown above
 call_queue_members = cache.get_department_members(call_queue['id'])
 ```
 
