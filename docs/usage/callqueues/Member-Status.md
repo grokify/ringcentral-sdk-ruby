@@ -14,30 +14,33 @@ The following presents useful code for managing call queue member status given a
 
 ```ruby
 # Instantiate client SDK and authorize as administrator
-rcapi = RingCentralSdk.new(...)
-rcapi.login(...) # can be ROPC grant or authorization code grant
+rcapi = RingCentralSdk.new ...
+rcapi.login ... # can be ROPC grant or authorization code grant
 
 # Retrieve a Call Queue Extension by Extension Number to Store in Your App
 call_queue_extension_number = 201
 
-extensions = RingCentralSdk::Cache::Extensions.new(rcapi)
-extensions.retrieve_all()
+extensions = RingCentralSdk::Cache::Extensions.new rcapi
+extensions.retrieve_all
 
 call_queue = extensions.get_extension_by_number(call_queue_extension_number)
 
 # Retrieve Call Queue Members by Call Queue Id to Map to Your User Database
-call_queue_members = extensions.get_department_members(call_queue['id'])
+call_queue_members = extensions.get_department_members call_queue['id']
 
 # Enable and Disable Call Queue Member Status
 extension_id = call_queue_members[0]['id']
 
-extension_presence = RingCentralSdk::Helpers::ExtensionPresence.new(rcapi, extension_id)
+extension_presence = RingCentralSdk::Helpers::ExtensionPresence.new rcapi, extension_id
 
 ## Enable Call Queue calls
-extension_presence.enable_department_calls()
+extension_presence.department_calls_enable true
 
 ## Disable Call Queue calls
-extension_presence.disable_department_calls()
+extension_presence.department_calls_enable false
+
+## Check Call Queue calls enabled
+extension_presence.department_calls_enabled?
 ```
 
 ## Details
@@ -68,35 +71,35 @@ Create an object to represent a RingCentral call queue object in your applicatio
 
 The retieve the call queue extension information to store with your app.
 
-The above is implemented in `RingCentralSdk::Cache::Extensions` ([lib/ringcentral_sdk/cache/extensions.rb](https://github.com/grokify/ringcentral-sdk-ruby/blob/master/lib/ringcentral_sdk/cache/extensions.rb)) and can be used as follows:
-
 ```ruby
 # Retrieve a Call Queue Extension by Extension Number
 call_queue_extension_number = 201
 
-extensions = RingCentralSdk::Cache::Extensions.new(rcapi)
+extensions = RingCentralSdk::Cache::Extensions.new rcapi
 extensions.retrieve_all()
 
-call_queue = extensions.get_extension_by_number(call_queue_extension_number)
+call_queue = extensions.get_extension_by_number call_queue_extension_number
 ```
+
+The above is implemented in `RingCentralSdk::Cache::Extensions` ([lib/ringcentral_sdk/cache/extensions.rb](https://github.com/grokify/ringcentral-sdk-ruby/blob/master/lib/ringcentral_sdk/cache/extensions.rb)).
 
 #### Step 2.2. Retrieve the call queue members
 
-In an end-user application, allow the user to enter call queue's extension number and then retrieve the call queue member information.
+In an end-user application, after retrieving the configured call queue extension information, use the SDK to retrieve the call queue member information as follows:
 
-To perform these steps using the RingCentral API, perform the following steps:
+```ruby
+# Retrieve Call Queue Members by Call Queue Id
+# Call extensions.retrieve_all() first as shown above
+call_queue_members = extensions.get_department_members call_queue['id']
+```
+
+The SDK performs this using the following steps:
 
 1. Locate the call queue extension id by retrieving an extension list from the API and performing a client-side filter on `extensionNumber`. At the API, this can either be full extension list or filtered on `type=Department` for call queue extensions.
 2. Call the `department/members` API endpoint to retrieve a list of member extension ids and extension numbers
 3. Call the extension API endpoint to retrieve the full information for each call queue member
 
-The above is implemented in `RingCentralSdk::Cache::Extensions` ([lib/ringcentral_sdk/cache/extensions.rb](https://github.com/grokify/ringcentral-sdk-ruby/blob/master/lib/ringcentral_sdk/cache/extensions.rb)) and can be used as follows:
-
-```ruby
-# Retrieve Call Queue Members by Call Queue Id
-# Call extensions.retrieve_all() first as shown above
-call_queue_members = extensions.get_department_members(call_queue['id'])
-```
+The above is implemented in `RingCentralSdk::Cache::Extensions` ([lib/ringcentral_sdk/cache/extensions.rb](https://github.com/grokify/ringcentral-sdk-ruby/blob/master/lib/ringcentral_sdk/cache/extensions.rb)).
 
 #### Step 2.3: Map queue members to your user objects
 
@@ -119,36 +122,41 @@ Updating a user extension's `dndStatus` is done via the `presence` API endpoint 
 
 #### Step 3.1: Enable a User Extension for Call Queue Calls
 
-To enable a user for Call Queue calls, ensure that the extension's `dndStatus` is accepting department calls per the table above. This involves the following steps:
-
-1. Retrieve the extension's current presence `dndStatus` using the `extension/presence` endpoint
-2. Check to see if the extension's `dndStatus` includes department (call queue) calls
-3. If the presence does not include department calls, update the `extension/presence` endpoint with the appropriate new status
-
-The above is implemented in `RingCentralSdk::Helpers::ExtensionPresence` ([lib/ringcentral_sdk/helpers/extension_presence.rb](https://github.com/grokify/ringcentral-sdk-ruby/blob/master/lib/ringcentral_sdk/helpers/extension_presence.rb)) and can be used as follows:
+To enable a user for Call Queue calls, ensure that the extension's `dndStatus` is accepting department calls per the table above. This can be done by disabling department calls as follows:
 
 ```ruby
 # Enable Call Queue calls
 extension_id = 111111 # e.g. call_queue_members[0]['id']
 
-extension_presence = RingCentralSdk::Helpers::ExtensionPresence.new(rcapi, extension_id)
-extension_presence.enable_department_calls()
+extension_presence = RingCentralSdk::Helpers::ExtensionPresence.new rcapi, extension_id
+extension_presence.department_calls_enable true
 ```
+
+The SDK performs this using the following steps:
+
+1. Retrieve the extension's current presence `dndStatus` using the `extension/presence` endpoint
+2. Check to see if the extension's `dndStatus` includes department (call queue) calls
+3. If the presence does not include department calls, update the `extension/presence` endpoint with the appropriate new status
+
+The above is implemented in `RingCentralSdk::Helpers::ExtensionPresence` ([lib/ringcentral_sdk/helpers/extension_presence.rb](https://github.com/grokify/ringcentral-sdk-ruby/blob/master/lib/ringcentral_sdk/helpers/extension_presence.rb)).
 
 #### Step 3.2: Disable a User Extension for Call Queue Calls
 
-To disable a user for Call Queue calls, ensure that the extension's `dndStatus` is not accepting department calls per the table above. This involves the following steps:
-
-1. Retrieve the extension's current presence `dndStatus` using the `extension/presence` endpoint
-2. Check to see if the extension's `dndStatus` excludes department (call queue) calls
-3. If the presence includes department calls, update the `extension/presence` endpoint with the appropriate new status
-
-The above is implemented in `RingCentralSdk::Helpers::ExtensionPresence` ([lib/ringcentral_sdk/helpers/extension_presence.rb](https://github.com/grokify/ringcentral-sdk-ruby/blob/master/lib/ringcentral_sdk/helpers/extension_presence.rb)) and can be used as follows:
+To disable a user for Call Queue calls, ensure that the extension's `dndStatus` is not accepting department calls per the table above. This can be done by disabling department calls as follows:
 
 ```ruby
 # Disable Call Queue calls
 extension_id = 111111 # e.g. call_queue_members[0]['id']
 
 extension_presence = RingCentralSdk::Helpers::ExtensionPresence.new(rcapi, extension_id)
-extension_presence.disable_department_calls()
+extension_presence.department_calls_enable false
 ```
+
+The SDK performs this using the following steps:
+
+1. Retrieve the extension's current presence `dndStatus` using the `extension/presence` endpoint
+2. Check to see if the extension's `dndStatus` excludes department (call queue) calls
+3. If the presence includes department calls, update the `extension/presence` endpoint with the appropriate new status
+
+The above is implemented in `RingCentralSdk::Helpers::ExtensionPresence` ([lib/ringcentral_sdk/helpers/extension_presence.rb](https://github.com/grokify/ringcentral-sdk-ruby/blob/master/lib/ringcentral_sdk/helpers/extension_presence.rb)).
+

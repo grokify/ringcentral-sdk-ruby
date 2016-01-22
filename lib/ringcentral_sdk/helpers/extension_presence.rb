@@ -27,7 +27,7 @@ module RingCentralSdk::Helpers
       return @presence_info
     end
 
-    def enable_department_calls()
+    def department_calls_enable(enable)
       retrieve()
 
       if !@presence_info.has_key?('dndStatus')
@@ -35,11 +35,33 @@ module RingCentralSdk::Helpers
       end
 
       current_status = @presence_info['dndStatus']
-      new_status = status_enable_dnd_department_calls(current_status)
+      new_status = enable ?
+        status_enable_dnd_department_calls(current_status) :
+        status_disable_dnd_department_calls(current_status)
 
       if current_status != new_status
         update({:dndStatus => new_status})
       end
+    end
+
+    def department_calls_enabled?(reload=false)
+      if reload
+        retrieve()
+      elsif !@presence_info.has_key?('dndStatus')
+        retrieve()
+      end
+
+      current_status = @presence_info['dndStatus']
+
+      status_enabled = {
+        'DoNotAcceptAnyCalls' => false,
+        'DoNotAcceptDepartmentCalls' => false,
+        'TakeAllCalls' => true,
+        'TakeDepartmentCallsOnly' => true
+      }
+
+      return status_enabled.has_key?(current_status) ?
+        status_enabled[current_status] : nil
     end
 
     def disable_department_calls()
