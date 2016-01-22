@@ -76,7 +76,7 @@ The retieve the call queue extension information to store with your app.
 call_queue_extension_number = 201
 
 extensions = RingCentralSdk::Cache::Extensions.new rcapi
-extensions.retrieve_all()
+extensions.retrieve_all
 
 call_queue = extensions.get_extension_by_number call_queue_extension_number
 ```
@@ -89,7 +89,7 @@ In an end-user application, after retrieving the configured call queue extension
 
 ```ruby
 # Retrieve Call Queue Members by Call Queue Id
-# Call extensions.retrieve_all() first as shown above
+# Call extensions.retrieve_all  first as shown above
 call_queue_members = extensions.get_department_members call_queue['id']
 ```
 
