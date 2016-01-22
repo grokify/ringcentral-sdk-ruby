@@ -36,7 +36,7 @@ extension_presence = RingCentralSdk::Helpers::ExtensionPresence.new(rcapi, exten
 ## Enable Call Queue calls
 extension_presence.enable_department_calls()
 
-## Enable Call Queue calls
+## Disable Call Queue calls
 extension_presence.disable_department_calls()
 ```
 
@@ -128,7 +128,8 @@ To enable a user for Call Queue calls, ensure that the extension's `dndStatus` i
 The above is implemented in `RingCentralSdk::Helpers::ExtensionPresence` ([lib/ringcentral_sdk/helpers/extension_presence.rb](https://github.com/grokify/ringcentral-sdk-ruby/blob/master/lib/ringcentral_sdk/helpers/extension_presence.rb)) and can be used as follows:
 
 ```ruby
-extension_id = 111111
+# Enable Call Queue calls
+extension_id = 111111 # e.g. call_queue_members[0]['id']
 
 extension_presence = RingCentralSdk::Helpers::ExtensionPresence.new(rcapi, extension_id)
 extension_presence.enable_department_calls()
@@ -145,7 +146,8 @@ To disable a user for Call Queue calls, ensure that the extension's `dndStatus` 
 The above is implemented in `RingCentralSdk::Helpers::ExtensionPresence` ([lib/ringcentral_sdk/helpers/extension_presence.rb](https://github.com/grokify/ringcentral-sdk-ruby/blob/master/lib/ringcentral_sdk/helpers/extension_presence.rb)) and can be used as follows:
 
 ```ruby
-extension_id = 111111
+# Disable Call Queue calls
+extension_id = 111111 # e.g. call_queue_members[0]['id']
 
 extension_presence = RingCentralSdk::Helpers::ExtensionPresence.new(rcapi, extension_id)
 extension_presence.disable_department_calls()
