@@ -28,7 +28,6 @@ RingCentral SDK for Ruby
     1. [Generic HTTP Requests](#generic-http-requests)
     2. [SMS Example](#sms-example)
     3. [Fax Example](#fax-example)
-  1. [Subscriptions](#subscriptions)
 5. [Supported Ruby Versions](#supported-ruby-versions)
 6. [Releases](#releases)
   1. [Versioning](#versioning)
@@ -281,38 +280,9 @@ response = rcsdk.client.post do |req|
 end
 ```
 
-### Subscriptions
-
-To make subscriptions with RingCentral, use the SDK object to create subscription Observer object and then add observers to it.
-
-```ruby
-# Create an observer object
-class MyObserver
-  def update(message)
-    puts "Subscription Message Received"
-    puts JSON.dump(message)
-  end
-end
-
-# Create an observable subscription and add your observer
-sub = rcsdk.create_subscription()
-sub.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
-sub.add_observer(MyObserver.new())
-
-# End the subscription
-sub.destroy()
-```
-
 ## Supported Ruby Versions
 
-This library supports and is [tested against](https://travis-ci.org/grokify/ringcentral-sdk-ruby) the following Ruby implementations:
-
-* Ruby 2.2.3, 2.2.0
-* Ruby 2.1.7, 2.1.0
-* Ruby 2.0.0
-* Ruby 1.9.3
-* [JRuby](http://jruby.org/)
-* [Rubinius](http://rubini.us/)
+This library supports and is tested against the versions listed in `.travis.yml` with [Travis CI build results](https://travis-ci.org/grokify/ringcentral-sdk-ruby).
 
 Note: Ruby 1.8.7 works except for subscription support which relies on the `pubnub` gem. If there is a need for 1.8.7 support, consider creating a GitHub issue so we can evalute creating a separate library for subscription handling.
 
