@@ -52,7 +52,7 @@ The SDK performs this using the following steps:
 To create an array of extension presence event filters of the following format:
 
 ```
-/restapi/v1.0/account/#{account_id}/extension/#{ext['id']}/presence?detailedTelephonyState=true
+/restapi/v1.0/account/#{account_id}/extension/#{extension_id}/presence?detailedTelephonyState=true
 ```
 
 Convert the array of extension above to an array of event_filters with the following:
