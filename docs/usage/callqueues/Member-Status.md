@@ -8,17 +8,9 @@ The RingCentral API can be used to automate the scheduling of which members are 
 
 Since this requires managing the extension presence on individual extensions, an administration extension authorization grant is necessary.
 
-Integration with a third-party scheduling service can involve the following steps:
-
-1. Create and Add Users to a Call Queue
-2. Configure the RingCentral Call Queue in the Scheduling Application
-3. Updating User Call Queue Status
-
-These steps are described below including general steps as well as code using the Ruby SDK. To see how the general steps are implemented, refer to the classes referenced below in [GitHub](https://github.com/grokify/ringcentral-sdk-ruby).
-
 ## Synopsis
 
-The following presents and overview of the code used. The Details section discusses each of these steps in more detail and identifies the code being used in the SDK for reference.
+The following presents useful code for managing call queue member status given a call queue extension number with existing members. The Details section below discusses each of these steps in more detail and identifies the code being used in the SDK for reference.
 
 ```ruby
 # Instantiate client SDK and authorize as administrator
@@ -49,6 +41,14 @@ extension_presence.disable_dnd_department_calls()
 ```
 
 ## Details
+
+Integration with a third-party scheduling service can involve the following steps:
+
+1. Create and Add Users to a Call Queue
+2. Configure the RingCentral Call Queue in the Scheduling Application
+3. Updating User Call Queue Status
+
+These steps are described below including general steps as well as code using the Ruby SDK. To see how the general steps are implemented, refer to the classes referenced below in [GitHub](https://github.com/grokify/ringcentral-sdk-ruby).
 
 ### Step 1: Create and Add Users to a Call Queue
 
