@@ -16,7 +16,6 @@ RingCentral SDK for Ruby
 
 1. [Overview](#overview)
   1. [Included](#included)
-  2. [To Do](#to-do)
 2. [Documentation](#documentation)
 3. [Installation](#installation)
 4. [Usage](#usage)
@@ -26,7 +25,6 @@ RingCentral SDK for Ruby
     1. [Authorization Code Grant](#authorization-code-grant)
   1. [API Requests](#api-requests)
     1. [Generic HTTP Requests](#generic-http-requests)
-    2. [SMS Example](#sms-example)
     3. [Fax Example](#fax-example)
 5. [Supported Ruby Versions](#supported-ruby-versions)
 6. [Releases](#releases)
@@ -38,11 +36,9 @@ RingCentral SDK for Ruby
 
 ## Overview
 
+A gem for using the RingCentral REST API. [Click here to read the full documentation](http://ringcentral-sdk-ruby.readthedocs.org/)
+
 This is a Ruby SDK for the RingCentral for Developers Platform REST API (https://developers.ringcentral.com).
-
-The core SDK objects follow the general design of the [official RingCentral SDKs](https://github.com/ringcentral). Additional functionality is provided for ease of use including request helpers and generalized OAuth2 support.
-
-This SDK is an early stage library and subject to breaking changes.
 
 ### Included
 
@@ -53,16 +49,14 @@ This SDK is an early stage library and subject to breaking changes.
 * Unit test suite via `Test::Unit` and `mocha`
 * Docs via [Read the Docs](http://ringcentral-sdk-ruby.readthedocs.org/) and [RubyDoc](http://www.rubydoc.info/gems/ringcentral_sdk/)
 
-### To Do
-
-There are no major to do items at this time.
-
 ## Documentation
 
-More documentation is available on [Read the Docs](http://ringcentral-sdk-ruby.readthedocs.org/)
-and [RubyDoc](http://www.rubydoc.info/gems/ringcentral_sdk/). The documentation philosophy is to
-use RubyDoc / YARD for brief documentation and code specific docs while using Read the Docs for
-user guide / tutorial / FAQ style documentation.
+Documentation is available on:
+
+1. [Read the Docs](http://ringcentral-sdk-ruby.readthedocs.org/)
+2. [RubyDoc](http://www.rubydoc.info/gems/ringcentral_sdk/). 
+
+Read the Docs is the primary documentation solution used, however, RubyDoc is useful for examining code.
 
 In addition the documentation for this Ruby SDK, refer to the official RingCentral guides for
 more information on individual API calls:
@@ -75,15 +69,10 @@ more information on individual API calls:
 
 ### Via Bundler
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'ringcentral_sdk'
-```
-
-And then execute:
+Add 'ringcentral_sdk' to Gemfile and then run `bundle`:
 
 ```sh
+$ echo "gem 'ringcentral_sdk'" >> Gemfile
 $ bundle
 ```
 
@@ -226,23 +215,6 @@ Faraday request middleware has been loaded for the following:
 Faraday response middleware is loaded for the following:
 
 * `:json`
-
-#### SMS Example
-
-SMS and other requests can be easily sent directly without helpers.
-
-```ruby
-# SMS Example
-response = rcsdk.client.post do |req|
-  req.url 'account/~/extension/~/sms'
-  req.headers['Content-Type'] = 'application/json'
-  req.body = {
-    :from =>   { :phoneNumber => '16505551212' },
-    :to   => [ { :phoneNumber => '14155551212'} ],
-    :text => 'RingCentral SMS demo using Ruby!'
-  }
-end
-```
 
 #### Fax Example
 

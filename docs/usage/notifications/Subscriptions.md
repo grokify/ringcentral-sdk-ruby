@@ -1,5 +1,7 @@
 # Subscriptions
 
+## Synopsis
+
 To make subscriptions with RingCentral, use the SDK object to create subscription Observer object and then add observers to it.
 
 ```ruby
