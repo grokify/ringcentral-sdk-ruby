@@ -23,7 +23,7 @@ call_queue_extension_number = 201
 extensions = RingCentralSdk::Cache::Extensions.new rcapi
 extensions.retrieve_all
 
-call_queue = extensions.get_extension_by_number(call_queue_extension_number)
+call_queue = extensions.get_extension_by_number call_queue_extension_number
 
 # Retrieve Call Queue Members by Call Queue Id to Map to Your User Database
 call_queue_members = extensions.get_department_members call_queue['id']
@@ -148,7 +148,7 @@ To disable a user for Call Queue calls, ensure that the extension's `dndStatus` 
 # Disable Call Queue calls
 extension_id = 111111 # e.g. call_queue_members[0]['id']
 
-extension_presence = RingCentralSdk::Helpers::ExtensionPresence.new(rcapi, extension_id)
+extension_presence = RingCentralSdk::Helpers::ExtensionPresence.new rcapi, extension_id
 extension_presence.department_calls_enable false
 ```
 
