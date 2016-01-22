@@ -42,7 +42,7 @@ To perform these steps using the RingCentral API, perform the following steps:
 2. Call the `department/members` API endpoint to retrieve a list of member extension ids and extension numbers
 3. Call the extension API endpoint to retrieve the full information for each call queue member
 
-Some helper coe for this is implemented in `RingCentralSdk::Cache::Extensions` and used as shown below.
+The above is implemented in `RingCentralSdk::Cache::Extensions` ([lib/ringcentral_sdk/cache/extensions.rb](https://github.com/grokify/ringcentral-sdk-ruby/blob/master/lib/ringcentral_sdk/cache/extensions.rb)) and can be used as follows:
 
 ```ruby
 # Retrieve a Call Queue Extension by Extension Number
@@ -85,7 +85,7 @@ To enable a user for Call Queue calls, ensure that the extension's `dndStatus` i
 2. Check to see if the extension's `dndStatus` includes department (call queue) calls
 3. If the presence does not include department calls, update the `extension/presence` endpoint with the appropriate new status
 
-The above is implemented in `RingCentralSdk::Helpers::ExtensionPresence` and used as follows:
+The above is implemented in `RingCentralSdk::Helpers::ExtensionPresence` ([lib/ringcentral_sdk/helpers/extension_presence.rb](https://github.com/grokify/ringcentral-sdk-ruby/blob/master/lib/ringcentral_sdk/helpers/extension_presence.rb)) and can be used as follows:
 
 ```ruby
 extension_id = 111111
@@ -102,7 +102,7 @@ To disable a user for Call Queue calls, ensure that the extension's `dndStatus` 
 2. Check to see if the extension's `dndStatus` excludes department (call queue) calls
 3. If the presence includes department calls, update the `extension/presence` endpoint with the appropriate new status
 
-The above is implemented in `RingCentralSdk::Helpers::ExtensionPresence` and used as follows:
+The above is implemented in `RingCentralSdk::Helpers::ExtensionPresence` ([lib/ringcentral_sdk/helpers/extension_presence.rb](https://github.com/grokify/ringcentral-sdk-ruby/blob/master/lib/ringcentral_sdk/helpers/extension_presence.rb)) and can be used as follows:
 
 ```ruby
 extension_id = 111111
