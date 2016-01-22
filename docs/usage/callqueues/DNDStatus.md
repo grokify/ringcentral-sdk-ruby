@@ -18,7 +18,7 @@ These steps are described below including general steps as well as code using th
 
 ### Step 1: Create and Add Users to a Call Queue
 
-To create a call queue and add user extensions to the queue, use the RingCentral Online Account Portal as documented in [RingCentral Office Admin Guide](http://netstorage.ringcentral.com/guides/office_admin_guide.pdf).
+Using the RingCentral Online Account Portal, create a call queue and add user extensions to the queue as documented in [RingCentral Office Admin Guide](http://netstorage.ringcentral.com/guides/office_admin_guide.pdf).
 
 ### Step 2: Configure the RingCentral Call Queue in the Scheduling Application
 
@@ -30,7 +30,7 @@ Now that the extension is configured in RingCentral, build the application so an
 
 #### Step 2.1: Create a RingCentral call queue object
 
-Create an object to represent a RingCentral call queue object in your application which will be mapped to member users. This should include the call queue extension's `extensionId` and possibly the `extensionNumber`. The `extensionId` is a API level identifier while the `extensionNumber` is used in the RingCentral Online Account Portal and will be known by end users.
+Create an object to represent a RingCentral call queue object in your application which will be mapped to a RingCentral call queue extension and member user extensions. This should include the call queue extension's `id` and possibly the `extensionNumber`. The extension `id` is a API level identifier while the `extensionNumber` is used in the RingCentral Online Account Portal and will be known by end users.
 
 #### Step 2.2. Retrieve the call queue members
 
