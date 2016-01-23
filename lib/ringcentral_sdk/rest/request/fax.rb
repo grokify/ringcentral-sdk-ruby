@@ -46,7 +46,7 @@ module RingCentralSdk::REST::Request
       json_part.headers.set('Content-Type', 'application/json')
       json_part.headers.set('Content-Transfer-Encoding', 'base64') if @metadata_part_encode_base64
       @msg.add(json_part)
-      return true
+      true
     end
 
     def create_metadata(opts={})
@@ -69,7 +69,7 @@ module RingCentralSdk::REST::Request
         meta[k] = v unless processed.has_key?(k)
       end
 
-      return meta
+      meta
     end
 
     def add_part_text(text=nil, opts={})
@@ -103,20 +103,19 @@ module RingCentralSdk::REST::Request
     end
 
     def method()
-      return 'post'
+      'post'
     end
 
     def url()
-      return "account/#{@account_id.to_s}/extension/#{@extension_id.to_s}/fax"
+      "account/#{@account_id.to_s}/extension/#{@extension_id.to_s}/fax"
     end
 
     def content_type()
-      return @msg.headers.get('Content-Type').to_s
+      @msg.headers.get('Content-Type').to_s
     end
 
     def body()
-      return @msg.body.to_s
+      @msg.body.to_s
     end
-
   end
 end
