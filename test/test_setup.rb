@@ -10,7 +10,7 @@ class RingCentralSdkTest < Test::Unit::TestCase
   end
 
   def test_main
-    assert_equal 'RingCentralSdk::Platform', @rcsdk.class.name
+    assert_equal 'RingCentralSdk::REST::Client', @rcsdk.class.name
 
     assert_raise do
       @rcsdk.request(nil)
@@ -21,7 +21,7 @@ class RingCentralSdkTest < Test::Unit::TestCase
       'my_app_secret',
       RingCentralSdk::RC_SERVER_SANDBOX
     )
-    assert_equal 'RingCentralSdk::Platform', rcsdk.class.name
+    assert_equal 'RingCentralSdk::REST::Client', rcsdk.class.name
   end
 
   def test_login

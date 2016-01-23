@@ -5,29 +5,24 @@ require './test/test_helper.rb'
 class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
   def testSetup
 
-    fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
-      nil, # Can be nil or {} for defaults '~'
-      {
-        # phone numbers are in E.164 format with or without leading '+'
-        :to            => '+16505551212',
-        :faxResolution => 'High',
-        :coverPageText => 'RingCentral fax demo using Ruby SDK!'
-      },
-      :text => 'RingCentral fax demo using Ruby SDK!'
+    fax = RingCentralSdk::REST::Request::Fax.new(
+      # phone numbers are in E.164 format with or without leading '+'
+      :to            => '+16505551212',
+      :faxResolution => 'High',
+      :coverPageText => 'RingCentral fax demo using Ruby SDK!',
+      :text          => 'RingCentral fax demo using Ruby SDK!'
     )
 
-    assert_equal "RingCentralSdk::Helpers::CreateFaxRequest", fax.class.name
+    assert_equal "RingCentralSdk::REST::Request::Fax", fax.class.name
     assert_equal 'account/~/extension/~/fax', fax.url()
 
-    fax2 = RingCentralSdk::Helpers::CreateFaxRequest.new(
-      { :account_id => '111111111', :extension_id => '222222222' }, # Can be nil or {} for defaults '~'
-      {
-        # phone numbers are in E.164 format with or without leading '+'
-        "to"           => { :phoneNumber => '+16505551212' },
-        :faxResolution => 'High',
-        :coverPageText => 'RingCentral fax demo using Ruby SDK Résolution!'
-      },
-      :file_name => './scripts/test_file.pdf'
+    fax2 = RingCentralSdk::REST::Request::Fax.new(
+      :accountId     => '111111111',
+      :extensionId   => '222222222',
+      :to            => { :phoneNumber => '+16505551212' },
+      :faxResolution => 'High',
+      :coverPageText => 'RingCentral fax demo using Ruby SDK Résolution!',
+      :files         => ['./scripts/test_file.pdf']
     )
 
     assert_equal 'account/111111111/extension/222222222/fax', fax2.url()
@@ -39,37 +34,38 @@ class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
     # Test UTF-8 metadata and file MIME concatenation
     body = fax2.body
 
-    fax3 = RingCentralSdk::Helpers::CreateFaxRequest.new(
-      { :account_id => 111111111, :extension_id => 222222222 }, # Can be nil or {} for defaults '~'
-      {
-        # phone numbers are in E.164 format with or without leading '+'
-        :to           => [{ :phoneNumber => '+16505551212' }],
-        :faxResolution => 'High',
-        :coverPageText => 'RingCentral fax demo using Ruby SDK!'
-      },
+    fax3 = RingCentralSdk::REST::Request::Fax.new(
+      :accountId => 111111111,
+      :extensionId => 222222222,
+      # phone numbers are in E.164 format with or without leading '+'
+      :to           => [{ :phoneNumber => '+16505551212' }],
+      :faxResolution => 'High',
+      :coverPageText => 'RingCentral fax demo using Ruby SDK!',
       :text => 'RingCentral fax demo using Ruby SDK!'
     )
 
     assert_equal 'account/111111111/extension/222222222/fax', fax3.url()
 
-    fax4 = RingCentralSdk::Helpers::CreateFaxRequest.new(
-      { :account_id => 111111111, :extension_id => 222222222 }, # Can be nil or {} for defaults '~'
-      '{"to":"+16505551212","coverPageText":"RingCentral fax demo using Ruby SDK!"}',
+    fax4 = RingCentralSdk::REST::Request::Fax.new(
+      :accountId => 111111111,
+      :extensionId => 222222222, # Can be nil or {} for defaults '~'
+      :to => '+16505551212","coverPageText":"RingCentral fax demo using Ruby SDK!"}',
       :text => 'RingCentral fax demo using Ruby SDK!'
     )
     assert_equal 'account/111111111/extension/222222222/fax', fax4.url()
 
-    fax5 = RingCentralSdk::Helpers::CreateFaxRequest.new(
-      { :account_id => 111111111, :extension_id => 222222222 }, # Can be nil or {} for defaults '~'
-      '{"coverPageText":"RingCentral fax demo using Ruby SDK!"}',
+    fax5 = RingCentralSdk::REST::Request::Fax.new(
+      :accountId => 111111111,
+      :extensionId => 222222222, # Can be nil or {} for defaults '~'
+      :coverPageText => "RingCentral fax demo using Ruby SDK!",
       :text => 'RingCentral fax demo using Ruby SDK!'
     )
     assert_equal 'account/111111111/extension/222222222/fax', fax5.url()
 
-    assert_equal 'application/pdf', fax.get_file_content_type('example.pdf')
-    assert_equal 'attachment', fax.get_attachment_content_disposition()
-    assert_equal 'attachment; filename="example.pdf"', fax.get_attachment_content_disposition('example.pdf')
-    assert_equal 'attachment; filename="example.pdf"', fax.get_attachment_content_disposition('/path/to/example.pdf')
+    #assert_equal 'application/pdf', fax.get_file_content_type('example.pdf')
+    #assert_equal 'attachment', fax.get_attachment_content_disposition()
+    #assert_equal 'attachment; filename="example.pdf"', fax.get_attachment_content_disposition('example.pdf')
+    #assert_equal 'attachment; filename="example.pdf"', fax.get_attachment_content_disposition('/path/to/example.pdf')
     assert_equal 'post', fax.method()
 
     content_type = fax.content_type()

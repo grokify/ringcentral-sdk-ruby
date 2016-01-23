@@ -1,19 +1,15 @@
 module RingCentralSdk
 
-  VERSION = '0.5.2'
+  VERSION = '1.0.0'
 
   RC_SERVER_PRODUCTION = 'https://platform.ringcentral.com'
   RC_SERVER_SANDBOX    = 'https://platform.devtest.ringcentral.com'
 
-  autoload :Cache, 'ringcentral_sdk/cache'
-  autoload :Helpers, 'ringcentral_sdk/helpers'
-  autoload :Platform, 'ringcentral_sdk/platform'
-  autoload :Simple, 'ringcentral_sdk/simple'
-  autoload :Subscription, 'ringcentral_sdk/subscription'
+  autoload :REST, 'ringcentral_sdk/rest'
 
   class << self
     def new(app_key, app_secret, server_url=RC_SERVER_SANDBOX, opts={})
-      RingCentralSdk::Platform.new(app_key, app_secret, server_url, opts)
+      RingCentralSdk::REST::Client.new(app_key, app_secret, server_url, opts)
     end
   end
 

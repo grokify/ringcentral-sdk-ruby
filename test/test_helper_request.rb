@@ -3,7 +3,7 @@ require './test/test_helper.rb'
 class RingCentralSdkHelperRequestTest < Test::Unit::TestCase
   def testSetup
 
-    req = RingCentralSdk::Helpers::Request.new
+    req = RingCentralSdk::REST::Request::Base.new
 
     assert_equal 'get', req.method()
     assert_equal '', req.url()

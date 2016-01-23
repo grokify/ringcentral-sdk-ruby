@@ -43,7 +43,7 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     @rcsdk.set_token(token_data)
 
     assert_equal 'OAuth2::AccessToken', @rcsdk.token.class.name
-    assert_equal 'Faraday::Connection', @rcsdk.client.class.name
+    assert_equal 'Faraday::Connection', @rcsdk.http.class.name
 
     assert_raise do
       @rcsdk.set_token('test')
@@ -173,31 +173,37 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
       @rcsdk.request()
     end
 
-    rcsdk = new_rcsdk()
-    rcsdk.set_oauth2_client()
+    client = new_rcsdk()
+    client.set_oauth2_client()
 
     stub_token_hash = data_auth_token_with_refresh
-    stub_token = OAuth2::AccessToken::from_hash(rcsdk.oauth2client, stub_token_hash)
+    stub_token = OAuth2::AccessToken::from_hash(client.oauth2client, stub_token_hash)
 
-    rcsdk.oauth2client.password.stubs(:get_token).returns(stub_token)
+    client.oauth2client.password.stubs(:get_token).returns(stub_token)
 
-    token = rcsdk.authorize('my_test_username', 'my_test_extension', 'my_test_password')
+    token = client.authorize('my_test_username', 'my_test_extension', 'my_test_password')
 
     #@rcsdk.client.stubs(:post).returns(Faraday::Response.new)
     Faraday::Connection.any_instance.stubs(:post).returns(Faraday::Response.new)
 
-    fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
-      nil, # Can be nil or {} for defaults '~'
-      {
-        # phone numbers are in E.164 format with or without leading '+'
-        :to            => '+16505551212',
-        :faxResolution => 'High',
-        :coverPageText => 'RingCentral fax demo using Ruby SDK!'
-      },
-      :text => 'RingCentral fax demo using Ruby SDK!'
+    fax = RingCentralSdk::REST::Request::Fax.new(
+      # phone numbers are in E.164 format with or without leading '+'
+      :to            => '+16505551212',
+      :faxResolution => 'High',
+      :coverPageText => 'RingCentral fax demo using Ruby SDK!',
+      :text          => 'RingCentral fax demo using Ruby SDK!'
     )
-    res = rcsdk.request(fax)
+    res = client.send_request(fax)
     assert_equal 'Faraday::Response', res.class.name
+
+    res = client.messages.fax.create(
+      :to            => '+16505551212',
+      :faxResolution => 'High',
+      :coverPageText => 'RingCentral fax demo using Ruby SDK!',
+      :text          => 'RingCentral fax demo using Ruby SDK!'
+    )
+    assert_equal 'Faraday::Response', res.class.name
+
   end
 
   def new_rcsdk(opts={})

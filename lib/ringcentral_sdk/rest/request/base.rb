@@ -1,5 +1,5 @@
-module RingCentralSdk::Helpers
-  class Request
+module RingCentralSdk::REST::Request
+  class Base
     def method()
       return 'get'
     end

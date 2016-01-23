@@ -1,5 +1,11 @@
 CHANGELOG
 ---------
+- **2016-01-23**: 0.9.0
+  - Major refactor
+- **2016-01-22**: 0.5.2
+  - Add `RingCentralSdk::Cache::Extensions`
+  - Add `RingCentralSdk::Helpers::ExtensionPresence`
+  - Add Call Queue Member Status mydocs documentation
 - **2015-12-08**: 0.5.1
   - Add call recording transcription demo script via VoiceBase
   - Fix PubNub unsubscribe bug

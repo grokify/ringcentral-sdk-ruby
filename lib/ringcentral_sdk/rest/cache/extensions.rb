@@ -1,17 +1,17 @@
 require 'time'
 require 'uri'
 
-module RingCentralSdk::Cache
+module RingCentralSdk::REST::Cache
   class Extensions
 
-    attr_accessor :rc_api
+    attr_accessor :client
     attr_accessor :account_id
     attr_reader :extensions_hash
     attr_reader :extensions_num2id
     attr_reader :last_retrieved
 
-    def initialize(rc_api)
-      @rc_api = rc_api
+    def initialize(client)
+      @client = client
       @account_id = '~'
       @extensions_hash = {}
       @extensions_num2id = {}
@@ -24,7 +24,7 @@ module RingCentralSdk::Cache
       if params.length > 0 
         uri.query = URI.encode_www_form params
       end
-      res = @rc_api.client.get do |req|
+      res = @client.http.get do |req|
         req.url uri.to_s
         if retrieve_all
           req.params['page'] = 1
@@ -101,7 +101,7 @@ module RingCentralSdk::Cache
 
       members = []
 
-      res = @rc_api.client.get do |req|
+      res = @client.http.get do |req|
         req.url "account/#{account_id}/department/#{department_id}/members"
       end
 

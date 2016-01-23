@@ -1,4 +1,4 @@
-module RingCentralSdk::Helpers::Inflator
+module RingCentralSdk::REST::Request::Inflator
   class ContactInfo
     def inflate_to_array(any=nil)
       contacts   = []

@@ -89,106 +89,78 @@ This provides a very basic guide to using the SDK. Please use the following reso
 2. [SDK Reference](http://www.rubydoc.info/gems/ringcentral_sdk/). 
 1. [API Developer and Reference Guide](https://developers.ringcentral.com/api-docs/latest/index.html)
 
-### Instantiation
+### Instantiation and Authorization
 
-The RingCentral server URLs can be populated manually or via the included constants:
+How you instantiate the SDK can depend on whether you use OAuth 2.0 password grant or the authorization code grant which are both described here.
+
+It is also necessary to specify your RingCentral API end point URL which are included constants:
 
 * `RingCentralSdk::RC_SERVER_PRODUCTION`
 * `RingCentralSdk::RC_SERVER_SANDBOX`
+
+#### Password Grant
+
+The OAuth 2.0 resource owner password grant flow is designed for server applications where the app and resource owners are the same.
 
 ```ruby
 require 'ringcentral_sdk'
 
 # Returns RingCentralSdk::Platform instance
-rcsdk = RingCentralSdk.new(
+client = RingCentralSdk::REST::Client.new(
   'myAppKey',
   'myAppSecret',
   RingCentralSdk::RC_SERVER_SANDBOX
 )
-```
 
-### Authorization
-
-#### Password Grant
-
-The 2-legged OAuth 2.0 flow using a password grant is designed for server applications where the app and resource owners are the same.
-
-```ruby
-# Initialize using main phone number and extension number
-rcsdk.authorize('myUsername', 'myExtension', 'myPassword')
-
-# Initialize using user phone number without extension number
-# Extension defaults to company admin extension
-rcsdk.authorize('myUsername', nil, 'myPassword')
+# extension will default to company admin extension if not provided
+client.authorize_password('myUsername', 'myExtension', 'myPassword')
 ```
 
 #### Authorization Code Grant
 
-The 3-legged OAuth 2.0 flow using an authorization code grant is designed for web apps and public apps where authorization needs to be granted by a 3rd party resource owner.
+The OAuth 2.0 authorization code grant is designed for where authorization needs to be granted by a 3rd party resource owner.
 
 Using the default authorization URL:
 
 ```ruby
 # Initialize SDK with OAuth redirect URI
-rcsdk = RingCentralSdk.new(
+client = RingCentralSdk::REST::Client.new(
   'myAppKey',
   'myAppSecret',
   RingCentralSdk::RC_SERVER_SANDBOX,
   {:redirect_uri => 'http://example.com/oauth'}
 )
+
 # Retrieve OAuth authorize url using default redirect URL
-auth_url = rcsdk.authorize_url()
-```
-
-Customizing authorize URL:
-
-```ruby
-rcapi = RingCentralSdk.new(
-  'myAppKey',
-  'myAppSecret',
-  RingCentralSdk::RC_SERVER_SANDBOX
-)
-# Retrieve OAuth authorize url using override redirect URL
-auth_url = rcapi.authorize_url({
-  :redirect_uri => 'my_registered_oauth_url', # optional override of default URL
-  :display      => '', # optional: page|popup|touch|mobile, default 'page'
-  :prompt       => '', # optional: sso|login|consent, default is 'login sso consent'
-  :state        => '', # optional
-  :brand_id     => ''  # optional: string|number
-})
-# Open browser window to authorization url and retrieve authorize code from redirect uri.
+auth_url = client.authorization_url()
 ```
 
 On your redirect page, you can exchange your authorization code for an access token using the following:
 
 ```ruby
-code  = params['code'] # retrieve GET 'code' parameter in Sinatra
-rcapi.authorize_code(code)
+code  = params['code'] # e.g. using Sinatra to retrieve code param in Redirect URI
+client.authorize_code(code)
 ```
 
-For a complete working example, a demo Sinatra app is available in the scripts directory at [scripts/oauth2-sinatra](scripts/oauth2-sinatra).
+More information on the authorization code flow:
 
-#### Authentication Lifecycle
+1. [Full documentation](http://ringcentral-sdk-ruby.readthedocs.org/en/latest/usage/authorization/Authorization/#authorization-code-grant)
+2. [Sinatra example](scripts/oauth2-sinatra)
+
+#### Token Reuse
 
 The platform class performs token refresh procedure automatically if needed. To save the access and refresh tokens between instances of the SDK, you can save and reuse the token as follows:
 
 ```ruby
-# Retrieve and save access token when program is to be stopped
-# `token` is an `OAuth2::AccessToken` object
-token_hash = rcsdk.token.to_hash
+# Access `OAuth2::AccessToken` object as hash
+token_hash = client.token.to_hash
 ```
 
-After you have saved the token hash, e.g. as JSON, you can reload it in another instance of the SDK as follows:
+You can reload the token hash in another instance of the SDK as follows:
 
 ```ruby
-# Reuse token_hash in another SDK instance
-rcapi2 = RingCentralSdk.new(
-  'myAppKey',
-  'myAppSecret',
-  RingCentralSdk::RC_SERVER_SANDBOX
-)
 # set_token() accepts a hash or OAuth2::AccessToken object
-rcapi2.set_token(token_hash)
+client.set_token(token_hash)
 ```
 
 Important! You have to manually maintain synchronization of SDK's between requests if you share authentication. When two simultaneous requests will perform refresh, only one will succeed. One of the solutions would be to have semaphor and pause other pending requests while one of them is performing refresh.
@@ -201,16 +173,16 @@ API requests can be made via the included `Faraday` client or `RingCentralSdk::H
 
 #### Generic HTTP Requests
 
-To make generic API requests, use included `Faraday` client which can be accessed via `rcapi.client`. The client automatically adds the correct access token to the HTTP request and handles OAuth token refresh using the `OAuth` gem.
+To make generic API requests, use included `Faraday` client which can be accessed via `client.http`. The client automatically adds the correct access token to the HTTP request and handles OAuth token refresh using the `OAuth` gem.
 
 ```ruby
-client = rcapi.client
+http = client.http
 ```
 
 #### SMS Example
 
 ```ruby
-rcapi.messages.create(
+client.messages.sms.create(
   :from => '+16505551212',
   :to => '+14155551212',
   :text => 'Hi there!'
@@ -219,39 +191,24 @@ rcapi.messages.create(
 
 #### Fax Example
 
-Request helpers are subclasses of `RingCentralSdk::Helpers::Request` and provide standard methods
-that can be called by the `.request()` method of the Platform object. This enables the
-requisite information for Faraday to be generated in a standard way.
-
-To create your own request helpers, please take a look at the fax one shown below:
-
-The fax helper is included to help create the `multipart/mixed` HTTP request. This consists of
-instantiating a fax helper object and then executing a Faraday POST request. The helper can then
-be used with the standard faraday client or helper `.request()` method that takes the request
-helper object in its entirety.
+Fax files:
 
 ```ruby
-# Fax example using request helper
-fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
-  nil, # auto-inflates to [{:account_id => '~', :extension_id => '~'}]
-  {
-    # phone numbers are in E.164 format with or without leading '+'
-    :to            => [{ :phoneNumber => '+16505551212' }],
-    :coverPageText => 'RingCentral fax PDF demo using Ruby!'
-  },
-  :file_name     => '/path/to/my_file.pdf'
+client.messages.fax.create(
+  :to => '+14155551212',
+  :coverPageText => 'Hi there!',
+  :files => ['/path/to/myfile.pdf']
 )
-
-# sending request via request helper methods
-response = rcapi.request(fax)
-
-# sending request via standard Faraday client
-response = rcapi.client.post do |req|
-  req.url fax.url
-  req.headers['Content-Type'] = fax.content_type
-  req.body = fax.body
-end
 ```
+
+Fax text:
+
+```ruby
+client.messages.fax.create(
+  :to => '+14155551212',
+  :coverPageText => 'Hi there!',
+  :text => 'Hi there!'
+)
 
 ## Supported Ruby Versions
 

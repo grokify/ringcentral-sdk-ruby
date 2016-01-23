@@ -6,7 +6,7 @@ require 'openssl'
 require 'pubnub'
 require 'timers'
 
-module RingCentralSdk
+module RingCentralSdk::REST
   class Subscription
     include Observable
 
@@ -14,8 +14,8 @@ module RingCentralSdk
 
     attr_reader :event_filters
 
-    def initialize(platform)
-      @_platform = platform
+    def initialize(client)
+      @_client = client
       @event_filters = []
       @_timeout = nil
       @_subscription = nil_subscription()
@@ -72,10 +72,10 @@ module RingCentralSdk
       end
 
       begin
-        response = @_platform.client.post do |req|
+        response = @_client.http.post do |req|
           req.url 'subscription'
           req.body = {
-            :eventFilters    => @_platform.create_urls(@event_filters),
+            :eventFilters    => @_client.create_urls(@event_filters),
             :deliveryMode    => {
               :transportType => 'PubNub'
             }
@@ -109,10 +109,10 @@ module RingCentralSdk
       _clear_timeout()
 
       begin
-        response = @_platform.client.put do |req|
+        response = @_client.http.put do |req|
           req.url 'subscription/' + @_subscription['id'].to_s
           req.body = {
-            :eventFilters => @_platform.create_urls(@event_filters),
+            :eventFilters => @_client.create_urls(@event_filters),
           }
         end
 
@@ -135,7 +135,7 @@ module RingCentralSdk
 
       begin
         url = 'subscription/' + @_subscription['id'].to_s
-        response = @_platform.client.delete do |req|
+        response = @_client.http.delete do |req|
           req.url = 'subscription' + @_subscription['id']
         end
         reset()

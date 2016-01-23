@@ -4,8 +4,8 @@ require 'faraday_middleware'
 require 'faraday_middleware/oauth2_refresh'
 require 'oauth2'
 
-module RingCentralSdk
-  class Platform
+module RingCentralSdk::REST
+  class Client
 
     ACCESS_TOKEN_TTL  = 600             # 10 minutes
     REFRESH_TOKEN_TTL = 36000           # 10 hours
@@ -20,7 +20,7 @@ module RingCentralSdk
 
     attr_accessor :server_url
 
-    attr_reader   :client
+    attr_reader   :http
     attr_reader   :oauth2client
     attr_reader   :token
     attr_reader   :user_agent
@@ -33,7 +33,7 @@ module RingCentralSdk
       @app_secret   = app_secret.to_s
       @server_url   = server_url
       @token        = nil
-      @client       = nil
+      @http         = nil
       @redirect_uri = ''
       @user_agent   = get_user_agent()
       @oauth2client = new_oauth2_client()
@@ -44,7 +44,7 @@ module RingCentralSdk
           authorize_password(opts[:username], extension, opts[:password])
         end
       end
-      @messages = RingCentralSdk::Helpers::Messages.new(self)
+      @messages = RingCentralSdk::REST::Messages.new(self)
     end
 
     def get_api_version_url()
@@ -124,9 +124,9 @@ module RingCentralSdk
         raise "Token is not a OAuth2::AccessToken"
       end
 
-      @token  = token
+      @token = token
 
-      @client = Faraday.new(:url => get_api_version_url()) do |conn|
+      @http = Faraday.new(:url => get_api_version_url()) do |conn|
         conn.request  :oauth2_refresh, @token
         conn.request  :json
         conn.request  :url_encoded
@@ -160,16 +160,16 @@ module RingCentralSdk
       return api_key
     end
 
-    def send_request(helper=nil)
-      unless helper.is_a?(RingCentralSdk::Helpers::Request)
-        raise 'Request is not a RingCentralSdk::Helpers::Request'
+    def send_request(request=nil)
+      unless request.is_a?(RingCentralSdk::REST::Request::Base)
+        raise 'Request is not a RingCentralSdk::REST::Request::Base'
       end
 
-      if helper.method.downcase == 'post'
-        resp       =  @client.post do |req|
-          req.url helper.url
-          req.headers['Content-Type'] = helper.content_type if helper.content_type
-          req.body = helper.body if helper.body
+      if request.method.downcase == 'post'
+        resp       =  @http.post do |req|
+          req.url request.url
+          req.headers['Content-Type'] = request.content_type if request.content_type
+          req.body = request.body if request.body
         end
         return resp
       end
@@ -185,12 +185,11 @@ module RingCentralSdk
     end
 
     def create_subscription()
-      return RingCentralSdk::Subscription.new(self)
+      return RingCentralSdk::REST::Subscription.new(self)
     end
 
     alias_method :authorize, :authorize_password
     alias_method :login, :authorize_password
-    alias_method :request, :send_request
     private :get_api_version_url
   end
 end

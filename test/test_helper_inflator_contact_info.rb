@@ -3,7 +3,7 @@ require './test/test_helper.rb'
 class RingCentralSdkHelperInflatorContactInfoTest < Test::Unit::TestCase
   def testSetup
 
-    inf  = RingCentralSdk::Helpers::Inflator::ContactInfo.new
+    inf  = RingCentralSdk::REST::Request::Inflator::ContactInfo.new
 
     arr1 = inf.inflate_to_array(16505551212)
     assert_equal 16505551212, arr1[0][:phoneNumber]

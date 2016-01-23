@@ -11,7 +11,7 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
 
   def test_main
     sub = @rcsdk.create_subscription()
-    assert_equal "RingCentralSdk::Subscription", sub.class.name
+    assert_equal "RingCentralSdk::REST::Subscription", sub.class.name
 
     assert_equal 0, sub.event_filters.length
 
@@ -94,11 +94,11 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     data = data_test_subscribe()
     response = Faraday::Response.new
     response.stubs(:body).returns(data)
-    rcsdk.client.stubs(:post).returns(response)
-    rcsdk.client.stubs(:put).returns(response)
+    rcsdk.http.stubs(:post).returns(response)
+    rcsdk.http.stubs(:put).returns(response)
     responseDel = Faraday::Response.new
     responseDel.stubs(:body).returns('')
-    rcsdk.client.stubs(:delete).returns(responseDel)
+    rcsdk.http.stubs(:delete).returns(responseDel)
     # Stub Pubnub Response
     Pubnub::Client.any_instance.stubs(:subscribe).returns(nil)
     Pubnub::Client.any_instance.stubs(:unsubscribe).returns(nil)
@@ -124,9 +124,9 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     sub.remove()
     # Test Exceptions
     rcsdk2 = get_rcsdk_authorized()
-    rcsdk2.client.stubs(:post).raises('error')
-    rcsdk2.client.stubs(:put).raises('error')
-    rcsdk2.client.stubs(:delete).raises('error')
+    rcsdk2.http.stubs(:post).raises('error')
+    rcsdk2.http.stubs(:put).raises('error')
+    rcsdk2.http.stubs(:delete).raises('error')
     sub2 = rcsdk2.create_subscription()
     assert_raise do
       sub2.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])

@@ -1,14 +1,14 @@
-module RingCentralSdk
-  class Simple
-    attr_accessor :rcsdk
+module RingCentralSdk::REST
+  class SimpleClient
+    attr_accessor :client
 
-    def initialize(rcsdk)
-      @rcsdk = rcsdk
+    def initialize(client)
+      @client = client
     end
 
     def send(request)
       if request.is_a?(RingCentralSdk::Helpers::Request)
-        return @rcsdk.request(request)
+        return @client.request(request)
       elsif ! request.is_a?(Hash)
         raise "Request is not a RingCentralSdk::Helpers::Request or Hash"
       end
@@ -29,19 +29,19 @@ module RingCentralSdk
     end
 
     def delete(opts={})
-      return @rcsdk.client.delete do |req|
+      return @client.http.delete do |req|
         req.url build_url(opts[:path])
       end
     end
 
     def get(opts={})
-      return @rcsdk.client.get do |req|
+      return @client.http.get do |req|
         req.url build_url(opts[:path])
       end
     end
 
     def post(opts={})
-      return @rcsdk.client.post do |req|
+      return @client.http.post do |req|
         req.url build_url(opts[:path])
         if opts.has_key?(:body)
           req.body = opts[:body]
@@ -53,7 +53,7 @@ module RingCentralSdk
     end
 
     def put(opts={})
-      return @rcsdk.client.put do |req|
+      return @client.http.put do |req|
         req.url build_url(opts[:path])
         if opts.has_key?(:body)
           req.body = opts[:body]
