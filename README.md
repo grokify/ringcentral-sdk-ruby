@@ -227,7 +227,7 @@ class MyObserver
 end
 
 # Create an observable subscription and add your observer
-sub = rcsdk.create_subscription()
+sub = client.create_subscription()
 sub.add_observer(MyObserver.new())
 
 # Subscribe to an arbitrary number of event filters
