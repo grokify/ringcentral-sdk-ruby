@@ -15,8 +15,10 @@ end
 
 # Create an observable subscription and add your observer
 sub = rcsdk.create_subscription()
-sub.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
 sub.add_observer(MyObserver.new())
+
+# Subscribe to an arbitrary number of event filters
+sub.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
 
 # End the subscription
 sub.destroy()

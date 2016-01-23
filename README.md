@@ -132,7 +132,7 @@ client = RingCentralSdk::REST::Client.new(
 )
 
 # Retrieve OAuth authorize url using default redirect URL
-auth_url = client.authorization_url()
+auth_url = client.authorize_url()
 ```
 
 On your redirect page, you can exchange your authorization code for an access token using the following:
@@ -209,6 +209,30 @@ client.messages.fax.create(
   :coverPageText => 'Hi there!',
   :text => 'Hi there!'
 )
+```
+
+#### Subscription Example
+
+To make subscriptions with RingCentral, use the SDK object to create subscription Observer object and then add observers to it.
+
+```ruby
+# Create an observer object
+class MyObserver
+  def update(message)
+    puts "Subscription Message Received"
+    puts JSON.dump(message)
+  end
+end
+
+# Create an observable subscription and add your observer
+sub = rcsdk.create_subscription()
+sub.add_observer(MyObserver.new())
+
+# Subscribe to an arbitrary number of event filters
+sub.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
+
+# End the subscription
+sub.destroy()
 ```
 
 ## Supported Ruby Versions
