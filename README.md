@@ -36,9 +36,7 @@ RingCentral SDK for Ruby
 
 ## Overview
 
-A gem for using the RingCentral REST API. [Click here to read the full documentation](http://ringcentral-sdk-ruby.readthedocs.org/)
-
-This is a Ruby SDK for the RingCentral for Developers Platform REST API (https://developers.ringcentral.com).
+A gem for using the [RingCentral REST API](https://developers.ringcentral.com). [Click here to read the full documentation](http://ringcentral-sdk-ruby.readthedocs.org/)
 
 ### Included
 
@@ -86,6 +84,8 @@ $ gem install ringcentral_sdk
 
 This provides a very basic guide to using the SDK. Please use the following resources for more information:
 
+1. [SDK Developer Guide](http://ringcentral-sdk-ruby.readthedocs.org/)
+2. [SDK Reference](http://www.rubydoc.info/gems/ringcentral_sdk/). 
 1. [API Developer and Reference Guide](https://developers.ringcentral.com/api-docs/latest/index.html)
 
 ### Instantiation
@@ -215,6 +215,17 @@ Faraday request middleware has been loaded for the following:
 Faraday response middleware is loaded for the following:
 
 * `:json`
+
+#### SMS Example
+
+```ruby
+rcapi.messages.create(
+  :from => '+6501112222',
+  :to '+4153334444',
+  :text 'Hi there!'
+)
+
+```
 
 #### Fax Example
 

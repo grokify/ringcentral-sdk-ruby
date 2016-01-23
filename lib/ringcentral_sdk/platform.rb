@@ -26,6 +26,8 @@ module RingCentralSdk
     attr_reader   :user_agent
     attr_reader   :redirect_uri
 
+    attr_reader   :messages
+
     def initialize(app_key, app_secret, server_url=RingCentralSdk::RC_SERVER_SANDBOX, opts={})
       @app_key      = app_key.to_s
       @app_secret   = app_secret.to_s
@@ -42,6 +44,7 @@ module RingCentralSdk
           authorize_password(opts[:username], extension, opts[:password])
         end
       end
+      @messages = RingCentralSdk::Helpers::Messages.new(self)
     end
 
     def get_api_version_url()

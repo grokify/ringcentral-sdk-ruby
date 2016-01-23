@@ -42,7 +42,7 @@ rc_api.login ... # Authorize
 
 # Retrieve all Enabled extensions
 extensions = RingCentralSdk::Cache::Extensions.new rc_api
-extensions.retrieve {'status' => 'Enabled'}, true
+extensions.retrieve({'status' => 'Enabled'}, true)
 extension_ids = extensions.extensions_hash.keys
 ```
 

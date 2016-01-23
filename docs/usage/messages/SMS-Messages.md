@@ -2,7 +2,7 @@
 
 Sending and receiving SMS is a core capability of RingCentral. Features include UTF-8 and long concatenated message support.
 
-## Sending a SMS
+## Overview
 
 SMS requests can be easily sent directly without helpers.
 
@@ -11,14 +11,25 @@ SMS requests can be easily sent directly without helpers.
 rcapi = RingCentralSdk.new ...
 rcapi.login ... # OAuth authorization
 
-# SMS Example
+# SMS using helper
+rcapi.messages.create(
+  :from => '+16505551212',
+  :to '+14155551212',
+  :text 'Hi there!'
+)
+```
+
+You can also use the Faraday client directly:
+
+```ruby
+# SMS using Faraday
 response = rcapi.client.post do |req|
   req.url 'account/~/extension/~/sms'
   req.headers['Content-Type'] = 'application/json'
   req.body = {
-    :from =>   { :phoneNumber => '16505551212' },
-    :to   => [ { :phoneNumber => '14155551212'} ],
-    :text => 'RingCentral SMS demo using Ruby!'
+    :from =>   { :phoneNumber => '+16505551212' },
+    :to   => [ { :phoneNumber => '+14155551212'} ],
+    :text => 'Hi there!'
   }
 end
 ```

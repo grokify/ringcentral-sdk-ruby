@@ -89,7 +89,7 @@ In an end-user application, after retrieving the configured call queue extension
 
 ```ruby
 # Retrieve Call Queue Members by Call Queue Id
-# Call extensions.retrieve_all  first as shown above
+# Call extensions.retrieve_all first as shown above
 call_queue_members = extensions.get_department_members call_queue['id']
 ```
 
