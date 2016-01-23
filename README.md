@@ -25,6 +25,7 @@ RingCentral SDK for Ruby
     1. [Authorization Code Grant](#authorization-code-grant)
   1. [API Requests](#api-requests)
     1. [Generic HTTP Requests](#generic-http-requests)
+    2. [SMS Example](#sms-example)
     3. [Fax Example](#fax-example)
 5. [Supported Ruby Versions](#supported-ruby-versions)
 6. [Releases](#releases)
@@ -142,13 +143,13 @@ auth_url = rcsdk.authorize_url()
 Customizing authorize URL:
 
 ```ruby
-rcsdk = RingCentralSdk.new(
+rcapi = RingCentralSdk.new(
   'myAppKey',
   'myAppSecret',
   RingCentralSdk::RC_SERVER_SANDBOX
 )
 # Retrieve OAuth authorize url using override redirect URL
-auth_url = rcsdk.authorize_url({
+auth_url = rcapi.authorize_url({
   :redirect_uri => 'my_registered_oauth_url', # optional override of default URL
   :display      => '', # optional: page|popup|touch|mobile, default 'page'
   :prompt       => '', # optional: sso|login|consent, default is 'login sso consent'
@@ -162,7 +163,7 @@ On your redirect page, you can exchange your authorization code for an access to
 
 ```ruby
 code  = params['code'] # retrieve GET 'code' parameter in Sinatra
-rcsdk.authorize_code(code)
+rcapi.authorize_code(code)
 ```
 
 For a complete working example, a demo Sinatra app is available in the scripts directory at [scripts/oauth2-sinatra](scripts/oauth2-sinatra).
@@ -181,13 +182,13 @@ After you have saved the token hash, e.g. as JSON, you can reload it in another 
 
 ```ruby
 # Reuse token_hash in another SDK instance
-rcsdk2 = RingCentralSdk.new(
+rcapi2 = RingCentralSdk.new(
   'myAppKey',
   'myAppSecret',
   RingCentralSdk::RC_SERVER_SANDBOX
 )
 # set_token() accepts a hash or OAuth2::AccessToken object
-rcsdk2.set_token(token_hash)
+rcapi2.set_token(token_hash)
 ```
 
 Important! You have to manually maintain synchronization of SDK's between requests if you share authentication. When two simultaneous requests will perform refresh, only one will succeed. One of the solutions would be to have semaphor and pause other pending requests while one of them is performing refresh.
@@ -200,7 +201,7 @@ API requests can be made via the included `Faraday` client or `RingCentralSdk::H
 
 #### Generic HTTP Requests
 
-To make generic API requests, use included `Faraday` client which can be accessed via `rcsdk.client`. The client automatically adds the correct access token to the HTTP request and handles OAuth token refresh using the `OAuth` gem.
+To make generic API requests, use included `Faraday` client which can be accessed via `rcapi.client`. The client automatically adds the correct access token to the HTTP request and handles OAuth token refresh using the `OAuth` gem.
 
 ```ruby
 client = rcapi.client
@@ -214,7 +215,6 @@ rcapi.messages.create(
   :to => '+4153334444',
   :text => 'Hi there!'
 )
-
 ```
 
 #### Fax Example
@@ -243,10 +243,10 @@ fax = RingCentralSdk::Helpers::CreateFaxRequest.new(
 )
 
 # sending request via request helper methods
-response = rcsdk.request(fax)
+response = rcapi.request(fax)
 
 # sending request via standard Faraday client
-response = rcsdk.client.post do |req|
+response = rcapi.client.post do |req|
   req.url fax.url
   req.headers['Content-Type'] = fax.content_type
   req.body = fax.body
