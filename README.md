@@ -221,8 +221,8 @@ Faraday response middleware is loaded for the following:
 ```ruby
 rcapi.messages.create(
   :from => '+6501112222',
-  :to '+4153334444',
-  :text 'Hi there!'
+  :to => '+4153334444',
+  :text => 'Hi there!'
 )
 
 ```
