@@ -150,7 +150,7 @@ module RingCentralSdk::REST
       elsif client.is_a?(OAuth2::Client)
         @oauth2client = client
       else
-        raise "client is not an OAuth2::Client"
+        fail "client is not an OAuth2::Client"
       end
     end
 
@@ -162,7 +162,7 @@ module RingCentralSdk::REST
 
     def send_request(request=nil)
       unless request.is_a?(RingCentralSdk::REST::Request::Base)
-        raise 'Request is not a RingCentralSdk::REST::Request::Base'
+        fail 'Request is not a RingCentralSdk::REST::Request::Base'
       end
 
       if request.method.downcase == 'post'

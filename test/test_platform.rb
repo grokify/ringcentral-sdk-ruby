@@ -196,6 +196,10 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     res = client.send_request(fax)
     assert_equal 'Faraday::Response', res.class.name
 
+    assert_raise do
+      res = client.send_request('non-fax')
+    end
+
     res = client.messages.fax.create(
       :to            => '+16505551212',
       :faxResolution => 'High',

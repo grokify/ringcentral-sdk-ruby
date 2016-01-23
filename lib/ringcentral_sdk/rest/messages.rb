@@ -1,6 +1,5 @@
 module RingCentralSdk::REST
   class Messages
-
     attr_reader :sms
     attr_reader :fax
 
@@ -9,13 +8,11 @@ module RingCentralSdk::REST
       @sms = RingCentralSdk::REST::MessagesSMS.new(client)
       @fax = RingCentralSdk::REST::MessagesFax.new(client)
     end
-
   end
 end
 
 module RingCentralSdk::REST
   class MessagesSMS
-
     def initialize(client)
       @client = client
     end
@@ -32,13 +29,11 @@ module RingCentralSdk::REST
       end
       return response
     end
-
   end
 end
 
 module RingCentralSdk::REST
   class MessagesFax
-
     def initialize(client)
       @client = client
     end
@@ -47,6 +42,5 @@ module RingCentralSdk::REST
       fax = RingCentralSdk::REST::Request::Fax.new(opts)
       return @client.send_request(fax)
     end
-
   end
 end
