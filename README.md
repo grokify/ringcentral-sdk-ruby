@@ -209,6 +209,7 @@ client.messages.fax.create(
   :coverPageText => 'Hi there!',
   :text => 'Hi there!'
 )
+```
 
 ## Supported Ruby Versions
 
