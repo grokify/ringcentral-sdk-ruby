@@ -203,7 +203,7 @@ API requests can be made via the included `Faraday` client or `RingCentralSdk::H
 To make generic API requests, use included `Faraday` client which can be accessed via `rcsdk.client`. The client automatically adds the correct access token to the HTTP request and handles OAuth token refresh using the `OAuth` gem.
 
 ```ruby
-client = rcsdk.client
+client = rcapi.client
 ```
 
 #### SMS Example
