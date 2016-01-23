@@ -4,7 +4,7 @@ Sending and receiving SMS is a core capability of RingCentral. Features include 
 
 ## Overview
 
-SMS requests can be easily sent directly without helpers.
+SMS requests can be easily using the client SDK.
 
 ```ruby
 # Instantiate client SDK
@@ -19,11 +19,11 @@ rcapi.messages.create(
 )
 ```
 
-You can also use the Faraday client directly:
+SMS can also be sent using the Faraday client directly.
 
 ```ruby
 # SMS using Faraday
-response = rcapi.client.post do |req|
+rcapi.client.post do |req|
   req.url 'account/~/extension/~/sms'
   req.headers['Content-Type'] = 'application/json'
   req.body = {

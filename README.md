@@ -211,8 +211,8 @@ client = rcapi.client
 
 ```ruby
 rcapi.messages.create(
-  :from => '+6501112222',
-  :to => '+4153334444',
+  :from => '+16505551212',
+  :to => '+14155551212',
   :text => 'Hi there!'
 )
 ```
