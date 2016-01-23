@@ -175,6 +175,8 @@ API requests can be made via the included `Faraday` client or `RingCentralSdk::H
 
 To make generic API requests, use included `Faraday` client which can be accessed via `client.http`. The client automatically adds the correct access token to the HTTP request and handles OAuth token refresh using the `OAuth` gem.
 
+This is useful to access many API endpoints which do not have custom wrappers and for debugging purposes.
+
 ```ruby
 http = client.http
 ```
