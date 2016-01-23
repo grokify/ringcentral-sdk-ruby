@@ -15,7 +15,6 @@ RingCentral SDK for Ruby
 ## Table of contents
 
 1. [Overview](#overview)
-  1. [Included](#included)
 2. [Documentation](#documentation)
 3. [Installation](#installation)
 4. [Usage](#usage)
@@ -37,16 +36,7 @@ RingCentral SDK for Ruby
 
 ## Overview
 
-A gem for using the [RingCentral REST API](https://developers.ringcentral.com). [Click here to read the full documentation](http://ringcentral-sdk-ruby.readthedocs.org/)
-
-### Included
-
-* Authorization via `OAuth2` with authorization code and password grant flows including token refresh
-* Generic API requests via `Faraday` client
-* Subscriptions via `Pubnub` with auto-decryption
-* Fax request helper to create `multipart/mixed` messages
-* Unit test suite via `Test::Unit` and `mocha`
-* Docs via [Read the Docs](http://ringcentral-sdk-ruby.readthedocs.org/) and [RubyDoc](http://www.rubydoc.info/gems/ringcentral_sdk/)
+A library for using the [RingCentral REST API](https://developers.ringcentral.com). [Click here to read the full documentation](http://ringcentral-sdk-ruby.readthedocs.org/).
 
 ## Documentation
 
