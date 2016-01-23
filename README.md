@@ -206,16 +206,6 @@ To make generic API requests, use included `Faraday` client which can be accesse
 client = rcsdk.client
 ```
 
-Faraday request middleware has been loaded for the following:
-
-* `:oauth2_refresh`
-* `:json`
-* `:url_encoded`
-
-Faraday response middleware is loaded for the following:
-
-* `:json`
-
 #### SMS Example
 
 ```ruby

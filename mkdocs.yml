@@ -11,6 +11,9 @@ pages:
 ## Authorization:
 - ['usage/authorization/Authorization.md', 'Authorization', 'Authorization']
 
+## Generic HTTP
+- ['usage/http-client.md', 'Generic Requests', 'HTTP Client']
+
 ## Messaging:
 - ['usage/messages/SMS-Messages.md', 'Messaging', 'SMS Messages']
 - ['usage/messages/Fax-Messages.md', 'Messaging', 'Fax Messages']
