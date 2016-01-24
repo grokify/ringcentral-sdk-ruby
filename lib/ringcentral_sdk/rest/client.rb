@@ -94,19 +94,20 @@ module RingCentralSdk::REST
     end
 
     def authorize_url(opts={})
-      if !opts.key?(:redirect_uri) && @app_config.redirect_url.to_s.length > 0
-        opts[:redirect_uri] = @app_config.redirect_url.to_s
-      end
-      @oauth2client.auth_code.authorize_url(opts)
+      @oauth2client.auth_code.authorize_url(_add_redirect_uri(opts))
     end
 
     def authorize_code(code, opts={})
+      token = @oauth2client.auth_code.get_token(code, _add_redirect_uri(opts))
+      set_token(token)
+      return token
+    end
+
+    def _add_redirect_uri(opts={})
       if !opts.key?(:redirect_uri) && @app_config.redirect_url.to_s.length > 0
         opts[:redirect_uri] = @app_config.redirect_url.to_s
       end
-      token = @oauth2client.auth_code.get_token(code, opts)
-      set_token(token)
-      return token
+      return opts
     end
 
     def authorize_password(username, extension='', password='', remember=false)
