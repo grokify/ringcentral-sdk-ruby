@@ -32,17 +32,17 @@ module RingCentralSdk::REST::Cache
         end
       end
       res.body['records'].each do |extension|
-        if extension.has_key?('id') && extension['id']>0
+        if extension.key?('id') && extension['id']>0
           @extensions_hash[extension['id'].to_s] = extension
         end
       end
       if retrieve_all
-        while res.body.has_key?('navigation') && res.body['navigation'].has_key?('nextPage')
+        while res.body.key?('navigation') && res.body['navigation'].key?('nextPage')
           res = rcsdk.client.get do |req|
             req.url res.body['navigation']['nextPage']['uri']
           end
           res.body['records'].each do |record|
-            if extension.has_key?('id') && extension['id'].length>0
+            if extension.key?('id') && extension['id'].length>0
               @extensions_hash[extension['id'].to_s] = extension
             end
           end
@@ -59,8 +59,8 @@ module RingCentralSdk::REST::Cache
     def inflate_num2id()
       num2id = {}
       @extensions_hash.each do |k,v|
-        if v.has_key?('id') && v['id']>0 &&
-          v.has_key?('extensionNumber') && v['extensionNumber'].length>0
+        if v.key?('id') && v['id']>0 &&
+          v.key?('extensionNumber') && v['extensionNumber'].length>0
           num2id[v['extensionNumber']] = v['id'].to_s
         end
       end
@@ -72,7 +72,7 @@ module RingCentralSdk::REST::Cache
       if !extension_id.is_a?(String)
         extension_id = extension_id.to_s
       end
-      if @extensions_hash.has_key?(extension_id)
+      if @extensions_hash.key? extension_id
           return @extensions_hash[extension_id]
       end
       return nil
@@ -82,9 +82,9 @@ module RingCentralSdk::REST::Cache
       if !extension_number.is_a?(String)
         extension_number = extension_number.to_s
       end
-      if @extensions_num2id.has_key?(extension_number)
+      if @extensions_num2id.key?(extension_number)
         extension_id = @extensions_num2id[extension_number]
-        if @extensions_hash.has_key?(extension_id)
+        if @extensions_hash.key?(extension_id)
           return @extensions_hash[extension_id]
         end
       end
@@ -105,13 +105,11 @@ module RingCentralSdk::REST::Cache
         req.url "account/#{account_id}/department/#{department_id}/members"
       end
 
-      if res.body.has_key?('records')
+      if res.body.key? 'records'
         res.body['records'].each do |extension|
-          if extension.has_key?('id')
+          if extension.key? 'id'
             member = get_extension_by_id extension['id']
-            if !member.nil?
-              members.push member
-            end
+            members.push member unless member.nil?
           end
         end
       end

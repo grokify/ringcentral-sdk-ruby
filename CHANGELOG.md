@@ -2,6 +2,7 @@ CHANGELOG
 ---------
 - **2016-01-23**: 0.9.0
   - Major refactor
+  - Add `RingCentral::REST::Config` and dotenv support
 - **2016-01-22**: 0.5.2
   - Add `RingCentralSdk::Cache::Extensions`
   - Add `RingCentralSdk::Helpers::ExtensionPresence`
