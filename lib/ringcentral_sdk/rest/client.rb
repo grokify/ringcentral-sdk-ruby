@@ -18,37 +18,58 @@ module RingCentralSdk::REST
     API_VERSION       = 'v1.0'
     URL_PREFIX        = '/restapi'
 
-    attr_accessor :server_url
+    attr_accessor :server_uri
 
-    attr_reader   :http
-    attr_reader   :oauth2client
-    attr_reader   :token
-    attr_reader   :user_agent
-    attr_reader   :redirect_uri
+    attr_reader :app_config
+    attr_reader :http
+    attr_reader :oauth2client
+    attr_reader :token
+    attr_reader :user_agent
+    #attr_reader :redirect_uri
 
     attr_reader   :messages
 
-    def initialize(app_key, app_secret, server_url=RingCentralSdk::RC_SERVER_SANDBOX, opts={})
-      @app_key      = app_key.to_s
-      @app_secret   = app_secret.to_s
-      @server_url   = server_url
-      @token        = nil
-      @http         = nil
-      @redirect_uri = ''
-      @user_agent   = get_user_agent()
-      @oauth2client = new_oauth2_client()
-      if opts.is_a?(Hash)
-        @redirect_uri = opts.has_key?(:redirect_uri) ? opts[:redirect_uri] : ''
-        if opts.has_key?(:username) && opts.has_key?(:password)
-          extension = opts.has_key?(:extension) ? opts[:extension] : ''
-          authorize_password(opts[:username], extension, opts[:password])
-        end
+    def initialize(app_key='', app_secret='', server_uri=RingCentralSdk::RC_SERVER_SANDBOX, opts={})
+      init_attributes()
+      app_config = RingCentralSdk::REST::ConfigApp.new(app_key, app_secret, server_uri, opts)
+      app_config(app_config)
+
+      if opts.has_key?(:username) && opts.has_key?(:password)
+        extension = opts.has_key?(:extension) ? opts[:extension] : ''
+        authorize_password(opts[:username], extension, opts[:password])
       end
+
+      #@app_key      = app_key.to_s
+      #@app_secret   = app_secret.to_s
+      #@server_url   = server_url
+      #@token        = nil
+      #@http         = nil
+      #@redirect_uri = ''
+      #@user_agent   = get_user_agent()
+      #@oauth2client = new_oauth2_client()
+      #if opts.is_a?(Hash)
+        #@redirect_url = opts.has_key?(:redirect_uri) ? opts[:redirect_uri] : ''
+      #  if opts.has_key?(:username) && opts.has_key?(:password)
+      #    extension = opts.has_key?(:extension) ? opts[:extension] : ''
+      #    authorize_password(opts[:username], extension, opts[:password])
+      #  end
+      #end
       @messages = RingCentralSdk::REST::Messages.new(self)
     end
 
-    def get_api_version_url()
-      return @server_url + URL_PREFIX + '/' + API_VERSION 
+    def app_config(app_config)
+      @app_config = app_config
+      @oauth2client = new_oauth2_client()
+    end
+
+    def init_attributes()
+      @token = nil
+      @http = nil
+      @user_agent = get_user_agent()
+    end
+
+    def api_version_url()
+      return @app_config.server_url + URL_PREFIX + '/' + API_VERSION 
     end
 
     def create_url(url, add_server=false, add_method=nil, add_token=false)
@@ -56,7 +77,7 @@ module RingCentralSdk::REST
       has_http = !url.index('http://').nil? && !url.index('https://').nil?
 
       if add_server && ! has_http
-        built_url += @server_url
+        built_url += @app_config.server_url
       end
 
       if url.index(URL_PREFIX).nil? && ! has_http
@@ -115,6 +136,10 @@ module RingCentralSdk::REST
       return token
     end
 
+    def authorize_user(user, remember=false)
+      authorize_password(user.username, user.extension, user.password)
+    end
+
     def set_token(token)
       if token.is_a?(Hash)
         token = OAuth2::AccessToken::from_hash(@oauth2client, token)
@@ -126,7 +151,7 @@ module RingCentralSdk::REST
 
       @token = token
 
-      @http = Faraday.new(:url => get_api_version_url()) do |conn|
+      @http = Faraday.new(:url => api_version_url()) do |conn|
         conn.request  :oauth2_refresh, @token
         conn.request  :json
         conn.request  :url_encoded
@@ -138,8 +163,8 @@ module RingCentralSdk::REST
     end
 
     def new_oauth2_client()
-      return OAuth2::Client.new(@app_key, @app_secret,
-        :site          => @server_url,
+      return OAuth2::Client.new(@app_config.key, @app_config.secret,
+        :site          => @app_config.server_url,
         :authorize_url => AUTHZ_ENDPOINT,
         :token_url     => TOKEN_ENDPOINT)
     end
@@ -155,8 +180,8 @@ module RingCentralSdk::REST
     end
 
     def get_api_key()
-      api_key = (@app_key.is_a?(String) && @app_secret.is_a?(String)) \
-        ? Base64.encode64("#{@app_key}:#{@app_secret}").gsub(/[\s\t\r\n]/,'') : ''
+      api_key = (@app_config.key.is_a?(String) && @app_config.secret.is_a?(String)) \
+        ? Base64.encode64("#{@app_config.key}:#{@app_config.secret}").gsub(/[\s\t\r\n]/,'') : ''
       return api_key
     end
 
@@ -190,6 +215,6 @@ module RingCentralSdk::REST
 
     alias_method :authorize, :authorize_password
     alias_method :login, :authorize_password
-    private :get_api_version_url
+    private :api_version_url
   end
 end

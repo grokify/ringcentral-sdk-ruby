@@ -12,10 +12,10 @@ client = RingCentralSdk::REST::Client.new
 client.app_config(config.app)
 client.authorize_user(config.user)
 
-res = client.messages.fax.create(
-  :to => config.env.data['RC_DEMO_FAX_TO'],
-  :coverPageText => config.env.data['RC_DEMO_FAX_COVERPAGE_TEXT'],
-  :files => [config.env.data['RC_DEMO_FAX_FILEPATH']]
+res = client.messages.sms.create(
+  :from => config.env.data['RC_DEMO_SMS_FROM'],
+  :to => config.env.data['RC_DEMO_SMS_TO'],
+  :text => config.env.data['RC_DEMO_SMS_TEXT']
 )
 
 pp res.body

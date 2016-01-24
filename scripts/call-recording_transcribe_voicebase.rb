@@ -23,16 +23,9 @@ Guide version 1.1.4 PDF page 18.
 
 config = RingCentralSdk::REST::Config.new.load_dotenv
 
-client = RingCentralSdk::REST::Client.new(
-  config.app.key,
-  config.app.secret,
-  config.app.server_url,
-  {
-    :username => config.user.username,
-    :extension => config.user.extension,
-    :password => config.user.password
-  }
-)
+client = RingCentralSdk::REST::Client.new
+client.app_config(config.app)
+client.authorize_user(config.user)
 
 module VoiceBase
   class Client
