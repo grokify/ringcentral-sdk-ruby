@@ -55,9 +55,11 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
       'my_app_key',
       'my_app_secret',
       RingCentralSdk::RC_SERVER_PRODUCTION,
-      {:redirect_uri => 'http://localhost:4567/oauth'}
+      {:redirect_url => 'http://localhost:4567/oauth'}
     )
     authorize_url = rcsdk.authorize_url()
+
+    puts authorize_url
 
     assert_equal true, authorize_url.is_a?(String)
     assert_equal 0, authorize_url.index(RingCentralSdk::RC_SERVER_PRODUCTION)

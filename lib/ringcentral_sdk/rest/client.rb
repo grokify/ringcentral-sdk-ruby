@@ -18,7 +18,7 @@ module RingCentralSdk::REST
     API_VERSION       = 'v1.0'
     URL_PREFIX        = '/restapi'
 
-    attr_accessor :server_uri
+    #attr_accessor :server_url
 
     attr_reader :app_config
     attr_reader :http
@@ -29,9 +29,9 @@ module RingCentralSdk::REST
 
     attr_reader   :messages
 
-    def initialize(app_key='', app_secret='', server_uri=RingCentralSdk::RC_SERVER_SANDBOX, opts={})
+    def initialize(app_key='', app_secret='', server_url=RingCentralSdk::RC_SERVER_SANDBOX, opts={})
       init_attributes()
-      app_config = RingCentralSdk::REST::ConfigApp.new(app_key, app_secret, server_uri, opts)
+      app_config = RingCentralSdk::REST::ConfigApp.new(app_key, app_secret, server_url, opts)
       app_config(app_config)
 
       if opts.has_key?(:username) && opts.has_key?(:password)
@@ -113,15 +113,15 @@ module RingCentralSdk::REST
     end
 
     def authorize_url(opts={})
-      if ! opts.has_key?(:redirect_uri) && @redirect_uri.to_s.length>0
-        opts[:redirect_uri] = @redirect_uri.to_s
+      if ! opts.has_key?(:redirect_url) && @app_config.redirect_url.to_s.length>0
+        opts[:redirect_url] = @app_config.redirect_url.to_s
       end
       @oauth2client.auth_code.authorize_url(opts)
     end
 
     def authorize_code(code, opts={})
-      if ! opts.has_key?(:redirect_uri) && @redirect_uri.to_s.length>0
-        opts[:redirect_uri] = @redirect_uri.to_s
+      if ! opts.has_key?(:redirect_url) && @app_config.redirect_url.to_s.length>0
+        opts[:redirect_url] = @app_config.redirect_url.to_s
       end
       token = @oauth2client.auth_code.get_token(code, opts)
       set_token(token)
