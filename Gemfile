@@ -1,6 +1,7 @@
 source ENV['GEM_SOURCE'] || 'https://rubygems.org'
 
 gem 'coveralls'
+gem 'dotenv'
 gem 'faraday', '~> 0.9.0'
 gem 'faraday_middleware'
 gem 'faraday_middleware-oauth2_refresh'

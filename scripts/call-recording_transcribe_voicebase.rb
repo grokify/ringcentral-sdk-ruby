@@ -18,28 +18,21 @@ Guide version 1.1.4 PDF page 18.
 
 =end
 
-# Set your credentials in the test credentials file
+# Set your credentials in the .env file
+# Use the rc_config_sample.env.txt file as a scaffold
 
-class RingCentralSdkBootstrap
+config = RingCentralSdk::REST::Config.new.load_dotenv
 
-  attr_reader :credentials
-
-  def load_credentials(credentials_filepath, usage_string=nil)
-    unless credentials_filepath.to_s.length>0
-      raise usage_string.to_s
-    end
-
-    unless File.exists?(credentials_filepath.to_s)
-      raise "Error: credentials file does not exist for: #{credentials_filepath}"
-    end
-
-    @credentials = MultiJson.decode(IO.read(credentials_filepath), :symbolize_keys=>true)
-  end
-
-end
-
-boot = RingCentralSdkBootstrap.new
-boot.load_credentials(ARGV.shift, 'Usage: call-recording_transcribe_voicebase.rb path/to/credentials.json')
+client = RingCentralSdk::REST::Client.new(
+  config.app.key,
+  config.app.secret,
+  config.app.server_url,
+  {
+    :username => config.user.username,
+    :extension => config.user.extension,
+    :password => config.user.password
+  }
+)
 
 module VoiceBase
   class Client
@@ -88,8 +81,8 @@ def upload_recordings(vbsdk, dir)
 end
 
 vbsdk = VoiceBase::Client.new(
-  boot.credentials[:voicebase][:api_key],
-  boot.credentials[:voicebase][:password])
+  config.env.data['RC_DEMO_VB_API_KEY'],
+  config.env.data['RC_DEMO_VB_PASSWORD'])
 
 upload_recordings(vbsdk, '.')
 
