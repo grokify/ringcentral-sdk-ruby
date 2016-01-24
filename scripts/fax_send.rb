@@ -3,8 +3,10 @@
 require 'ringcentral_sdk'
 require 'pp'
 
-config = RingCentralSdk::REST::Config.new
-config.load_dotenv
+# Set your credentials in the .env file
+# Use the rc_config_sample.env.txt file as a scaffold
+
+config = RingCentralSdk::REST::Config.new.load_dotenv
 
 client = RingCentralSdk::REST::Client.new(
   config.app.key,
