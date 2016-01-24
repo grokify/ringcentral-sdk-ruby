@@ -4,32 +4,24 @@ require 'sinatra'
 require 'multi_json'
 require 'ringcentral_sdk'
 
-# BEGIN CONFIG
-# ENTER YOUR INFORMATION HERE
-app_key      = 'my_app_key'
-app_secret   = 'my_app_secret'
-redirect_uri = 'http://localhost:4567/oauth'
-# END CONFIG
+# Enter config in .env file
 
-rcsdk = RingCentralSdk.new(
-  app_key,
-  app_secret,
-  RingCentralSdk::RC_SERVER_SANDBOX,
-  {:redirect_uri => redirect_uri}
-)
+client = RingCentralSdk::REST::Client.new
+config = RingCentralSdk::REST::Config.new.load_dotenv
+client.app_config(config.app)
 
 get '/' do
   erb :index, :locals => {
-    :authorize_url => rcsdk.authorize_url(),
-    :redirect_uri  => redirect_uri
+    :authorize_url => client.authorize_url(),
+    :redirect_uri  => config.app.redirect_url
   }
 end
 
 get '/oauth' do
-  code = params.has_key?('code') ? params['code'] : ''
+  code = params.key?('code') ? params['code'] : ''
   token_json = ''
   if code
-    token = rcsdk.authorize_code(code)
+    token = client.authorize_code(code)
     token_json = MultiJson.encode(token.to_hash, :pretty=>true)
   end
   erb :oauth, :locals => {

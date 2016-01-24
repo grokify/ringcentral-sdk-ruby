@@ -18,42 +18,23 @@ module RingCentralSdk::REST
     API_VERSION       = 'v1.0'
     URL_PREFIX        = '/restapi'
 
-    #attr_accessor :server_url
-
     attr_reader :app_config
     attr_reader :http
     attr_reader :oauth2client
     attr_reader :token
     attr_reader :user_agent
-    #attr_reader :redirect_uri
-
-    attr_reader   :messages
+    attr_reader :messages
 
     def initialize(app_key='', app_secret='', server_url=RingCentralSdk::RC_SERVER_SANDBOX, opts={})
       init_attributes()
       app_config = RingCentralSdk::REST::ConfigApp.new(app_key, app_secret, server_url, opts)
       app_config(app_config)
 
-      if opts.has_key?(:username) && opts.has_key?(:password)
-        extension = opts.has_key?(:extension) ? opts[:extension] : ''
+      if opts.key?(:username) && opts.key?(:password)
+        extension = opts.key?(:extension) ? opts[:extension] : ''
         authorize_password(opts[:username], extension, opts[:password])
       end
 
-      #@app_key      = app_key.to_s
-      #@app_secret   = app_secret.to_s
-      #@server_url   = server_url
-      #@token        = nil
-      #@http         = nil
-      #@redirect_uri = ''
-      #@user_agent   = get_user_agent()
-      #@oauth2client = new_oauth2_client()
-      #if opts.is_a?(Hash)
-        #@redirect_url = opts.has_key?(:redirect_uri) ? opts[:redirect_uri] : ''
-      #  if opts.has_key?(:username) && opts.has_key?(:password)
-      #    extension = opts.has_key?(:extension) ? opts[:extension] : ''
-      #    authorize_password(opts[:username], extension, opts[:password])
-      #  end
-      #end
       @messages = RingCentralSdk::REST::Messages.new(self)
     end
 
@@ -113,15 +94,15 @@ module RingCentralSdk::REST
     end
 
     def authorize_url(opts={})
-      if ! opts.has_key?(:redirect_url) && @app_config.redirect_url.to_s.length>0
-        opts[:redirect_url] = @app_config.redirect_url.to_s
+      if !opts.key?(:redirect_uri) && @app_config.redirect_url.to_s.length > 0
+        opts[:redirect_uri] = @app_config.redirect_url.to_s
       end
       @oauth2client.auth_code.authorize_url(opts)
     end
 
     def authorize_code(code, opts={})
-      if ! opts.has_key?(:redirect_url) && @app_config.redirect_url.to_s.length>0
-        opts[:redirect_url] = @app_config.redirect_url.to_s
+      if !opts.key?(:redirect_uri) && @app_config.redirect_url.to_s.length > 0
+        opts[:redirect_uri] = @app_config.redirect_url.to_s
       end
       token = @oauth2client.auth_code.get_token(code, opts)
       set_token(token)

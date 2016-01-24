@@ -29,12 +29,6 @@ module RingCentralSdk::REST
     attr_accessor :password
 
     def load_env
-      ['RC_USER_USERNAME', 'RC_USER_PASSWORD'].each do |var|
-        if !ENV.key?(var)
-          fail "environment variable '#{var}' not found"
-        end
-      end
-
       @username = ENV['RC_USER_USERNAME']
       @extension = ENV['RC_USER_EXTENSION']
       @password = ENV['RC_USER_PASSWORD']
@@ -59,7 +53,13 @@ module RingCentralSdk::REST
       @key = app_key
       @secret = app_secret
       @server_url = server_url
-      @redirect_url = opts.key?(:redirect_url) ? opts[:redirect_url] : ''
+      if opts.key?(:redirect_url)
+        @redirect_url = opts[:redirect_url]
+      elsif opts.key?(:redirect_uri)
+        @redirect_url = opts[:redirect_uri]
+      else
+        @redirect_url = ''
+      end
     end
 
     def load_env
