@@ -1,6 +1,6 @@
 # RingCentral SDK for Ruby
 
-Unofficial SDK for RingCentral Connect Platform in Ruby.
+This documentation is for version 1.0.0 of [ringcentral_sdk](https://github.com/grokify/ringcentral-sdk-ruby).
 
 ## Table of Contents
 

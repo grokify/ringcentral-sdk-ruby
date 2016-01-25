@@ -10,7 +10,7 @@ More detailed information on initialization and authorization is available in th
 ```ruby
 require 'ringcentral_sdk'
 
-rcapi = RingCentralSdk.new(
+client = RingCentralSdk.new(
   "myAppKey",
   "myAppSecret",
   RingCentralSdk::Sdk::RC_SERVER_SANDBOX
@@ -22,11 +22,11 @@ rcapi = RingCentralSdk.new(
 ```ruby
 # Initialize using user phone number without extension number
 
-rcapi.authorize("myUsername", nil, "myPassword")
+client.authorize("myUsername", nil, "myPassword")
 
 # Initialize using main phone number and extension number
 
-rcapi.authorize("myUsername", "myExtension", "myPassword")
+client.authorize("myUsername", "myExtension", "myPassword")
 ```
 
 See the [Authorization section](usage/authorization/Authorization.md) for more examples, including
@@ -39,7 +39,7 @@ Requests are made using the inclued Faraday client which adds the requisite OAut
 Any API request can be made via this method.
 
 ```ruby
-client = rcapi.client
+http = client.http
 ```
 ## Create SMS Message
 
@@ -47,15 +47,11 @@ SMS and other requests can be easily sent directly without helpers.
 
 ```ruby
 # Send SMS - POST request
-response = rcapi.client.post do |req|
-  req.url 'account/~/extension/~/sms'
-  req.headers['Content-Type'] = 'application/json'
-  req.body = {
-    :from =>   { :phoneNumber => '16505551212' },
-    :to   => [ { :phoneNumber => '14155551212'} ],
-    :text => 'RingCentral SMS demo using Ruby!'
-  }
-end
+response = client.messages.sms.create(
+  :from => '+16505551212',
+  :to '+14155551212',
+  :text 'Hi there!'
+)
 ```
 
 ## Create Subscription
@@ -72,7 +68,7 @@ class MyObserver
 end
 
 # Create an observable subscription and add your observer
-sub = rcapi.create_subscription()
+sub = client.create_subscription()
 sub.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
 sub.add_observer(MyObserver.new())
 

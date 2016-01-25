@@ -8,11 +8,11 @@ SMS requests can be easily using the client SDK.
 
 ```ruby
 # Instantiate client SDK
-rcapi = RingCentralSdk.new ...
-rcapi.login ... # OAuth authorization
+client = RingCentralSdk.new ...
+client.authorize_password ... # OAuth authorization
 
 # SMS using helper
-rcapi.messages.create(
+client.messages.sms.create(
   :from => '+16505551212',
   :to '+14155551212',
   :text 'Hi there!'
@@ -23,7 +23,7 @@ SMS can also be sent using the Faraday client directly.
 
 ```ruby
 # SMS using Faraday
-rcapi.client.post do |req|
+client.http.post do |req|
   req.url 'account/~/extension/~/sms'
   req.headers['Content-Type'] = 'application/json'
   req.body = {
@@ -43,7 +43,7 @@ To retrieve a list of phone numbers, make a `GET` request to the `extension/phon
 ```ruby
 # Phone Number Example
 
-response = rcapi.client.get do |req|
+response = client.http.get do |req|
   req.url 'account/~/extension/~/phone-number'
 end
 ```

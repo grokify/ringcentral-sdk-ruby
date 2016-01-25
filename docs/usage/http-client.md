@@ -1,9 +1,9 @@
 # HTTP Client
 
-To make generic API requests, use included `Faraday` client which can be accessed via `rcsdk.client`. The client automatically adds the correct access token to the HTTP request and handles OAuth token refresh using the `OAuth` gem.
+To make generic API requests, use included `Faraday` client which can be accessed via `client.http`. The client automatically adds the correct access token to the HTTP request and handles OAuth token refresh using the `OAuth` gem.
 
 ```ruby
-client = rcsdk.client
+http = client.http
 ```
 
 Faraday request middleware has been loaded for the following:
@@ -20,7 +20,7 @@ An example SMS request is presented below:
 
 ```ruby
 # SMS using Faraday
-response = rcapi.client.post do |req|
+response = client.http.post do |req|
   req.url 'account/~/extension/~/sms'
   req.headers['Content-Type'] = 'application/json'
   req.body = {
