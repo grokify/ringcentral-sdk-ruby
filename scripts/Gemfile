@@ -1,0 +1,5 @@
+source ENV['GEM_SOURCE'] || 'https://rubygems.org'
+
+gem 'multi_json'
+gem 'ringcentral_sdk'
+gem 'voicebase'
