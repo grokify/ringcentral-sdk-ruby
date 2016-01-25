@@ -1,4 +1,4 @@
-require './test/test_helper.rb'
+require './test/test_base.rb'
 
 class RingCentralSdkTest < Test::Unit::TestCase
   def setup

@@ -61,22 +61,6 @@ module RingCentralSdk::REST
         status_enabled[current_status] : nil
     end
 
-=begin
-    def disable_department_calls()
-      retrieve()
-
-      if !@presence_data.key?('dndStatus')
-        raise 'invalid presence info'
-      end
-
-      current_status = @presence_data['dndStatus']
-      new_status = new_status_dnd_department_calls(current_status, false)
-
-      if current_status != new_status
-        update({:dndStatus => new_status})
-      end
-    end
-=end
     def update(body=nil)
       if body.nil?
         raise 'HTTP request body is required to update presence'
@@ -114,36 +98,5 @@ module RingCentralSdk::REST
 
       return new_status
     end
-=begin
-    def status_enable_dnd_department_calls(current_status)
-      new_status = current_status
-
-      new_statuses = {
-        'DoNotAcceptAnyCalls' => 'TakeDepartmentCallsOnly',
-        'DoNotAcceptDepartmentCalls' => 'TakeAllCalls'
-      }
-
-      if new_statuses.key?(current_status.to_s)
-        new_status = new_statuses[current_status.to_s]
-      end
-
-      return new_status
-    end
-
-    def status_disable_dnd_department_calls(current_status)
-      new_status = current_status
-
-      new_statuses = {
-        'TakeAllCalls' => 'DoNotAcceptDepartmentCalls',
-        'TakeDepartmentCallsOnly' => 'DoNotAcceptAnyCalls'
-      }
-
-      if new_statuses.key?(current_status.to_s)
-        new_status = new_statuses[current_status.to_s]
-      end
-
-      return new_status
-    end
-=end
   end
 end

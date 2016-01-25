@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-require './test/test_helper.rb'
+require './test/test_base.rb'
 
 class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
   def testSetup
