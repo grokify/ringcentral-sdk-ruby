@@ -1,8 +1,18 @@
 CHANGELOG
 ---------
-- **2016-01-23**: 0.9.0
+- **2016-01-26**: 1.0.0
   - Major refactor
-  - Add `RingCentral::REST::Config` and dotenv support
+  - Many naming changes for more consistency
+    - All code moved into RingCentralSdk::REST namespace
+    - RingCentralSdk::Platform is now RingCentralSdk::REST::Client
+    - RingCentralSdk::Platform::client is now RingCentralSdk::REST::Client::http
+    - RingCentralSdk::Helpers namespace is now RingCentralSdk::Request
+  - Add RingCentralSdk::REST::Config
+    - RingCentralSdk::REST::Config reads dotenv files
+    - Update sample scripts to use new Config object
+    - Add scripts/account-extensions.rb script
+  - Add RingCentral::REST::Messages, RingCentral::REST::Messages::MessagesSMS and RingCentral::REST::Messages::MessagesFax
+  - Update RingCentralSdk::REST::Request::Fax helper for nicer interface, formerly RingCentralSdk::Helpers::Fax
 - **2016-01-22**: 0.5.2
   - Add `RingCentralSdk::Cache::Extensions`
   - Add `RingCentralSdk::Helpers::ExtensionPresence`
