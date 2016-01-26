@@ -42,15 +42,15 @@ A library for using the [RingCentral REST API](https://developers.ringcentral.co
 
 Documentation is available on:
 
-1. [Read the Docs](http://ringcentral-sdk-ruby.readthedocs.org/)
-2. [RubyDoc](http://www.rubydoc.info/gems/ringcentral_sdk/). 
+1. [SDK Developer Guide](http://ringcentral-sdk-ruby.readthedocs.org/)
+2. [SDK Reference Guide](http://www.rubydoc.info/gems/ringcentral_sdk/)
 
 Read the Docs is the primary documentation solution used, however, RubyDoc is useful for examining code.
 
 In addition the documentation for this Ruby SDK, refer to the official RingCentral guides for
 more information on individual API calls:
 
-1. [API Developer and Reference Guide](https://developers.ringcentral.com/api-docs/latest/index.html) for information on specific APIs.
+1. [API Developer and Reference Guide](https://developers.ringcentral.com/api-docs/latest/index.html) for information on specific APIs
 1. [API Explorer](http://ringcentral.github.io/api-explorer/)
 1. [Dev Tutorial](http://ringcentral.github.io/tutorial/)
 
@@ -76,7 +76,7 @@ $ gem install ringcentral_sdk
 This provides a very basic guide to using the SDK. Please use the following resources for more information:
 
 1. [SDK Developer Guide](http://ringcentral-sdk-ruby.readthedocs.org/)
-2. [SDK Reference](http://www.rubydoc.info/gems/ringcentral_sdk/). 
+2. [SDK Reference Guide](http://www.rubydoc.info/gems/ringcentral_sdk/). 
 1. [API Developer and Reference Guide](https://developers.ringcentral.com/api-docs/latest/index.html)
 
 ### Instantiation and Authorization
