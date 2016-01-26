@@ -47,8 +47,7 @@ Documentation is available on:
 
 Read the Docs is the primary documentation solution used, however, RubyDoc is useful for examining code.
 
-In addition the documentation for this Ruby SDK, refer to the official RingCentral guides for
-more information on individual API calls:
+In addition the documentation for this Ruby SDK, refer to the official RingCentral guides for more information on individual API calls:
 
 1. [API Developer and Reference Guide](https://developers.ringcentral.com/api-docs/latest/index.html) for information on specific APIs
 1. [API Explorer](http://ringcentral.github.io/api-explorer/)
