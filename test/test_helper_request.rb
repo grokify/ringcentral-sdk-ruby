@@ -9,6 +9,5 @@ class RingCentralSdkHelperRequestTest < Test::Unit::TestCase
     assert_equal '', req.url()
     assert_equal '', req.content_type()
     assert_equal '', req.body()
-
   end
 end

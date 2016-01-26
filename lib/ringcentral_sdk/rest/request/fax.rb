@@ -25,12 +25,12 @@ module RingCentralSdk::REST::Request
     end
 
     def add_path(opts={})
-      if opts.has_key?(:accountId) && opts[:accountId].to_s.length>0
+      if opts.key?(:accountId) && opts[:accountId].to_s.length>0
         @account_id = opts[:accountId]
       else
         @account_id = '~'
       end
-      if opts.has_key?(:extensionId) && opts[:extensionId].to_s.length>0
+      if opts.key?(:extensionId) && opts[:extensionId].to_s.length>0
         @extension_id = opts[:extensionId]
       else
         @extension_id = '~'
@@ -66,7 +66,7 @@ module RingCentralSdk::REST::Request
       }
 
       opts.each do |k,v|
-        meta[k] = v unless processed.has_key?(k)
+        meta[k] = v unless processed.key?(k)
       end
 
       meta
@@ -88,13 +88,13 @@ module RingCentralSdk::REST::Request
         if part.is_a?(String)
           file_part = MIMEBuilder::Filepath.new(part)
           @msg.add(file_part.mime)
-        elsif part.is_a?(Hash)
+        elsif part.is_a? Hash
           part[:content_id_disable] = true
           part[:is_attachment] = true
-          if part.has_key(:filename)
+          if part.key? :filename
             file_part = MIMEBuilder::Filepath.new(part[:filename], part)
             @msg.add(file_part.mime)
-          elsif part.has_key?(:text)
+          elsif part.key? :text
             text_part = MIMEBuilder::Text.new(part[:text], part)
             @msg.add(text_part.mime)
           end
