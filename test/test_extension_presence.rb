@@ -1,7 +1,5 @@
 require './test/test_base.rb'
 
-require 'pp'
-
 class RingCentralSdkRESTExtensionPresenceTest < Test::Unit::TestCase
   def new_client
     client = RingCentralSdk::REST::Client.new(
@@ -63,8 +61,6 @@ class RingCentralSdkRESTExtensionPresenceTest < Test::Unit::TestCase
     presence.retrieve()
     presence.presence_data = stub_presence
 
-    pp presence.presence_data
-
     assert_equal 'TakeAllCalls', presence.presence_data['dndStatus']
 
     assert_equal true, presence.department_calls_enabled?
@@ -72,6 +68,16 @@ class RingCentralSdkRESTExtensionPresenceTest < Test::Unit::TestCase
     #new_status = presence.department_calls_enable false
     #assert_equal 'DoNotAcceptDepartmentCalls', new_status
 
+    presence.extension_id = 'abc'
+    assert_raise do
+      presence.retrieve
+    end
+
+    assert_raise do
+      presence.update nil
+    end
+
+    presence.update({:dndStatus=>'TakeAllCalls'})
   end
 
   def data_extension_presence
