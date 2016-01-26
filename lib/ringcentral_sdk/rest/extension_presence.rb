@@ -39,6 +39,8 @@ module RingCentralSdk::REST
       if current_status != new_status
         update({:dndStatus => new_status})
       end
+
+      return new_status
     end
 
     def department_calls_enabled?(reload=false)

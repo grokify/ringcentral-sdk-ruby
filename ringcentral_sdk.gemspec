@@ -18,14 +18,14 @@ Gem::Specification.new do |s|
   s.files      += Dir['[A-Z]*']    + Dir['test/**/*']
   # s.files.reject! { |fn| fn.include? "CVS" }
   # s.required_ruby_version = '>= 1.8.7' # 1.8.7+ is tested
-  s.add_dependency 'dotenv', '>= 0'
+  s.add_dependency 'dotenv', '~> 2.1', '>= 2.1.0'
   s.add_dependency 'faraday', '~> 0.9', '>= 0.9'
   s.add_dependency 'faraday_middleware', '~> 0', '>= 0'
-  s.add_dependency 'faraday_middleware-oauth2_refresh', '>= 0'
-  s.add_dependency 'mime', '>= 0'
-  s.add_dependency 'mime-types', '>= 1.25' # >= 1.9 '~> 2.5', '>= 2.5'
-  s.add_dependency 'multi_json', '>= 0'
-  s.add_dependency 'oauth2', '>= 0'
-  s.add_dependency 'pubnub', '~> 3.7.3'
-  s.add_dependency 'timers', '>= 0'
+  s.add_dependency 'faraday_middleware-oauth2_refresh', '~> 0'
+  s.add_dependency 'mime', '~> 0.4', '>= 0.4.3'
+  s.add_dependency 'mime-types', '~> 1.25' # >= 1.9 '~> 2.5', '>= 2.5'
+  s.add_dependency 'multi_json', '~> 1.3'
+  s.add_dependency 'oauth2', '~> 1.0', '>= 1.0.0'
+  s.add_dependency 'pubnub', '~> 3.7', '>= 3.7.3'
+  s.add_dependency 'timers', '~> 0'
 end

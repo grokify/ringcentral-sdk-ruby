@@ -2,6 +2,7 @@ Gemfile.lock
 coverage
 scripts/_*
 scripts/*.env
+scripts/Gemfile.lock
 scripts/credentials.json
 scripts/credentials[0-9].json
 scripts/rc-credentials.json
