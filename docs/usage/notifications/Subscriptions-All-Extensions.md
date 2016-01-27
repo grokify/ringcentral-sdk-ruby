@@ -37,11 +37,11 @@ To get a list of all extensions, you can use `RingCentralSdk::Cache::Extensions`
 
 ```ruby
 # Initialize client SDK
-rc_api = RingCentralSdk.new ...
-rc_api.login ... # Authorize
+client = RingCentralSdk::REST::Client.new ...
+client.login ... # Authorize
 
 # Retrieve all Enabled extensions
-extensions = RingCentralSdk::Cache::Extensions.new rc_api
+extensions = RingCentralSdk::REST::Cache::Extensions.new client
 extensions.retrieve({'status' => 'Enabled'}, true)
 extension_ids = extensions.extensions_hash.keys
 ```
@@ -85,9 +85,9 @@ For the array of extension presents event filters, a single subscription API is 
 
 ```ruby
 # Run the event filters in a single subscription API call
-def run_subscription(rc_api, event_filters)
+def run_subscription(client, event_filters)
   # Create an observable subscription and add your observer
-  sub = rc_api.create_subscription()
+  sub = client.create_subscription()
   sub.subscribe(event_filters)
 
   # Add observer
@@ -101,5 +101,5 @@ def run_subscription(rc_api, event_filters)
   sub.destroy()
 end
 
-run_subscription(rc_api, event_filters)
+run_subscription(client, event_filters)
 ```

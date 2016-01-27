@@ -17,16 +17,16 @@ In addition to the synopsis below, an example Sinatra app is available in the re
 
 ```ruby
 # Initialize SDK with OAuth redirect URI
-rcsdk = RingCentralSdk.new(
+client = RingCentralSdk.new(
   'myAppKey',
   'myAppSecret',
   RingCentralSdk::RC_SERVER_SANDBOX,
   {:redirect_uri => 'http://example.com/oauth'}
 )
 # Retrieve OAuth authorize url using default redirect URL
-auth_url = rcsdk.authorize_url()
+auth_url = client.authorize_url()
 # Retrieve OAuth authorize url using override redirect URL
-auth_url = rcsdk.authorize_url({
+auth_url = client.authorize_url({
   :redirect_uri => 'my_registered_oauth_url', # optional override of default URL
   :display      => '', # optional: page|popup|touch|mobile, default 'page'
   :prompt       => '', # optional: sso|login|consent, default is 'login sso consent'
@@ -40,7 +40,7 @@ On your redirect page, you can exchange your authorization code for an access to
 
 ```ruby
 code  = params['code'] # retrieve GET 'code' parameter in Sinatra
-token = rcsdk.authorize_code(code)
+token = client.authorize_code(code)
 ```
 
 ## Password Grant
@@ -53,11 +53,11 @@ This is the reference OAuth2 password strategy authorization used by the officia
 RingCentral SDKs:
 
 ```ruby
-rcsdk = RingCentralSdk.new(
+client = RingCentralSdk.new(
   'my_app_key', 'my_app_secret', RingCentralSdk::Sdk::RC_SERVER_SANDBOX
 )
 
-rcsdk.authorize( 'my_username', 'my_extension', 'my_password' )
+client.authorize( 'my_username', 'my_extension', 'my_password' )
 ```
 
 ### Simple Approach
@@ -67,7 +67,7 @@ method which will execute the OAuth2 password stategy when present. This is usef
 for single queries where you do not need to reuse the SDK object.
 
 ```ruby
-rcsdk = RingCentralSdk.new(
+client = RingCentralSdk.new(
   'my_app_key', 'my_app_secret',
   RingCentralSdk::RC_SERVER_SANDBOX, # or RingCentralSdk::RC_SERVER_PRODUCTION
   {:username => 'my_username', :extension => 'my_extension', :password => 'my_password'}
@@ -98,19 +98,19 @@ Using the generic authorization approach, any `OAuth2::AccessToken` can be
 provided, allowing you more flexibility.
 
 ```ruby
-rcsdk = RingCentralSdk.new(
+client = RingCentralSdk.new(
   'myAppKey', 'myAppSecret', RingCentralSdk::Sdk::RC_SERVER_SANDBOX
 )
 
 oauth2 = OAuth2::Client.new(@app_key, @app_secret,
-  :site      => rcsdk.server_url,
+  :site      => client.server_url,
   :token_url => RingCentralSdk::Platform::Platform::TOKEN_ENDPOINT)
 
 token = oauth2.password.get_token('my_username', 'my_password', {
   :extension => 'my_extension',
-  :headers   => { 'Authorization' => 'Basic ' + rcsdk.get_api_key() } })
+  :headers   => { 'Authorization' => 'Basic ' + client.get_api_key() } })
 
-rcsdk.authorized(token)
+client.authorized(token)
 ```
 
 ## Token Reuse
@@ -119,30 +119,30 @@ To reuse an access token between sessions, you can save the hash of the token,
 store it, and then reuse it in another SDK instance.
 
 ```ruby
-rcsdk = RingCentralSdk.new(
+client = RingCentralSdk.new(
   'my_app_key', 'my_app_secret', RingCentralSdk::RC_SERVER_SANDBOX
 )
-rcsdk.authorize( 'my_username', 'my_extension', 'my_password' )
+client.authorize( 'my_username', 'my_extension', 'my_password' )
 
 # Save token
-token_hash = rcsdk.token.to_hash
+token_hash = client.token.to_hash
 
 # New SDK Instance
-rcsdk2 = RingCentralSdk.new(
+client2 = RingCentralSdk.new(
   'my_app_key', 'my_app_secret', RingCentralSdk::RC_SERVER_SANDBOX
 )
 
 # Method 1: Load token as hash
-rcsdk2.set_token(token_hash)
+client2.set_token(token_hash)
 
 # Method 2: Load token as OAuth2::AccessToken object
 oauth2 = OAuth2::Client.new(@app_key, @app_secret,
-  :site      => rcsdk2.server_url,
-  :token_url => rcsdk2.class::TOKEN_ENDPOINT)
+  :site      => client2.server_url,
+  :token_url => client2.class::TOKEN_ENDPOINT)
 
 token = OAuth2::AccessToken::from_hash(oauth2, token_hash)
 
-rcsdk2.set_token(token)
+client2.set_token(token)
 ```
 
 ## Implementation
