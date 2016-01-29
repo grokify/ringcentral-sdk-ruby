@@ -42,12 +42,10 @@ A library for using the [RingCentral REST API](https://developers.ringcentral.co
 
 Full documentation and resources are available at:
 
-1. [Ruby SDK Developer Guide](http://ringcentral-sdk-ruby.readthedocs.org/)
-2. [Ruby SDK Reference Guide](http://www.rubydoc.info/gems/ringcentral_sdk/)
+1. [Ruby SDK Developer Guide](http://ringcentral-sdk-ruby.readthedocs.org/) - Read the Docs
+2. [Ruby SDK Reference Guide](http://www.rubydoc.info/gems/ringcentral_sdk/) - RubyDoc.info
 
-Read the Docs is the primary documentation solution used, however, RubyDoc is useful for examining code.
-
-In addition the documentation for this Ruby SDK, refer to the official RingCentral guides for more information on individual API calls:
+For API information, see the official RingCentral resources:
 
 1. [API Developer and Reference Guide](https://developers.ringcentral.com/api-docs/latest/index.html) for information on specific APIs
 1. [API Explorer](https://developer.ringcentral.com/api-explorer/)
