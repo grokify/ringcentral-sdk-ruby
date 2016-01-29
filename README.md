@@ -22,10 +22,12 @@ RingCentral SDK for Ruby
   1. [Authorization](#authorization)
     1. [Password Grant](#password-grant)
     1. [Authorization Code Grant](#authorization-code-grant)
+    1. [Token Reuse](#token-reuse)
   1. [API Requests](#api-requests)
     1. [Generic HTTP Requests](#generic-http-requests)
     2. [SMS Example](#sms-example)
     3. [Fax Example](#fax-example)
+  1. [Advanced Use Cases](#advanced-use-cases)
 5. [Supported Ruby Versions](#supported-ruby-versions)
 6. [Releases](#releases)
   1. [Versioning](#versioning)
@@ -217,6 +219,11 @@ sub.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
 # End the subscription
 sub.destroy()
 ```
+
+### Advanced Use Cases
+
+1. [Subscribing to All Extensions](http://ringcentral-sdk-ruby.readthedocs.org/en/latest/usage/notifications/Subscriptions-All-Extensions/)
+1. [Managing Call Queue Member Status](http://ringcentral-sdk-ruby.readthedocs.org/en/latest/usage/callqueues/Member-Status/)
 
 ## Supported Ruby Versions
 
