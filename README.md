@@ -49,7 +49,7 @@ Full documentation and resources are available at:
 
 For API information, see the official RingCentral resources:
 
-1. [API Developer and Reference Guide](https://developers.ringcentral.com/api-docs/latest/index.html) for information on specific APIs
+1. [API Developer and Reference Guide](https://developers.ringcentral.com/api-docs/latest/index.html)
 1. [API Explorer](https://developer.ringcentral.com/api-explorer/)
 1. [CTI Tutorial](http://ringcentral.github.io/tutorial/)
 
