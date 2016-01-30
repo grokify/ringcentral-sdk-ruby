@@ -257,7 +257,7 @@ module RingCentralSdk::REST
     end
 
     def _clear_timeout()
-      if @_timeout.is_a?(Timers::Group)
+      if @_timeout.is_a? Timers::Group
         @_timeout.cancel()
       end
     end
@@ -277,6 +277,5 @@ module RingCentralSdk::REST
         :logger => my_logger
       )
     end
-
   end
 end
