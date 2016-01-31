@@ -26,7 +26,7 @@ class RcEventSMSChatPoster
 
   def post_message()
     return unless @event.new_sms_count > 0
-    messages = @retriever.retrieve_for_event(@event, {:direction => 'Inbound'})
+    messages = @retriever.retrieve_for_event(@event, {direction: 'Inbound'})
     messages.each do |message|
       post_message_to_chat message
     end
@@ -62,7 +62,7 @@ def new_glip(config)
   body = "* event_filter: extension/message-store?messageType=SMS\n* actions: post SMS messages to Glip team"
 
   glip.send_message(body, {
-    :activity => 'RingCentral Subscription initiated',
+    activity: 'RingCentral Subscription initiated',
   })
   return glip
 end
