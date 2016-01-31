@@ -4,6 +4,8 @@ require 'ringcentral_sdk'
 require 'glip-poster'
 require 'pp'
 
+require 'slack_poster'
+
 # Set your credentials in the .env file
 # Use the rc_config_sample.env.txt file as a scaffold
 
@@ -62,9 +64,16 @@ def new_glip(config)
   body = "* event_filter: extension/message-store?messageType=SMS\n* actions: post SMS messages to Glip team"
 
   glip.send_message(body, {
-    activity: 'RingCentral Subscription initiated',
+    activity: 'RingCentral subscription initiated',
   })
   return glip
+end
+
+def new_slack()
+  url = 'https://hooks.slack.com/services/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'
+  poster = Slack::Poster.new(url)
+  poster.send_message('*RingCentral subscription initiated!*')
+  return poster
 end
 
 def run_subscription(config, client)
@@ -75,6 +84,9 @@ def run_subscription(config, client)
   # Create and add first chat poster
   posters = []
   posters.push new_glip(config)
+  posters.push new_slack()
+
+  # Add observer
   sub.add_observer(RcSmsToChatObserver.new(client, posters))
 
   # Run until key is clicked

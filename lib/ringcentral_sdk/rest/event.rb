@@ -1,8 +1,6 @@
 require 'jsondoc'
 require 'multi_json'
 
-require 'pp'
-
 module RingCentralSdk::REST
   class Event
     attr_accessor :doc
@@ -38,9 +36,6 @@ module RingCentralSdk::REST
       have_sms = false
       changes = @doc.getAttr('body.changes')
 
-puts '---'
-      pp changes
-puts '==='
       if changes.is_a?(Array) && changes.length > 0
         changes.each do |change|
           if change.key?(:type) && change[:type].to_s.downcase == 'sms'
