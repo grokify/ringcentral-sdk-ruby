@@ -17,10 +17,10 @@ module RingCentralSdk::REST
       last_updated_s = event.doc.getAttr('body.lastUpdated')
       last_updated_dt = DateTime.iso8601(last_updated_s)
 
-      params.merge!({
+      params.merge!(
         dateFrom: (last_updated_dt - (@range/1440.0)).to_s,
-        dateTo: (last_updated_dt + (@range/1440.0)).to_s
-      })
+        dateTo: (last_updated_dt + (@range/1440.0)).to_s)
+      
       if event.new_sms_count > 0
         params[:messageType] = 'SMS'
       end
