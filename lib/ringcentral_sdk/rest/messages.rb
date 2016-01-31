@@ -22,9 +22,9 @@ module RingCentralSdk::REST
         req.url 'account/~/extension/~/sms'
         req.headers['Content-Type'] = 'application/json'
         req.body = {
-          :from =>   { :phoneNumber => opts[:from].to_s },
-          :to   => [ { :phoneNumber => opts[:to].to_s } ],
-          :text => opts[:text].to_s
+          from: { :phoneNumber => opts[:from].to_s },
+          to: [ { :phoneNumber => opts[:to].to_s } ],
+          text: opts[:text].to_s
         }
       end
       return response

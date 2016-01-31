@@ -81,11 +81,11 @@ module RingCentralSdk::REST
 
     def new_status_dnd_department_calls(current_status, enable)
       new_statuses = {
-        :enable => {
+        enable: {
           'DoNotAcceptAnyCalls' => 'TakeDepartmentCallsOnly',
           'DoNotAcceptDepartmentCalls' => 'TakeAllCalls'
         },
-        :disable => {
+        disable: {
           'TakeAllCalls' => 'DoNotAcceptDepartmentCalls',
           'TakeDepartmentCallsOnly' => 'DoNotAcceptAnyCalls'
         }

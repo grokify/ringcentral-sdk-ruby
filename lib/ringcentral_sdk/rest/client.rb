@@ -112,8 +112,8 @@ module RingCentralSdk::REST
 
     def authorize_password(username, extension='', password='', remember=false)
       token = @oauth2client.password.get_token(username, password, {
-        :extension => extension,
-        :headers   => { 'Authorization' => 'Basic ' + get_api_key() } })
+        extension: extension,
+        headers: { 'Authorization' => 'Basic ' + get_api_key() } })
       set_token(token)
       return token
     end
@@ -134,21 +134,21 @@ module RingCentralSdk::REST
       @token = token
 
       @http = Faraday.new(:url => api_version_url()) do |conn|
-        conn.request  :oauth2_refresh, @token
-        conn.request  :json
-        conn.request  :url_encoded
+        conn.request :oauth2_refresh, @token
+        conn.request :json
+        conn.request :url_encoded
         conn.headers['User-Agent'] = @user_agent
         conn.headers['Rc-User-Agent'] = @user_agent
         conn.response :json, :content_type => /\bjson$/
-        conn.adapter  Faraday.default_adapter
+        conn.adapter Faraday.default_adapter
       end
     end
 
     def new_oauth2_client()
       return OAuth2::Client.new(@app_config.key, @app_config.secret,
-        :site          => @app_config.server_url,
-        :authorize_url => AUTHZ_ENDPOINT,
-        :token_url     => TOKEN_ENDPOINT)
+        site: @app_config.server_url,
+        authorize_url: AUTHZ_ENDPOINT,
+        token_url: TOKEN_ENDPOINT)
     end
 
     def set_oauth2_client(client=nil)

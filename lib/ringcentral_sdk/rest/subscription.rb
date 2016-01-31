@@ -46,7 +46,7 @@ module RingCentralSdk::REST
       return @_pubnub
     end
 
-    def register(events=nil)
+    def register(events = nil)
       return alive?() ? renew(events) : subscribe(events)
     end
 
@@ -54,7 +54,7 @@ module RingCentralSdk::REST
       unless events.is_a?(Array)
         raise 'Events is not an array.'
       end
-      @event_filters.push(events) if events.length>0
+      @event_filters.push(events) if events.length > 0
     end
 
     def set_events(events)
@@ -67,7 +67,7 @@ module RingCentralSdk::REST
     def subscribe(events=nil)
       set_events(events) if events.is_a?(Array)
 
-      if !@event_filters.is_a?(Array) || @event_filters.length ==0
+      if !@event_filters.is_a?(Array) || @event_filters.length == 0
         raise 'Events are undefined'
       end
 
@@ -75,9 +75,9 @@ module RingCentralSdk::REST
         response = @_client.http.post do |req|
           req.url 'subscription'
           req.body = {
-            :eventFilters    => @_client.create_urls(@event_filters),
-            :deliveryMode    => {
-              :transportType => 'PubNub'
+            eventFilters: @_client.create_urls(@event_filters),
+            deliveryMode: {
+              transportType: 'PubNub'
             }
           }
         end
@@ -95,7 +95,7 @@ module RingCentralSdk::REST
 
     end
 
-    def renew(events=nil)
+    def renew(events = nil)
       set_events(events) if events.is_a?(Array)
 
       unless alive?()
@@ -112,7 +112,7 @@ module RingCentralSdk::REST
         response = @_client.http.put do |req|
           req.url 'subscription/' + @_subscription['id'].to_s
           req.body = {
-            :eventFilters => @_client.create_urls(@event_filters),
+            eventFilters: @_client.create_urls(@event_filters)
           }
         end
 
@@ -196,12 +196,12 @@ module RingCentralSdk::REST
       }
 
       @_pubnub.subscribe(
-        :channel    => @_subscription['deliveryMode']['address'],
-        :callback   => callback,
-        :error      => lambda { |envelope| puts('ERROR: ' + envelope.msg.to_s) },
-        :connect    => lambda { |envelope| puts('CONNECTED') },
-        :reconnect  => lambda { |envelope| puts('RECONNECTED') },
-        :disconnect => lambda { |envelope| puts('DISCONNECTED') }
+        channel:    @_subscription['deliveryMode']['address'],
+        callback:   callback,
+        error:      lambda { |envelope| puts('ERROR: ' + envelope.msg.to_s) },
+        connect:    lambda { |envelope| puts('CONNECTED') },
+        reconnect:  lambda { |envelope| puts('RECONNECTED') },
+        disconnect: lambda { |envelope| puts('DISCONNECTED') }
       )
     end
 
@@ -267,15 +267,15 @@ module RingCentralSdk::REST
       my_logger = Logger.new(STDOUT) if my_logger.nil?
 
       return Pubnub.new(
-        :subscribe_key    => subscribe_key.to_s,
-        :publish_key      => publish_key.to_s,
-        :error_callback   => lambda { |msg|
+        subscribe_key: subscribe_key.to_s,
+        publish_key: publish_key.to_s,
+        error_callback: lambda { |msg|
           puts "Error callback says: #{msg.inspect}"
         },
-        :connect_callback => lambda { |msg|
+        connect_callback: lambda { |msg|
           puts "CONNECTED: #{msg.inspect}"
         },
-        :logger => my_logger
+        logger: my_logger
       )
     end
   end

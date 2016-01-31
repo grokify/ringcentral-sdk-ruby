@@ -57,12 +57,12 @@ module RingCentralSdk::REST::Request
       meta[:to] = inf.inflate_to_array opts[:to]
 
       processed = {
-        :accountId => 1,
-        :extensionId => 1,
-        :to    => 1,
-        :text  => 1,
-        :files => 1,
-        :parts => 1
+        accountId: 1,
+        extensionId: 1,
+        to: 1,
+        text: 1,
+        files: 1,
+        parts: 1
       }
 
       opts.each do |k,v|
