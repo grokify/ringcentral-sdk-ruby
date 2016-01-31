@@ -1,5 +1,9 @@
 CHANGELOG
 ---------
+- **2016-01-30**: 1.1.0
+  - Add `RingCentralSdk::REST::Event`
+  - Add `RingCentralSdk::REST::MessagesRetriever`
+  - Add `scripts/sms-to-chat.rb` demo script to send inbound SMS to chat
 - **2016-01-26**: 1.0.0
   - Major refactor
   - Many naming changes for more consistency
