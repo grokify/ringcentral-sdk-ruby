@@ -271,11 +271,13 @@ RingCentral Official SDKs
 
 * https://github.com/ringcentral
 
-## Contributions
+## Contributing
 
-Any reports of problems, comments or suggestions are most welcome.
-
-Please report these on [Github](https://github.com/grokify/ringcentral-sdk-ruby)
+1. Fork it ( http://github.com/grokify/ringcentral-sdk-ruby/fork )
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
 
 ## License
 

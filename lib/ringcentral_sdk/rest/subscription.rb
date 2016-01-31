@@ -191,7 +191,8 @@ module RingCentralSdk::REST
       callback = lambda { |envelope|
       	_notify(envelope.msg)
       	changed
-      	notify_observers('GOT_PUBNUB_MESSAGE_NOTIFY')
+        #notify_observers {}
+      	#notify_observers('GOT_PUBNUB_MESSAGE_NOTIFY')
       }
 
       @_pubnub.subscribe(
@@ -225,7 +226,7 @@ module RingCentralSdk::REST
         ciphertext = Base64.decode64(message)
         plaintext = cipher.update(ciphertext) + cipher.final
 
-        message = MultiJson.decode(plaintext)
+        message = MultiJson.decode(plaintext, :symbolize_keys=>false)
       end
 
       return message

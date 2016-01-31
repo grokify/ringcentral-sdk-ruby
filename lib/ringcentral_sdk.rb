@@ -1,6 +1,5 @@
 module RingCentralSdk
-
-  VERSION = '1.0.0'
+  VERSION = '1.0.1'
 
   RC_SERVER_PRODUCTION = 'https://platform.ringcentral.com'
   RC_SERVER_SANDBOX    = 'https://platform.devtest.ringcentral.com'
@@ -12,5 +11,4 @@ module RingCentralSdk
       RingCentralSdk::REST::Client.new(app_key, app_secret, server_url, opts)
     end
   end
-
 end
