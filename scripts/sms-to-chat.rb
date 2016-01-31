@@ -20,13 +20,13 @@ class RcEventSMSChatPoster
   def initialize(client, posters=[], event_data={})
     @client = client
     @posters = posters
-    @event = RingCentralSdk::REST::Event.new(event_data)
+    @event = RingCentralSdk::REST::Event.new event_data
     @retriever = RingCentralSdk::REST::MessagesRetriever.new @client
   end
 
   def post_message()
     return unless @event.new_sms_count > 0
-    messages = @retriever.retrieve_for_event(@event, {direction: 'Inbound'})
+    messages = @retriever.retrieve_for_event @event, direction: 'Inbound'
     messages.each do |message|
       post_message_to_chat message
     end
@@ -49,14 +49,14 @@ class RcSmsToChatObserver
 
   def update(message)
     puts "DEMO_RECEIVED_NEW_MESSAGE"
-    event = RcEventSMSChatPoster.new(@client, @posters, message)
+    event = RcEventSMSChatPoster.new @client, @posters, message
     event.post_message
     puts JSON.dump(message)
   end
 end
 
 def new_glip(config)
-  glip = Glip::Poster.new(config.env.data['RC_DEMO_GLIP_WEBHOOK_URL'])
+  glip = Glip::Poster.new config.env.data['RC_DEMO_GLIP_WEBHOOK_URL']
   glip.options[:icon] = config.env.data['RC_DEMO_GLIP_WEBHOOK_ICON']
   glip.options[:activity] = 'New Inbound SMS'
 
@@ -70,15 +70,15 @@ end
 
 def run_subscription(config, client)
   # Create an observable subscription and add your observer
-  sub = client.create_subscription()
-  sub.subscribe(['/restapi/v1.0/account/~/extension/~/message-store'])
+  sub = client.create_subscription
+  sub.subscribe ['/restapi/v1.0/account/~/extension/~/message-store']
 
   # Create and add first chat poster
   posters = []
   posters.push new_glip(config)
 
   # Add observer
-  sub.add_observer(RcSmsToChatObserver.new(client, posters))
+  sub.add_observer RcSmsToChatObserver.new client, posters
 
   # Run until key is clicked
   puts "Click any key to finish"
@@ -88,6 +88,6 @@ def run_subscription(config, client)
   sub.destroy()
 end
 
-run_subscription(config, client)
+run_subscription config, client
 
 puts "DONE"
