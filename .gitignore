@@ -1,4 +1,3 @@
-scripts/sms-to-chat.rb
 Gemfile.lock
 coverage
 scripts/_*
