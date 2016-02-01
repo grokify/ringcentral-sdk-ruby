@@ -1,8 +1,9 @@
 #!ruby
 
 require 'ringcentral_sdk'
-require 'glip-poster'
 require 'pp'
+
+require 'glip_poster'
 
 # Set your credentials in the .env file
 # Use the rc_config_sample.env.txt file as a scaffold
