@@ -87,7 +87,7 @@ Content-Type: multipart/mixed; boundary=Boundary_9fzzogow8pxxub43x02zvcc5yg
 --Boundary_9fzzogow8pxxub43x02zvcc5yg
 Content-Type: application/json
 
-{"to":[{"phoneNumber":"+16505626570"}],"faxResolution":"High","coverPageText":"RingCentral fax PDF example using Ruby SDK!"}
+{"to":[{"phoneNumber":"+16505551212"}],"faxResolution":"High","coverPageText":"RingCentral fax PDF example using Ruby SDK!"}
 --Boundary_9fzzogow8pxxub43x02zvcc5yg
 Content-Type: application/pdf
 Content-Disposition: attachment; filename="test_file.pdf"
@@ -98,8 +98,8 @@ Content-Disposition: attachment; filename="test_file.pdf"
 << /Length 5 0 R /Filter /FlateDecode >>
 stream
 [...]
-0000024228 00000 n 
-0000024265 00000 n 
+0000024228 00000 n
+0000024265 00000 n
 trailer
 << /Size 27 /Root 12 0 R /Info 1 0 R /ID [ <48712ae2bdffa879f883d08f491ab571>
 <48712ae2bdffa879f883d08f491ab571> ] >>
@@ -121,7 +121,7 @@ Content-Type: multipart/mixed; boundary=Boundary_9j36hcowhyoi7683x02z56wq64
 --Boundary_9j36hcowhyoi7683x02z56wq64
 Content-Type: application/json
 
-{"to":[{"phoneNumber":"+16505626570"}],"faxResolution":"High","coverPageText":"RingCentral fax PDF example using Ruby SDK!"}
+{"to":[{"phoneNumber":"+16505551212"}],"faxResolution":"High","coverPageText":"RingCentral fax PDF example using Ruby SDK!"}
 --Boundary_9j36hcowhyoi7683x02z56wq64
 Content-Type: application/pdf
 Content-Transfer-Encoding: base64
