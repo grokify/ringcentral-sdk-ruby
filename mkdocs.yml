@@ -27,4 +27,5 @@ pages:
 
 ## Notifications:
 - ['usage/notifications/Subscriptions.md', 'Notifications', 'Subscriptions']
-- ['usage/notifications/Subscriptions-All-Extensions.md', 'Notifications', 'Subscribe to All Extensions']
+- ['usage/notifications/Subscribe_to_All_Extensions.md', 'Notifications', 'Subscribe to All Extensions']
+- ['usage/notifications/Subscribe_for_New_SMS.md', 'Notifications', 'Subscribe for New SMS']

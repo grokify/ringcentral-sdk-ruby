@@ -23,6 +23,7 @@ class RcEventSMSChatPoster
     @posters = posters
     @event = RingCentralSdk::REST::Event.new event_data
     @retriever = RingCentralSdk::REST::MessagesRetriever.new @client
+    @retriever.range = 0.5 # minutes
   end
 
   def post_message()

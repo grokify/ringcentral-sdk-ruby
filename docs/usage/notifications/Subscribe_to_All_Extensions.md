@@ -1,6 +1,4 @@
-# Notifications: Subscription API
-
-## Subscribing to All Extensions
+# Subscribe to All Extensions
 
 A common use case is to subscribe to the presence events on multiple or all extensions of a RingCentral account. This can be done with 2 API calls for accounts with 1000 or fewer extensions, one API call to get extension info for up to 1000 extensions and a second API call to subscribe to those extensions as event filters. Add 1 API call per each additional 1000 extensions.
 
