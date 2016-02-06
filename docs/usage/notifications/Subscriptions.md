@@ -20,8 +20,21 @@ sub.add_observer(MyObserver.new())
 # Subscribe to an arbitrary number of event filters
 sub.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
 
+# Subscribe to detailed telephony state
+sub.subscribe(['/restapi/v1.0/account/~/extension/~/presence?detailedTelephonyState=true'])
+
+# Subscribe to for Multiple Events
+sub.subscribe([
+  '/restapi/v1.0/account/~/extension/~/message-store'
+  '/restapi/v1.0/account/~/extension/~/presence'
+])
+
+## Subscribing to Multiple Extensions if you have permissions
+sub.subscribe([
+  '/restapi/v1.0/account/~/extension/111111/presence'
+  '/restapi/v1.0/account/~/extension/222222/presence'
+])
+
 # End the subscription
 sub.destroy()
 ```
-
-You can subscribe to multiple extensions by adding multiple event filters to a single subscription API call.
