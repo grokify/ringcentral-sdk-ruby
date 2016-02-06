@@ -7,9 +7,18 @@ To retrieve incoming SMS messages, there are two steps
 1. Subscribe for events on the message store to receive information on new SMS messages
 2. Retrieve the messages from the message store by querying the store for the time range
 
-### Step 1: Subscription for new SMS events:
+### Step 1: Subscribe for New SMS events:
 
-For this step, create a subscription to the `/restapi/v1.0/account/~/extension/~/message-store` event filter with the account id and extension id of interest where `~` represents your currently authorized values. When receiving an event, you will receive an array of `changes` of which, some can have the `type` attribute set to `SMS` along with a `newCount` attribute. When `newCount` is > 0, there is a new SMS. Information on subscription is here:
+For this step, create a subscription to the `/restapi/v1.0/account/~/extension/~/message-store` event filter with the account id and extension id of interest where `~` represents your currently authorized values. When receiving an event, you will receive an array of `changes` of which, some can have the `type` attribute set to `SMS` along with a `newCount` attribute. When `newCount` is > 0, there is a new SMS.
+
+To subscribe for new message store events, use the following:
+
+```ruby
+sub = client.create_subscription
+sub.subscribe ['/restapi/v1.0/account/~/extension/~/message-store']
+```
+
+Information on subscription is here:
 
 * [Dev Guide: Notifications](https://developer.ringcentral.com/api-docs/latest/index.html#!#Notifications.html)
 * [API Reference: Notifications](https://developer.ringcentral.com/api-docs/latest/index.html#!#RefNotifications.html)
@@ -21,6 +30,16 @@ To retrieve the new SMS message given an subscription, use the event's `body.las
 1. Retrieve the event's `body.lastUpdated` property
 2. Create a message store API call setting the `dateFrom` and `dateTo` parameters around the event's `body.lastUpdated` property. You can set the range to be 1 second on either side.
 3. Upon receiving an array of messages in the response, filter the messages on the message `lastModifiedTime` which will be the same as the event's `body.lastUpdated` time.
+
+To accomplish the above, you can use the Ruby SDK as follows:
+
+```ruby
+retriever = RingCentralSdk::REST::MessagesRetriever.new client
+messages = @retriever.retrieve_for_event event, direction: 'Inbound'
+messages.each do |message|
+  # do something
+end
+```
 
 For additional reading, see:
 
