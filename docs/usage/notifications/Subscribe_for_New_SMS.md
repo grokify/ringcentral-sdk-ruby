@@ -43,6 +43,26 @@ messages.each do |message|
 end
 ```
 
+An example observer object shows how to combine these:
+
+```ruby
+# Create an observer object
+class MyObserver
+  def initialize(client)
+    @client = client
+    @retriever = RingCentralSdk::REST::MessagesRetriever.new client
+  end
+
+  def update(message)
+    event = RingCentralSdk::REST::Event.new message
+    messages = @retriever.retrieve_for_event event, direction: 'Inbound'
+    messages.each do |message|
+      # do something
+    end
+  end
+end
+```
+
 For additional reading, see:
 
 * [Dev Guide: Messaging](https://developer.ringcentral.com/api-docs/latest/index.html#!#MessagingGuide.html)
