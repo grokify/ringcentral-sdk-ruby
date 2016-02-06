@@ -111,7 +111,7 @@ client = RingCentralSdk::REST::Client.new(
   'myAppKey',
   'myAppSecret',
   RingCentralSdk::RC_SERVER_SANDBOX,
-  {:redirect_uri => 'http://example.com/oauth'}
+  {redirect_uri: 'http://example.com/oauth'}
 )
 
 # Retrieve OAuth authorize url using default redirect URL
@@ -168,9 +168,9 @@ http = client.http
 
 ```ruby
 client.messages.sms.create(
-  :from => '+16505551212',
-  :to => '+14155551212',
-  :text => 'Hi there!'
+  from: '+16505551212',
+  to: '+14155551212',
+  text: 'Hi there!'
 )
 ```
 
@@ -180,9 +180,9 @@ Fax files:
 
 ```ruby
 client.messages.fax.create(
-  :to => '+14155551212',
-  :coverPageText => 'Hi there!',
-  :files => ['/path/to/myfile.pdf']
+  to: '+14155551212',
+  coverPageText: 'Hi there!',
+  files: ['/path/to/myfile.pdf']
 )
 ```
 
@@ -190,9 +190,9 @@ Fax text:
 
 ```ruby
 client.messages.fax.create(
-  :to => '+14155551212',
-  :coverPageText => 'Hi there!',
-  :text => 'Hi there!'
+  to: '+14155551212',
+  coverPageText: 'Hi there!',
+  text: 'Hi there!'
 )
 ```
 

@@ -15,68 +15,33 @@ A fax request helper is included in this SDK to make creating faxes easier.
 ```ruby
 require 'ringcentral_sdk'
 
-response = RingCentralSdk.new(
-  'myAppKey', 'myAppSecret', RingCentralSdk::RC_SERVER_SANDBOX,
-  {:username => 'myUsername', :extension => 'myExtension', :password => 'myPassword'}
-).request(
-  RingCentralSdk::Helpers::CreateFaxRequest.new(
-    nil, # for authz user or { :account_id => '~', :extension_id => '~' }
-    {
-      :to            => '+16505551212', # inflates to [{ :phoneNumber => '+16505551212' }],
-      :coverPageText => 'RingCentral fax text example using Ruby!'
-    },
-    :text     => 'RingCentral fax text example using Ruby!'
-  )
+client = RingCentralSdk.new(
+  'myAppKey', 'myAppSecret', RingCentralSdk::RC_SERVER_SANDBOX
+)
+client.authorize_password('myUsername', 'myExtension', 'myPassword')
+
+response = client.messages.fax.create(
+  from: '+16505551212',
+  to: '+14155551212',
+  text: 'Hi there!'
 )
 ```
 
 ## Faxing a PDF or TIFF
 
-By default, creating a fax creates a `multipart/mixed` message with the body as a plain octet stream.
+By default, creating a fax creates a `multipart/mixed` message with the body as a plain octet stream. The following helper method uses the `RingCentralSdk::REST::Request::Fax` helper class to create a `multipart/mime` request.
 
 ```ruby
-require 'ringcentral_sdk'
-
-response = RingCentralSdk.new(
-  'myAppKey', 'myAppSecret', RingCentralSdk::RC_SERVER_SANDBOX,
-  {:username => 'myUsername', :extension => 'myExtension', :password => 'myPassword'}
-).request(
-  RingCentralSdk::Helpers::CreateFaxRequest.new(
-    nil, # for authz user or { :account_id => '~', :extension_id => '~' }
-    {
-      :to            => { :phoneNumber => '+16505551212' }, # inflates to [{ :phoneNumber => '+16505551212' }],
-      :coverPageText => 'RingCentral fax PDF example using Ruby!'
-    },
-    :file_name     => '/path/to/my_file.pdf'
-  )
-)
-```
-
-## Faxing a PDF or TIFF with Base 64 Encoding
-
-Base 64 encoding a message results in a larger message using more bandwith but
-can be desirable for better debugging.
-
-```ruby
-require 'ringcentral_sdk'
-
-response = RingCentralSdk.new(
-  'myAppKey', 'myAppSecret', RingCentralSdk::RC_SERVER_SANDBOX,
-  {:username => 'myUsername', :extension => 'myExtension', :password => 'myPassword'}
-).request(
-  RingCentralSdk::Helpers::CreateFaxRequest.new(
-    nil, # for authz user or { :account_id => '~', :extension_id => '~' }
-    {
-      :to            => [{ :phoneNumber => '+16505551212' }],
-      :coverPageText => 'RingCentral fax TIFF example using Ruby!'
-    },
-    :file_name     => '/path/to/my_file.tif',
-    :encode_base64 => true
-  )
+client.messages.fax.create(
+  to: '+14155551212',
+  coverPageText: 'Hi there!',
+  files: ['/path/to/my_file.pdf']
 )
 ```
 
 ## HTTP Request Example: PDF with Octet Stream
+
+This is an example request body for reference purposes.
 
 ```http
 POST https://platform.ringcentral.com/restapi/v1.0/account/~/extension/~/fax HTTP/1.1
@@ -111,6 +76,8 @@ startxref
 ```
 
 ## HTTP Request Example: PDF with Base 64 Encoding
+
+This is an example request body with Base64 encoding for reference purposes.
 
 ```http
 POST https://platform.ringcentral.com/restapi/v1.0/account/~/extension/~/fax HTTP/1.1
