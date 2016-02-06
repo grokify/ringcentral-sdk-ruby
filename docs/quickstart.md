@@ -48,9 +48,9 @@ SMS and other requests can be easily sent directly without helpers.
 ```ruby
 # Send SMS - POST request
 response = client.messages.sms.create(
-  :from => '+16505551212',
-  :to '+14155551212',
-  :text 'Hi there!'
+  from: '+16505551212',
+  to: '+14155551212',
+  text: 'Hi there!'
 )
 ```
 
