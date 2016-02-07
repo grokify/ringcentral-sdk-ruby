@@ -13,9 +13,9 @@ client.authorize_password ... # OAuth authorization
 
 # SMS using helper
 client.messages.sms.create(
-  :from => '+16505551212',
-  :to '+14155551212',
-  :text 'Hi there!'
+  from: '+16505551212',
+  to:'+14155551212',
+  text: 'Hi there!'
 )
 ```
 
@@ -27,9 +27,9 @@ client.http.post do |req|
   req.url 'account/~/extension/~/sms'
   req.headers['Content-Type'] = 'application/json'
   req.body = {
-    :from =>   { :phoneNumber => '+16505551212' },
-    :to   => [ { :phoneNumber => '+14155551212'} ],
-    :text => 'Hi there!'
+    from: { phoneNumber: '+16505551212' },
+    to: [ { phoneNumber: '+14155551212' } ],
+    text: 'Hi there!'
   }
 end
 ```
