@@ -1,4 +1,6 @@
-# HTTP Client
+# Generic HTTP Requests
+
+## HTTP Client
 
 To make generic API requests, use included `Faraday` client which can be accessed via `client.http`. The client automatically adds the correct access token to the HTTP request and handles OAuth token refresh using the `OAuth` gem.
 
@@ -29,4 +31,39 @@ response = client.http.post do |req|
     :text => 'Hi there!'
   }
 end
+```
+
+## RingCentralSDK Request Subclasses
+
+In addition to providing access to the Faraday client, the SDK also provides a Request base class that can be used to construct more complicated requests.
+
+| Class name | Description |
+|------------|-------------|
+| `RingCentralSDK::REST::Request::Base` | Base class |
+| `RingCentralSDK::REST::Request::Simple` | Generic helper class |
+| `RingCentralSDK::REST::Request::Fax` | Fax helper class |
+
+### Base class interface
+
+| Class name | Type | Description |
+|------------|------|-------------|
+| `method` | enum String [`get`, `post`, `put`, `delete`] |
+| `url` | String |
+| `params` | Hash | query parameters |
+| `headers` | Hash |
+| `body` | String or Hash | Hash for JSON |
+| `content_type` | String | convenience method |
+
+### Simple Request Class
+
+```ruby
+request = RingCentralSdk::REST::Request::Simple.new(
+  url: 'account/~/extension/~/message-store',
+  params: {
+    direction: 'Inbound',
+    messageType: 'SMS'
+  }
+)
+
+response = client.send_request request
 ```

@@ -9,7 +9,7 @@ module RingCentralSdk::REST
         @doc = data
       elsif data.is_a? Hash
         data = _symbolize_keys data
-        @doc = JsonDoc::Document.new(data,false, false, false)
+        @doc = JsonDoc::Document.new(data, false, false, false)
       elsif opts.key?(:force) && opts[:force]
         @doc = JsonDoc::Document.new({}, false, false, false)
       else
