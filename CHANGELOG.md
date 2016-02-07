@@ -1,31 +1,30 @@
 CHANGELOG
 ---------
 - **2016-01-30**: 1.1.0
-  - Subscribe to Retreive New Messages
-    - Base
+  - Subscribe to Retrieve New Messages
+    - gem
       - Add `RingCentralSdk::REST::Event`
       - Add `RingCentralSdk::REST::MessagesRetriever`
       - Add `RingCentralSdk::REST::Request::Simple`
       - Update `RingCentralSdk::REST::Client` - update `send_request`
       - Update `RingCentralSdk::REST::Request::Base` - add `headers`
-    - Fax
+    - scripts
       - Add `scripts/fax_download.rb` demo script
       - Add `scripts/fax_download_new.rb` demo script
-    - SMS to Chat
       - Add `scripts/sms_to_chat.rb` demo script to send inbound SMS to chat
 - **2016-01-26**: 1.0.0
   - Major refactor
   - Many naming changes for more consistency
-    - All code moved into RingCentralSdk::REST namespace
-    - RingCentralSdk::Platform is now RingCentralSdk::REST::Client
-    - RingCentralSdk::Platform::client is now RingCentralSdk::REST::Client::http
-    - RingCentralSdk::Helpers namespace is now RingCentralSdk::Request
-  - Add RingCentralSdk::REST::Config
-    - RingCentralSdk::REST::Config reads dotenv files
+    - All code moved into `RingCentralSdk::REST` namespace
+    - `RingCentralSdk::Platform` is now `RingCentralSdk::REST::Client`
+    - `RingCentralSdk::Platform::client` is now `RingCentralSdk::REST::Client::http`
+    - `RingCentralSdk::Helpers` namespace is now `RingCentralSdk::Request`
+  - Add `RingCentralSdk::REST::Config`
+    - `RingCentralSdk::REST::Config` reads dotenv files
     - Update sample scripts to use new Config object
-    - Add scripts/account-extensions.rb script
-  - Add RingCentral::REST::Messages, RingCentral::REST::Messages::MessagesSMS and RingCentral::REST::Messages::MessagesFax
-  - Update RingCentralSdk::REST::Request::Fax helper for nicer interface, formerly RingCentralSdk::Helpers::Fax
+    - Add `scripts/account-extensions.rb` script
+  - Add `RingCentral::REST::Messages`, `RingCentral::REST::Messages::MessagesSMS` and `RingCentral::REST::Messages::MessagesFax`
+  - Update `RingCentralSdk::REST::Request::Fax` helper for nicer interface, formerly `RingCentralSdk::Helpers::Fax`
 - **2016-01-22**: 0.5.2
   - Add `RingCentralSdk::Cache::Extensions`
   - Add `RingCentralSdk::Helpers::ExtensionPresence`
