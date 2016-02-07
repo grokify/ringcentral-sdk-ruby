@@ -13,9 +13,9 @@ client.app_config(config.app)
 client.authorize_user(config.user)
 
 res = client.messages.sms.create(
-  :from => config.env.data['RC_DEMO_SMS_FROM'],
-  :to => config.env.data['RC_DEMO_SMS_TO'],
-  :text => config.env.data['RC_DEMO_SMS_TEXT']
+  from: config.env.data['RC_DEMO_SMS_FROM'],
+  to: config.env.data['RC_DEMO_SMS_TO'],
+  text: config.env.data['RC_DEMO_SMS_TEXT']
 )
 
 pp res.body

@@ -14,9 +14,9 @@ client = RingCentralSdk::REST::Client.new(
   config.app.secret,
   config.app.server_url,
   {
-    :username => config.user.username,
-    :extension => config.user.extension,
-    :password => config.user.password
+    username: config.user.username,
+    extension: config.user.extension,
+    password: config.user.password
   }
 )
 

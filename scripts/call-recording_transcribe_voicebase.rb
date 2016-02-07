@@ -31,7 +31,7 @@ client.authorize_user(config.user)
 def upload_recordings(vbsdk, dir)
   Dir.glob('recording_*.mp3').each_with_index do |file,i|
     puts file
-    res = vbsdk.upload_media(:filePath => file, :fileContentType => 'audio/mpeg', :desc => 'myfile')
+    res = vbsdk.upload_media(filePath: file, fileContentType: 'audio/mpeg', desc: 'myfile')
     pp res.body
     break
   end

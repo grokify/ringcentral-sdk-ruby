@@ -16,7 +16,7 @@ client.authorize_user(config.user)
 def get_recordings(client)
   # Retrieve voice call log records with recordings
   response = client.http.get do |req|
-    params = {:type => 'Voice', :withRecording => 'True',:dateFrom=>'2015-01-01'}
+    params = {type: 'Voice', withRecording: 'True', dateFrom: '2015-01-01'}
     req.url 'account/~/extension/~/call-log', params
   end
 
