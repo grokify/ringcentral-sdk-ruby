@@ -1,7 +1,7 @@
 CHANGELOG
 ---------
 - **2016-02-07**: 1.1.0
-  - Subscribe to Retrieve New Messages
+  - Add Subscription to Retrieve New Messages functionality
     - `./lib`
       - Add `RingCentralSdk::REST::Event`
       - Add `RingCentralSdk::REST::MessagesRetriever`
@@ -43,13 +43,16 @@ CHANGELOG
   - Delete `lib/ringcentral_sdk/version.rb` file
   - Delete `VERSION.txt` file
 - **2015-10-15**: 0.4.0
-  - Add 3-Legged OAuth support via platform `authorize_url` and `authorize_code` methods
-  - Add `oauth2-sinatra` demo app in `scripts` directory
-  - Add `call_recording_download.rb` demo script
-  - Add `rc-credentials.json` separate demo credentials file
-  - Update `fax_send.rb` demo script with name change
-  - Update SDK initialization by converting optional params to options hash
-  - Refactor `RingCentralSdk::Platform::Platform` to `RingCentralSdk::Platform`
+  - Add OAuth `authorization_code` support
+    - './lib'
+      - Add 3-Legged OAuth support via platform `authorize_url` and `authorize_code` methods
+      - Update SDK initialization by converting optional params to options hash
+      - Update `RingCentralSdk::Platform::Platform` to `RingCentralSdk::Platform`
+    - './scripts'
+      - Add `oauth2-sinatra` demo app in `scripts` directory
+      - Add `call_recording_download.rb` demo script
+      - Add `rc-credentials.json` separate demo credentials file
+      - Update `fax_send.rb` demo script with name change
 - **2015-10-07**: 0.3.0
   - Add subscription support via PubNub
   - Add `ruby-head`, `jruby`, `jruby-head`, and `rbx-2` to Travis CI
