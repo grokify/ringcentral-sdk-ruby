@@ -2,13 +2,13 @@ CHANGELOG
 ---------
 - **2016-01-30**: 1.1.0
   - Subscribe to Retrieve New Messages
-    - gem
+    - `./lib`
       - Add `RingCentralSdk::REST::Event`
       - Add `RingCentralSdk::REST::MessagesRetriever`
       - Add `RingCentralSdk::REST::Request::Simple`
       - Update `RingCentralSdk::REST::Client` - update `send_request`
       - Update `RingCentralSdk::REST::Request::Base` - add `headers`
-    - scripts
+    - `./scripts`
       - Add `scripts/fax_download.rb` demo script
       - Add `scripts/fax_download_new.rb` demo script
       - Add `scripts/sms_to_chat.rb` demo script to send inbound SMS to chat
