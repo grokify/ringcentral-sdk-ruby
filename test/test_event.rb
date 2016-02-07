@@ -5,7 +5,7 @@ class RingCentralSdkRESTEventTest < Test::Unit::TestCase
   def test_new_sms_count
     data = data_test_json_sms()
 
-    event = RingCentralSdk::REST::Event.new(data, force: true)
+    event = RingCentralSdk::REST::Event.new data
 
     assert_equal '11112222-3333-4444-5555-666677778888', event.doc.getAttr('uuid')
     assert_equal 1, event.new_sms_count
@@ -15,7 +15,7 @@ class RingCentralSdkRESTEventTest < Test::Unit::TestCase
   def test_new_fax_count
     data = data_test_json_fax()
 
-    event = RingCentralSdk::REST::Event.new(data, force: true)
+    event = RingCentralSdk::REST::Event.new data
 
     assert_equal '11112222-3333-4444-5555-666677778888', event.doc.getAttr('uuid')
     assert_equal -1, event.new_sms_count

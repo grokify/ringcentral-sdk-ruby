@@ -4,13 +4,13 @@ require 'multi_json'
 module RingCentralSdk::REST
   class Event
     attr_accessor :doc
-    def initialize(data={}, opts={})
+    def initialize(data = nil)
       if data.is_a? JsonDoc::Document
         @doc = data
       elsif data.is_a? Hash
         data = _symbolize_keys data
         @doc = JsonDoc::Document.new(data, false, false, false)
-      elsif opts.key?(:force) && opts[:force]
+      elsif data.nil?
         @doc = JsonDoc::Document.new({}, false, false, false)
       else
         raise 'initialize needs JsonDoc::Document or Hash argument'
