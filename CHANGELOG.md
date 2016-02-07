@@ -1,6 +1,6 @@
 CHANGELOG
 ---------
-- **2016-01-30**: 1.1.0
+- **2016-02-07**: 1.1.0
   - Subscribe to Retrieve New Messages
     - `./lib`
       - Add `RingCentralSdk::REST::Event`
