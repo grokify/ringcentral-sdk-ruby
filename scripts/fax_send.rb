@@ -15,7 +15,7 @@ client.authorize_user(config.user)
 res = client.messages.fax.create(
   to: config.env.data['RC_DEMO_FAX_TO'],
   coverPageText: config.env.data['RC_DEMO_FAX_COVERPAGE_TEXT'],
-  files: [config.env.data['RC_DEMO_FAX_FILEPATH']]
+  files: [config.env.data['RC_DEMO_FAX_FILE']]
 )
 
 pp res.body

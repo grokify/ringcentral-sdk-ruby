@@ -31,22 +31,29 @@ module RingCentralSdk::REST
       return hash
     end
 
-    def new_sms_count()
-      count = 0
-      have_sms = false
-      changes = @doc.getAttr('body.changes')
+    def new_fax_count
+      new_type_count('fax')
+    end
 
+    def new_sms_count
+      new_type_count('sms')
+    end
+
+    def new_type_count(type)
+      count = 0
+      have_type = false
+      changes = @doc.getAttr('body.changes')
       if changes.is_a?(Array) && changes.length > 0
         changes.each do |change|
-          if change.key?(:type) && change[:type].to_s.downcase == 'sms'
-            have_sms = true
+          if change.key?(:type) && change[:type].to_s.downcase == type
+            have_type = true
             if change.key?(:newCount)
               count += change[:newCount]
             end
           end
         end
       end
-      return have_sms ? count : -1
+      return have_type ? count : -1
     end
 
     private :_hash_has_string_keys, :_symbolize_keys

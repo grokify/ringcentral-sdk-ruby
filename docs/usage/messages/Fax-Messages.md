@@ -153,6 +153,29 @@ if res.status == 200
 end
 ```
 
+## New Fax Notification Event
+
+A new incoming fax event via the Subscription API has the following format with the `newCount` attribute being incremented. An outgoing fax that is successfully sent will increment the `updatedCount` attribute.
+
+```json
+{
+  "uuid": "11112222-3333-4444-5555-666677778888",
+  "event": "/restapi/v1.0/account/~/extension/11112222/message-store",
+  "timestamp": "2016-01-01T12:20:12.030Z",
+  "body": {
+    "extensionId": 11112222,
+    "lastUpdated": "2016-01-01T12:20:05.471+0000",
+    "changes": [
+      {
+        "type": "Fax",
+        "newCount": 1,
+        "updatedCount": 0
+      }
+    ]
+  }
+}
+```
+
 ## FAQ
 
 ### Can I send multiple files as one fax?

@@ -1,9 +1,18 @@
 CHANGELOG
 ---------
 - **2016-01-30**: 1.1.0
-  - Add `RingCentralSdk::REST::Event`
-  - Add `RingCentralSdk::REST::MessagesRetriever`
-  - Add `scripts/sms-to-chat.rb` demo script to send inbound SMS to chat
+  - Subscribe to Retreive New Messages
+    - Base
+      - Add `RingCentralSdk::REST::Event`
+      - Add `RingCentralSdk::REST::MessagesRetriever`
+      - Add `RingCentralSdk::REST::Request::Simple`
+      - Update `RingCentralSdk::REST::Client` - update `send_request`
+      - Update `RingCentralSdk::REST::Request::Base` - add `headers`
+    - Fax
+      - Add `scripts/fax_download.rb` demo script
+      - Add `scripts/fax_download_new.rb` demo script
+    - SMS to Chat
+      - Add `scripts/sms_to_chat.rb` demo script to send inbound SMS to chat
 - **2016-01-26**: 1.0.0
   - Major refactor
   - Many naming changes for more consistency
@@ -30,17 +39,17 @@ CHANGELOG
 - **2015-10-18**: 0.5.0
   - Add stubbed tests via `mocha`
   - Add `RingCentralSdk.new()` sugar method
-  - Modify `RingCentralSdk::RC_SERVER_PRODUCTION` url from `RingCentralSdk::Sdk::RC_SERVER_Production`
-  - Remove `lib/ringcentral_sdk/sdk.rb` file and `RingCentralSdk::Sdk` class
-  - Remove `lib/ringcentral_sdk/version.rb` file
-  - Remove `VERSION.txt` file
+  - Update `RingCentralSdk::RC_SERVER_PRODUCTION` url from `RingCentralSdk::Sdk::RC_SERVER_Production`
+  - Delete `lib/ringcentral_sdk/sdk.rb` file and `RingCentralSdk::Sdk` class
+  - Delete `lib/ringcentral_sdk/version.rb` file
+  - Delete `VERSION.txt` file
 - **2015-10-15**: 0.4.0
   - Add 3-Legged OAuth support via platform `authorize_url` and `authorize_code` methods
   - Add `oauth2-sinatra` demo app in `scripts` directory
   - Add `call_recording_download.rb` demo script
   - Add `rc-credentials.json` separate demo credentials file
   - Update `fax_send.rb` demo script with name change
-  - Modify SDK initialization by converting optional params to options hash
+  - Update SDK initialization by converting optional params to options hash
   - Refactor `RingCentralSdk::Platform::Platform` to `RingCentralSdk::Platform`
 - **2015-10-07**: 0.3.0
   - Add subscription support via PubNub

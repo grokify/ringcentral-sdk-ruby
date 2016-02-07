@@ -167,19 +167,44 @@ module RingCentralSdk::REST
       return api_key
     end
 
-    def send_request(request=nil)
-      unless request.is_a?(RingCentralSdk::REST::Request::Base)
+    def send_request(request_sdk = nil)
+      unless request_sdk.is_a?(RingCentralSdk::REST::Request::Base)
         fail 'Request is not a RingCentralSdk::REST::Request::Base'
       end
 
-      if request.method.downcase == 'post'
-        resp       =  @http.post do |req|
-          req.url request.url
-          req.headers['Content-Type'] = request.content_type if request.content_type
-          req.body = request.body if request.body
-        end
-        return resp
+      res = nil
+
+      method = request_sdk.method.downcase
+      case method
+      when 'delete'
+        res = @http.delet { |req| req = inflate_request(req, request_sdk) }
+      when 'get'
+        res = @http.get { |req| req = inflate_request(req, request_sdk) }
+      when 'post'
+        res = @http.post { |req| req = inflate_request(req, request_sdk) }
+      when 'put'
+        res = @http.put { |req| req = inflate_request(req, request_sdk) }
+      else
+        fail "#{method} not support"
       end
+      return res
+    end
+
+    def inflate_request(req_faraday, req_sdk)
+      req_faraday.url req_sdk.url
+      req_faraday.body = req_sdk.body if req_sdk.body
+      if req_sdk.params.is_a? Hash 
+        req_sdk.params.each { |k,v| req_faraday.params[k] = v }
+      end
+      if req_sdk.headers.is_a? Hash 
+        req_sdk.headers.each { |k,v| req_faraday.headers[k] = v }
+      end
+
+      ct = req_sdk.content_type
+      if !ct.nil? && ct.to_s.length > 0
+        req_faraday.headers['Content-Type'] = ct.to_s
+      end
+      return req_faraday
     end
 
     def get_user_agent()
