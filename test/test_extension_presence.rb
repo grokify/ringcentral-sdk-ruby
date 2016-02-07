@@ -78,6 +78,14 @@ class RingCentralSdkRESTExtensionPresenceTest < Test::Unit::TestCase
     end
 
     presence.update({:dndStatus=>'TakeAllCalls'})
+
+    ######
+    # Test with good data
+    ######
+
+    assert_raise do
+      presence.department_calls_enable true
+    end
   end
 
   def data_extension_presence

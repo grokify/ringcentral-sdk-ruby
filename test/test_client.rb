@@ -209,6 +209,49 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
       :text          => 'RingCentral fax demo using Ruby SDK!'
     )
     assert_equal 'Faraday::Response', res.class.name
+
+    ######
+    # Simple Request - GET
+    ######
+    request = RingCentralSdk::REST::Request::Simple.new(
+      method: 'get',
+      url: 'account/~/extension/~/message-store',
+      params: {
+        direction: 'Inbound',
+        messageType: 'SMS'
+      }
+    )
+    assert_equal 'get', request.method
+
+    res = client.send_request request
+    assert_equal 'Faraday::Response', res.class.name
+
+    ######
+    # Simple Request - PUT
+    ######
+    request = RingCentralSdk::REST::Request::Simple.new(
+      method: 'put',
+      url: 'account/~/extension/~/message-store/11111111',
+      body: {
+        readStatus: 'Read'
+      }
+    )
+    assert_equal 'put', request.method
+
+    res = client.send_request request
+    assert_equal 'Faraday::Response', res.class.name
+
+    ######
+    # Simple Request - DELETE
+    ######
+    request = RingCentralSdk::REST::Request::Simple.new(
+      method: 'delete',
+      url: 'account/~/extension/~/message-store/11111111',
+    )
+    assert_equal 'delete', request.method
+
+    res = client.send_request request
+    assert_equal 'Faraday::Response', res.class.name
   end
 
   def test_sms

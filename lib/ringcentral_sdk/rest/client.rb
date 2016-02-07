@@ -177,7 +177,7 @@ module RingCentralSdk::REST
       method = request_sdk.method.downcase
       case method
       when 'delete'
-        res = @http.delet { |req| req = inflate_request(req, request_sdk) }
+        res = @http.delete { |req| req = inflate_request(req, request_sdk) }
       when 'get'
         res = @http.get { |req| req = inflate_request(req, request_sdk) }
       when 'post'

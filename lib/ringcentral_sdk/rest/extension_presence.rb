@@ -29,7 +29,7 @@ module RingCentralSdk::REST
     def department_calls_enable(enable)
       retrieve()
 
-      if !@presence_data.key?('dndStatus')
+      unless @presence.is_a?(Hash) && @presence_data.key?('dndStatus')
         raise 'invalid presence info'
       end
 
