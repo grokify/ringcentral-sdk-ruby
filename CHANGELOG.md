@@ -25,9 +25,10 @@ CHANGELOG
   - Add `RingCentral::REST::Messages`, `RingCentral::REST::Messages::MessagesSMS` and `RingCentral::REST::Messages::MessagesFax`
   - Update `RingCentralSdk::REST::Request::Fax` helper for nicer interface, formerly `RingCentralSdk::Helpers::Fax`
 - **2016-01-22**: 0.5.2
-  - Add `RingCentralSdk::Cache::Extensions`
-  - Add `RingCentralSdk::Helpers::ExtensionPresence`
-  - Add Call Queue Member Status mydocs documentation
+  - Add Call Queue Management support
+    - Add `RingCentralSdk::Cache::Extensions`
+    - Add `RingCentralSdk::Helpers::ExtensionPresence`
+    - Add Call Queue Member Status mydocs documentation
 - **2015-12-08**: 0.5.1
   - Add call recording transcription demo script via VoiceBase
   - Fix PubNub unsubscribe bug
@@ -36,11 +37,12 @@ CHANGELOG
   - Update sample scripts credentials file format to be more scalable
 - **2015-10-18**: 0.5.0
   - Add stubbed tests via `mocha`
-  - Add `RingCentralSdk.new()` sugar method
-  - Update `RingCentralSdk::RC_SERVER_PRODUCTION` url from `RingCentralSdk::Sdk::RC_SERVER_Production`
-  - Delete `lib/ringcentral_sdk/sdk.rb` file and `RingCentralSdk::Sdk` class
-  - Delete `lib/ringcentral_sdk/version.rb` file
-  - Delete `VERSION.txt` file
+  - Update naming and cleanup interface
+    - Add `RingCentralSdk.new()` sugar method
+    - Update `RingCentralSdk::RC_SERVER_PRODUCTION` url from `RingCentralSdk::Sdk::RC_SERVER_Production`
+    - Delete `lib/ringcentral_sdk/sdk.rb` file and `RingCentralSdk::Sdk` class
+    - Delete `lib/ringcentral_sdk/version.rb` file
+    - Delete `VERSION.txt` file
 - **2015-10-15**: 0.4.0
   - Add OAuth `authorization_code` support
     - './lib'
