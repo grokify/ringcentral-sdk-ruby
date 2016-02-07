@@ -25,16 +25,8 @@ module RingCentralSdk::REST::Request
     end
 
     def add_path(opts={})
-      if opts.key?(:accountId) && opts[:accountId].to_s.length>0
-        @account_id = opts[:accountId]
-      else
-        @account_id = '~'
-      end
-      if opts.key?(:extensionId) && opts[:extensionId].to_s.length>0
-        @extension_id = opts[:extensionId]
-      else
-        @extension_id = '~'
-      end
+      @account_id = opts[:accountId] ||= '~'
+      @extension_id = opts[:extensionId] ||= '~'
     end
 
     def add_part_meta(opts={})
