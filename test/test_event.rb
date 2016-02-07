@@ -22,6 +22,17 @@ class RingCentralSdkRESTEventTest < Test::Unit::TestCase
     assert_equal 1, event.new_fax_count
   end
 
+  def test_new_empty
+    event = RingCentralSdk::REST::Event.new
+    assert_equal 'RingCentralSdk::REST::Event', event.class.name
+  end
+
+  def test_new_failure
+    assert_raise do
+      event = RingCentralSdk::REST::Event.new ''
+    end
+  end
+
   def data_test_hash(opts={})
     json = data_test_json()
     hash = MultiJson.decode(json, symbolize_keys: false)
