@@ -245,9 +245,9 @@ Releases with release notes are availabe on [GitHub releases](https://github.com
 
 ### Versioning
 
-This project is currently in development and the API can change. During initial development (Version 0.x.x), minor version changes will indicate either substantial feature inclusion or breaking changes.
+Versions 1.0.0 and above follow [semantic versioning](http://semver.org/). Breaking changes will be indicated by a change in major version.
 
-Once the project is version 1.0.0 or above, it will use [semantic versioning](http://semver.org/). At this time, breaking changes will be indicated by a change in major version.
+Versions below 1.0.0 are in active development. During initial development (Version 0.x.x), minor version changes will indicate either substantial feature inclusion or breaking changes.
 
 ### Change Log
 
