@@ -13,16 +13,15 @@ CHANGELOG
       - Add `scripts/fax_download_new.rb` demo script
       - Add `scripts/sms_to_chat.rb` demo script to send inbound SMS to chat
 - **2016-01-26**: 1.0.0
-  - Major refactor
-  - Many naming changes for more consistency
+  - Major refactor focusing on naming changes to improve consistency
     - All code moved into `RingCentralSdk::REST` namespace
-    - `RingCentralSdk::Platform` is now `RingCentralSdk::REST::Client`
-    - `RingCentralSdk::Platform::client` is now `RingCentralSdk::REST::Client::http`
-    - `RingCentralSdk::Helpers` namespace is now `RingCentralSdk::Request`
-  - Add `RingCentralSdk::REST::Config`
-    - `RingCentralSdk::REST::Config` reads dotenv files
-    - Update sample scripts to use new Config object
+    - Update: rename `RingCentralSdk::Platform` to `RingCentralSdk::REST::Client`
+    - Update: rename `RingCentralSdk::Platform::client` to `RingCentralSdk::REST::Client::http`
+    - Update: rename `RingCentralSdk::Helpers` namespace to `RingCentralSdk::Request`
+  - Add `RingCentralSdk::REST::Config` to support `dotenv` config files
+    - Add `RingCentralSdk::REST::Config` reads dotenv files
     - Add `scripts/account-extensions.rb` script
+    - Update sample scripts to use new Config object
   - Add `RingCentral::REST::Messages`, `RingCentral::REST::Messages::MessagesSMS` and `RingCentral::REST::Messages::MessagesFax`
   - Update `RingCentralSdk::REST::Request::Fax` helper for nicer interface, formerly `RingCentralSdk::Helpers::Fax`
 - **2016-01-22**: 0.5.2
