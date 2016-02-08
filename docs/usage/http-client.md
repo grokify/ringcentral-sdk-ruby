@@ -1,5 +1,10 @@
 # Generic HTTP Requests
 
+The SDK provides access to a HTTP client and generic requests to support the wide number of APIs supported by the RingCentral Connect Platform. The HTTP client and generic request processor will automatically manage OAuth access token refresh transparently.
+
+* The HTTP Client is a Faraday client.
+* The generic requests are sub-classes of `RingCentralSdk::REST::Request::Base`. A generic request subclass, `RingCentral::REST::Request::Simple` to simply API calls. A fax subclasses is also provided to make creating `multipart/mixed` requests easier.
+
 ## HTTP Client
 
 To make generic API requests, use included `Faraday` client which can be accessed via `client.http`. The client automatically adds the correct access token to the HTTP request and handles OAuth token refresh using the `OAuth` gem.
@@ -26,9 +31,9 @@ response = client.http.post do |req|
   req.url 'account/~/extension/~/sms'
   req.headers['Content-Type'] = 'application/json'
   req.body = {
-    :from =>   { :phoneNumber => '+16505551212' },
-    :to   => [ { :phoneNumber => '+14155551212'} ],
-    :text => 'Hi there!'
+    from: {phoneNumber: '+16505551212'},
+    to: [ {phoneNumber: '+14155551212'} ],
+    text: 'Hi there!'
   }
 end
 ```
