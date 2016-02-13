@@ -3,7 +3,6 @@ require 'uri'
 
 module RingCentralSdk::REST::Cache
   class Extensions
-
     attr_accessor :client
     attr_accessor :account_id
     attr_reader :extensions_hash
@@ -13,6 +12,10 @@ module RingCentralSdk::REST::Cache
     def initialize(client)
       @client = client
       @account_id = '~'
+      flush()
+    end
+
+    def flush
       @extensions_hash = {}
       @extensions_num2id = {}
       @last_retrieved = -1
@@ -32,17 +35,17 @@ module RingCentralSdk::REST::Cache
         end
       end
       res.body['records'].each do |extension|
-        if extension.key?('id') && extension['id']>0
+        if extension.key?('id') && extension['id'] > 0
           @extensions_hash[extension['id'].to_s] = extension
         end
       end
       if retrieve_all
         while res.body.key?('navigation') && res.body['navigation'].key?('nextPage')
-          res = rcsdk.client.get do |req|
+          res = @client.http.get do |req|
             req.url res.body['navigation']['nextPage']['uri']
           end
-          res.body['records'].each do |record|
-            if extension.key?('id') && extension['id'].length>0
+          res.body['records'].each do |extension|
+            if extension.key?('id') && extension['id'] > 0
               @extensions_hash[extension['id'].to_s] = extension
             end
           end
@@ -59,7 +62,7 @@ module RingCentralSdk::REST::Cache
     def inflate_num2id()
       num2id = {}
       @extensions_hash.each do |k,v|
-        if v.key?('id') && v['id']>0 &&
+        if v.key?('id') && v['id'] > 0 &&
           v.key?('extensionNumber') && v['extensionNumber'].length>0
           num2id[v['extensionNumber']] = v['id'].to_s
         end
@@ -116,6 +119,5 @@ module RingCentralSdk::REST::Cache
 
       return members
     end
-
   end
 end

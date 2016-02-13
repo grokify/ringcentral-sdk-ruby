@@ -9,8 +9,8 @@ require 'ringcentral_sdk'
 config = RingCentralSdk::REST::Config.new.load_dotenv
 
 client = RingCentralSdk::REST::Client.new
-client.app_config(config.app)
-client.authorize_user(config.user)
+client.app_config config.app
+client.authorize_user config.user
 
 # An example observer object
 class MyObserver
@@ -23,9 +23,12 @@ end
 def run_subscription(client)
   # Create an observable subscription and add your observer
   sub = client.create_subscription()
-  sub.subscribe(["/restapi/v1.0/account/~/extension/~/presence"])
+  sub.subscribe([
+    "/restapi/v1.0/account/~/extension/~/message-store",
+    "/restapi/v1.0/account/~/extension/~/presence"
+  ])
 
-  sub.add_observer(MyObserver.new())
+  sub.add_observer MyObserver.new()
 
   puts "Click any key to finish"
 
@@ -35,6 +38,6 @@ def run_subscription(client)
   sub.destroy()
 end
 
-run_subscription(client)
+run_subscription client
 
 puts "DONE"

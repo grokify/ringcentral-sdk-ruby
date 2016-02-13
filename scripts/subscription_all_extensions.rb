@@ -9,16 +9,9 @@ require 'ringcentral_sdk'
 
 config = RingCentralSdk::REST::Config.new.load_dotenv
 
-client = RingCentralSdk::REST::Client.new(
-  config.app.key,
-  config.app.secret,
-  config.app.server_url,
-  {
-    username: config.user.username,
-    extension: config.user.extension,
-    password: config.user.password
-  }
-)
+client = RingCentralSdk::REST::Client.new
+client.app_config config.app
+client.authorize_user config.user
 
 # Create an array of event_filters from the array of extensions
 def get_event_filters_for_extensions(extension_ids, account_id = '~')
@@ -45,10 +38,12 @@ end
 def run_subscription(client, event_filters)
   # Create an observable subscription and add your observer
   sub = client.create_subscription()
-  sub.subscribe(event_filters)
+  res = sub.subscribe(event_filters)
+
+  pp(res)
 
   # Add observer
-  sub.add_observer(MyObserver.new())
+  sub.add_observer MyObserver.new()
 
   # Run until user clicks key to finish
   puts "Click any key to finish"
