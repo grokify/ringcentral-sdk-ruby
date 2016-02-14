@@ -187,7 +187,7 @@ module RingCentralSdk::REST
       when 'put'
         res = @http.put { |req| req = inflate_request(req, request_sdk) }
       else
-        fail "#{method} not support"
+        fail "#{method} not supported"
       end
       return res
     end
