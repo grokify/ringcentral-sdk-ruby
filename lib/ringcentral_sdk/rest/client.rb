@@ -168,15 +168,15 @@ module RingCentralSdk::REST
     end
 
     def send_request(request_sdk = {})
-      if request_sdk.is_a?(Hash)
+      if request_sdk.is_a? Hash
         request_sdk = RingCentralSdk::REST::Request::Simple.new(request_sdk)
-      elsif !request_sdk.is_a?(RingCentralSdk::REST::Request::Base)
+      elsif !request_sdk.is_a? RingCentralSdk::REST::Request::Base
         fail 'Request is not a RingCentralSdk::REST::Request::Base'
       end
 
       res = nil
-
       method = request_sdk.method.downcase
+
       case method
       when 'delete'
         res = @http.delete { |req| req = inflate_request(req, request_sdk) }
