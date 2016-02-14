@@ -266,9 +266,20 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     token = client.authorize('my_test_username', 'my_test_extension', 'my_test_password')
 
     res = client.messages.sms.create(
-      :from => '+16505551212',
-      :to => '+14155551212',
-      :text => 'test'
+      from: '+16505551212',
+      to: '+14155551212',
+      text: 'test'
+    )
+    assert_equal 'Faraday::Response', res.class.name
+
+    res = client.send_request(
+      method: 'post',
+      url: 'account/~/extension/~/sms',
+      body: {
+        from: {phoneNumber: '+16505551212'},
+        to: {phoneNumber: '+14155551212'},
+        text: 'Hi there!'
+      }
     )
     assert_equal 'Faraday::Response', res.class.name
   end

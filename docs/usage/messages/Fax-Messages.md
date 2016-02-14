@@ -23,7 +23,8 @@ client.authorize_password('myUsername', 'myExtension', 'myPassword')
 # Simple text message
 response = client.messages.fax.create(
   from: '+16505551212',
-  to: '+14155551212', # Will Address Book name if present
+  to: '+14155551212',
+  # Cover page "To" value defaults to Address Book Contact firstName + lastName
   coverPageText: 'Check this out!',
   text: 'Hi there!'
 )
@@ -33,7 +34,7 @@ response = client.messages.fax.create(
   from: '+16505551212',
   to: {
     phoneNumber: '+14155551212'
-    name: 'John Doe' # Will override Address Book name
+    name: 'John Doe' # Cover page "To" value
   },
   text: 'Hi there!'
 )
@@ -41,7 +42,7 @@ response = client.messages.fax.create(
 # Fax one or more files
 client.messages.fax.create(
   to: '+14155551212',
-  coverPageText: 'Hi there!',
+  coverPageText: 'Check this out!',
   files: ['/path/to/my_file.pdf']
 )
 ```
