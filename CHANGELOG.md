@@ -1,8 +1,9 @@
 CHANGELOG
 ---------
 - **2016-02-13**: 1.1.1
-  - Add client.send_request(Hash)
-  - Add documetation / FAQ for fax `to.name` attribute
+  - Additions
+    - Add `client.send_request(Hash)` in addition to `Request::Base` object
+    - Add documetation / FAQ for fax `to.name` attribute
   - Bugfixes
     - Fix `RingCentralSdk::REST::Cache::Extensions` bug - old client
     - Fix `RingCentralSdk::REST::Request::Simple` bug - initialize body
@@ -51,11 +52,11 @@ CHANGELOG
     - Delete `VERSION.txt` file
 - **2015-10-15**: 0.4.0
   - Add OAuth `authorization_code` support
-    - './lib'
+    - `./lib`
       - Add 3-Legged OAuth support via platform `authorize_url` and `authorize_code` methods
       - Update SDK initialization by converting optional params to options hash
       - Update `RingCentralSdk::Platform::Platform` to `RingCentralSdk::Platform`
-    - './scripts'
+    - `./scripts`
       - Add `oauth2-sinatra` demo app in `scripts` directory
       - Add `call_recording_download.rb` demo script
       - Add `rc-credentials.json` separate demo credentials file
