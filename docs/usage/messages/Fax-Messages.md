@@ -21,20 +21,20 @@ client = RingCentralSdk.new(
 client.authorize_password('myUsername', 'myExtension', 'myPassword')
 
 # Simple text message
+# Cover sheet "To" value defaults to Address Book Contact firstName + lastName
 response = client.messages.fax.create(
   from: '+16505551212',
   to: '+14155551212',
-  # Cover page "To" value defaults to Address Book Contact firstName + lastName
   coverPageText: 'Check this out!',
   text: 'Hi there!'
 )
 
-# Filling out Cover Page To field
+# Cover sheet "To" value set to `to.name` attribute
 response = client.messages.fax.create(
   from: '+16505551212',
   to: {
     phoneNumber: '+14155551212'
-    name: 'John Doe' # Cover page "To" value
+    name: 'John Doe'
   },
   text: 'Hi there!'
 )
