@@ -1,5 +1,11 @@
 CHANGELOG
 ---------
+- **2016-02-13**: 1.1.1
+  - Add client.send_request(Hash)
+  - Add documetation / FAQ for fax `to.name` attribute
+  - Bugfixes
+    - Fix `RingCentralSdk::REST::Cache::Extensions` bug - old client
+    - Fix `RingCentralSdk::REST::Request::Simple` bug - initialize body
 - **2016-02-07**: 1.1.0
   - Add Subscription to Retrieve New Messages functionality
     - `./lib`

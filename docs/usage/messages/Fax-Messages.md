@@ -10,7 +10,7 @@ A fax request helper is included in this SDK to make creating faxes easier.
 1. Request helpers are subclasses of `RingCentral::Helpers::Request` that provide the `method`, `url`, `content_type`, and `body` methods. These can be used by the Faraday client object or the helper class can be passed directly to the `sdk.request()` and `rcsdk.request()` methods.
 1. The `rcsdk.request()` and `rcsdk.request()` methods only take request helpers as arguments and will raise an exception otherwise.
 
-## Faxing a Text Message
+## Synopsis
 
 ```ruby
 require 'ringcentral_sdk'
@@ -20,18 +20,25 @@ client = RingCentralSdk.new(
 )
 client.authorize_password('myUsername', 'myExtension', 'myPassword')
 
+# Simple text message
 response = client.messages.fax.create(
   from: '+16505551212',
-  to: '+14155551212',
+  to: '+14155551212', # Will Address Book name if present
+  coverPageText: 'Check this out!',
   text: 'Hi there!'
 )
-```
 
-## Faxing a PDF or TIFF
+# Filling out Cover Page To field
+response = client.messages.fax.create(
+  from: '+16505551212',
+  to: {
+    phoneNumber: '+14155551212'
+    name: 'John Doe' # Will override Address Book name
+  },
+  text: 'Hi there!'
+)
 
-By default, creating a fax creates a `multipart/mixed` message with the body as a plain octet stream. The following helper method uses the `RingCentralSdk::REST::Request::Fax` helper class to create a `multipart/mime` request.
-
-```ruby
+# Fax one or more files
 client.messages.fax.create(
   to: '+14155551212',
   coverPageText: 'Hi there!',
@@ -177,6 +184,10 @@ A new incoming fax event via the Subscription API has the following format with 
 ```
 
 ## FAQ
+
+### Can I set the cover page "To" value?
+
+Yes. The To attribute on the cover page is set two ways. If the `to.name` property is set in the request body, that value will be used on the cover page. If it is not set, the system will create a name by concatenating the `firstName` and `lastName` attributes of the address book contact with a matching `businessFax` number attribute.
 
 ### Can I send multiple files as one fax?
 

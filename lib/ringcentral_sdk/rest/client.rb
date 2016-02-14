@@ -167,8 +167,10 @@ module RingCentralSdk::REST
       return api_key
     end
 
-    def send_request(request_sdk = nil)
-      unless request_sdk.is_a?(RingCentralSdk::REST::Request::Base)
+    def send_request(request_sdk = {})
+      if request_sdk.is_a?(Hash)
+        request_sdk = RingCentralSdk::REST::Request::Simple.new(request_sdk)
+      elsif !request_sdk.is_a?(RingCentralSdk::REST::Request::Base)
         fail 'Request is not a RingCentralSdk::REST::Request::Base'
       end
 

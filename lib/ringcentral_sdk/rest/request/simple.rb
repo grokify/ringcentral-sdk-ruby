@@ -5,8 +5,8 @@ module RingCentralSdk::REST::Request
       @url = opts[:url]
       @params = opts[:params]
       @headers = opts[:headers]
-      @body = body.nil? ? '' : body
-      if body.is_a? Hash 
+      @body = opts[:body].nil? ? {} : opts[:body]
+      if @body.is_a? Hash 
         @headers = {} unless @headers.is_a? Hash 
         @headers['Content-Type'] = 'application/json'
       end
