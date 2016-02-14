@@ -2,8 +2,8 @@ CHANGELOG
 ---------
 - **2016-02-13**: 1.1.1
   - Additions
-    - Add `client.send_request(Hash)` in addition to `Request::Base` object
-    - Add documetation / FAQ for fax `to.name` attribute
+    - Add `client.send_request` hash support in addition to `Request::Base` object
+    - Add documentation / FAQ for fax `to.name` attribute
   - Bugfixes
     - Fix `RingCentralSdk::REST::Cache::Extensions` bug - old client
     - Fix `RingCentralSdk::REST::Request::Simple` bug - initialize body
