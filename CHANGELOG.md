@@ -2,10 +2,8 @@ CHANGELOG
 ---------
 - **2016-02-17**: 1.2.0
   - Additions
-    - Add custom instance headers
+    - Add `RingCentral::REST::Client` custom instance headers support
     - Add docs for Answering Rules
-    - 
-
 - **2016-02-13**: 1.1.1
   - Additions
     - Add `client.send_request` hash support in addition to `Request::Base` object
