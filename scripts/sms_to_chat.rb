@@ -11,8 +11,8 @@ require 'glip_poster'
 config = RingCentralSdk::REST::Config.new.load_dotenv
 
 client = RingCentralSdk::REST::Client.new
-client.app_config(config.app)
-client.authorize_user(config.user)
+client.app_config config.app
+client.authorize_user config.user
 
 # An SMS event poster. Takes a message store subscription
 # event and posts inbound SMS as chats.

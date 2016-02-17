@@ -13,5 +13,6 @@ module RingCentralSdk::REST
   autoload :MessagesSMS, 'ringcentral_sdk/rest/messages'
   autoload :MessagesRetriever, 'ringcentral_sdk/rest/messages_retriever'
   autoload :Request, 'ringcentral_sdk/rest/request'
+  autoload :SimpleClient, 'ringcentral_sdk/rest/simple_client'
   autoload :Subscription, 'ringcentral_sdk/rest/subscription'
 end

@@ -6,7 +6,6 @@ require 'oauth2'
 
 module RingCentralSdk::REST
   class Client
-
     ACCESS_TOKEN_TTL  = 600             # 10 minutes
     REFRESH_TOKEN_TTL = 36000           # 10 hours
     REFRESH_TOKEN_TTL_REMEMBER = 604800 # 1 week
@@ -17,6 +16,7 @@ module RingCentralSdk::REST
     REVOKE_ENDPOINT   = '/restapi/oauth/revoke'
     API_VERSION       = 'v1.0'
     URL_PREFIX        = '/restapi'
+    DEFAULT_LANGUAGE  = 'en-us'
 
     attr_reader :app_config
     attr_reader :http
@@ -24,6 +24,8 @@ module RingCentralSdk::REST
     attr_reader :token
     attr_reader :user_agent
     attr_reader :messages
+
+    attr_reader :instance_headers
 
     def initialize(app_key='', app_secret='', server_url=RingCentralSdk::RC_SERVER_SANDBOX, opts={})
       init_attributes()
@@ -34,6 +36,8 @@ module RingCentralSdk::REST
         extension = opts.key?(:extension) ? opts[:extension] : ''
         authorize_password(opts[:username], extension, opts[:password])
       end
+
+      @instance_headers = opts[:headers] || {}
 
       @messages = RingCentralSdk::REST::Messages.new(self)
     end
@@ -133,12 +137,18 @@ module RingCentralSdk::REST
 
       @token = token
 
-      @http = Faraday.new(:url => api_version_url()) do |conn|
+      @http = Faraday.new(url: api_version_url()) do |conn|
         conn.request :oauth2_refresh, @token
         conn.request :json
         conn.request :url_encoded
         conn.headers['User-Agent'] = @user_agent
-        conn.headers['Rc-User-Agent'] = @user_agent
+        if @instance_headers.is_a? Hash 
+          @instance_headers.each do |k,v|
+            conn.headers[k] = v
+          end
+        end
+        conn.headers['RC-User-Agent'] = @user_agent
+        conn.headers['SDK-User-Agent'] = @user_agent
         conn.response :json, :content_type => /\bjson$/
         conn.adapter Faraday.default_adapter
       end
@@ -175,7 +185,7 @@ module RingCentralSdk::REST
       end
 
       res = nil
-      method = request_sdk.method.downcase
+      method = request_sdk.method.to_s.downcase || 'get'
 
       case method
       when 'delete'
@@ -187,7 +197,7 @@ module RingCentralSdk::REST
       when 'put'
         res = @http.put { |req| req = inflate_request(req, request_sdk) }
       else
-        fail "#{method} not supported"
+        fail "method [#{method}] not supported"
       end
       return res
     end

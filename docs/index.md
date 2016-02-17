@@ -12,6 +12,7 @@ This documentation is for version 1.0.0 of [ringcentral_sdk](https://github.com/
   2. [Fax Messages](usage/messages/Fax-Messages.md)
   3. [Call Queues](usage/callqueues/Member-Status.md)
   4. [Subscriptions](usage/notifications/Subscriptions.md)
+  5. [Answering Rules](usage/answering-rules/Answering-Rules-Call-Forwarding.md)
 
 ## Installation
 

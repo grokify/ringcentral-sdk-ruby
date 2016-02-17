@@ -25,8 +25,8 @@ Guide version 1.1.4 PDF page 18.
 config = RingCentralSdk::REST::Config.new.load_dotenv
 
 client = RingCentralSdk::REST::Client.new
-client.app_config(config.app)
-client.authorize_user(config.user)
+client.app_config config.app
+client.authorize_user config.user
 
 def upload_recordings(vbsdk, dir)
   Dir.glob('recording_*.mp3').each_with_index do |file,i|

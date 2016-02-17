@@ -11,8 +11,8 @@ require 'pp'
 config = RingCentralSdk::REST::Config.new.load_dotenv
 
 client = RingCentralSdk::REST::Client.new
-client.app_config(config.app)
-client.authorize_user(config.user)
+client.app_config config.app
+client.authorize_user config.user
 
 def transcribe_recordings(rcsdk, vbsdk)
   # Retrieve voice call log records with recordings

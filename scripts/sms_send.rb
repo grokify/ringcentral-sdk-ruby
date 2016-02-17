@@ -9,8 +9,8 @@ require 'pp'
 config = RingCentralSdk::REST::Config.new.load_dotenv
 
 client = RingCentralSdk::REST::Client.new
-client.app_config(config.app)
-client.authorize_user(config.user)
+client.app_config config.app
+client.authorize_user config.user
 
 res = client.messages.sms.create(
   from: config.env.data['RC_DEMO_SMS_FROM'],
