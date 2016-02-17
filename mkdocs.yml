@@ -22,6 +22,9 @@ pages:
 - ['usage/voice/Click-To-Call.md', 'Voice', 'Click-To-Call']
 - ['usage/messages/Call-Recordings.md', 'Voice', 'Call Recordings']
 
+## Answering Rules:
+- ['usage/answering-rules/Answering-Rules-Call-Forwarding.md', 'Answering Rules', 'Call Forwarding']
+
 ## Call Queues:
 - ['usage/callqueues/Member-Status.md', 'Call Queues', 'Member Status']
 
