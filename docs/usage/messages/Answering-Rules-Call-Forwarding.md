@@ -11,13 +11,28 @@ The API endpoints are as follows:
 * `account/~/extension/~/answering-rule/business-hours-rule`
 * `account/~/extension/~/answering-rule/after-hours-rule`
 
-The object looks like the following.
+The answering rule resource can be retrieved via the following:
 
-```json
-GET /restapi/v1.0/account/11111111/extension/22222222/answering-rule/business-hours-rule" HTTP/1.1
+### Ruby SDK Request
+
+```ruby
+client.send_request(
+  method: 'get',
+  url: 'account/~/extension/~/answering-rule/business-hours-rule',
+)
+```
+
+### HTTP Request
+
+```http
+GET /restapi/v1.0/account/11111111/extension/22222222/answering-rule/business-hours-rule HTTP/1.1
 Accept: application/json
 Authorization: Bearer MyAccessToken   
+```
 
+### HTTP Response
+
+```json
 HTTP/1.1 200 OK
 Content-Type: application/json
 {
@@ -119,7 +134,7 @@ The business and after hours rules can forward calls to a set of forwarding numb
 
 An update can be written as follows:
 
-### Ruby SDK
+### Ruby SDK Request
 
 ```ruby
 client.send_request(
@@ -131,7 +146,7 @@ client.send_request(
 )
 ```
 
-### HTTP
+### HTTP Request
 
 ```http
 PUT /restapi/v1.0/account/11111111/extension/22222222/forwarding-number/33333333 HTTP/1.1
