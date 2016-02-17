@@ -18,7 +18,7 @@ The answering rule resource can be retrieved via the following:
 ```ruby
 client.send_request(
   method: 'get',
-  url: 'account/~/extension/~/answering-rule/business-hours-rule',
+  url: 'account/~/extension/~/answering-rule/business-hours-rule'
 )
 ```
 
