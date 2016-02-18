@@ -186,6 +186,7 @@ module RingCentralSdk::REST
 
       res = nil
       method = request_sdk.method.to_s.downcase || 'get'
+      method = 'get' if method.empty?
 
       case method
       when 'delete'
