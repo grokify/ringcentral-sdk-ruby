@@ -4,7 +4,7 @@ Organizations often wish to programmatically update the RingCentral extension Ca
 
 ## Answering Rule Resource
 
-Each RingCentral account has two answering rule resources, one for business hours and another for after hours. These can be configured by end-users using the RingCentral Online Account Portal under Extension Call Handling & Forwarding.
+Each RingCentral extension has two answering rule resources, one for business hours and another for after hours. These can be configured by end-users using the RingCentral Online Account Portal under extension Call Handling & Forwarding.
 
 The API endpoints are as follows:
 

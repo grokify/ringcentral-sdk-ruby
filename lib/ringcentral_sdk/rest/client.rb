@@ -184,9 +184,10 @@ module RingCentralSdk::REST
         fail 'Request is not a RingCentralSdk::REST::Request::Base'
       end
 
-      res = nil
-      method = request_sdk.method.to_s.downcase || 'get'
+      method = request_sdk.method.to_s.downcase
       method = 'get' if method.empty?
+
+      res = nil
 
       case method
       when 'delete'
