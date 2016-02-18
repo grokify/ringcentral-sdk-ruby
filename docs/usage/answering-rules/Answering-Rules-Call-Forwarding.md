@@ -1,6 +1,6 @@
 # Answering Rules - Call Forwarding
 
-Organizations often wish to programmatically update the RingCentral extension Call Handling & Forwarding rules. This can be done using the RingCentral Connect Platform API as desribed below.
+Organizations often wish to programmatically update the RingCentral extension Call Handling & Forwarding rules. This can be done using the RingCentral Connect Platform API as described below.
 
 ## Answering Rule Resource
 
