@@ -41,8 +41,13 @@ When building an application that sends SMS it is useful to retrieve a list of S
 To retrieve a list of phone numbers, make a `GET` request to the `extension/phone-number` endpoint as follows:
 
 ```ruby
-# Phone Number Example
+# Phone Number example
+response = client.send_request(
+  method: 'get', # optional, defaults to 'get'
+  url: 'account/~/extension/~/phone-number'
+)
 
+# Phone Number Example using Faraday
 response = client.http.get do |req|
   req.url 'account/~/extension/~/phone-number'
 end
@@ -71,3 +76,7 @@ This will return a list of phone numbers assigned the extension as shown below. 
   ]
 }
 ```
+
+## Sending and Receiving SMS as the Main Company Phone Number
+
+You can send and receive SMS messages from the main company phone number when authorized as the Operator Extension. By default, the Operation Extension is set to extension 101. This can be edited and assigned to other extensions in the Online Account Portal under "Auto-Receptionist" > "Operator Extension.""
