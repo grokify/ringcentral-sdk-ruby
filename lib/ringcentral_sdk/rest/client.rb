@@ -29,8 +29,8 @@ module RingCentralSdk::REST
 
     def initialize(app_key='', app_secret='', server_url=RingCentralSdk::RC_SERVER_SANDBOX, opts={})
       init_attributes()
-      app_config = RingCentralSdk::REST::ConfigApp.new(app_key, app_secret, server_url, opts)
-      app_config(app_config)
+      self.app_config = RingCentralSdk::REST::ConfigApp.new(
+        app_key, app_secret, server_url, opts)
 
       if opts.key?(:username) && opts.key?(:password)
         extension = opts.key?(:extension) ? opts[:extension] : ''
@@ -39,11 +39,11 @@ module RingCentralSdk::REST
 
       @instance_headers = opts[:headers] || {}
 
-      @messages = RingCentralSdk::REST::Messages.new(self)
+      @messages = RingCentralSdk::REST::Messages.new self
     end
 
-    def app_config(app_config)
-      @app_config = app_config
+    def app_config=(new_app_config)
+      @app_config = new_app_config
       @oauth2client = new_oauth2_client()
     end
 
@@ -97,41 +97,41 @@ module RingCentralSdk::REST
       return built_urls
     end
 
-    def authorize_url(opts={})
+    def authorize_url(opts = {})
       @oauth2client.auth_code.authorize_url(_add_redirect_uri(opts))
     end
 
-    def authorize_code(code, opts={})
+    def authorize_code(code, opts = {})
       token = @oauth2client.auth_code.get_token(code, _add_redirect_uri(opts))
       set_token(token)
       return token
     end
 
-    def _add_redirect_uri(opts={})
+    def _add_redirect_uri(opts = {})
       if !opts.key?(:redirect_uri) && @app_config.redirect_url.to_s.length > 0
         opts[:redirect_uri] = @app_config.redirect_url.to_s
       end
       return opts
     end
 
-    def authorize_password(username, extension='', password='', remember=false)
+    def authorize_password(username, extension = '', password = '', remember = false)
       token = @oauth2client.password.get_token(username, password, {
         extension: extension,
-        headers: { 'Authorization' => 'Basic ' + get_api_key() } })
+        headers: {'Authorization' => 'Basic ' + get_api_key()}})
       set_token(token)
       return token
     end
 
-    def authorize_user(user, remember=false)
+    def authorize_user(user, remember = false)
       authorize_password(user.username, user.extension, user.password)
     end
 
     def set_token(token)
-      if token.is_a?(Hash)
+      if token.is_a? Hash
         token = OAuth2::AccessToken::from_hash(@oauth2client, token)
       end
 
-      unless token.is_a?(OAuth2::AccessToken)
+      unless token.is_a? OAuth2::AccessToken
         raise "Token is not a OAuth2::AccessToken"
       end
 
@@ -149,7 +149,7 @@ module RingCentralSdk::REST
         end
         conn.headers['RC-User-Agent'] = @user_agent
         conn.headers['SDK-User-Agent'] = @user_agent
-        conn.response :json, :content_type => /\bjson$/
+        conn.response :json, content_type: /\bjson$/
         conn.adapter Faraday.default_adapter
       end
     end
@@ -164,7 +164,7 @@ module RingCentralSdk::REST
     def set_oauth2_client(client=nil)
       if client.nil?
         @oauth2client = new_oauth2_client()
-      elsif client.is_a?(OAuth2::Client)
+      elsif client.is_a? OAuth2::Client
         @oauth2client = client
       else
         fail "client is not an OAuth2::Client"

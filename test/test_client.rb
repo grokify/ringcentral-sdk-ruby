@@ -16,6 +16,19 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     assert_equal "bXlfYXBwX2tleTpteV9hcHBfc2VjcmV0", @rcsdk.send(:get_api_key)
   end
 
+  def test_config
+    redirect_url = 'http://localhost:4567/oauth'
+    client = RingCentralSdk.new(
+      'my_app_key',
+      'my_app_secret',
+      RingCentralSdk::RC_SERVER_SANDBOX,
+      {
+        redirect_url: redirect_url
+      }
+    )
+    assert_equal redirect_url, client.app_config.redirect_url
+  end
+
   def test_set_client
     rcsdk = new_client()
     assert_equal true, rcsdk.oauth2client.is_a?(OAuth2::Client)
