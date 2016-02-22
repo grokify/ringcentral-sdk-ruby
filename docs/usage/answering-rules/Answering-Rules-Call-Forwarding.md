@@ -130,6 +130,8 @@ Content-Type: application/json
 
 ## Updating the Forwarding Number Phone Number
 
+* Permissions needed: `EditExtensions`
+
 The business and after hours rules can forward calls to a set of forwarding numbers. To update the phone number used, identify the forwarding number in the list of rules and then update the phone number of that resource using a HTTP PUT request to the endpoint updating the `phoneNumber` property.
 
 An update can be written as follows:

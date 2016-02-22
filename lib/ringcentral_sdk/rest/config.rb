@@ -74,6 +74,15 @@ module RingCentralSdk::REST
       @server_url = ENV['RC_APP_SERVER_URL']
       @redirect_url = ENV['RC_APP_REDIRECT_URL']
     end
+
+    def to_hash
+      {
+        key: @key,
+        secret: @secret,
+        server_url: @server_url,
+        redirect_url: @redirect_url
+      }
+    end
   end
 end
 
