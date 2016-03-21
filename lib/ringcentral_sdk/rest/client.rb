@@ -173,7 +173,7 @@ module RingCentralSdk::REST
 
     def get_api_key()
       api_key = (@app_config.key.is_a?(String) && @app_config.secret.is_a?(String)) \
-        ? Base64.encode64("#{@app_config.key}:#{@app_config.secret}").gsub(/[\s\t\r\n]/,'') : ''
+        ? Base64.encode64("#{@app_config.key}:#{@app_config.secret}").gsub(/\s/,'') : ''
       return api_key
     end
 

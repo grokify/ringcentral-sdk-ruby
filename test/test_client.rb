@@ -196,7 +196,7 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
 
     client.oauth2client.password.stubs(:get_token).returns(stub_token)
 
-    token = client.authorize('my_test_username', 'my_test_extension', 'my_test_password')
+    client.authorize('my_test_username', 'my_test_extension', 'my_test_password')
 
     #@rcsdk.client.stubs(:post).returns(Faraday::Response.new)
     Faraday::Connection.any_instance.stubs(:post).returns(Faraday::Response.new)
@@ -276,7 +276,7 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
 
     client.oauth2client.password.stubs(:get_token).returns(stub_token)
 
-    token = client.authorize('my_test_username', 'my_test_extension', 'my_test_password')
+    client.authorize('my_test_username', 'my_test_extension', 'my_test_password')
 
     res = client.messages.sms.create(
       from: '+16505551212',

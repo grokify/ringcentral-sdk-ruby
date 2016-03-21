@@ -38,6 +38,11 @@ RingCentral SDK for Ruby
 
 ## Overview
 
+##### YOU MUST HAVE A RINGCENTRAL ACCOUNT TO USE THE API.
+##### https://developers.ringcentral.com/login.html
+
+www.ringcentral.com - RingCentral Complete Cloud Communications System.
+
 A library for using the [RingCentral REST API](https://developers.ringcentral.com). [Click here to read the full documentation](http://ringcentral-sdk-ruby.readthedocs.org/).
 
 ## Documentation

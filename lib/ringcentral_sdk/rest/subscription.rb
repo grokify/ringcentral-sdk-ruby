@@ -134,9 +134,8 @@ module RingCentralSdk::REST
       end
 
       begin
-        url = 'subscription/' + @_subscription['id'].to_s
         response = @_client.http.delete do |req|
-          req.url = 'subscription' + @_subscription['id']
+          req.url 'subscription/' + @_subscription['id'].to_s
         end
         reset()
         changed

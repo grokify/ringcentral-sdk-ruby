@@ -195,7 +195,7 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
 
   def test_pubnub
     sub = @rcsdk.create_subscription()
-    pub = sub.new_pubnub()
+    pub = sub.new_pubnub('test', false, '')
 
     assert_equal 'Pubnub::Client', pub.class.name
   end

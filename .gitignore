@@ -1,5 +1,6 @@
 Gemfile.lock
 coverage
+pubnub.log
 scripts/_*
 scripts/*.env
 scripts/Gemfile.lock
