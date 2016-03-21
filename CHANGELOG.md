@@ -6,7 +6,7 @@ CHANGELOG
     - Add docs for Answering Rules
   - Updates
     - Update Pubnub dependency to 3.8.0 from 3.7.3
-  - Remove
+  - Removals
     - Deprecate Ruby 1.9.3 due to `mime-types-data` (3.2016.0221) requiring Ruby >= 2.0
 - **2016-02-13**: 1.1.1
   - Additions
