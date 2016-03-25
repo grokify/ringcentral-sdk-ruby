@@ -33,7 +33,7 @@ response = client.messages.fax.create(
 response = client.messages.fax.create(
   from: '+16505551212',
   to: {
-    phoneNumber: '+14155551212'
+    phoneNumber: '+14155551212',
     name: 'John Doe'
   },
   text: 'Hi there!'
