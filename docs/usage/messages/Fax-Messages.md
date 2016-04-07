@@ -220,7 +220,7 @@ Yes, faxes sent via the API can be viewed in the Service Web Portal (https://ser
 
 ### How can I retrieve a sent fax via API?
 
-When sending a fax via the API, the fax message `messageId` and rendered fax `attachmentId` can be used in the message store end points to retrieve the message information or attachment.
+When sending a fax via the API, the fax message `messageId` and rendered fax `attachmentId` can be used in the message store end points to retrieve the message information or attachment. Authorized apps can retrieve faxes for the user that authorized the app. Admin user authorized apps can retrieve faxes for the account.
 
 ### What formats can faxes be stored and retrieved in?
 
