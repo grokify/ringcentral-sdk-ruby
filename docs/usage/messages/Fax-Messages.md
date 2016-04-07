@@ -224,7 +224,7 @@ When sending a fax via the API, the fax message `messageId` and rendered fax `at
 
 ### What formats can faxes be stored and retrieved in?
 
-RingCentral supports storing faxes as PDF and TIFF files. The configuration preference is available per extension.
+RingCentral supports storing faxes as PDF and TIFF files. The configuration preference is available per extension. Upon retrieval, the `Content-Type` HTTP response header will be set to `application/pdf` or `image/tiff`.
 
 ### Will retrieving a rendered fax attachment change the read status?
 
