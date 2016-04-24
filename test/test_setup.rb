@@ -13,7 +13,7 @@ class RingCentralSdkTest < Test::Unit::TestCase
     assert_equal 'RingCentralSdk::REST::Client', @rcsdk.class.name
 
     assert_raise do
-      @rcsdk.request(nil)
+      @rcsdk.send_request(nil)
     end
 
     rcsdk = RingCentralSdk.new(

@@ -150,6 +150,7 @@ module RingCentralSdk::REST
         conn.headers['RC-User-Agent'] = @user_agent
         conn.headers['SDK-User-Agent'] = @user_agent
         conn.response :json, content_type: /\bjson$/
+        conn.response :logger
         conn.adapter Faraday.default_adapter
       end
     end

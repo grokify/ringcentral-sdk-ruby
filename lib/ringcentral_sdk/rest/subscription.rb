@@ -23,7 +23,7 @@ module RingCentralSdk::REST
     end
 
     def nil_subscription()
-      subscription       =  {
+      subscription        =  {
         'eventFilters'    => [],
         'expirationTime'  => '', # 2014-03-12T19:54:35.613Z
         'expiresIn'       => 0,
@@ -90,9 +90,8 @@ module RingCentralSdk::REST
         reset()
         changed
         notify_observers(e)
-        raise 'Subscribe HTTP Request Error'
+        raise 'Subscribe HTTP Request Error: ' + e.to_s
       end
-
     end
 
     def renew(events = nil)

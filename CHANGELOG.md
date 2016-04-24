@@ -1,8 +1,9 @@
 CHANGELOG
 ---------
-- **2016-02-17**: 1.2.0
+- **2016-04-23**: 1.2.0
   - Additions
     - Add `RingCentral::REST::Client` custom instance headers support
+    - Add `RingCentral::REST::Client` `attr_reader` for `app_config`
     - Add docs for Answering Rules
   - Updates
     - Update Pubnub dependency to 3.8.0 from 3.7.3
