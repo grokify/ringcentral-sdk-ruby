@@ -9,7 +9,7 @@ require 'pp'
 config = RingCentralSdk::REST::Config.new.load_dotenv
 
 client = RingCentralSdk::REST::Client.new
-client.app_config = config.app
+client.set_app_config config.app
 client.authorize_user config.user
 
 # An SMS event poster. Takes a message store subscription

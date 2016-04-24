@@ -10,7 +10,7 @@ require 'ringcentral_sdk'
 config = RingCentralSdk::REST::Config.new.load_dotenv
 
 client = RingCentralSdk::REST::Client.new
-client.app_config = config.app
+client.set_app_config config.app
 client.authorize_user config.user
 
 # Create an array of event_filters from the array of extensions

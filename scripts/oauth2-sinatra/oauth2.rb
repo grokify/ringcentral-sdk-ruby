@@ -8,7 +8,7 @@ require 'ringcentral_sdk'
 
 client = RingCentralSdk::REST::Client.new
 config = RingCentralSdk::REST::Config.new.load_dotenv
-client.app_config = config.app
+client.set_app_config config.app
 
 get '/' do
   erb :index, locals: {

@@ -29,8 +29,8 @@ module RingCentralSdk::REST
 
     def initialize(app_key='', app_secret='', server_url=RingCentralSdk::RC_SERVER_SANDBOX, opts={})
       init_attributes()
-      self.app_config = RingCentralSdk::REST::ConfigApp.new(
-        app_key, app_secret, server_url, opts)
+      self.set_app_config( RingCentralSdk::REST::ConfigApp.new(
+        app_key, app_secret, server_url, opts) )
 
       if opts.key?(:username) && opts.key?(:password)
         extension = opts.key?(:extension) ? opts[:extension] : ''
@@ -42,7 +42,7 @@ module RingCentralSdk::REST
       @messages = RingCentralSdk::REST::Messages.new self
     end
 
-    def app_config=(new_app_config)
+    def set_app_config(new_app_config)
       @app_config = new_app_config
       @oauth2client = new_oauth2_client()
     end
