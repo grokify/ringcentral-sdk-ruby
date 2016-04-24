@@ -1,5 +1,8 @@
 CHANGELOG
 ---------
+- **2016-04-23**: 1.2.1
+  - Updates
+    - Update `RingCentral::REST::Client` `app_config =` to `set_app_config`
 - **2016-04-23**: 1.2.0
   - Additions
     - Add `RingCentral::REST::Client` custom instance headers support
