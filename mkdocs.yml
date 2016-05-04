@@ -26,6 +26,7 @@ pages:
 - ['usage/answering-rules/Answering-Rules-Call-Forwarding.md', 'Answering Rules', 'Call Forwarding']
 
 ## Call Queues:
+- ['usage/callqueues/Adding-Removing-Users.md', 'Call Queues', 'Adding and Removing Users']
 - ['usage/callqueues/Member-Status.md', 'Call Queues', 'Member Status']
 
 ## Notifications:
