@@ -139,8 +139,9 @@ module RingCentralSdk::REST
 
       @http = Faraday.new(url: api_version_url()) do |conn|
         conn.request :oauth2_refresh, @token
-        conn.request :json
+        conn.request :multipart
         conn.request :url_encoded
+        conn.request :json
         conn.headers['User-Agent'] = @user_agent
         if @instance_headers.is_a? Hash 
           @instance_headers.each do |k,v|
