@@ -37,7 +37,7 @@ module RingCentralSdk::REST
       new_status = new_status_dnd_department_calls(current_status, enable)
 
       if current_status != new_status
-        update({:dndStatus => new_status})
+        update({dndStatus: new_status})
       end
 
       return new_status
