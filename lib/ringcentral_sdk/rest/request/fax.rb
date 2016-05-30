@@ -58,7 +58,7 @@ module RingCentralSdk::REST::Request
       }
 
       opts.each do |k,v|
-        meta[k] = v unless processed.key?(k)
+        meta[k] = v unless processed.key? k
       end
 
       meta
@@ -68,27 +68,29 @@ module RingCentralSdk::REST::Request
       return unless !text.nil? && text.to_s.length>0
       opts[:content_id_disable] = true
       text_part = MIMEBuilder::Text.new(text, opts)
-      @msg.add(text_part.mime)
+      @msg.add text_part.mime
     end
 
     def add_parts(parts=[])
       return if parts.nil?
-      unless parts.is_a?(Array)
+      unless parts.is_a? Array
         raise 'invalid parameter[0]. needs to be an array'
       end
       parts.each do |part|
-        if part.is_a?(String)
+        if part.is_a? MIME::Media
+          @msg.add part
+        elsif part.is_a?(String)
           file_part = MIMEBuilder::Filepath.new(part)
-          @msg.add(file_part.mime)
+          @msg.add file_part.mime
         elsif part.is_a? Hash
           part[:content_id_disable] = true
           part[:is_attachment] = true
           if part.key? :filename
             file_part = MIMEBuilder::Filepath.new(part[:filename], part)
-            @msg.add(file_part.mime)
+            @msg.add file_part.mime
           elsif part.key? :text
             text_part = MIMEBuilder::Text.new(part[:text], part)
-            @msg.add(text_part.mime)
+            @msg.add text_part.mime
           end
         end
       end
