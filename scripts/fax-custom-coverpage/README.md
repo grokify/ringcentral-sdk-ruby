@@ -1,9 +1,9 @@
 Custom Cover Page Demo in Ruby
 ==============================
 
-A custom fax coverpage can be added by includig the coverpage as the first attachment and having the fax API not include its own cover page.
+A custom fax cover page can be added by including the cover page as the first attachment and having the fax API not include its own cover page.
 
-The demo shows how to create a custom coverpage using HTML and use it with the fax API.
+The demo shows how to create a custom cover page using HTML and use it with the fax API.
 
 Components of the demo include:
 
@@ -13,6 +13,6 @@ Components of the demo include:
 
 Sample files:
 
-1. [HTML template](view_coverpage.handlebars)
-2. [Attachment](asset_file.pdf)
-3. [Demo Output](asset_output.pdf)
+1. [Cover Page HTML template](view_coverpage.handlebars)
+2. [Fax Attachment](asset_file.pdf)
+3. [Fax Demo Output](asset_output.pdf)
