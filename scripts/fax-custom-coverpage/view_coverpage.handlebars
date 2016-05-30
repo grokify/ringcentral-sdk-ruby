@@ -4,14 +4,17 @@
 		<meta charset="UTF-8">
 		<title>Fax</title>
 		<style>
+			body {width:95%;margin:0 auto}
+			h1 {width:100%;color:#fff;background-color:#000;padding:0.2em 0.2em 0.2em 1.2em}
+			.bodyWrap {padding-left:1em}
 			.contactHeading {font-weight:bold;}
 			.itemLabel {font-weight:bold;}
 		</style>
 	</head>
-	<body style="width:95%;margin:0 auto">
-		<h1 style="width:100%;color:#fff;background-color:#000;padding:0.2em">&nbsp;FAX</h1>
+	<body>
+		<h1>FAX</h1>
 
-		<div style="padding-left:1em">
+		<div class="bodyWrap">
 			<blockquote>
 				<p><span class="itemLabel">Date:</span> {{ fax_date }}</p>
 				<p><span class="itemLabel">Pages including cover sheet:</span> {{ fax_pages }}</p>
