@@ -22,7 +22,7 @@ def get_coverpage
   template = handlebars.compile IO.read(hbs)
 
   html = template.call(
-  	fax_date: DateTime.now().to_s,
+    fax_date: DateTime.now().to_s,
     fax_pages: ENV['RC_DEMO_FAX_PAGES'],
     fax_to_name: ENV['RC_DEMO_FAX_TO_NAME'],
     fax_to_phone: ENV['RC_DEMO_FAX_TO'],
