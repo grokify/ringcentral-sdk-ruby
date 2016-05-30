@@ -2,7 +2,7 @@ CHANGELOG
 ---------
 - **2016-05-30**: 1.2.2
   - Additions
-    - Add fax helper support for all `MIME::Media` MIME parts
+    - Add `RingCentralSdk::REST::Request::Fax` to support all `MIME::Media` MIME parts
     - Add docs for call queue add / remove agents
     - Add docs for fax `multipart/form-data` support
     - Add demo for fax custom cover page
