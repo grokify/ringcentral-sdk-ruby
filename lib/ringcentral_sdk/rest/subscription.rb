@@ -74,6 +74,7 @@ module RingCentralSdk::REST
       begin
         response = @_client.http.post do |req|
           req.url 'subscription'
+          req.headers['Content-Type'] = 'application/json'
           req.body = {
             eventFilters: @_client.create_urls(@event_filters),
             deliveryMode: {

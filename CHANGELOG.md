@@ -1,5 +1,8 @@
 CHANGELOG
 ---------
+- **2016-06-01**: 1.2.3
+  - Updates
+    - Update subscription for new header requirement
 - **2016-05-30**: 1.2.2
   - Additions
     - Add `RingCentralSdk::REST::Request::Fax` to support all `MIME::Media` MIME parts
