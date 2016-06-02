@@ -232,17 +232,7 @@ sub.destroy()
 
 ## Supported Ruby Versions
 
-This library supports and is [tested against](https://travis-ci.org/grokify/ringcentral-sdk-ruby) the following Ruby implementations:
-
-1. Ruby 2.3.0
-2. Ruby 2.2.0
-3. Ruby 2.1.0
-4. Ruby 2.0.0
-5. Ruby 1.9.3
-6. [JRuby](http://jruby.org/)
-7. [Rubinius](http://rubinius.com/)
-
-Note: Ruby 1.8.7 works except for subscription support which relies on the `pubnub` gem. If there is a need for 1.8.7 support, consider creating a GitHub issue so we can evalute creating a separate library for subscription handling.
+This library is tested against [this list of Ruby implementations](https://travis-ci.org/grokify/ringcentral-sdk-ruby).
 
 ## Releases
 
