@@ -23,7 +23,6 @@ response = client.http.post do |req|
   req.body = {
     to: { phoneNumber: '14155551212'}, # to is required
     from: { phoneNumber: '16505551212' }, # from optional
-    callerId: { phoneNumber: '14085551212'}, # callerId is optional
     playPrompt: true # playPrompt is optional
   }
 end
@@ -61,7 +60,9 @@ This will return a list of phone numbers assigned the extension as shown below. 
 
 ### Retrieving a List of Valid RingOut Caller ID Numbers
 
-To retrieve a list of numbers for Caller ID, use the `extension/phone-number` endpoint and then selecting the phone numbers with the `CallerId` feature. A common UX for this is to present a drop down element to allow the user to select a phone number to send from.
+Note: The Caller Id number used in a RingOut call is set in the Online Account Portal (https://service.ringcentral.com) under the extension `RingOut from Web` setting. This is available by logging into the Online Account Portal and navigating to: `Settings` > `Outbound Caller ID` > `By Feature` > `RingOut from Web`. If you need to set the Caller Id value in a call, consider using RingCentral's WebRTC capability.
+
+To retrieve a list of numbers that can be used for Caller ID, use the `extension/phone-number` endpoint and then selecting the phone numbers with the `CallerId` feature. A common UX for this is to present a drop down element to allow the user to select a phone number to send from.
 
 To retrieve a list of phone numbers, make a `GET` request to the `extension/phone-number` endpoint as follows:
 
