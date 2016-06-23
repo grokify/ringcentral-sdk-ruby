@@ -21,10 +21,10 @@ response = client.http.post do |req|
   req.url 'account/~/extension/~/ringout'
   req.headers['Content-Type'] = 'application/json'
   req.body = {
-    :to   => { :phoneNumber => '14155551212'}, # required field
-    :from => { :phoneNumber => '16505551212' }, # optional field
-    :callerId   => {"phoneNumber": "13443334444"}, # optional field
-    :playPrompt => true # optional field
+    :to   => { phoneNumber: '14155551212'}, # to is required
+    :from => { phoneNumber: '16505551212' }, # from optional
+    :callerId   => { phoneNumber: '14085551212'}, # callerId is optional
+    :playPrompt => true # playPrompt is optional
   }
 end
 ```
