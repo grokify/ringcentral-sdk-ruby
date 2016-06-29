@@ -21,17 +21,17 @@ client = RingCentralSdk.new(
   'myAppKey',
   'myAppSecret',
   RingCentralSdk::RC_SERVER_SANDBOX,
-  {:redirect_uri => 'http://example.com/oauth'}
+  redirect_uri: 'http://example.com/oauth'
 )
 # Retrieve OAuth authorize url using default redirect URL
 auth_url = client.authorize_url()
 # Retrieve OAuth authorize url using override redirect URL
 auth_url = client.authorize_url({
-  :redirect_uri => 'my_registered_oauth_url', # optional override of default URL
-  :display      => '', # optional: page|popup|touch|mobile, default 'page'
-  :prompt       => '', # optional: sso|login|consent, default is 'login sso consent'
-  :state        => '', # optional
-  :brand_id     => ''  # optional: string|number
+  redirect_uri: 'my_registered_oauth_url', # optional override of default URL
+  display:      '', # optional: page|popup|touch|mobile, default 'page'
+  prompt:       '', # optional: sso|login|consent, default is 'login sso consent'
+  state:        '', # optional
+  brand_id:     ''  # optional: string|number
 })
 # Open browser window to authUrl and retrieve authorize_code from redirect uri.
 ```
@@ -70,7 +70,7 @@ for single queries where you do not need to reuse the SDK object.
 client = RingCentralSdk.new(
   'my_app_key', 'my_app_secret',
   RingCentralSdk::RC_SERVER_SANDBOX, # or RingCentralSdk::RC_SERVER_PRODUCTION
-  {:username => 'my_username', :extension => 'my_extension', :password => 'my_password'}
+  {username: 'my_username', extension: 'my_extension', password: 'my_password'}
 )
 ```
 
@@ -79,13 +79,13 @@ With chaining and request helper:
 ```ruby
 response = RingCentralSdk.new(
   'my_app_key', 'my_app_secret', RingCentralSdk::RC_SERVER_SANDBOX,
-  {:username => 'my_username', :extension => 'my_extension', :password => 'my_password'}
+  {username: 'my_username', extension: 'my_extension', password: 'my_password'}
 ).request(
   RingCentralSdk::Helpers::CreateFaxRequest.new(
     nil, # for authz user or { :account_id => '~', :extension_id => '~' }
     {
-      :to            => '+16505551212', # inflates to [{ :phoneNumber => '+16505551212' }],
-      :coverPageText => 'RingCentral fax text example using Ruby!'
+      to: '+16505551212', # inflates to [{ :phoneNumber => '+16505551212' }],
+      coverPageText: 'RingCentral fax text example using Ruby!'
     },
     :text     => 'RingCentral fax text example using Ruby!'
   )
@@ -103,12 +103,12 @@ client = RingCentralSdk.new(
 )
 
 oauth2 = OAuth2::Client.new(@app_key, @app_secret,
-  :site      => client.server_url,
-  :token_url => RingCentralSdk::Platform::Platform::TOKEN_ENDPOINT)
+  site:      client.server_url,
+  token_url: RingCentralSdk::Platform::Platform::TOKEN_ENDPOINT)
 
 token = oauth2.password.get_token('my_username', 'my_password', {
-  :extension => 'my_extension',
-  :headers   => { 'Authorization' => 'Basic ' + client.get_api_key() } })
+  extension: 'my_extension',
+  headers: { 'Authorization' => 'Basic ' + client.get_api_key() } })
 
 client.authorized(token)
 ```
@@ -137,8 +137,8 @@ client2.set_token(token_hash)
 
 # Method 2: Load token as OAuth2::AccessToken object
 oauth2 = OAuth2::Client.new(@app_key, @app_secret,
-  :site      => client2.server_url,
-  :token_url => client2.class::TOKEN_ENDPOINT)
+  site:      client2.server_url,
+  token_url: client2.class::TOKEN_ENDPOINT)
 
 token = OAuth2::AccessToken::from_hash(oauth2, token_hash)
 
