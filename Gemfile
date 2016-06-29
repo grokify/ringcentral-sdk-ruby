@@ -1,23 +1,6 @@
 source ENV['GEM_SOURCE'] || 'https://rubygems.org'
 
-gem 'coveralls'
-gem 'dotenv'
-gem 'faraday', '~> 0.9.0'
-gem 'faraday_middleware'
-gem 'faraday_middleware-oauth2_refresh'
-gem 'jsondoc'
-gem 'logger'
-gem 'mime'
-gem 'mime-types'
-gem 'mime_builder'
-gem 'mocha'
-gem 'multi_json'
-gem 'oauth2'
-gem 'pubnub', '~> 3.8.0'
-gem 'rake'
-gem 'simplecov'
-gem 'test-unit'
-gem 'timers'
+gemspec
 
 # Ruby 1.8.7 is not currently supported
 # platforms :ruby_18 do
