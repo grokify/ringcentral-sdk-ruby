@@ -116,7 +116,7 @@ client = RingCentralSdk::REST::Client.new(
   'myAppKey',
   'myAppSecret',
   RingCentralSdk::RC_SERVER_SANDBOX,
-  {redirect_uri: 'http://example.com/oauth'}
+  redirect_uri: 'http://example.com/oauth'
 )
 
 # Retrieve OAuth authorize url using default redirect URL
