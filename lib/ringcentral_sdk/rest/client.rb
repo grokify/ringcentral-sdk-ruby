@@ -4,6 +4,8 @@ require 'faraday_middleware'
 require 'faraday_middleware/oauth2_refresh'
 require 'oauth2'
 
+require 'pp'
+
 module RingCentralSdk::REST
   class Client
     ACCESS_TOKEN_TTL  = 600             # 10 minutes
@@ -101,8 +103,8 @@ module RingCentralSdk::REST
       @oauth2client.auth_code.authorize_url(_add_redirect_uri(opts))
     end
 
-    def authorize_code(code, opts = {})
-      token = @oauth2client.auth_code.get_token(code, _add_redirect_uri(opts))
+    def authorize_code(code, params = {})
+      token = @oauth2client.auth_code.get_token(code, _add_redirect_uri(params))
       set_token(token)
       return token
     end
@@ -114,16 +116,16 @@ module RingCentralSdk::REST
       return opts
     end
 
-    def authorize_password(username, extension = '', password = '', remember = false)
+    def authorize_password(username, extension = '', password = '', params = {})
       token = @oauth2client.password.get_token(username, password, {
         extension: extension,
-        headers: {'Authorization' => 'Basic ' + get_api_key()}})
+        headers: {'Authorization' => 'Basic ' + get_api_key()}}.merge(params))
       set_token(token)
       return token
     end
 
-    def authorize_user(user, remember = false)
-      authorize_password(user.username, user.extension, user.password)
+    def authorize_user(user, params = {})
+      authorize_password(user.username, user.extension, user.password, params)
     end
 
     def set_token(token)
