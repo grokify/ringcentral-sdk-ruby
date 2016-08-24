@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'jsondoc', '~> 0.1', '>= 0.1.0'
   s.add_dependency 'logger'
   s.add_dependency 'mime', '~> 0.4', '>= 0.4.3'
-  s.add_dependency 'mime-types', '~> 1.25' # >= 1.9 '~> 2.5', '>= 2.5'
+  s.add_dependency 'mime-types', '~> 3.1' # >= 1.9 '~> 2.5', '>= 2.5'
   s.add_dependency 'mime_builder', '~> 0'
   s.add_dependency 'multi_json', '~> 1.3'
   s.add_dependency 'oauth2', '~> 1.0', '>= 1.0.0'
