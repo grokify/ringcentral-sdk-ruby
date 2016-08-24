@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'mime_builder', '~> 0'
   s.add_dependency 'multi_json', '~> 1.3'
   s.add_dependency 'oauth2', '~> 1.0', '>= 1.0.0'
-  s.add_dependency 'pubnub', '~> 4.0', '>= 4.0.0'
+  s.add_dependency 'pubnub', '~> 3.8'
   s.add_dependency 'timers', '~> 4.1'
 
   s.add_development_dependency 'coveralls'
