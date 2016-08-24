@@ -40,8 +40,8 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     oauth2client = OAuth2::Client.new(
       'my_app_key',
       'my_app_secret',
-      :site      => RingCentralSdk::RC_SERVER_SANDBOX,
-      :token_url => rcsdk.class::TOKEN_ENDPOINT)
+      site: RingCentralSdk::RC_SERVER_SANDBOX,
+      token_url: rcsdk.class::TOKEN_ENDPOINT)
     rcsdk.set_oauth2_client(oauth2client)
     assert_equal true, rcsdk.oauth2client.is_a?(OAuth2::Client) 
 
@@ -51,11 +51,13 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
   end
 
   def test_set_token
-    token_data = {:access_token => 'test_token'}
+    token_data = {access_token: 'test_token'}
 
     @rcsdk.set_token(token_data)
 
-    assert_equal 'OAuth2::AccessToken', @rcsdk.token.class.name
+    token = @rcsdk.token
+
+    assert_equal 'OAuth2::AccessToken', token.class.name
     assert_equal 'Faraday::Connection', @rcsdk.http.class.name
 
     assert_raise do

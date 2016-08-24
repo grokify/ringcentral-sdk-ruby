@@ -23,7 +23,6 @@ module RingCentralSdk::REST
     attr_reader :app_config
     attr_reader :http
     attr_reader :oauth2client
-    attr_reader :token
     attr_reader :user_agent
     attr_reader :messages
 
@@ -50,7 +49,6 @@ module RingCentralSdk::REST
     end
 
     def init_attributes()
-      @token = nil
       @http = nil
       @user_agent = get_user_agent()
     end
@@ -128,6 +126,10 @@ module RingCentralSdk::REST
       authorize_password(user.username, user.extension, user.password, params)
     end
 
+    def token
+      return @http ? @http.builder.app.oauth2_token : nil
+    end
+
     def set_token(token)
       if token.is_a? Hash
         token = OAuth2::AccessToken::from_hash(@oauth2client, token)
@@ -137,10 +139,8 @@ module RingCentralSdk::REST
         raise "Token is not a OAuth2::AccessToken"
       end
 
-      @token = token
-
       @http = Faraday.new(url: api_version_url()) do |conn|
-        conn.request :oauth2_refresh, @token
+        conn.request :oauth2_refresh, token
         conn.request :multipart
         conn.request :url_encoded
         conn.request :json
