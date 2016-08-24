@@ -43,7 +43,7 @@ code  = params['code'] # retrieve GET 'code' parameter in Sinatra
 token = client.authorize_code code
 
 # Optional OAuth parameters can be passed in
-token = client.authorize_code code, , access_token_ttl: 600
+token = client.authorize_code code, access_token_ttl: 600
 ```
 
 ## Password Grant
