@@ -40,7 +40,10 @@ On your redirect page, you can exchange your authorization code for an access to
 
 ```ruby
 code  = params['code'] # retrieve GET 'code' parameter in Sinatra
-token = client.authorize_code(code)
+token = client.authorize_code code
+
+# Optional OAuth parameters can be passed in
+token = client.authorize_code code, , access_token_ttl: 600
 ```
 
 ## Password Grant
@@ -57,7 +60,10 @@ client = RingCentralSdk.new(
   'my_app_key', 'my_app_secret', RingCentralSdk::Sdk::RC_SERVER_SANDBOX
 )
 
-client.authorize( 'my_username', 'my_extension', 'my_password' )
+client.authorize 'my_username', 'my_extension', 'my_password'
+
+# Optional OAuth parameters can be passed in
+client.authorize 'my_username', 'my_extension', 'my_password', access_token_ttl: 600
 ```
 
 ### Simple Approach
@@ -82,12 +88,12 @@ response = RingCentralSdk.new(
   {username: 'my_username', extension: 'my_extension', password: 'my_password'}
 ).request(
   RingCentralSdk::Helpers::CreateFaxRequest.new(
-    nil, # for authz user or { :account_id => '~', :extension_id => '~' }
+    nil, # for authz user or { account_id: '~', extension_id: '~' }
     {
-      to: '+16505551212', # inflates to [{ :phoneNumber => '+16505551212' }],
+      to: '+16505551212', # inflates to [{ phoneNumber: '+16505551212' }],
       coverPageText: 'RingCentral fax text example using Ruby!'
     },
-    :text     => 'RingCentral fax text example using Ruby!'
+    text: 'RingCentral fax text example using Ruby!'
   )
 )
 ```
