@@ -14,8 +14,8 @@ Gem::Specification.new do |s|
   s.email       = 'johncwang@gmail.com'
   s.homepage    = 'https://github.com/grokify/'
   s.licenses    = ['MIT']
-  s.files       = Dir['lib/**/**/*'] # + Dir['bin/*']
-  s.files      += Dir['[A-Z]*']    + Dir['test/**/*']
+  s.files       = Dir['lib/**/**/*']
+  s.files      += Dir['[A-Z]*'] + Dir['test/**/*']
   # s.files.reject! { |fn| fn.include? "CVS" }
   # s.required_ruby_version = '>= 1.8.7' # 1.8.7+ is tested
   s.add_dependency 'dotenv', '~> 2.1', '>= 2.1.0'
