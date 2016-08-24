@@ -1,5 +1,13 @@
 CHANGELOG
 ---------
+- **2016-08-24**: 1.3.1
+  - Updates
+    - Lock PubNub dependency to 3.x due to back compat issue with 4.x
+- **2016-08-23**: 1.3.0
+  - Additions
+    - Add OAuth 2.0 parameter support for `authorize_(code|password|user)` methods
+  - Bugfixes
+    - Fix `Client#token` to return token used by `FaradayMiddleware::OAuth2Refresh`
 - **2016-06-01**: 1.2.3
   - Updates
     - Update subscription for new header requirement
