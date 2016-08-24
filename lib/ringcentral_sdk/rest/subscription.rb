@@ -6,6 +6,8 @@ require 'openssl'
 require 'pubnub'
 require 'timers'
 
+require 'pp'
+
 module RingCentralSdk::REST
   class Subscription
     include Observable
@@ -225,7 +227,7 @@ module RingCentralSdk::REST
         ciphertext = Base64.decode64(message)
         plaintext = cipher.update(ciphertext) + cipher.final
 
-        message = MultiJson.decode(plaintext, :symbolize_keys=>false)
+        message = MultiJson.decode(plaintext, symbolize_keys: false)
       end
 
       return message
