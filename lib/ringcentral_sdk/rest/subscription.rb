@@ -255,7 +255,10 @@ module RingCentralSdk::REST
     end
 
     def _clear_timeout
-      @_timeout = nil
+      unless @_timeout.nil?
+        @_timeout.exit
+        @_timeout = nil
+      end
     end
 
     def new_pubnub(subscribe_key='', ssl_on=false, publish_key='', my_logger=nil)
