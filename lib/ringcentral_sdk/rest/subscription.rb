@@ -4,9 +4,6 @@ require 'multi_json'
 require 'observer'
 require 'openssl'
 require 'pubnub'
-require 'timers'
-
-require 'pp'
 
 module RingCentralSdk::REST
   class Subscription
@@ -25,7 +22,7 @@ module RingCentralSdk::REST
     end
 
     def nil_subscription()
-      subscription        =  {
+      return {
         'eventFilters'    => [],
         'expirationTime'  => '', # 2014-03-12T19:54:35.613Z
         'expiresIn'       => 0,
@@ -41,7 +38,6 @@ module RingCentralSdk::REST
         'status'          => '', # Active
         'uri'             => ''
       }
-      return subscription
     end
 
     def pubnub()
@@ -49,25 +45,25 @@ module RingCentralSdk::REST
     end
 
     def register(events = nil)
-      return alive?() ? renew(events) : subscribe(events)
+      return alive? ? renew(events) : subscribe(events)
     end
 
     def add_events(events)
-      unless events.is_a?(Array)
+      unless events.is_a? Array
         raise 'Events is not an array.'
       end
       @event_filters.push(events) if events.length > 0
     end
 
     def set_events(events)
-      unless events.is_a?(Array)
+      unless events.is_a? Array
         raise 'Events is not an array.'
       end
       @event_filters = events
     end
 
     def subscribe(events=nil)
-      set_events(events) if events.is_a?(Array)
+      set_events(events) if events.is_a? Array
 
       if !@event_filters.is_a?(Array) || @event_filters.length == 0
         raise 'Events are undefined'
@@ -84,10 +80,10 @@ module RingCentralSdk::REST
             }
           }
         end
-        set_subscription(response.body)
+        set_subscription response.body
         _subscribe_at_pubnub()
         changed
-        notify_observers(response)
+        notify_observers response
         return response
       rescue StandardError => e
         reset()
@@ -98,9 +94,9 @@ module RingCentralSdk::REST
     end
 
     def renew(events = nil)
-      set_events(events) if events.is_a?(Array)
+      set_events(events) if events.is_a? Array
 
-      unless alive?()
+      unless alive?
         raise 'Subscription is not alive'
       end
 
@@ -113,25 +109,26 @@ module RingCentralSdk::REST
       begin
         response = @_client.http.put do |req|
           req.url 'subscription/' + @_subscription['id'].to_s
+          req.headers['Content-Type'] = 'application/json'
           req.body = {
             eventFilters: @_client.create_urls(@event_filters)
           }
         end
 
-        set_subscription(response.body)
+        set_subscription response.body
         changed
-        notify_observers(response)
+        notify_observers response
         return response
       rescue StandardError => e
         reset()
         changed
-        notify_observers(e)
+        notify_observers e
         raise 'Renew HTTP Request Error'
       end
     end
 
     def remove()
-      unless alive?()
+      unless alive?
         raise 'Subscription is not alive'
       end
 
@@ -141,16 +138,16 @@ module RingCentralSdk::REST
         end
         reset()
         changed
-        notify_observers(response.body)
+        notify_observers response.body
         return response
       rescue StandardError => e
         reset()
         changed
-        notify_observers(e)
+        notify_observers e
       end
     end
 
-    def alive?()
+    def alive?
       s = @_subscription
       return (s.has_key?('deliveryMode') && s['deliveryMode']) && \
         (s['deliveryMode'].has_key?('subscriberKey') && s['deliveryMode']['subscriberKey']) && \
@@ -160,7 +157,7 @@ module RingCentralSdk::REST
         ? true : false
     end
 
-    def subscription()
+    def subscription
       return @_subscription
     end
 
@@ -170,18 +167,18 @@ module RingCentralSdk::REST
       _set_timeout()
     end
 
-    def reset()
+    def reset
       _clear_timeout()
       _unsubscribe_at_pubnub()
       @_subscription = nil_subscription()
     end
 
-    def destroy()
+    def destroy
       reset()
     end
 
-    def _subscribe_at_pubnub()
-      if ! alive?()
+    def _subscribe_at_pubnub
+      unless alive?
         raise 'Subscription is not alive'
       end
 
@@ -192,8 +189,6 @@ module RingCentralSdk::REST
       callback = lambda { |envelope|
       	_notify(envelope.msg)
       	changed
-        #notify_observers {}
-      	#notify_observers('GOT_PUBNUB_MESSAGE_NOTIFY')
       }
 
       @_pubnub.subscribe(
@@ -207,13 +202,13 @@ module RingCentralSdk::REST
     end
 
     def _notify(message)
-      message = _decrypt(message)
+      message = _decrypt message
       changed
-      notify_observers(message)
+      notify_observers message
     end
 
     def _decrypt(message)
-      unless alive?()
+      unless alive?
         raise 'Subscription is not alive'
       end
 
@@ -233,7 +228,7 @@ module RingCentralSdk::REST
       return message
     end
 
-    def _encrypted?()
+    def _encrypted?
       delivery_mode = @_subscription['deliveryMode']
       is_encrypted  = delivery_mode.has_key?('encryption') && \
         delivery_mode['encryption']                        && \
@@ -242,7 +237,7 @@ module RingCentralSdk::REST
       return is_encrypted
     end
 
-    def _unsubscribe_at_pubnub()
+    def _unsubscribe_at_pubnub
       if @_pubnub && alive?()
         @_pubnub.unsubscribe(channel: @_subscription['deliveryMode']['address']) do |envelope|
           # puts envelope.message
@@ -250,18 +245,17 @@ module RingCentralSdk::REST
       end
     end
 
-    def _set_timeout()
+    def _set_timeout
       time_to_expiration = @_subscription['expiresIn'] - RENEW_HANDICAP
-      @_timeout = Timers::Group.new
-      @_timeout.after(time_to_expiration) do
-        renew()
+
+      @_timeout = Thread.new do
+        sleep time_to_expiration
+        renew
       end
     end
 
-    def _clear_timeout()
-      if @_timeout.is_a? Timers::Group
-        @_timeout.cancel()
-      end
+    def _clear_timeout
+      @_timeout = nil
     end
 
     def new_pubnub(subscribe_key='', ssl_on=false, publish_key='', my_logger=nil)

@@ -1,5 +1,8 @@
 CHANGELOG
 ---------
+- **2016-09-04**: 1.3.2
+  - Bugfixes
+    - Fix `RingCentralSdk::REST::Subscription` renewal bug
 - **2016-08-24**: 1.3.1
   - Updates
     - Lock PubNub dependency to 3.x due to back compat issue with 4.x
