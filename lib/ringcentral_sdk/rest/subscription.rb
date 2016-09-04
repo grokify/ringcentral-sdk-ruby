@@ -19,6 +19,7 @@ module RingCentralSdk::REST
       @_timeout = nil
       @_subscription = nil_subscription()
       @_pubnub = nil
+      @_logger_prefix = " -- #{self.class.name}: "
     end
 
     def nil_subscription()
@@ -103,23 +104,21 @@ module RingCentralSdk::REST
       if !@event_filters.is_a?(Array) || @event_filters.length ==0
         raise 'Events are undefined'
       end
- 
-      _clear_timeout()
+      _clear_timeout
 
       begin
-        response = @_client.http.put do |req|
-          req.url 'subscription/' + @_subscription['id'].to_s
+        response = @_client.http.post do |req|
+          req.url uri_join(@_subscription['uri'], 'renew')
           req.headers['Content-Type'] = 'application/json'
-          req.body = {
-            eventFilters: @_client.create_urls(@event_filters)
-          }
         end
 
         set_subscription response.body
         changed
         notify_observers response
+
         return response
       rescue StandardError => e
+        puts "RingCentralSdk::REST::Subscription: RENEW_ERROR #{e}"
         reset()
         changed
         notify_observers e
@@ -162,9 +161,9 @@ module RingCentralSdk::REST
     end
 
     def set_subscription(data)
-      _clear_timeout()
+      _clear_timeout
       @_subscription = data
-      _set_timeout()
+      _set_timeout
     end
 
     def reset
@@ -202,6 +201,10 @@ module RingCentralSdk::REST
     end
 
     def _notify(message)
+      count = count_observers
+      count_string = " -- RingCentralSdk::REST::Subscription: Notify #{count.to_s} observers"
+      puts count_string
+
       message = _decrypt message
       changed
       notify_observers message
@@ -246,6 +249,8 @@ module RingCentralSdk::REST
     end
 
     def _set_timeout
+      _clear_timeout
+
       time_to_expiration = @_subscription['expiresIn'] - RENEW_HANDICAP
 
       @_timeout = Thread.new do
@@ -255,10 +260,13 @@ module RingCentralSdk::REST
     end
 
     def _clear_timeout
-      unless @_timeout.nil?
-        @_timeout.exit
-        @_timeout = nil
-      end
+      @_timeout.exit if @_timeout.is_a?(Thread) && @_timeout.status == 'sleep'
+      @_timeout = nil
+    end
+
+    def uri_join(*args)
+      url = args.join('/').gsub(/\/+/, '/')
+      return url.gsub(/^(https?:\/)/i, '\1/')
     end
 
     def new_pubnub(subscribe_key='', ssl_on=false, publish_key='', my_logger=nil)

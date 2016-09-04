@@ -22,6 +22,7 @@ module RingCentralSdk::REST
 
     attr_reader :app_config
     attr_reader :http
+    attr_reader :logger
     attr_reader :oauth2client
     attr_reader :user_agent
     attr_reader :messages
@@ -39,6 +40,12 @@ module RingCentralSdk::REST
       end
 
       @instance_headers = opts[:headers] || {}
+      if opts.key? :logger
+        @logger = opts[:logger]
+      else
+        @logger = Logger.new(STDOUT)
+        @logger.level = :info
+      end
 
       @messages = RingCentralSdk::REST::Messages.new self
     end
@@ -205,6 +212,7 @@ module RingCentralSdk::REST
       else
         fail "method [#{method}] not supported"
       end
+
       return res
     end
 

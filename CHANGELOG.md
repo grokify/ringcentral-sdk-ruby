@@ -1,6 +1,9 @@
 CHANGELOG
 ---------
-- **2016-09-04**: 1.3.2
+- **2016-09-05**: 1.3.4
+  - Bugfixes
+    - Fix `RingCentralSdk::REST::Subscription` renewal bug
+- **2016-09-04**: 1.3.2 & 1.3.3
   - Bugfixes
     - Fix `RingCentralSdk::REST::Subscription` renewal bug
 - **2016-08-24**: 1.3.1
