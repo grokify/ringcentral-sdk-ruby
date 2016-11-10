@@ -295,8 +295,8 @@ RingCentral SDK &copy; 2015-2016 by John Wang
  [codeclimate-status-link]: https://codeclimate.com/github/grokify/ringcentral-sdk-ruby
  [scrutinizer-status-svg]: https://scrutinizer-ci.com/g/grokify/ringcentral-sdk-ruby/badges/quality-score.png?b=master
  [scrutinizer-status-link]: https://scrutinizer-ci.com/g/grokify/ringcentral-sdk-ruby/?branch=master
- [story-status-svg]: https://badge.waffle.io/grokify/ringcentral-sdk-ruby.svg?label=ready&title=Ready
- [story-status-link]: https://waffle.io/grokify/ringcentral-sdk-ruby
+ [story-status-svg]: https://badge.waffle.io/ringcentral-ruby/ringcentral-sdk-ruby.svg?label=ready&title=Ready
+ [story-status-link]: https://waffle.io/ringcentral-ruby/ringcentral-sdk-ruby
  [docs-readthedocs-svg]: https://img.shields.io/badge/docs-readthedocs-blue.svg
  [docs-readthedocs-link]: http://ringcentral-sdk-ruby.readthedocs.org/
  [docs-rubydoc-svg]: https://img.shields.io/badge/docs-rubydoc-blue.svg
