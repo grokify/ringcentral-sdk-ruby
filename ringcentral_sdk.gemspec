@@ -31,11 +31,12 @@ Gem::Specification.new do |s|
   s.add_dependency 'mime_builder', '~> 0'
   s.add_dependency 'multi_json', '~> 1.3'
   s.add_dependency 'oauth2', '~> 1.0', '>= 1.0.0'
-  s.add_dependency 'pubnub', '~> 3.8'
+  s.add_dependency 'pubnub', '~> 4.0'
 
-  s.add_development_dependency 'coveralls'
-  s.add_development_dependency 'mocha'
-  s.add_development_dependency 'rake'
-  s.add_development_dependency 'simplecov'
-  s.add_development_dependency 'test-unit'
+  s.add_development_dependency 'bundler', '~> 1'
+  s.add_development_dependency 'coveralls', '~> 0'
+  s.add_development_dependency 'mocha', '~> 1'
+  s.add_development_dependency 'rake', '~> 11'
+  s.add_development_dependency 'simplecov', '~> 0'
+  s.add_development_dependency 'test-unit', '~> 3'
 end

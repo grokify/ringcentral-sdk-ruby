@@ -1,5 +1,9 @@
 CHANGELOG
 ---------
+- **2016-12-12**: 2.0.0
+  - Update
+    - Update `pubnub` dependency to `4.0.16`
+    - Update gemspec to include dependency versions
 - **2016-09-05**: 1.3.4
   - Bugfixes
     - Fix `RingCentralSdk::REST::Subscription` renewal bug

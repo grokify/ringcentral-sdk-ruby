@@ -21,6 +21,7 @@ class MyObserver
 end
 
 def run_subscription(client)
+  client.logger.info("RUNNING_EXAMPLE_SUBSCRIPTION_SCRIPT")
   # Create an observable subscription and add your observer
   sub = client.create_subscription()
   sub.subscribe([

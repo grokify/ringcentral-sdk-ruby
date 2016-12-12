@@ -43,8 +43,8 @@ module RingCentralSdk::REST
       if opts.key? :logger
         @logger = opts[:logger]
       else
-        @logger = Logger.new(STDOUT)
-        @logger.level = :info
+        @logger = Logger.new STDOUT
+        @logger.level = Logger::INFO
       end
 
       @messages = RingCentralSdk::REST::Messages.new self

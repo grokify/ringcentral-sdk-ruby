@@ -1,5 +1,5 @@
 module RingCentralSdk
-  VERSION = '1.3.4'
+  VERSION = '2.0.0'
 
   RC_SERVER_PRODUCTION = 'https://platform.ringcentral.com'
   RC_SERVER_SANDBOX    = 'https://platform.devtest.ringcentral.com'
