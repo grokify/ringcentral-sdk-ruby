@@ -36,7 +36,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'bundler', '~> 1'
   s.add_development_dependency 'coveralls', '~> 0'
   s.add_development_dependency 'mocha', '~> 1'
-  s.add_development_dependency 'rake', '~> 11'
+  s.add_development_dependency 'rake', '~> 12'
   s.add_development_dependency 'simplecov', '~> 0'
   s.add_development_dependency 'test-unit', '~> 3'
 end
