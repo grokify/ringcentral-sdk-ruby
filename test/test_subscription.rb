@@ -2,11 +2,11 @@ require './test/test_base.rb'
 
 class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
   def setup
-    @rcsdk = RingCentralSdk.new(
-      'myAppKey',
-      'myAppSecret',
-      RingCentralSdk::RC_SERVER_SANDBOX
-    )
+    @rcsdk = RingCentralSdk::REST::Client.new do |config|
+      config.app_key = 'my_app_key'
+      config.app_secret = 'my_app_secret'
+      config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
+    end
   end
 
   def test_main
@@ -71,11 +71,11 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
   end
 
   def get_rcsdk_authorized
-    rcsdk = RingCentralSdk.new(
-      'myAppKey',
-      'myAppSecret',
-      RingCentralSdk::RC_SERVER_SANDBOX
-    )
+    rcsdk = RingCentralSdk::REST::Client.new do |config|
+      config.app_key = 'my_app_key'
+      config.app_secret = 'my_app_secret'
+      config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
+    end
     rcsdk.set_oauth2_client()
 
     stub_token_hash = data_test_auth_token

@@ -2,11 +2,11 @@ require './test/test_base.rb'
 
 class RingCentralSdkRESTExtensionPresenceTest < Test::Unit::TestCase
   def new_client
-    client = RingCentralSdk::REST::Client.new(
-      'my_app_key',
-      'my_app_secret',
-      RingCentralSdk::RC_SERVER_SANDBOX
-    )
+    client = RingCentralSdk::REST::Client.new do |config|
+      config.app_key = 'my_app_key'
+      config.app_secret = 'my_app_secret'
+      config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
+    end
     return client
   end
 
@@ -14,11 +14,11 @@ class RingCentralSdkRESTExtensionPresenceTest < Test::Unit::TestCase
     presence = RingCentralSdk::REST::ExtensionPresence.new(111111)
 
     new_statuses = {
-      :enable => {
+      enable: {
         'DoNotAcceptAnyCalls' => 'TakeDepartmentCallsOnly',
         'DoNotAcceptDepartmentCalls' => 'TakeAllCalls'
       },
-      :disable => {
+      disable: {
         'TakeAllCalls' => 'DoNotAcceptDepartmentCalls',
         'TakeDepartmentCallsOnly' => 'DoNotAcceptAnyCalls'
       }
@@ -77,7 +77,7 @@ class RingCentralSdkRESTExtensionPresenceTest < Test::Unit::TestCase
       presence.update nil
     end
 
-    presence.update({:dndStatus=>'TakeAllCalls'})
+    presence.update({dndStatus: 'TakeAllCalls'})
 
     ######
     # Test with good data
@@ -104,7 +104,7 @@ class RingCentralSdkRESTExtensionPresenceTest < Test::Unit::TestCase
   "ringOnMonitoredCall": false,
   "pickUpCallsOnHold": false
 }'
-    data = JSON.parse(json, :symbolize_names=>false)
+    data = JSON.parse json, symbolize_names: false
     return data
   end
 end
@@ -112,11 +112,11 @@ end
 class RingCentralSdkTestSubAuth
 
   def new_client
-    client = RingCentralSdk::REST::Client.new(
-      'my_app_key',
-      'my_app_secret',
-      RingCentralSdk::RC_SERVER_SANDBOX
-    )
+    client = RingCentralSdk::REST::Client.new do |config|
+      config.app_key = 'my_app_key'
+      config.app_secret = 'my_app_secret'
+      config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
+    end
     return client
   end
 
@@ -143,7 +143,7 @@ class RingCentralSdkTestSubAuth
   "scope": "ReadCallLog DirectRingOut EditCallLog ReadAccounts Contacts EditExtensions ReadContacts SMS EditPresence RingOut EditCustomData ReadPresence EditPaymentInfo Interoperability Accounts NumberLookup InternalMessages ReadCallRecording EditAccounts Faxes EditReportingSettings ReadClientInfo EditMessages VoipCalling ReadMessages",
   "owner_id": "1234567890"
       }'
-      data = JSON.parse(json, :symbolize_names=>true)
+      data = JSON.parse(json, symbolize_names: true)
       return data
     end
 
@@ -155,7 +155,7 @@ class RingCentralSdkTestSubAuth
   "scope": "ReadCallLog DirectRingOut EditCallLog ReadAccounts Contacts EditExtensions ReadContacts SMS EditPresence RingOut EditCustomData ReadPresence EditPaymentInfo Interoperability Accounts NumberLookup InternalMessages ReadCallRecording EditAccounts Faxes EditReportingSettings ReadClientInfo EditMessages VoipCalling ReadMessages",
   "owner_id": "1234567890"
       }'
-      data = JSON.parse(json, :symbolize_names=>true)
+      data = JSON.parse(json, symbolize_names: true)
       return data
     end
 
