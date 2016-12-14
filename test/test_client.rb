@@ -5,11 +5,11 @@ require 'oauth2'
 
 class RingCentralSdkPlatformTest < Test::Unit::TestCase
   def setup
-    @rcsdk = RingCentralSdk.new(
-      'my_app_key',
-      'my_app_secret',
-      RingCentralSdk::RC_SERVER_SANDBOX
-    )
+    @rcsdk = RingCentralSdk::REST::Client.new do |config|
+      config.app_key = 'my_app_key'
+      config.app_secret = 'my_app_secret'
+      config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
+    end
   end
 
   def test_main
@@ -18,15 +18,13 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
 
   def test_config
     redirect_url = 'http://localhost:4567/oauth'
-    client = RingCentralSdk.new(
-      'my_app_key',
-      'my_app_secret',
-      RingCentralSdk::RC_SERVER_SANDBOX,
-      {
-        redirect_url: redirect_url
-      }
-    )
-    assert_equal redirect_url, client.app_config.redirect_url
+    client = RingCentralSdk::REST::Client.new do |config|
+      config.app_key = 'my_app_key'
+      config.app_secret = 'my_app_secret'
+      config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
+      config.redirect_url = redirect_url
+    end
+    assert_equal redirect_url, client.config.redirect_url
   end
 
   def test_set_client
@@ -66,12 +64,13 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
   end
 
   def test_authorize_url_default
-    rcsdk = RingCentralSdk.new(
-      'my_app_key',
-      'my_app_secret',
-      RingCentralSdk::RC_SERVER_PRODUCTION,
-      {:redirect_url => 'http://localhost:4567/oauth'}
-    )
+    rcsdk = RingCentralSdk::REST::Client.new do |config|
+      config.app_key = 'my_app_key'
+      config.app_secret = 'my_app_secret'
+      config.server_url = RingCentralSdk::RC_SERVER_PRODUCTION
+      config.redirect_url = 'http://localhost:4567/oauth'
+    end
+
     authorize_url = rcsdk.authorize_url()
 
     puts authorize_url
@@ -118,7 +117,13 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     assert_equal 'OAuth2::AccessToken', token.class.name
     assert_equal 'OAuth2::AccessToken', rcsdk.token.class.name
 
-    rcsdk = new_client({:redirect_uri => 'http://localhost:4567/oauth'})
+    rcsdk = RingCentralSdk::REST::Client.new do |config|
+      config.app_key = 'my_app_key'
+      config.app_secret = 'my_app_secret'
+      config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
+      config.redirect_url = 'http://localhost:4567/oauth'
+    end
+
     rcsdk.set_oauth2_client()
 
     stub_token_hash = data_auth_token_with_refresh
@@ -299,13 +304,12 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     assert_equal 'Faraday::Response', res.class.name
   end
 
-  def new_client(opts={})
-    return RingCentralSdk.new(
-      'my_app_key',
-      'my_app_secret',
-      RingCentralSdk::RC_SERVER_PRODUCTION,
-      opts
-    )
+  def new_client
+    RingCentralSdk::REST::Client.new do |config|
+      config.app_key = 'my_app_key'
+      config.app_secret = 'my_app_secret'
+      config.server_url = RingCentralSdk::RC_SERVER_PRODUCTION
+    end
   end
 
   def data_auth_token_with_refresh
@@ -318,7 +322,7 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
   "scope": "ReadCallLog DirectRingOut EditCallLog ReadAccounts Contacts EditExtensions ReadContacts SMS EditPresence RingOut EditCustomData ReadPresence EditPaymentInfo Interoperability Accounts NumberLookup InternalMessages ReadCallRecording EditAccounts Faxes EditReportingSettings ReadClientInfo EditMessages VoipCalling ReadMessages",
   "owner_id": "1234567890"
       }'
-    data = JSON.parse(json, :symbolize_names=>true)
+    data = JSON.parse(json, symbolize_names: true)
     return data
   end
 
@@ -330,7 +334,7 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
   "scope": "ReadCallLog DirectRingOut EditCallLog ReadAccounts Contacts EditExtensions ReadContacts SMS EditPresence RingOut EditCustomData ReadPresence EditPaymentInfo Interoperability Accounts NumberLookup InternalMessages ReadCallRecording EditAccounts Faxes EditReportingSettings ReadClientInfo EditMessages VoipCalling ReadMessages",
   "owner_id": "1234567890"
       }'
-    data = JSON.parse(json, :symbolize_names=>true)
+    data = JSON.parse(json, symbolize_names: true)
     return data
   end
 

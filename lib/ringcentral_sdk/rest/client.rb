@@ -2,6 +2,7 @@ require 'base64'
 require 'faraday'
 require 'faraday_middleware'
 require 'faraday_middleware/oauth2_refresh'
+require 'multi_json'
 require 'oauth2'
 
 require 'pp'
@@ -20,7 +21,7 @@ module RingCentralSdk::REST
     URL_PREFIX        = '/restapi'
     DEFAULT_LANGUAGE  = 'en-us'
 
-    attr_reader :app_config
+    attr_reader :config
     attr_reader :http
     attr_reader :logger
     attr_reader :oauth2client
@@ -29,7 +30,27 @@ module RingCentralSdk::REST
 
     attr_reader :instance_headers
 
-    def initialize(app_key='', app_secret='', server_url=RingCentralSdk::RC_SERVER_SANDBOX, opts={})
+    def initialize
+      init_attributes
+
+      raise ArgumentError, "Config block not given" unless block_given?
+      @config = RingCentralSdk::REST::Configuration.new
+      yield config
+      @config.inflate
+
+      @logger = @config.logger
+      @instance_headers = @config.headers
+      @oauth2client = new_oauth2_client
+
+      if @config.username.to_s.length > 0
+        authorize_password @config.username, @config.extension, @config.password
+      end
+
+      @messages = RingCentralSdk::REST::Messages.new self
+    end
+
+=begin
+    def initialize_old(app_key='', app_secret='', server_url=RingCentralSdk::RC_SERVER_SANDBOX, opts={})
       init_attributes()
       self.set_app_config( RingCentralSdk::REST::ConfigApp.new(
         app_key, app_secret, server_url, opts) )
@@ -49,11 +70,12 @@ module RingCentralSdk::REST
 
       @messages = RingCentralSdk::REST::Messages.new self
     end
+=end
 
-    def set_app_config(new_app_config)
-      @app_config = new_app_config
-      @oauth2client = new_oauth2_client()
-    end
+    #def set_app_config(new_app_config)
+    #  @app_config = new_app_config
+    #  @oauth2client = new_oauth2_client
+    #end
 
     def init_attributes()
       @http = nil
@@ -61,7 +83,7 @@ module RingCentralSdk::REST
     end
 
     def api_version_url()
-      return @app_config.server_url + URL_PREFIX + '/' + API_VERSION 
+      return @config.server_url + URL_PREFIX + '/' + API_VERSION 
     end
 
     def create_url(url, add_server=false, add_method=nil, add_token=false)
@@ -69,7 +91,7 @@ module RingCentralSdk::REST
       has_http = !url.index('http://').nil? && !url.index('https://').nil?
 
       if add_server && ! has_http
-        built_url += @app_config.server_url
+        built_url += @config.server_url
       end
 
       if url.index(URL_PREFIX).nil? && ! has_http
@@ -115,8 +137,8 @@ module RingCentralSdk::REST
     end
 
     def _add_redirect_uri(opts = {})
-      if !opts.key?(:redirect_uri) && @app_config.redirect_url.to_s.length > 0
-        opts[:redirect_uri] = @app_config.redirect_url.to_s
+      if !opts.key?(:redirect_uri) && @config.redirect_url.to_s.length > 0
+        opts[:redirect_uri] = @config.redirect_url.to_s
       end
       return opts
     end
@@ -163,11 +185,14 @@ module RingCentralSdk::REST
         conn.response :logger
         conn.adapter Faraday.default_adapter
       end
+
+      token_string = MultiJson.encode(token.to_hash)
+      @logger.info("SET_TOKEN: #{token_string}")
     end
 
     def new_oauth2_client()
-      return OAuth2::Client.new(@app_config.key, @app_config.secret,
-        site: @app_config.server_url,
+      return OAuth2::Client.new(@config.app_key, @config.app_secret,
+        site: @config.server_url,
         authorize_url: AUTHZ_ENDPOINT,
         token_url: TOKEN_ENDPOINT)
     end
@@ -183,8 +208,8 @@ module RingCentralSdk::REST
     end
 
     def get_api_key()
-      api_key = (@app_config.key.is_a?(String) && @app_config.secret.is_a?(String)) \
-        ? Base64.encode64("#{@app_config.key}:#{@app_config.secret}").gsub(/\s/,'') : ''
+      api_key = (@config.app_key.is_a?(String) && @config.app_secret.is_a?(String)) \
+        ? Base64.encode64("#{@config.app_key}:#{@config.app_secret}").gsub(/\s/,'') : ''
       return api_key
     end
 

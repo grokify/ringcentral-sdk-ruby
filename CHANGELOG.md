@@ -2,8 +2,9 @@ CHANGELOG
 ---------
 - **2016-12-12**: 2.0.0
   - Update
+    - Update config to block based config
     - Update `pubnub` dependency to `4.0.16` from `3.8.x`
-    - Update `rake` dependency to `12.x.x` from `11.x.x.`
+    - Update `rake` dependency to `12.x.x` from `11.x.x`
     - Update gemspec to include dependency versions
   - Bugfixes
     - Fix `logger.level` default setting

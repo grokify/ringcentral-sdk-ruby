@@ -96,11 +96,11 @@ The OAuth 2.0 resource owner password grant flow is designed for server applicat
 require 'ringcentral_sdk'
 
 # Returns RingCentralSdk::Platform instance
-client = RingCentralSdk::REST::Client.new(
-  'myAppKey',
-  'myAppSecret',
-  RingCentralSdk::RC_SERVER_SANDBOX
-)
+client = RingCentralSdk::REST::Client.new do |config|
+  config.app_key = 'myAppKey'
+  config.app_secret = 'myAppSecret'
+  config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
+end
 
 # extension will default to company admin extension if not provided
 client.authorize_password('myUsername', 'myExtension', 'myPassword')

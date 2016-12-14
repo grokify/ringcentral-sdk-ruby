@@ -3,6 +3,7 @@ require './test/test_base.rb'
 require 'faraday'
 require 'oauth2'
 
+=begin
 class RingCentralSdkRESTConfigTest < Test::Unit::TestCase
   def setup
     @config = RingCentralSdk::REST::Config.new.load_dotenv
@@ -27,3 +28,4 @@ class RingCentralSdkRESTConfigTest < Test::Unit::TestCase
     assert_equal '', @config.user.password
   end
 end
+=end
