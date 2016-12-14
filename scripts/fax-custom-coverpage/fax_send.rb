@@ -7,10 +7,9 @@ require 'mime_builder'
 
 # Set your credentials in the .env file
 # Use the rc_config_sample.env.txt file as a scaffold
-config = RingCentralSdk::REST::Config.new.load_dotenv
-client = RingCentralSdk::REST::Client.new
-client.set_app_config config.app
-client.authorize_user config.user
+client = RingCentralSdk::REST::Client.new do |config|
+  config.dotenv = true
+end
 
 def get_coverpage
   hbs = ENV['RC_DEMO_FAX_COVERPAGE_TEMPLATE']
@@ -48,9 +47,9 @@ cover = get_coverpage()
 # Set coverIndex to 0 to remove standard template
 # add MIME::Media object as first file attachment
 res = client.messages.fax.create(
-  to: config.env.data['RC_DEMO_FAX_TO'],
+  to: ENV['RC_DEMO_FAX_TO'],
   coverIndex: 0,
-  files: [cover, config.env.data['RC_DEMO_FAX_FILE']]
+  files: [cover, ENV['RC_DEMO_FAX_FILE']]
 )
 pp res.body
 
