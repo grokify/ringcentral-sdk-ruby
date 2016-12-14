@@ -8,11 +8,9 @@ require 'pp'
 # Set your credentials in the .env file
 # Use the rc_config_sample.env.txt file as a scaffold
 
-config = RingCentralSdk::REST::Config.new.load_dotenv
-
-client = RingCentralSdk::REST::Client.new
-client.set_app_config config.app
-client.authorize_user config.user
+client = RingCentralSdk::REST::Client.new do |config|
+  config.dotenv = true
+end
 
 def transcribe_recordings(rcsdk, vbsdk)
   # Retrieve voice call log records with recordings
@@ -41,8 +39,8 @@ def transcribe_recordings(rcsdk, vbsdk)
 end
 
 vbsdk = VoiceBase::V1::Client.new(
-  config.env.data['RC_DEMO_VB_API_KEY'],
-  config.env.data['RC_DEMO_VB_PASSWORD'])
+  ENV['RC_DEMO_VB_API_KEY'],
+  ENV['RC_DEMO_VB_PASSWORD'])
 
 transcribe_recordings(client, vbsdk)
 

@@ -6,16 +6,14 @@ require 'pp'
 # Set your credentials in the .env file
 # Use the rc_config_sample.env.txt file as a scaffold
 
-config = RingCentralSdk::REST::Config.new.load_dotenv
-
-client = RingCentralSdk::REST::Client.new
-client.set_app_config config.app
-client.authorize_user config.user
+client = RingCentralSdk::REST::Client.new do |config|
+  config.dotenv = true
+end
 
 res = client.messages.fax.create(
-  to: config.env.data['RC_DEMO_FAX_TO'],
-  coverPageText: config.env.data['RC_DEMO_FAX_COVERPAGE_TEXT'],
-  files: [config.env.data['RC_DEMO_FAX_FILE']]
+  to: ENV['RC_DEMO_FAX_TO'],
+  coverPageText: ENV['RC_DEMO_FAX_COVERPAGE_TEXT'],
+  files: [ENV['RC_DEMO_FAX_FILE']]
 )
 
 pp res.body

@@ -6,11 +6,9 @@ require 'pp'
 # Set your credentials in the .env file
 # Use the rc_config_sample.env.txt file as a scaffold
 
-config = RingCentralSdk::REST::Config.new.load_dotenv
-
-client = RingCentralSdk::REST::Client.new
-client.set_app_config config.app
-client.authorize_user config.user
+client = RingCentralSdk::REST::Client.new do |config|
+  config.dotenv = true
+end
 
 puts RingCentralSdk::VERSION
 
@@ -33,7 +31,7 @@ res.body['records'].each do |rec|
   rec['attachments'].each do |att|
     pp att
     url = att['uri']
-    filename = 'fax2_' + url.gsub(%r{^.*restapi/v[^/]+/}, '').gsub(%r{/},'_')
+    filename = '_fax2_' + url.gsub(%r{^.*restapi/v[^/]+/}, '').gsub(%r{/},'_')
     ext = att['contentType'] == 'application/pdf' ? '.pdf' : ''
     filename += ext
     puts filename
