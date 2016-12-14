@@ -277,7 +277,7 @@ RingCentral Official SDKs
 
 ## License
 
-RingCentral SDK is available under an MIT-style license. See [LICENSE.txt](LICENSE.txt) for details.
+RingCentral SDK is available under an MIT-style license. See [LICENSE.md](LICENSE.md) for details.
 
 RingCentral SDK &copy; 2015-2016 by John Wang
 
@@ -302,4 +302,4 @@ RingCentral SDK &copy; 2015-2016 by John Wang
  [docs-rubydoc-svg]: https://img.shields.io/badge/docs-rubydoc-blue.svg
  [docs-rubydoc-link]: http://www.rubydoc.info/gems/ringcentral_sdk/
  [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
- [license-link]: https://github.com/grokify/ringcentral-sdk-ruby/blob/master/LICENSE.txt
+ [license-link]: https://github.com/grokify/ringcentral-sdk-ruby/blob/master/LICENSE.md

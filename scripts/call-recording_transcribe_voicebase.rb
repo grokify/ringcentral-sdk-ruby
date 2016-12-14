@@ -22,11 +22,9 @@ Guide version 1.1.4 PDF page 18.
 # Set your credentials in the .env file
 # Use the rc_config_sample.env.txt file as a scaffold
 
-config = RingCentralSdk::REST::Config.new.load_dotenv
-
-client = RingCentralSdk::REST::Client.new
-client.set_app_config config.app
-client.authorize_user config.user
+client = RingCentralSdk::REST::Client.new do |config|
+  config.dotenv = true
+end
 
 def upload_recordings(vbsdk, dir)
   Dir.glob('recording_*.mp3').each_with_index do |file,i|
@@ -38,8 +36,8 @@ def upload_recordings(vbsdk, dir)
 end
 
 vbsdk = VoiceBase::V1::Client.new(
-  config.env.data['RC_DEMO_VB_API_KEY'],
-  config.env.data['RC_DEMO_VB_PASSWORD'])
+  ENV['RC_DEMO_VB_API_KEY'],
+  ENV['RC_DEMO_VB_PASSWORD'])
 
 upload_recordings(vbsdk, '.')
 

@@ -8,11 +8,9 @@ require 'glip_poster'
 # Set your credentials in the .env file
 # Use the rc_config_sample.env.txt file as a scaffold
 
-config = RingCentralSdk::REST::Config.new.load_dotenv
-
-client = RingCentralSdk::REST::Client.new
-client.set_app_config config.app
-client.authorize_user config.user
+client = RingCentralSdk::REST::Client.new do |config|
+  config.dotenv = true
+end
 
 # An SMS event poster. Takes a message store subscription
 # event and posts inbound SMS as chats.
@@ -57,9 +55,9 @@ class RcSmsToChatObserver
   end
 end
 
-def new_glip(config)
-  glip = Glip::Poster.new config.env.data['RC_DEMO_GLIP_WEBHOOK_URL']
-  glip.options[:icon] = config.env.data['RC_DEMO_GLIP_WEBHOOK_ICON']
+def new_glip
+  glip = Glip::Poster.new ENV['RC_DEMO_GLIP_WEBHOOK_URL']
+  glip.options[:icon] = ENV['RC_DEMO_GLIP_WEBHOOK_ICON']
   glip.options[:activity] = 'New Inbound SMS'
 
   body = "* event_filter: extension/message-store?messageType=SMS\n* actions: post SMS messages to Glip team"
@@ -70,14 +68,14 @@ def new_glip(config)
   return glip
 end
 
-def run_subscription(config, client)
+def run_subscription(client)
   # Create an observable subscription and add your observer
   sub = client.create_subscription
   sub.subscribe ['/restapi/v1.0/account/~/extension/~/message-store']
 
   # Create and add first chat poster
   posters = []
-  posters.push new_glip(config)
+  posters.push new_glip()
 
   # Add observer
   sub.add_observer RcSmsToChatObserver.new client, posters
@@ -90,6 +88,6 @@ def run_subscription(config, client)
   sub.destroy()
 end
 
-run_subscription config, client
+run_subscription client
 
 puts "DONE"

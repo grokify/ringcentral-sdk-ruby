@@ -6,9 +6,9 @@ require 'ringcentral_sdk'
 
 # Enter config in .env file
 
-client = RingCentralSdk::REST::Client.new
-config = RingCentralSdk::REST::Config.new.load_dotenv
-client.set_app_config config.app
+client = RingCentralSdk::REST::Client.new do |config|
+  config.dotenv = true
+end
 
 get '/' do
   erb :index, locals: {
