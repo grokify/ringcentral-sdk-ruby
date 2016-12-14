@@ -114,12 +114,12 @@ Using the default authorization URL:
 
 ```ruby
 # Initialize SDK with OAuth redirect URI
-client = RingCentralSdk::REST::Client.new(
-  'myAppKey',
-  'myAppSecret',
-  RingCentralSdk::RC_SERVER_SANDBOX,
-  redirect_uri: 'http://example.com/oauth'
-)
+client = RingCentralSdk::REST::Client.new do |config|
+  config.app_key = 'myAppKey'
+  config.app_secret = 'myAppSecret'
+  config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
+  config.redirect_url = 'http://example.com/oauth'
+end
 
 # Retrieve OAuth authorize url using default redirect URL
 auth_url = client.authorize_url()
