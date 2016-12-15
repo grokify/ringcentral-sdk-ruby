@@ -31,13 +31,7 @@ module RingCentralSdk::REST::Request
 
     def add_part_meta(opts={})
       meta = create_metadata opts
-      json = MultiJson.encode meta
-      json = Base64.encode64(json) if @metadata_part_encode_base64
-      json_part = MIME::Text.new(json)
-      json_part.headers.delete('Content-Id')
-      json_part.headers.set('Content-Type', 'application/json')
-      json_part.headers.set('Content-Transfer-Encoding', 'base64') if @metadata_part_encode_base64
-      @msg.add(json_part)
+      @msg.add MIMEBuilder::JSON.new(meta).mime
       true
     end
 
