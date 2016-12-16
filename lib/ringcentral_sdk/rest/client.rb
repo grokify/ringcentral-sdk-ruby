@@ -5,8 +5,6 @@ require 'faraday_middleware/oauth2_refresh'
 require 'multi_json'
 require 'oauth2'
 
-require 'pp'
-
 module RingCentralSdk::REST
   class Client
     ACCESS_TOKEN_TTL  = 600             # 10 minutes
@@ -48,34 +46,6 @@ module RingCentralSdk::REST
 
       @messages = RingCentralSdk::REST::Messages.new self
     end
-
-=begin
-    def initialize_old(app_key='', app_secret='', server_url=RingCentralSdk::RC_SERVER_SANDBOX, opts={})
-      init_attributes()
-      self.set_app_config( RingCentralSdk::REST::ConfigApp.new(
-        app_key, app_secret, server_url, opts) )
-
-      if opts.key?(:username) && opts.key?(:password)
-        extension = opts.key?(:extension) ? opts[:extension] : ''
-        authorize_password(opts[:username], extension, opts[:password])
-      end
-
-      @instance_headers = opts[:headers] || {}
-      if opts.key? :logger
-        @logger = opts[:logger]
-      else
-        @logger = Logger.new STDOUT
-        @logger.level = Logger::INFO
-      end
-
-      @messages = RingCentralSdk::REST::Messages.new self
-    end
-=end
-
-    #def set_app_config(new_app_config)
-    #  @app_config = new_app_config
-    #  @oauth2client = new_oauth2_client
-    #end
 
     def init_attributes()
       @http = nil
