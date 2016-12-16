@@ -97,11 +97,18 @@ require 'ringcentral_sdk'
 
 # Returns RingCentralSdk::Platform instance
 client = RingCentralSdk::REST::Client.new do |config|
+  # App info (mandatory)
   config.app_key = 'myAppKey'
   config.app_secret = 'myAppSecret'
   config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
+
+  # User info for password grant (optional)
+  config.username = 'myUsername'
+  config.extension = 'myExtension'
+  config.password = 'myPassword'
 end
 
+# Password grant can also be performed after initialization
 # extension will default to company admin extension if not provided
 client.authorize_password('myUsername', 'myExtension', 'myPassword')
 ```

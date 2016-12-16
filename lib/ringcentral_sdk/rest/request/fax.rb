@@ -31,13 +31,7 @@ module RingCentralSdk::REST::Request
 
     def add_part_meta(opts={})
       meta = create_metadata opts
-      json = MultiJson.encode meta
-      json = Base64.encode64(json) if @metadata_part_encode_base64
-      json_part = MIME::Text.new(json)
-      json_part.headers.delete('Content-Id')
-      json_part.headers.set('Content-Type', 'application/json')
-      json_part.headers.set('Content-Transfer-Encoding', 'base64') if @metadata_part_encode_base64
-      @msg.add(json_part)
+      @msg.add MIMEBuilder::JSON.new(meta).mime
       true
     end
 
@@ -67,7 +61,7 @@ module RingCentralSdk::REST::Request
     def add_part_text(text=nil, opts={})
       return unless !text.nil? && text.to_s.length>0
       opts[:content_id_disable] = true
-      text_part = MIMEBuilder::Text.new(text, opts)
+      text_part = MIMEBuilder::Text.new text, opts
       @msg.add text_part.mime
     end
 
@@ -80,17 +74,15 @@ module RingCentralSdk::REST::Request
         if part.is_a? MIME::Media
           @msg.add part
         elsif part.is_a?(String)
-          file_part = MIMEBuilder::Filepath.new(part)
+          file_part = MIMEBuilder::Filepath.new part
           @msg.add file_part.mime
         elsif part.is_a? Hash
           part[:content_id_disable] = true
           part[:is_attachment] = true
           if part.key? :filename
-            file_part = MIMEBuilder::Filepath.new(part[:filename], part)
-            @msg.add file_part.mime
+            @msg.add MIMEBuilder::Filepath.new(part[:filename], part).mime
           elsif part.key? :text
-            text_part = MIMEBuilder::Text.new(part[:text], part)
-            @msg.add text_part.mime
+            @msg.add MIMEBuilder::Text.new(part[:text], part).mime
           end
         end
       end
