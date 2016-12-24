@@ -42,7 +42,7 @@ end
 
 # Get the coverpage as a MIME::Media object to pass into
 # Fax method as an file part
-cover = get_coverpage()
+cover = get_coverpage
 
 # Set coverIndex to 0 to remove standard template
 # add MIME::Media object as first file attachment
@@ -53,4 +53,4 @@ res = client.messages.fax.create(
 )
 pp res.body
 
-puts "DONE"
+puts 'DONE'

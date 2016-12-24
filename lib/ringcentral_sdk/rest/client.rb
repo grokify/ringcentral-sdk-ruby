@@ -31,7 +31,7 @@ module RingCentralSdk::REST
     def initialize
       init_attributes
 
-      raise ArgumentError, "Config block not given" unless block_given?
+      raise ArgumentError, 'Config block not given' unless block_given?
       @config = RingCentralSdk::REST::Configuration.new
       yield config
       @config.inflate
@@ -87,7 +87,7 @@ module RingCentralSdk::REST
 
     def create_urls(urls, add_server=false, add_method=nil, add_token=false)
       unless urls.is_a?(Array)
-        raise "URLs is not an array"
+        raise 'URLs is not an array'
       end
       built_urls = []
       urls.each do |url|
@@ -135,7 +135,7 @@ module RingCentralSdk::REST
       end
 
       unless token.is_a? OAuth2::AccessToken
-        raise "Token is not a OAuth2::AccessToken"
+        raise 'Token is not a OAuth2::AccessToken'
       end
 
       @http = Faraday.new(url: api_version_url()) do |conn|
@@ -173,7 +173,7 @@ module RingCentralSdk::REST
       elsif client.is_a? OAuth2::Client
         @oauth2client = client
       else
-        fail "client is not an OAuth2::Client"
+        fail 'client is not an OAuth2::Client'
       end
     end
 

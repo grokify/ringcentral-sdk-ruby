@@ -32,9 +32,9 @@ def run_subscription(client)
   stop_script = gets
 
   # End the subscription
-  sub.destroy()
+  sub.destroy
 end
 
 run_subscription client
 
-puts "DONE"
+puts 'DONE'

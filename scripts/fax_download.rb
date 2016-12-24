@@ -25,7 +25,7 @@ res = client.send_request(req)
   
 pp res.body
 
-puts "---"
+puts '---'
 
 res.body['records'].each do |rec|
   rec['attachments'].each do |att|
@@ -41,4 +41,4 @@ res.body['records'].each do |rec|
   end
 end
 
-puts "DONE"
+puts 'DONE'

@@ -23,7 +23,7 @@ module RingCentralSdk::REST
     end
 
     def nil_subscription()
-      return {
+      {
         'eventFilters'    => [],
         'expirationTime'  => '', # 2014-03-12T19:54:35.613Z
         'expiresIn'       => 0,
@@ -42,11 +42,11 @@ module RingCentralSdk::REST
     end
 
     def pubnub()
-      return @_pubnub
+      @_pubnub
     end
 
     def register(events = nil)
-      return alive? ? renew(events) : subscribe(events)
+      alive? ? renew(events) : subscribe(events)
     end
 
     def add_events(events)
