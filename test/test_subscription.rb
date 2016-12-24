@@ -11,7 +11,7 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
 
   def test_main
     sub = @rcsdk.create_subscription()
-    assert_equal "RingCentralSdk::REST::Subscription", sub.class.name
+    assert_equal 'RingCentralSdk::REST::Subscription', sub.class.name
 
     assert_equal 0, sub.event_filters.length
 
@@ -120,10 +120,10 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     assert_equal id_new.to_s, data['id'].to_s
     # Test register()
     sub.register(['/restapi/v1.0/account/~/extension/~/presence'])
-    # Test remove()
-    sub.remove()
+    # Test remove
+    sub.remove
     # Test Exceptions
-    rcsdk2 = get_rcsdk_authorized()
+    rcsdk2 = get_rcsdk_authorized
     rcsdk2.http.stubs(:post).raises('error')
     rcsdk2.http.stubs(:put).raises('error')
     rcsdk2.http.stubs(:delete).raises('error')
