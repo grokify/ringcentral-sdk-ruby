@@ -5,7 +5,7 @@ module RingCentralSdk::REST
     attr_accessor :extension_id
     attr_accessor :presence_data
 
-    def initialize(extension_id, opts={})
+    def initialize(extension_id, opts = {})
       @client = opts.key?(:client) ? opts[:client] : nil
       @account_id = '~'
       @extension_id = extension_id.to_s
@@ -37,7 +37,7 @@ module RingCentralSdk::REST
       new_status = new_status_dnd_department_calls(current_status, enable)
 
       if current_status != new_status
-        update({dndStatus: new_status})
+        update({ dndStatus: new_status })
       end
 
       return new_status

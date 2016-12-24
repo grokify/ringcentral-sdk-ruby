@@ -3,7 +3,7 @@ require 'multi_json'
 
 class RingCentralSdkRESTEventTest < Test::Unit::TestCase
   def test_new_sms_count
-    data = data_test_json_sms()
+    data = data_test_json_sms
 
     event = RingCentralSdk::REST::Event.new data
 
