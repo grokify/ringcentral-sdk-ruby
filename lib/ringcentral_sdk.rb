@@ -1,8 +1,8 @@
 module RingCentralSdk
   VERSION = '2.0.0'
 
-  RC_SERVER_PRODUCTION = 'https://platform.ringcentral.com'
-  RC_SERVER_SANDBOX    = 'https://platform.devtest.ringcentral.com'
+  RC_SERVER_PRODUCTION = 'https://platform.ringcentral.com'.freeze
+  RC_SERVER_SANDBOX = 'https://platform.devtest.ringcentral.com'.freeze
 
   autoload :REST, 'ringcentral_sdk/rest'
 
