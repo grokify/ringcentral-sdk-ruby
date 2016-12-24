@@ -50,7 +50,7 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
 
     assert_raise do
       sub.renew()
-    end   
+    end
 
     # sub.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
 
@@ -67,7 +67,6 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     sub.destroy()
     sub_data = sub.subscription()
     assert_equal sub_data['deliveryMode']['encryption'], false
-
   end
 
   def get_rcsdk_authorized

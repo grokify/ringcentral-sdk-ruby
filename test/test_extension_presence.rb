@@ -65,8 +65,8 @@ class RingCentralSdkRESTExtensionPresenceTest < Test::Unit::TestCase
 
     assert_equal true, presence.department_calls_enabled?
 
-    #new_status = presence.department_calls_enable false
-    #assert_equal 'DoNotAcceptDepartmentCalls', new_status
+    # new_status = presence.department_calls_enable false
+    # assert_equal 'DoNotAcceptDepartmentCalls', new_status
 
     presence.extension_id = 'abc'
     assert_raise do
