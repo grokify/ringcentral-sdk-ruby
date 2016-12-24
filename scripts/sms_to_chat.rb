@@ -48,10 +48,10 @@ class RcSmsToChatObserver
   end
 
   def update(message)
-    puts "DEMO_RECEIVED_NEW_MESSAGE"
+    @client.logger.info 'DEMO_RECEIVED_NEW_MESSAGE'
     event = RcEventSMSChatPoster.new @client, @posters, message
     event.post_message
-    puts JSON.dump(message)
+    @client.logger.info JSON.dump(message)
   end
 end
 
@@ -81,11 +81,11 @@ def run_subscription(client)
   sub.add_observer RcSmsToChatObserver.new client, posters
 
   # Run until key is clicked
-  puts "Click any key to finish"
+  puts 'Click any key to finish'
   stop_script = gets
 
   # End the subscription
-  sub.destroy()
+  sub.destroy
 end
 
 run_subscription client
