@@ -10,14 +10,14 @@ module RingCentralSdk::REST
     ACCESS_TOKEN_TTL  = 600             # 10 minutes
     REFRESH_TOKEN_TTL = 36000           # 10 hours
     REFRESH_TOKEN_TTL_REMEMBER = 604800 # 1 week
-    ACCOUNT_PREFIX    = '/account/'
-    ACCOUNT_ID        = '~'
-    AUTHZ_ENDPOINT    = '/restapi/oauth/authorize'
-    TOKEN_ENDPOINT    = '/restapi/oauth/token'
-    REVOKE_ENDPOINT   = '/restapi/oauth/revoke'
-    API_VERSION       = 'v1.0'
-    URL_PREFIX        = '/restapi'
-    DEFAULT_LANGUAGE  = 'en-us'
+    ACCOUNT_PREFIX    = '/account/'.freeze
+    ACCOUNT_ID        = '~'.freeze
+    AUTHZ_ENDPOINT    = '/restapi/oauth/authorize'.freeze
+    TOKEN_ENDPOINT    = '/restapi/oauth/token'.freeze
+    REVOKE_ENDPOINT   = '/restapi/oauth/revoke'.freeze
+    API_VERSION       = 'v1.0'.freeze
+    URL_PREFIX        = '/restapi'.freeze
+    DEFAULT_LANGUAGE  = 'en-us'.freeze
 
     attr_reader :config
     attr_reader :http
@@ -47,12 +47,12 @@ module RingCentralSdk::REST
       @messages = RingCentralSdk::REST::Messages.new self
     end
 
-    def init_attributes()
+    def init_attributes
       @http = nil
       @user_agent = get_user_agent()
     end
 
-    def api_version_url()
+    def api_version_url
       return @config.server_url + URL_PREFIX + '/' + API_VERSION 
     end
 
@@ -160,7 +160,7 @@ module RingCentralSdk::REST
       @logger.info("SET_TOKEN: #{token_string}")
     end
 
-    def new_oauth2_client()
+    def new_oauth2_client
       return OAuth2::Client.new(@config.app_key, @config.app_secret,
         site: @config.server_url,
         authorize_url: AUTHZ_ENDPOINT,
@@ -177,7 +177,7 @@ module RingCentralSdk::REST
       end
     end
 
-    def get_api_key()
+    def get_api_key
       api_key = (@config.app_key.is_a?(String) && @config.app_secret.is_a?(String)) \
         ? Base64.encode64("#{@config.app_key}:#{@config.app_secret}").gsub(/\s/,'') : ''
       return api_key
@@ -228,7 +228,7 @@ module RingCentralSdk::REST
       return req_faraday
     end
 
-    def get_user_agent()
+    def get_user_agent
       ua = "ringcentral-sdk-ruby/#{RingCentralSdk::VERSION} %s/%s %s" % [
         (RUBY_ENGINE rescue nil or "ruby"),
         RUBY_VERSION,
@@ -237,7 +237,7 @@ module RingCentralSdk::REST
       return ua.strip
     end
 
-    def create_subscription()
+    def create_subscription
       return RingCentralSdk::REST::Subscription.new(self)
     end
 
