@@ -60,4 +60,4 @@ end
 
 get_recordings(client)
 
-puts "DONE"
+puts 'DONE'

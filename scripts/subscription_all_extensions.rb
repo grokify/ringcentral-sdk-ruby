@@ -61,4 +61,4 @@ event_filters = get_event_filters_for_extensions(extensions.extensions_hash.keys
 # Make a subscription for all event_filters
 run_subscription(client, event_filters)
 
-puts "DONE"
+puts 'DONE'

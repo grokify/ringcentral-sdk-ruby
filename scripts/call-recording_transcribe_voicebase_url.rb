@@ -44,4 +44,4 @@ vbsdk = VoiceBase::V1::Client.new(
 
 transcribe_recordings(client, vbsdk)
 
-puts "DONE"
+puts 'DONE'

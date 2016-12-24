@@ -90,4 +90,4 @@ end
 
 run_subscription client
 
-puts "DONE"
+puts 'DONE'

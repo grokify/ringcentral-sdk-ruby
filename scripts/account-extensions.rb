@@ -17,4 +17,4 @@ pp extensions.extensions_hash.keys
 
 pp extensions.extensions_hash
 
-puts "DONE"
+puts 'DONE'

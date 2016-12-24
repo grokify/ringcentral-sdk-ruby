@@ -41,4 +41,4 @@ vbsdk = VoiceBase::V1::Client.new(
 
 upload_recordings(vbsdk, '.')
 
-puts "DONE"
+puts 'DONE'
