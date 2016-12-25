@@ -57,7 +57,7 @@ module RingCentralSdk
         token = ENV['RC_TOKEN']
         if token.to_s.empty?
           token_file = ENV['RC_TOKEN_FILE']
-          if (token_file.to_s.length) > 0 && File.exist?(token_file)
+          if token_file.to_s.length > 0 && File.exist?(token_file)
             token = IO.read token_file
           end
         end
