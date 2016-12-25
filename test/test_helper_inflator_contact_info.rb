@@ -14,6 +14,6 @@ class RingCentralSdkHelperInflatorContactInfoTest < Test::Unit::TestCase
     assert_equal 1_650_555_121_2, arr3[0][:phoneNumber]
 
     arr4 = inf.inflate_to_array([{ phoneNumber: 1_650_555_121_2 }])
-    assert_equal 1_650_555_121_2, arr4[0][:phoneNumber]   
+    assert_equal 1_650_555_121_2, arr4[0][:phoneNumber]
   end
 end

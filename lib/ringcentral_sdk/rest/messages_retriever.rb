@@ -11,7 +11,7 @@ module RingCentralSdk
         @range = 1.0 # minutes
       end
 
-      def retrieve_for_event(event, params={})
+      def retrieve_for_event(event, params = {})
         unless event.is_a? RingCentralSdk::REST::Event
           fail 'retrieve_for_event requires RingCentralSdk::REST::Event argument'
         end
