@@ -22,7 +22,7 @@ def get_recordings(client)
 
   # Save recording and metadata for each call log record
   if response.body.key?('records')
-    response.body['records'].each_with_index do |record, i|
+    response.body['records'].each_with_index do |record, _i|
       # Retrieve call recording
 
       unless record.key?('recording') && record['recording'].key?('contentUri')
@@ -43,10 +43,9 @@ def get_recordings(client)
           req.url record['recording']['contentUri']
         end
       end
-      
+
       # Save call recording
-      ext = response_file.headers['Content-Type'].to_s == 'audio/mpeg' \
-        ? '.mp3' : '.wav'
+      ext = response_file.headers['Content-Type'].to_s == 'audio/mpeg' ? '.mp3' : '.wav'
 
       file_mp3 = 'recording_' + record['id'] + '_' + record['recording']['id'] + ext
       File.open(file_mp3, 'wb') { |fp| fp.write(response_file.body) }
@@ -58,6 +57,6 @@ def get_recordings(client)
   end
 end
 
-get_recordings(client)
+get_recordings client
 
 puts 'DONE'

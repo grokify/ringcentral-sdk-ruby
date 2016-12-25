@@ -47,9 +47,9 @@ class RingCentralSdkTest < Test::Unit::TestCase
   "refresh_token": "my_test_refresh_token",
   "refresh_token_expires_in": 604799,
   "scope": "ReadCallLog DirectRingOut EditCallLog ReadAccounts Contacts EditExtensions ReadContacts SMS EditPresence RingOut EditCustomData ReadPresence EditPaymentInfo Interoperability Accounts NumberLookup InternalMessages ReadCallRecording EditAccounts Faxes EditReportingSettings ReadClientInfo EditMessages VoipCalling ReadMessages",
-  "owner_id": "1234567890"
+  "owner_id": "1234567890  "
       }'
-    data = JSON.parse(json, symbolize_names: true)
-    return data
+    JSON.parse(json, symbolize_names: true)
   end
 end
+
