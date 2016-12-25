@@ -56,7 +56,7 @@ module RingCentralSdk::REST
       return @config.server_url + URL_PREFIX + '/' + API_VERSION 
     end
 
-    def create_url(url, add_server=false, add_method=nil, add_token=false)
+    def create_url(url, add_server = false, add_method = nil, add_token = false)
       built_url = ''
       has_http = !url.index('http://').nil? && !url.index('https://').nil?
 

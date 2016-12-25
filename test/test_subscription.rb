@@ -59,7 +59,7 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     assert_equal sub_data['deliveryMode']['encryption'], false
     sub_data['deliveryMode']['encryption'] = true
     sub.set_subscription(sub_data)
-    sub_data = sub.subscription()
+    sub_data = sub.subscription
     assert_equal sub_data['deliveryMode']['encryption'], true
 
     assert_equal nil, sub.pubnub
@@ -102,7 +102,7 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     Pubnub::Client.any_instance.stubs(:subscribe).returns(nil)
     Pubnub::Client.any_instance.stubs(:unsubscribe).returns(nil)
     # Create Subscription
-    sub = rcsdk.create_subscription()
+    sub = rcsdk.create_subscription
     # Test subscribe()
     sub.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
     # Test renew()

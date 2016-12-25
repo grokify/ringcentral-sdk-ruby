@@ -1,4 +1,5 @@
 module RingCentralSdk::REST::Request::Inflator
+  # ContactInfo class will inflate contact info to array
   class ContactInfo
     def inflate_to_array(any=nil)
       contacts   = []
@@ -9,7 +10,7 @@ module RingCentralSdk::REST::Request::Inflator
       elsif any.is_a?(String) || any.is_a?(Integer)
         contacts = [{:phoneNumber=>any}]
       end
-      return contacts
+      contacts
     end
   end
 end
