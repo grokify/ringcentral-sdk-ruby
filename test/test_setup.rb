@@ -2,7 +2,11 @@ require './test/test_base.rb'
 
 class RingCentralSdkTest < Test::Unit::TestCase
   def setup
-    @rcsdk = RingCentralSdk::REST::Client.new do |config|
+    @rcsdk = new_sdk
+  end
+
+  def new_sdk
+    RingCentralSdk::REST::Client.new do |config|
       config.app_key = 'my_app_key'
       config.app_secret = 'my_app_secret'
       config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
@@ -16,11 +20,7 @@ class RingCentralSdkTest < Test::Unit::TestCase
       @rcsdk.send_request(nil)
     end
 
-    rcsdk = RingCentralSdk::REST::Client.new do |config|
-      config.app_key = 'my_app_key'
-      config.app_secret = 'my_app_secret'
-      config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
-    end
+    rcsdk = new_sdk
     assert_equal 'RingCentralSdk::REST::Client', rcsdk.class.name
   end
 

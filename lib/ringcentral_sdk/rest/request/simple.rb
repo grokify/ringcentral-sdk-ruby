@@ -1,6 +1,7 @@
 module RingCentralSdk
   module REST
     module Request
+      # Simple is a generic simple request class.
       class Simple < RingCentralSdk::REST::Request::Base
         attr_reader :method
         attr_reader :url

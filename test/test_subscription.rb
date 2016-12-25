@@ -20,7 +20,7 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
 
     sub.add_events(['/restapi/v1.0/account/~/extension/~/presence'])
     assert_equal 2, sub.event_filters.length
-    
+
     sub.set_events(['/restapi/v1.0/account/~/extension/~/presence'])
     assert_equal 1, sub.event_filters.length
 
@@ -78,12 +78,12 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     rcsdk.set_oauth2_client
 
     stub_token_hash = data_test_auth_token
-    stub_token = OAuth2::AccessToken::from_hash(rcsdk.oauth2client, stub_token_hash)
+    stub_token = OAuth2::AccessToken.from_hash(rcsdk.oauth2client, stub_token_hash)
 
     rcsdk.oauth2client.password.stubs(:get_token).returns(stub_token)
 
     token = rcsdk.authorize('my_test_username', 'my_test_extension', 'my_test_password')
-    return rcsdk
+    rcsdk
   end
 
   def test_subscribe_renew_delete_with_exceptions
