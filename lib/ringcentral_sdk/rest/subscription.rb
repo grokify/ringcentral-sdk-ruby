@@ -99,13 +99,8 @@ module RingCentralSdk
       def renew(events = nil)
         set_events(events) if events.is_a? Array
 
-        unless alive?
-          raise 'Subscription is not alive'
-        end
-
-        if !@event_filters.is_a?(Array) || @event_filters.empty?
-          raise 'Events are undefined'
-        end
+        raise 'Subscription is not alive' unless alive?
+        raise 'Events are undefined' unless @event_filters.is_a?(Array) && !@event_filters.empty?
         _clear_timeout
 
         begin
@@ -137,12 +132,12 @@ module RingCentralSdk
           response = @_client.http.delete do |req|
             req.url 'subscription/' + @_subscription['id'].to_s
           end
-          reset()
+          reset
           changed
           notify_observers response.body
           return response
         rescue StandardError => e
-          reset()
+          reset
           changed
           notify_observers e
         end

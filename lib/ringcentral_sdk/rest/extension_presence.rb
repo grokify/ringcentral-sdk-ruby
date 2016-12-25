@@ -42,9 +42,9 @@ module RingCentralSdk
 
       def department_calls_enabled?(reload = false)
         if reload
-          retrieve()
+          retrieve
         elsif !@presence_data.key?('dndStatus')
-          retrieve()
+          retrieve
         end
 
         current_status = @presence_data['dndStatus']

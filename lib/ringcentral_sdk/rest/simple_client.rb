@@ -24,7 +24,7 @@ module RingCentralSdk
 
       def send(request)
         return @client.request(request) if request.is_a? RingCentralSdk::Helpers::Request
-        raise  ArgumentError.new('Request is not a ...Helpers::Request or Hash') unless request.is_a? Hash
+        raise(ArgumentError, 'Request is not a ...Helpers::Request or Hash') unless request.is_a? Hash
 
         verb = request.key?(:verb) ? request[:verb].to_s.downcase : 'get'
 

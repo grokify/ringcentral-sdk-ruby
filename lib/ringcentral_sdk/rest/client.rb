@@ -87,7 +87,7 @@ module RingCentralSdk
       end
 
       def create_urls(urls, add_server = false, add_method = nil, add_token = false)
-        raise ArgumentError.new('URLs is not an array') unless urls.is_a? Array
+        raise(ArgumentError, 'URLs is not an array') unless urls.is_a? Array
         built_urls = []
         urls.each do |url|
           built_urls.push(create_url(url, add_server, add_method, add_token))
@@ -176,7 +176,7 @@ module RingCentralSdk
         elsif client.is_a? OAuth2::Client
           @oauth2client = client
         else
-          raise ArgumentError.new('client is not an OAuth2::Client')
+          raise ArgumentError, 'client is not an OAuth2::Client'
         end
       end
 

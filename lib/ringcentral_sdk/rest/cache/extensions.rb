@@ -66,8 +66,7 @@ module RingCentralSdk
         def inflate_num2id
           num2id = {}
           @extensions_hash.each do |_, v|
-            if v.key?('id') && v['id'] > 0 &&
-              v.key?('extensionNumber') && !v['extensionNumber'].empty?
+            if v.key?('id') && v['id'] > 0 && v.key?('extensionNumber') && !v['extensionNumber'].empty?
               num2id[v['extensionNumber']] = v['id'].to_s
             end
           end
