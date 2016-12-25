@@ -56,7 +56,7 @@ module RingCentralSdk
       end
 
       def api_version_url
-        return @config.server_url + URL_PREFIX + '/' + API_VERSION 
+        @config.server_url + URL_PREFIX + '/' + API_VERSION
       end
 
       def create_url(url, add_server = false, add_method = nil, add_token = false)

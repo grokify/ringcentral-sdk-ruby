@@ -121,7 +121,7 @@ module RingCentralSdk
           return response
         rescue StandardError => e
           @client.logger.warn "RingCentralSdk::REST::Subscription: RENEW_ERROR #{e}"
-          reset()
+          reset
           changed
           notify_observers e
           raise 'Renew HTTP Request Error'
@@ -153,7 +153,7 @@ module RingCentralSdk
         (s.key?('deliveryMode') && s['deliveryMode']) && \
           (s['deliveryMode'].key?('subscriberKey') && s['deliveryMode']['subscriberKey']) && \
           (
-            s['deliveryMode'].has_key?('address') && \
+            s['deliveryMode'].key?('address') && \
             !s['deliveryMode']['address'].nil? && \
             !s['deliveryMode']['address'].empty?
           ) \
@@ -189,7 +189,7 @@ module RingCentralSdk
         @_pubnub = new_pubnub(s_key, false, '')
 
         callback = Pubnub::SubscribeCallback.new(
-          message: ->(envelope) { 
+          message: ->(envelope) {
             @_client.logger.debug "MESSAGE: #{envelope.result[:data]}"
             _notify envelope.result[:data][:message]
             changed
@@ -249,7 +249,7 @@ module RingCentralSdk
         delivery_mode = @_subscription['deliveryMode']
         is_encrypted  = delivery_mode.key?('encryption') \
           && delivery_mode['encryption'] \
-          && delivery_mode.has_key?('encryptionKey') \
+          && delivery_mode.key?('encryptionKey') \
           && delivery_mode['encryptionKey']
         is_encrypted
       end
@@ -280,7 +280,7 @@ module RingCentralSdk
 
       def uri_join(*args)
         url = args.join('/').gsub(%r{/+}, '/')
-        return url.gsub(%r{^(https?:/)}i, '\1/')
+        url.gsub(%r{^(https?:/)}i, '\1/')
       end
 
       def new_pubnub(subscribe_key = '', ssl_on = false, publish_key = '', my_logger = nil)
