@@ -3,6 +3,7 @@ require 'jsondoc'
 
 module RingCentralSdk
   module REST
+    # MessagesRetrieve is a class that will retrieve matching records for an event
     class MessagesRetriever
       attr_accessor :range
       def initialize(client)
@@ -41,7 +42,7 @@ module RingCentralSdk
             messages.push rec
           end
         end
-        return messages
+        messages
       end
     end
   end

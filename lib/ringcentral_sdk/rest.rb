@@ -1,4 +1,6 @@
 module RingCentralSdk
+  # REST is the namespace for the RingCentral REST API class in the
+  # RingCentral Ruby SDK
   module REST
     autoload :Cache, 'ringcentral_sdk/rest/cache'
     autoload :Client, 'ringcentral_sdk/rest/client'
