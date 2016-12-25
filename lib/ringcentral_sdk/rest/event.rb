@@ -20,7 +20,7 @@ module RingCentralSdk
       end
 
       def _hash_has_string_keys(hash = {})
-        hash.each do |k, v|
+        hash.each do |k, _|
           return true if k.is_a? String
         end
         false
@@ -53,7 +53,7 @@ module RingCentralSdk
             end
           end
         end
-        return have_type ? count : -1
+        have_type ? count : -1
       end
 
       private :_hash_has_string_keys, :_symbolize_keys

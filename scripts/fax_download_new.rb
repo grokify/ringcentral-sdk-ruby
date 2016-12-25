@@ -71,7 +71,7 @@ class RcFaxPosterFilesystem
   end
 end
 
-def run_subscription(config, client)
+def run_subscription(client)
   # Create an observable subscription and add your observer
   sub = client.create_subscription
   sub.subscribe ['/restapi/v1.0/account/~/extension/~/message-store']
@@ -84,13 +84,13 @@ def run_subscription(config, client)
   sub.add_observer RcDownloadNewFaxObserver.new client, posters
 
   # Run until key is clicked
-  puts "Click any key to finish"
-  stop_script = gets
+  puts 'Click any key to finish'
+  gets
 
   # End the subscription
   sub.destroy
 end
 
-run_subscription config, client
+run_subscription client
 
 puts 'DONE'

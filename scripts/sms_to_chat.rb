@@ -16,7 +16,7 @@ end
 # event and posts inbound SMS as chats.
 class RcEventSMSChatPoster
   attr_accessor :event
-  def initialize(client, posters=[], event_data={})
+  def initialize(client, posters = [], event_data = {})
     @client = client
     @posters = posters
     @event = RingCentralSdk::REST::Event.new event_data
@@ -24,7 +24,7 @@ class RcEventSMSChatPoster
     @retriever.range = 0.5 # minutes
   end
 
-  def post_message()
+  def post_message
     return unless @event.new_sms_count > 0
     messages = @retriever.retrieve_for_event @event, direction: 'Inbound'
     messages.each do |message|
@@ -73,14 +73,14 @@ def run_subscription(client)
 
   # Create and add first chat poster
   posters = []
-  posters.push new_glip()
+  posters.push new_glip
 
   # Add observer
   sub.add_observer RcSmsToChatObserver.new client, posters
 
   # Run until key is clicked
   puts 'Click any key to finish'
-  stop_script = gets
+  gets
 
   # End the subscription
   sub.destroy
