@@ -22,10 +22,12 @@ def run_subscription(client)
   client.logger.info('RUNNING_EXAMPLE_SUBSCRIPTION_SCRIPT')
   # Create an observable subscription and add your observer
   sub = client.create_subscription
-  sub.subscribe([
-    '/restapi/v1.0/account/~/extension/~/message-store',
-    '/restapi/v1.0/account/~/extension/~/presence'
-  ])
+  sub.subscribe(
+    [
+      '/restapi/v1.0/account/~/extension/~/message-store',
+      '/restapi/v1.0/account/~/extension/~/presence'
+    ]
+  )
 
   sub.add_observer MyObserver.new
 

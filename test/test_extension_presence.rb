@@ -34,9 +34,11 @@ class RingCentralSdkRESTExtensionPresenceTest < Test::Unit::TestCase
       presence.new_status_dnd_department_calls(cur_status, true)
 
     cur_status = 'TakeDepartmentCallsOnly'
-    assert_equal 'DoNotAcceptAnyCalls', \
+    assert_equal \
+      'DoNotAcceptAnyCalls', \
       presence.new_status_dnd_department_calls(cur_status, false)
-    assert_equal 'TakeDepartmentCallsOnly', \
+    assert_equal \
+      'TakeDepartmentCallsOnly', \
       presence.new_status_dnd_department_calls(cur_status, true)
 
     cur_status = 'DoNotAcceptAnyCalls'

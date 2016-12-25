@@ -11,9 +11,9 @@ client = RingCentralSdk::REST::Client.new do |config|
   config.dotenv = true
 end
 
-def get_coverpage
+def build_coverpage
   hbs = ENV['RC_DEMO_FAX_COVERPAGE_TEMPLATE']
-  unless File.exists? hbs
+  unless File.exist? hbs
     raise "Coverpage Template Does Not Exist: " + hbs
   end
 
@@ -21,7 +21,7 @@ def get_coverpage
   template = handlebars.compile IO.read(hbs)
 
   html = template.call(
-    fax_date: DateTime.now().to_s,
+    fax_date: DateTime.now.to_s,
     fax_pages: ENV['RC_DEMO_FAX_PAGES'],
     fax_to_name: ENV['RC_DEMO_FAX_TO_NAME'],
     fax_to_phone: ENV['RC_DEMO_FAX_TO'],
@@ -32,17 +32,18 @@ def get_coverpage
     fax_coverpage_text: ENV['RC_DEMO_FAX_COVERPAGE_TEXT']
   )
 
-  builder = MIMEBuilder::Text.new html,
+  builder = MIMEBuilder::Text.new \
+    html,
     content_type: 'text/html',
     content_id_disable: true,
     is_attachment: true
 
-  return builder.mime
+  builder.mime
 end
 
 # Get the coverpage as a MIME::Media object to pass into
 # Fax method as an file part
-cover = get_coverpage
+cover = build_coverpage
 
 # Set coverIndex to 0 to remove standard template
 # add MIME::Media object as first file attachment
