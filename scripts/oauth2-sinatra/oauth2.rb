@@ -13,8 +13,9 @@ end
 get '/' do
   erb :index, locals: {
     app_key: config.app.key,
-    authorize_url: client.authorize_url(),
-    redirect_uri: client.app_config.redirect_url}
+    authorize_url: client.authorize_url,
+    redirect_uri: client.app_config.redirect_url
+  }
 end
 
 get '/oauth' do
@@ -26,5 +27,6 @@ get '/oauth' do
   end
   erb :oauth, locals: {
     code: code,
-    token: token_json}
+    token: token_json
+  }
 end

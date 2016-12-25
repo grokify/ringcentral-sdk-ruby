@@ -25,9 +25,12 @@ class RingCentralSdkRESTExtensionPresenceTest < Test::Unit::TestCase
     }
 
     cur_status = 'TakeAllCalls'
-    assert_equal 'DoNotAcceptDepartmentCalls', \
+    assert_equal \
+      'DoNotAcceptDepartmentCalls', \
       presence.new_status_dnd_department_calls(cur_status, false)
-    assert_equal 'TakeAllCalls', \
+
+    assert_equal \
+      'TakeAllCalls', \
       presence.new_status_dnd_department_calls(cur_status, true)
 
     cur_status = 'TakeDepartmentCallsOnly'
@@ -37,15 +40,20 @@ class RingCentralSdkRESTExtensionPresenceTest < Test::Unit::TestCase
       presence.new_status_dnd_department_calls(cur_status, true)
 
     cur_status = 'DoNotAcceptAnyCalls'
-    assert_equal 'DoNotAcceptAnyCalls', \
+
+    assert_equal \
+      'DoNotAcceptAnyCalls', \
       presence.new_status_dnd_department_calls(cur_status, false)
-    assert_equal 'TakeDepartmentCallsOnly', \
+    assert_equal \
+      'TakeDepartmentCallsOnly', \
       presence.new_status_dnd_department_calls(cur_status, true)
 
     cur_status = 'DoNotAcceptDepartmentCalls'
-    assert_equal 'DoNotAcceptDepartmentCalls', \
+    assert_equal \
+      'DoNotAcceptDepartmentCalls', \
       presence.new_status_dnd_department_calls(cur_status, false)
-    assert_equal 'TakeAllCalls', \
+    assert_equal \
+      'TakeAllCalls', \
       presence.new_status_dnd_department_calls(cur_status, true)
   end
 
