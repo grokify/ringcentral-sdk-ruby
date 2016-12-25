@@ -14,7 +14,7 @@ end
 def build_coverpage
   hbs = ENV['RC_DEMO_FAX_COVERPAGE_TEMPLATE']
   unless File.exist? hbs
-    raise "Coverpage Template Does Not Exist: " + hbs
+    raise "Coverpage Template Does Not Exist: #{hbs}"
   end
 
   handlebars = Handlebars::Context.new

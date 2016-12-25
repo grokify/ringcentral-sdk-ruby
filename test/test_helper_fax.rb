@@ -83,13 +83,13 @@ class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
     fax6 = RingCentralSdk::REST::Request::Fax.new(
       accountId: 111_111_111,
       extensionId: 222_222_222, # Can be nil or {} for defaults '~'
-      coverPageText: "RingCentral fax demo using Ruby SDK!",
+      coverPageText: 'RingCentral fax demo using Ruby SDK!',
       parts: [{ text: 'RingCentral fax demo using Ruby SDK!' }]
     )
     assert_equal 'account/111111111/extension/222222222/fax', fax6.url
 
     fax7 = RingCentralSdk::REST::Request::Fax.new(
-      coverPageText: "RingCentral fax demo using Ruby SDK!",
+      coverPageText: 'RingCentral fax demo using Ruby SDK!',
       parts: [{ text: 'RingCentral fax demo using Ruby SDK!' }]
     )
     assert_equal '~', fax7.account_id

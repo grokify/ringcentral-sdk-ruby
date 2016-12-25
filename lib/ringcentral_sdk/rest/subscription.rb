@@ -5,285 +5,290 @@ require 'observer'
 require 'openssl'
 require 'pubnub'
 
-module RingCentralSdk::REST
-  class Subscription
-    include Observable
+module RingCentralSdk
+  module REST
+    # Subscription class is an observerable class that represents
+    # one RingCentral subscription using the PubNub transport via
+    # the Subscription API
+    class Subscription
+      include Observable
 
-    RENEW_HANDICAP = 60
+      RENEW_HANDICAP = 60
 
-    attr_reader :event_filters
+      attr_reader :event_filters
 
-    def initialize(client)
-      @_client = client
-      @event_filters = []
-      @_timeout = nil
-      @_subscription = nil_subscription()
-      @_pubnub = nil
-      @_logger_prefix = " -- #{self.class.name}: "
-    end
-
-    def nil_subscription()
-      {
-        'eventFilters'    => [],
-        'expirationTime'  => '', # 2014-03-12T19:54:35.613Z
-        'expiresIn'       => 0,
-        'deliveryMode'    => {
-          'transportType' => 'PubNub',
-          'encryption'    => false,
-          'address'       => '',
-          'subscriberKey' => '',
-          'secretKey'     => ''
-        },
-        'id'              => '',
-        'creationTime'    => '', # 2014-03-12T19:54:35.613Z
-        'status'          => '', # Active
-        'uri'             => ''
-      }
-    end
-
-    def pubnub()
-      @_pubnub
-    end
-
-    def register(events = nil)
-      alive? ? renew(events) : subscribe(events)
-    end
-
-    def add_events(events)
-      unless events.is_a? Array
-        raise 'Events is not an array.'
-      end
-      @event_filters.push(events) if events.length > 0
-    end
-
-    def set_events(events)
-      unless events.is_a? Array
-        raise 'Events is not an array.'
-      end
-      @event_filters = events
-    end
-
-    def subscribe(events=nil)
-      set_events(events) if events.is_a? Array
-
-      if !@event_filters.is_a?(Array) || @event_filters.empty?
-        raise 'Events are undefined'
+      def initialize(client)
+        @_client = client
+        @event_filters = []
+        @_timeout = nil
+        @_subscription = nil_subscription
+        @_pubnub = nil
+        @_logger_prefix = " -- #{self.class.name}: "
       end
 
-      begin
-        response = @_client.http.post do |req|
-          req.url 'subscription'
-          req.headers['Content-Type'] = 'application/json'
-          req.body = {
-            eventFilters: @_client.create_urls(@event_filters),
-            deliveryMode: { transportType: 'PubNub' }
-          }
+      def nil_subscription
+        {
+          'eventFilters'    => [],
+          'expirationTime'  => '', # 2014-03-12T19:54:35.613Z
+          'expiresIn'       => 0,
+          'deliveryMode'    => {
+            'transportType' => 'PubNub',
+            'encryption'    => false,
+            'address'       => '',
+            'subscriberKey' => '',
+            'secretKey'     => ''
+          },
+          'id'              => '',
+          'creationTime'    => '', # 2014-03-12T19:54:35.613Z
+          'status'          => '', # Active
+          'uri'             => ''
+        }
+      end
+
+      def pubnub
+        @_pubnub
+      end
+
+      def register(events = nil)
+        alive? ? renew(events) : subscribe(events)
+      end
+
+      def add_events(events)
+        unless events.is_a? Array
+          raise 'Events is not an array.'
         end
-        set_subscription response.body
-        _subscribe_at_pubnub()
-        changed
-        notify_observers response
-        return response
-      rescue StandardError => e
-        reset()
-        changed
-        notify_observers(e)
-        raise 'Subscribe HTTP Request Error: ' + e.to_s
-      end
-    end
-
-    def renew(events = nil)
-      set_events(events) if events.is_a? Array
-
-      unless alive?
-        raise 'Subscription is not alive'
+        @event_filters.push(events) unless events.empty?
       end
 
-      if !@event_filters.is_a?(Array) || @event_filters.empty?
-        raise 'Events are undefined'
+      def set_events(events)
+        unless events.is_a? Array
+          raise 'Events is not an array.'
+        end
+        @event_filters = events
       end
-      _clear_timeout
 
-      begin
-        response = @_client.http.post do |req|
-          req.url uri_join(@_subscription['uri'], 'renew')
-          req.headers['Content-Type'] = 'application/json'
+      def subscribe(events = nil)
+        set_events(events) if events.is_a? Array
+
+        if !@event_filters.is_a?(Array) || @event_filters.empty?
+          raise 'Events are undefined'
         end
 
-        set_subscription response.body
-        changed
-        notify_observers response
-
-        return response
-      rescue StandardError => e
-        @client.logger.warn "RingCentralSdk::REST::Subscription: RENEW_ERROR #{e}"
-        reset()
-        changed
-        notify_observers e
-        raise 'Renew HTTP Request Error'
-      end
-    end
-
-    def remove()
-      unless alive?
-        raise 'Subscription is not alive'
-      end
-
-      begin
-        response = @_client.http.delete do |req|
-          req.url 'subscription/' + @_subscription['id'].to_s
+        begin
+          response = @_client.http.post do |req|
+            req.url 'subscription'
+            req.headers['Content-Type'] = 'application/json'
+            req.body = {
+              eventFilters: @_client.create_urls(@event_filters),
+              deliveryMode: { transportType: 'PubNub' }
+            }
+          end
+          set_subscription response.body
+          _subscribe_at_pubnub
+          changed
+          notify_observers response
+          return response
+        rescue StandardError => e
+          reset
+          changed
+          notify_observers(e)
+          raise 'Subscribe HTTP Request Error: ' + e.to_s
         end
-        reset()
-        changed
-        notify_observers response.body
-        return response
-      rescue StandardError => e
-        reset()
-        changed
-        notify_observers e
       end
-    end
 
-    def alive?
-      s = @_subscription
-      return (s.has_key?('deliveryMode') && s['deliveryMode']) && \
-        (s['deliveryMode'].has_key?('subscriberKey') && s['deliveryMode']['subscriberKey']) && \
-        (
-          s['deliveryMode'].has_key?('address') && \
-          s['deliveryMode']['address'] && \
-          s['deliveryMode']['address'].length>0
-        ) \
-        ? true : false
-    end
+      def renew(events = nil)
+        set_events(events) if events.is_a? Array
 
-    def subscription
-      return @_subscription
-    end
+        unless alive?
+          raise 'Subscription is not alive'
+        end
 
-    def set_subscription(data)
-      _clear_timeout
-      @_subscription = data
-      _set_timeout
-    end
+        if !@event_filters.is_a?(Array) || @event_filters.empty?
+          raise 'Events are undefined'
+        end
+        _clear_timeout
 
-    def reset
-      _clear_timeout
-      _unsubscribe_at_pubnub
-      @_subscription = nil_subscription
-    end
+        begin
+          response = @_client.http.post do |req|
+            req.url uri_join(@_subscription['uri'], 'renew')
+            req.headers['Content-Type'] = 'application/json'
+          end
 
-    def destroy
-      reset()
-    end
+          set_subscription response.body
+          changed
+          notify_observers response
 
-    def _subscribe_at_pubnub
-      unless alive?
-        raise 'Subscription is not alive'
+          return response
+        rescue StandardError => e
+          @client.logger.warn "RingCentralSdk::REST::Subscription: RENEW_ERROR #{e}"
+          reset()
+          changed
+          notify_observers e
+          raise 'Renew HTTP Request Error'
+        end
       end
-      s_key = @_subscription['deliveryMode']['subscriberKey']
 
-      @_pubnub = new_pubnub(s_key, false, '')
+      def remove
+        unless alive?
+          raise 'Subscription is not alive'
+        end
 
-      callback = Pubnub::SubscribeCallback.new(
-        message: ->(envelope) { 
-          @_client.logger.debug "MESSAGE: #{envelope.result[:data]}"
-          _notify envelope.result[:data][:message]
-          changed 
-        },
-        presence: ->(envelope) {
-          @_client.logger.info "PRESENCE: #{envelope.result[:data]}"
-        },
-        status: lambda do |envelope|
-          @_client.logger.info "\n\n\n#{envelope.status}\n\n\n"
-          if envelope.error?
-            @_client.logger.info "ERROR! #{envelope.status[:category]}"
-          elsif envelope.status[:last_timetoken] == 0 # Connected!
-            @_client.logger.info('CONNECTED!')
+        begin
+          response = @_client.http.delete do |req|
+            req.url 'subscription/' + @_subscription['id'].to_s
+          end
+          reset()
+          changed
+          notify_observers response.body
+          return response
+        rescue StandardError => e
+          reset()
+          changed
+          notify_observers e
+        end
+      end
+
+      def alive?
+        s = @_subscription
+        (s.key?('deliveryMode') && s['deliveryMode']) && \
+          (s['deliveryMode'].key?('subscriberKey') && s['deliveryMode']['subscriberKey']) && \
+          (
+            s['deliveryMode'].has_key?('address') && \
+            !s['deliveryMode']['address'].nil? && \
+            !s['deliveryMode']['address'].empty?
+          ) \
+          ? true : false
+      end
+
+      def subscription
+        @_subscription
+      end
+
+      def set_subscription(data)
+        _clear_timeout
+        @_subscription = data
+        _set_timeout
+      end
+
+      def reset
+        _clear_timeout
+        _unsubscribe_at_pubnub
+        @_subscription = nil_subscription
+      end
+
+      def destroy
+        reset
+      end
+
+      def _subscribe_at_pubnub
+        unless alive?
+          raise 'Subscription is not alive'
+        end
+        s_key = @_subscription['deliveryMode']['subscriberKey']
+
+        @_pubnub = new_pubnub(s_key, false, '')
+
+        callback = Pubnub::SubscribeCallback.new(
+          message: ->(envelope) { 
+            @_client.logger.debug "MESSAGE: #{envelope.result[:data]}"
+            _notify envelope.result[:data][:message]
+            changed
+          },
+          presence: ->(envelope) {
+            @_client.logger.info "PRESENCE: #{envelope.result[:data]}"
+          },
+          status: lambda do |envelope|
+            @_client.logger.info "\n\n\n#{envelope.status}\n\n\n"
+            if envelope.error?
+              @_client.logger.info "ERROR! #{envelope.status[:category]}"
+            elsif envelope.status[:last_timetoken] == 0 # Connected!
+              @_client.logger.info('CONNECTED!')
+            end
+          end
+        )
+
+        @_pubnub.add_listener callback: callback, name: :ringcentral
+
+        @_pubnub.subscribe(
+          channels: @_subscription['deliveryMode']['address']
+        )
+        @_client.logger.debug('SUBSCRIBED')
+      end
+
+      def _notify(message)
+        count = count_observers
+        @_client.logger.debug("RingCentralSdk::REST::Subscription NOTIFYING '#{count}' observers")
+
+        message = _decrypt message
+        changed
+        notify_observers message
+      end
+
+      def _decrypt(message)
+        unless alive?
+          raise 'Subscription is not alive'
+        end
+
+        if _encrypted?
+          delivery_mode = @_subscription['deliveryMode']
+
+          cipher = OpenSSL::Cipher::AES.new(128, :ECB)
+          cipher.decrypt
+          cipher.key = Base64.decode64(delivery_mode['encryptionKey'].to_s)
+
+          ciphertext = Base64.decode64(message)
+          plaintext = cipher.update(ciphertext) + cipher.final
+
+          message = MultiJson.decode(plaintext, symbolize_keys: false)
+        end
+
+        message
+      end
+
+      def _encrypted?
+        delivery_mode = @_subscription['deliveryMode']
+        is_encrypted  = delivery_mode.key?('encryption') \
+          && delivery_mode['encryption'] \
+          && delivery_mode.has_key?('encryptionKey') \
+          && delivery_mode['encryptionKey']
+        is_encrypted
+      end
+
+      def _unsubscribe_at_pubnub
+        if @_pubnub && alive?
+          @_pubnub.unsubscribe(channel: @_subscription['deliveryMode']['address']) do |envelope|
+            puts envelope.status
           end
         end
-      )
-
-      @_pubnub.add_listener callback: callback, name: :ringcentral
-
-      @_pubnub.subscribe(
-        channels: @_subscription['deliveryMode']['address']
-      )
-      @_client.logger.debug("SUBSCRIBED")
-    end
-
-    def _notify(message)
-      count = count_observers
-      @_client.logger.debug("RingCentralSdk::REST::Subscription NOTIFYING '#{count}' observers")
-
-      message = _decrypt message
-      changed
-      notify_observers message
-    end
-
-    def _decrypt(message)
-      unless alive?
-        raise 'Subscription is not alive'
       end
 
-      if _encrypted?
-        delivery_mode = @_subscription['deliveryMode']
+      def _set_timeout
+        _clear_timeout
 
-        cipher = OpenSSL::Cipher::AES.new(128, :ECB)
-        cipher.decrypt
-        cipher.key = Base64.decode64(delivery_mode['encryptionKey'].to_s)
+        time_to_expiration = @_subscription['expiresIn'] - RENEW_HANDICAP
 
-        ciphertext = Base64.decode64(message)
-        plaintext = cipher.update(ciphertext) + cipher.final
-
-        message = MultiJson.decode(plaintext, symbolize_keys: false)
-      end
-
-      message
-    end
-
-    def _encrypted?
-      delivery_mode = @_subscription['deliveryMode']
-      is_encrypted  = delivery_mode.has_key?('encryption') \
-        && delivery_mode['encryption'] \
-        && delivery_mode.has_key?('encryptionKey') \
-        && delivery_mode['encryptionKey']
-      is_encrypted
-    end
-
-    def _unsubscribe_at_pubnub
-      if @_pubnub && alive?()
-        @_pubnub.unsubscribe(channel: @_subscription['deliveryMode']['address']) do |envelope|
-          puts envelope.status
+        @_timeout = Thread.new do
+          sleep time_to_expiration
+          renew
         end
       end
-    end
 
-    def _set_timeout
-      _clear_timeout
-
-      time_to_expiration = @_subscription['expiresIn'] - RENEW_HANDICAP
-
-      @_timeout = Thread.new do
-        sleep time_to_expiration
-        renew
+      def _clear_timeout
+        @_timeout.exit if @_timeout.is_a?(Thread) && @_timeout.status == 'sleep'
+        @_timeout = nil
       end
-    end
 
-    def _clear_timeout
-      @_timeout.exit if @_timeout.is_a?(Thread) && @_timeout.status == 'sleep'
-      @_timeout = nil
-    end
+      def uri_join(*args)
+        url = args.join('/').gsub(%r{/+}, '/')
+        return url.gsub(%r{^(https?:/)}i, '\1/')
+      end
 
-    def uri_join(*args)
-      url = args.join('/').gsub(/\/+/, '/')
-      return url.gsub(/^(https?:\/)/i, '\1/')
-    end
-
-    def new_pubnub(subscribe_key='', ssl_on=false, publish_key='', my_logger=nil)
-      return Pubnub.new(
-        subscribe_key: subscribe_key.to_s,
-        publish_key: publish_key.to_s
-      )
+      def new_pubnub(subscribe_key = '', ssl_on = false, publish_key = '', my_logger = nil)
+        Pubnub.new(
+          subscribe_key: subscribe_key.to_s,
+          publish_key: publish_key.to_s
+        )
+      end
     end
   end
 end
