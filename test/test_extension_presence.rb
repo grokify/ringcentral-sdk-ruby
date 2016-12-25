@@ -2,12 +2,11 @@ require './test/test_base.rb'
 
 class RingCentralSdkRESTExtensionPresenceTest < Test::Unit::TestCase
   def new_client
-    client = RingCentralSdk::REST::Client.new do |config|
+    RingCentralSdk::REST::Client.new do |config|
       config.app_key = 'my_app_key'
       config.app_secret = 'my_app_secret'
       config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
     end
-    return client
   end
 
   def test_department_calls_enable
@@ -114,32 +113,29 @@ class RingCentralSdkRESTExtensionPresenceTest < Test::Unit::TestCase
   "ringOnMonitoredCall": false,
   "pickUpCallsOnHold": false
 }'
-    data = JSON.parse json, symbolize_names: false
-    return data
+    JSON.parse json, symbolize_names: false
   end
 end
 
 class RingCentralSdkTestSubAuth
   def new_client
-    client = RingCentralSdk::REST::Client.new do |config|
+    RingCentralSdk::REST::Client.new do |config|
       config.app_key = 'my_app_key'
       config.app_secret = 'my_app_secret'
       config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
     end
-    return client
   end
 
-  def new_client_with_auth()
+  def new_client_with_auth
     client = new_client
     client.set_oauth2_client
 
     stub_token_hash = data_auth_token_with_refresh
-    stub_token = OAuth2::AccessToken::from_hash(client.oauth2client, stub_token_hash)
+    stub_token = OAuth2::AccessToken.from_hash(client.oauth2client, stub_token_hash)
 
     client.oauth2client.password.stubs(:get_token).returns(stub_token)
-
-    token = client.authorize('my_test_username', 'my_test_extension', 'my_test_password')
-    return client
+    client.authorize('my_test_username', 'my_test_extension', 'my_test_password')
+    client
   end
 
   def data_auth_token_with_refresh
@@ -152,8 +148,7 @@ class RingCentralSdkTestSubAuth
   "scope": "ReadCallLog DirectRingOut EditCallLog ReadAccounts Contacts EditExtensions ReadContacts SMS EditPresence RingOut EditCustomData ReadPresence EditPaymentInfo Interoperability Accounts NumberLookup InternalMessages ReadCallRecording EditAccounts Faxes EditReportingSettings ReadClientInfo EditMessages VoipCalling ReadMessages",
   "owner_id": "1234567890"
       }'
-    data = JSON.parse(json, symbolize_names: true)
-    return data
+    JSON.parse(json, symbolize_names: true)
   end
 
   def data_auth_token_without_refresh
@@ -164,7 +159,6 @@ class RingCentralSdkTestSubAuth
   "scope": "ReadCallLog DirectRingOut EditCallLog ReadAccounts Contacts EditExtensions ReadContacts SMS EditPresence RingOut EditCustomData ReadPresence EditPaymentInfo Interoperability Accounts NumberLookup InternalMessages ReadCallRecording EditAccounts Faxes EditReportingSettings ReadClientInfo EditMessages VoipCalling ReadMessages",
   "owner_id": "1234567890"
       }'
-    data = JSON.parse(json, symbolize_names: true)
-    return data
+    JSON.parse(json, symbolize_names: true)
   end
 end

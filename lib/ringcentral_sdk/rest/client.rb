@@ -7,6 +7,8 @@ require 'oauth2'
 
 module RingCentralSdk
   module REST
+    # Client is the RingCentral REST API client class which handles
+    # HTTP requests with built-in OAuth handling
     class Client
       ACCESS_TOKEN_TTL = 600 # 10 minutes
       REFRESH_TOKEN_TTL = 36_000 # 10 hours
@@ -235,7 +237,7 @@ module RingCentralSdk
 
       def get_user_agent
         ua = "ringcentral-sdk-ruby/#{RingCentralSdk::VERSION} %s/%s %s" % [
-          (RUBY_ENGINE rescue nil or 'ruby'),
+          (RUBY_ENGINE rescue nil || 'ruby'),
           RUBY_VERSION,
           RUBY_PLATFORM
         ]
