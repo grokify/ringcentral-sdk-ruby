@@ -18,7 +18,7 @@ def get_event_filters_for_extensions(extension_ids, account_id = '~')
   extension_ids.each do |extension_id|
     if extension_id
       event_filter =
-        '/restapi/v1.0/account/#{account_id}/extension/#{extension_id}' +
+        "/restapi/v1.0/account/#{account_id}/extension/#{extension_id}" <<
         '/presence?detailedTelephonyState=true'
       event_filters.push event_filter
     end

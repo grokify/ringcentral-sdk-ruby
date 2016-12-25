@@ -96,7 +96,7 @@ module RingCentralSdk
         end
 
         def url
-          "account/#{@account_id.to_s}/extension/#{@extension_id}/fax"
+          "account/#{@account_id}/extension/#{@extension_id}/fax"
         end
 
         def content_type

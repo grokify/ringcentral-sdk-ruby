@@ -26,10 +26,10 @@ class RingCentralSdkTest < Test::Unit::TestCase
 
   def test_login
     stub_token_hash = data_auth_token
-    stub_token = OAuth2::AccessToken::from_hash(@rcsdk.oauth2client, stub_token_hash)
+    stub_token = OAuth2::AccessToken.from_hash(@rcsdk.oauth2client, stub_token_hash)
 
     OAuth2::Strategy::Password.any_instance.stubs(:get_token).returns(stub_token)
-    
+
     rcsdk = RingCentralSdk::REST::Client.new do |config|
       config.app_key = 'my_app_key'
       config.app_secret = 'my_app_secret'

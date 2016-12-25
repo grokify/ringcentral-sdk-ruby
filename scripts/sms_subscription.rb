@@ -21,15 +21,13 @@ end
 def run_subscription(client)
   # Create an observable subscription and add your observer
   sub = client.create_subscription
-  sub.subscribe([
-    '/restapi/v1.0/account/~/extension/~/message-store/instant?type=SMS'
-  ])
+  sub.subscribe(['/restapi/v1.0/account/~/extension/~/message-store/instant?type=SMS'])
 
   sub.add_observer MyObserver.new
 
   puts 'Click any key to finish'
 
-  stop_script = gets
+  gets
 
   # End the subscription
   sub.destroy
