@@ -69,7 +69,7 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     assert_equal sub_data['deliveryMode']['encryption'], false
   end
 
-  def get_rcsdk_authorized
+  def build_rcsdk_authorized
     rcsdk = RingCentralSdk::REST::Client.new do |config|
       config.app_key = 'my_app_key'
       config.app_secret = 'my_app_secret'
@@ -88,7 +88,7 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
 
   def test_subscribe_renew_delete_with_exceptions
     # Get RCSDK Authroized
-    rcsdk = get_rcsdk_authorized
+    rcsdk = build_rcsdk_authorized
     # Stub Subscribe RC Response
     data = data_test_subscribe
     response = Faraday::Response.new
@@ -122,7 +122,7 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     # Test remove
     sub.remove
     # Test Exceptions
-    rcsdk2 = get_rcsdk_authorized
+    rcsdk2 = build_rcsdk_authorized
     rcsdk2.http.stubs(:post).raises('error')
     rcsdk2.http.stubs(:put).raises('error')
     rcsdk2.http.stubs(:delete).raises('error')
@@ -139,7 +139,7 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
   end
 
   def test_decrypt_encrypted
-    rcsdk = get_rcsdk_authorized
+    rcsdk = build_rcsdk_authorized
     sub = rcsdk.create_subscription
     data = data_test_subscribe
     sub.set_subscription(data)

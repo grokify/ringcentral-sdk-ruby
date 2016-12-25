@@ -79,7 +79,7 @@ module RingCentralSdk
           if built_url =~ %r{/$}
             built_url += url
           else
-            built_url += '/' + url
+            built_url += '/' << url
           end
         end
 
@@ -115,7 +115,7 @@ module RingCentralSdk
       def authorize_password(username, extension = '', password = '', params = {})
         token = @oauth2client.password.get_token(username, password, {
           extension: extension,
-          headers: { 'Authorization' => 'Basic ' + get_api_key }
+          headers: { 'Authorization' => 'Basic ' + api_key }
         }.merge(params))
         set_token token
         token
@@ -180,7 +180,7 @@ module RingCentralSdk
         end
       end
 
-      def get_api_key
+      def api_key
         Base64.encode64("#{@config.app_key}:#{@config.app_secret}").gsub(/\s/, '')
       end
 
