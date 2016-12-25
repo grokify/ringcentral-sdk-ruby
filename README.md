@@ -5,6 +5,7 @@ RingCentral SDK for Ruby
 [![Build Status][build-status-svg]][build-status-link]
 [![Coverage Status][coverage-status-svg]][coverage-status-link]
 [![Dependency Status][dependency-status-svg]][dependency-status-link]
+[![Codacy Badge][codacy-svg]][codacy-link]
 [![Code Climate][codeclimate-status-svg]][codeclimate-status-link]
 [![Scrutinizer Code Quality][scrutinizer-status-svg]][scrutinizer-status-link]
 [![Downloads][downloads-svg]][downloads-link]
@@ -298,6 +299,8 @@ RingCentral SDK &copy; 2015-2016 by John Wang
  [coverage-status-link]: https://coveralls.io/r/grokify/ringcentral-sdk-ruby?branch=master
  [dependency-status-svg]: https://gemnasium.com/grokify/ringcentral-sdk-ruby.svg
  [dependency-status-link]: https://gemnasium.com/grokify/ringcentral-sdk-ruby
+ [codacy-svg]: https://api.codacy.com/project/badge/Grade/4792fe45b56b4841a7e6099c316ac0f8
+ [codacy-link]: https://www.codacy.com/app/ringcentral-ruby/ringcentral-sdk-ruby
  [codeclimate-status-svg]: https://codeclimate.com/github/grokify/ringcentral-sdk-ruby/badges/gpa.svg
  [codeclimate-status-link]: https://codeclimate.com/github/grokify/ringcentral-sdk-ruby
  [scrutinizer-status-svg]: https://scrutinizer-ci.com/g/grokify/ringcentral-sdk-ruby/badges/quality-score.png?b=master
