@@ -116,8 +116,9 @@ module RingCentralSdk::REST
     def authorize_password(username, extension = '', password = '', params = {})
       token = @oauth2client.password.get_token(username, password, {
         extension: extension,
-        headers: {'Authorization' => 'Basic ' + get_api_key()}}.merge(params))
-      set_token(token)
+        headers: { 'Authorization' => 'Basic ' + get_api_key() }
+      }.merge(params))
+      set_token token
       token
     end
 
@@ -145,13 +146,13 @@ module RingCentralSdk::REST
         conn.request :json
         conn.headers['User-Agent'] = @user_agent
         if @instance_headers.is_a? Hash 
-          @instance_headers.each do |k,v|
+          @instance_headers.each do |k, v|
             conn.headers[k] = v
           end
         end
         conn.headers['RC-User-Agent'] = @user_agent
         conn.headers['SDK-User-Agent'] = @user_agent
-        conn.response :json, content_type: /\bjson$/
+        conn.response :json, content_type: %r{\bjson$}
         conn.response :logger
         conn.adapter Faraday.default_adapter
       end
@@ -161,13 +162,16 @@ module RingCentralSdk::REST
     end
 
     def new_oauth2_client
-      return OAuth2::Client.new(@config.app_key, @config.app_secret,
+      OAuth2::Client.new(
+        @config.app_key,
+        @config.app_secret,
         site: @config.server_url,
         authorize_url: AUTHZ_ENDPOINT,
-        token_url: TOKEN_ENDPOINT)
+        token_url: TOKEN_ENDPOINT
+      )
     end
 
-    def set_oauth2_client(client=nil)
+    def set_oauth2_client(client = nil)
       if client.nil?
         @oauth2client = new_oauth2_client()
       elsif client.is_a? OAuth2::Client
@@ -180,7 +184,7 @@ module RingCentralSdk::REST
     def get_api_key
       api_key = (@config.app_key.is_a?(String) && @config.app_secret.is_a?(String)) \
         ? Base64.encode64("#{@config.app_key}:#{@config.app_secret}").gsub(/\s/,'') : ''
-      return api_key
+      api_key
     end
 
     def send_request(request_sdk = {})

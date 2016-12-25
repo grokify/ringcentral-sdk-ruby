@@ -134,7 +134,7 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
       sub2.renew(['/restapi/v1.0/account/~/extension/~/presence'])
     end
     assert_raise do
-      sub2.remove()
+      sub2.remove
     end
   end
 

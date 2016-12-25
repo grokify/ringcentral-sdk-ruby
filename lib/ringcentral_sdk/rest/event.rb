@@ -3,6 +3,7 @@ require 'multi_json'
 
 module RingCentralSdk
   module REST
+    # Event represents a Subscription API event
     class Event
       attr_accessor :doc
       def initialize(data = nil)

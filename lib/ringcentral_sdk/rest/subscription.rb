@@ -99,7 +99,7 @@ module RingCentralSdk::REST
         raise 'Subscription is not alive'
       end
 
-      if !@event_filters.is_a?(Array) || @event_filters.length ==0
+      if !@event_filters.is_a?(Array) || @event_filters.empty?
         raise 'Events are undefined'
       end
       _clear_timeout
@@ -225,7 +225,7 @@ module RingCentralSdk::REST
         raise 'Subscription is not alive'
       end
 
-      if _encrypted?()
+      if _encrypted?
         delivery_mode = @_subscription['deliveryMode']
 
         cipher = OpenSSL::Cipher::AES.new(128, :ECB)
@@ -243,10 +243,10 @@ module RingCentralSdk::REST
 
     def _encrypted?
       delivery_mode = @_subscription['deliveryMode']
-      is_encrypted  = delivery_mode.has_key?('encryption') && \
-        delivery_mode['encryption']                        && \
-        delivery_mode.has_key?('encryptionKey')            && \
-        delivery_mode['encryptionKey']
+      is_encrypted  = delivery_mode.has_key?('encryption') \
+        && delivery_mode['encryption'] \
+        && delivery_mode.has_key?('encryptionKey') \
+        && delivery_mode['encryptionKey']
       is_encrypted
     end
 

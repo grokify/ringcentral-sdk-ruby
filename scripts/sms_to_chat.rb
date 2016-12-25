@@ -62,10 +62,8 @@ def new_glip
 
   body = "* event_filter: extension/message-store?messageType=SMS\n* actions: post SMS messages to Glip team"
 
-  glip.send_message(body, {
-    activity: 'RingCentral subscription initiated',
-  })
-  return glip
+  glip.send_message body, activity: 'RingCentral subscription initiated'
+  glip
 end
 
 def run_subscription(client)

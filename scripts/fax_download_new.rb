@@ -50,7 +50,7 @@ class RcDownloadNewFaxObserver
   end
 
   def update(message)
-    puts "DEMO_RECEIVED_NEW_MESSAGE"
+    puts 'DEMO_RECEIVED_NEW_MESSAGE'
     pp message
     event = RcEventFaxDownloader.new @client, @posters, message
     event.download_fax
