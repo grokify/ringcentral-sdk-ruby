@@ -117,7 +117,7 @@ module RingCentralSdk
       def authorize_password(username, extension = '', password = '', params = {})
         token = @oauth2client.password.get_token(username, password, {
           extension: extension,
-          headers: { 'Authorization' => 'Basic ' + get_api_key() }
+          headers: { 'Authorization' => 'Basic ' + get_api_key }
         }.merge(params))
         set_token token
         token
@@ -128,12 +128,12 @@ module RingCentralSdk
       end
 
       def token
-        return @http ? @http.builder.app.oauth2_token : nil
+        @http ? @http.builder.app.oauth2_token : nil
       end
 
       def set_token(token)
         if token.is_a? Hash
-          token = OAuth2::AccessToken::from_hash(@oauth2client, token)
+          token = OAuth2::AccessToken.from_hash(@oauth2client, token)
         end
 
         unless token.is_a? OAuth2::AccessToken
@@ -235,7 +235,7 @@ module RingCentralSdk
 
       def get_user_agent
         ua = "ringcentral-sdk-ruby/#{RingCentralSdk::VERSION} %s/%s %s" % [
-          (RUBY_ENGINE rescue nil or "ruby"),
+          (RUBY_ENGINE rescue nil or 'ruby'),
           RUBY_VERSION,
           RUBY_PLATFORM
         ]

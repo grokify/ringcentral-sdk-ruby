@@ -37,6 +37,8 @@ class RingCentralSdkTest < Test::Unit::TestCase
       config.username = 'my_username'
       config.password = 'my_password'
     end
+
+    assert_equal 'my_test_access_token', rcsdk.token.to_hash[:access_token]
   end
 
   def data_auth_token
@@ -46,7 +48,7 @@ class RingCentralSdkTest < Test::Unit::TestCase
   "expires_in": 3599,
   "refresh_token": "my_test_refresh_token",
   "refresh_token_expires_in": 604799,
-  "scope": "ReadCallLog DirectRingOut EditCallLog ReadAccounts Contacts EditExtensions ReadContacts SMS EditPresence RingOut EditCustomData ReadPresence EditPaymentInfo Interoperability Accounts NumberLookup InternalMessages ReadCallRecording EditAccounts Faxes EditReportingSettings ReadClientInfo EditMessages VoipCalling ReadMessages",
+  "scope": "ReadCallLog DirectRingOut EditCallLog ReadAccounts VoipCalling ReadMessages",
   "owner_id": "1234567890  "
       }'
     JSON.parse(json, symbolize_names: true)

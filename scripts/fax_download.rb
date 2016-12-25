@@ -21,8 +21,8 @@ req = RingCentralSdk::REST::Request::Simple.new(
   }
 )
 
-res = client.send_request(req)
-  
+res = client.send_request req
+
 pp res.body
 
 puts '---'
@@ -31,7 +31,7 @@ res.body['records'].each do |rec|
   rec['attachments'].each do |att|
     pp att
     url = att['uri']
-    filename = '_fax2_' + url.gsub(%r{^.*restapi/v[^/]+/}, '').gsub(%r{/},'_')
+    filename = '_fax2_' + url.gsub(%r{^.*restapi/v[^/]+/}, '').gsub(%r{/}, '_')
     ext = att['contentType'] == 'application/pdf' ? '.pdf' : ''
     filename += ext
     puts filename
