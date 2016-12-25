@@ -38,25 +38,25 @@ module RingCentralSdk
               req.params['perPage'] = 1000
             end
           end
-          res.body['records'].each do |extension|
-            if extension.key?('id') && extension['id'] > 0
-              @extensions_hash[extension['id'].to_s] = extension
-            end
-          end
+          load_extensions(res.body['records'])
           if retrieve_all
             while res.body.key?('navigation') && res.body['navigation'].key?('nextPage')
               res = @client.http.get do |req|
                 req.url res.body['navigation']['nextPage']['uri']
               end
-              res.body['records'].each do |extension|
-                if extension.key?('id') && extension['id'] > 0
-                  @extensions_hash[extension['id'].to_s] = extension
-                end
-              end
+              load_extensions(res.body['records'])
             end
           end
           inflate_num2id
           @extensions_hash
+        end
+
+        def load_extensions(api_extensions)
+          api_extensions.each do |extension|
+            if extension.key?('id') && extension['id'] > 0
+              @extensions_hash[extension['id'].to_s] = extension
+            end
+          end
         end
 
         def retrieve_all

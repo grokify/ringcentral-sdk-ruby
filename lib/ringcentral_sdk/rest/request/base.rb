@@ -1,6 +1,7 @@
 module RingCentralSdk
   module REST
     module Request
+      # Base class for various types of requests.
       class Base
         def method
           'get' # HTTP methods
