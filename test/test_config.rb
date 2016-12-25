@@ -2,6 +2,7 @@ require './test/test_base.rb'
 
 require 'faraday'
 require 'oauth2'
+
 =begin
 class RingCentralSdkRESTConfigTest < Test::Unit::TestCase
   def setup

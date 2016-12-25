@@ -52,4 +52,3 @@ class RingCentralSdkTest < Test::Unit::TestCase
     JSON.parse(json, symbolize_names: true)
   end
 end
-
