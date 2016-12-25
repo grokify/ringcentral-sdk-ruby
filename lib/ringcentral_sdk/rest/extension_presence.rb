@@ -1,5 +1,6 @@
 module RingCentralSdk
   module REST
+    # ExtensionPresence is a helper class to manage presence info
     class ExtensionPresence
       attr_accessor :client
       attr_accessor :account_id
@@ -14,9 +15,7 @@ module RingCentralSdk
       end
 
       def retrieve
-        if @extension_id !~ /^[0-9]+$/
-          raise 'extension_id is not an integer'
-        end
+        raise 'extension_id is not an integer' if @extension_id !~ /^[0-9]+$/
 
         res = @client.http.get do |req|
           req.url "account/#{@account_id}/extension/#{@extension_id}/presence"
@@ -24,7 +23,7 @@ module RingCentralSdk
 
         @presence_data = res.body
 
-        return @presence_data
+        @presence_data
       end
 
       def department_calls_enable(enable)
@@ -37,10 +36,7 @@ module RingCentralSdk
         current_status = @presence_data['dndStatus']
         new_status = new_status_dnd_department_calls(current_status, enable)
 
-        if current_status != new_status
-          update(dndStatus: new_status)
-        end
-
+        update(dndStatus: new_status) if current_status != new_status
         new_status
       end
 
@@ -64,9 +60,7 @@ module RingCentralSdk
       end
 
       def update(body = nil)
-        if body.nil?
-          raise 'HTTP request body is required to update presence'
-        end
+        raise 'HTTP request body is required to update presence' if body.nil?
 
         res = @client.http.put do |req|
           req.url "account/#{@account_id}/extension/#{@extension_id}/presence"
@@ -76,7 +70,7 @@ module RingCentralSdk
 
         @presence_data = res.body
 
-        return @presence_data
+        @presence_data
       end
 
       def new_status_dnd_department_calls(current_status, enable)
@@ -98,7 +92,7 @@ module RingCentralSdk
         new_status = new_statuses[action][current_status.to_s] \
           if new_statuses[action].key?(current_status.to_s)
 
-        return new_status
+        new_status
       end
     end
   end
