@@ -28,9 +28,7 @@ module RingCentralSdk
         def retrieve(params = {}, retrieve_all = true)
           @last_retrieved = Time.now.to_i
           uri = URI.parse "account/#{@account_id}/extension"
-          if params.length > 0
-            uri.query = URI.encode_www_form params
-          end
+          uri.query = URI.encode_www_form(params) unless params.empty?
           res = @client.http.get do |req|
             req.url uri.to_s
             if retrieve_all
@@ -60,7 +58,7 @@ module RingCentralSdk
         end
 
         def retrieve_all
-          retrieve({}, true)
+          retrieve {}, true
         end
 
         def inflate_num2id

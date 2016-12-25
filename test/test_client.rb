@@ -138,7 +138,7 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     rcsdk.set_oauth2_client
 
     stub_token_hash = data_auth_token
-    stub_token = OAuth2::AccessToken::from_hash(rcsdk.oauth2client, stub_token_hash)
+    stub_token = OAuth2::AccessToken.from_hash(rcsdk.oauth2client, stub_token_hash)
 
     rcsdk.oauth2client.auth_code.stubs(:get_token).returns(stub_token)
 
@@ -150,7 +150,7 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     rcsdk.set_oauth2_client
 
     stub_token_hash = data_auth_token
-    stub_token = OAuth2::AccessToken::from_hash(rcsdk.oauth2client, stub_token_hash)
+    stub_token = OAuth2::AccessToken.from_hash(rcsdk.oauth2client, stub_token_hash)
 
     rcsdk.oauth2client.auth_code.stubs(:get_token).returns(stub_token)
 
@@ -164,7 +164,7 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     rcsdk.set_oauth2_client
 
     stub_token_hash = data_auth_token_with_refresh
-    stub_token = OAuth2::AccessToken::from_hash(rcsdk.oauth2client, stub_token_hash)
+    stub_token = OAuth2::AccessToken.from_hash(rcsdk.oauth2client, stub_token_hash)
 
     rcsdk.oauth2client.password.stubs(:get_token).returns(stub_token)
 
@@ -179,7 +179,7 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     rcsdk.set_oauth2_client
 
     stub_token_hash = data_auth_token_without_refresh
-    stub_token = OAuth2::AccessToken::from_hash(rcsdk.oauth2client, stub_token_hash)
+    stub_token = OAuth2::AccessToken.from_hash(rcsdk.oauth2client, stub_token_hash)
 
     rcsdk.oauth2client.password.stubs(:get_token).returns(stub_token)
 
