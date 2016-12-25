@@ -13,7 +13,7 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
   end
 
   def test_main
-    assert_equal "bXlfYXBwX2tleTpteV9hcHBfc2VjcmV0", @rcsdk.send(:api_key)
+    assert_equal 'bXlfYXBwX2tleTpteV9hcHBfc2VjcmV0', @rcsdk.send(:api_key)
   end
 
   def test_config
@@ -83,7 +83,7 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     authorize_url = @rcsdk.authorize_url(redirect_uri: 'http://localhost:4567/oauth')
 
     assert_equal 0, authorize_url.index(RingCentralSdk::RC_SERVER_SANDBOX)
-    assert_equal true, (authorize_url.index('localhost') > 0) ? true : false
+    assert_equal true, authorize_url.index('localhost') > 0 ? true : false
   end
 
   def test_create_url
@@ -126,7 +126,7 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     rcsdk.set_oauth2_client
 
     stub_token_hash = data_auth_token_with_refresh
-    stub_token = OAuth2::AccessToken::from_hash(rcsdk.oauth2client, stub_token_hash)
+    stub_token = OAuth2::AccessToken.from_hash(rcsdk.oauth2client, stub_token_hash)
 
     rcsdk.oauth2client.auth_code.stubs(:get_token).returns(stub_token)
 

@@ -11,6 +11,7 @@ client = RingCentralSdk::REST::Client.new do |config|
   config.dotenv = true
 end
 
+# CoverPage is a example coverpage page builder class
 class CoverPage
   def build_coverpage
     MIMEBuilder::Text.new(
