@@ -44,31 +44,31 @@ module RingCentralSdk::REST
       end
     end
 
-    def delete(opts={})
+    def delete(opts = {})
       return @client.http.delete do |req|
         req.url build_url(opts[:path])
       end
     end
 
-    def get(opts={})
+    def get(opts = {})
       return @client.http.get do |req|
         req.url build_url(opts[:path])
       end
     end
 
-    def post(opts={})
+    def post(opts = {})
       return @client.http.post do |req|
         req = inflate_request req, opts
       end
     end
 
-    def put(opts={})
+    def put(opts = {})
       return @client.http.put do |req|
         req = inflate_request req, opts
       end
     end
 
-    def inflate_request(req, opts={})
+    def inflate_request(req, opts = {})
       req.url build_url(opts[:path])
       if opts.key? :body
         req.body = opts[:body]

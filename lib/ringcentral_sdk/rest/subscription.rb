@@ -66,7 +66,7 @@ module RingCentralSdk::REST
     def subscribe(events=nil)
       set_events(events) if events.is_a? Array
 
-      if !@event_filters.is_a?(Array) || @event_filters.length == 0
+      if !@event_filters.is_a?(Array) || @event_filters.empty?
         raise 'Events are undefined'
       end
 
@@ -149,8 +149,10 @@ module RingCentralSdk::REST
       return (s.has_key?('deliveryMode') && s['deliveryMode']) && \
         (s['deliveryMode'].has_key?('subscriberKey') && s['deliveryMode']['subscriberKey']) && \
         (
-          s['deliveryMode'].has_key?('address') && s['deliveryMode']['address'] && \
-          s['deliveryMode']['address'].length>0) \
+          s['deliveryMode'].has_key?('address') && \
+          s['deliveryMode']['address'] && \
+          s['deliveryMode']['address'].length>0
+        ) \
         ? true : false
     end
 
@@ -165,9 +167,9 @@ module RingCentralSdk::REST
     end
 
     def reset
-      _clear_timeout()
-      _unsubscribe_at_pubnub()
-      @_subscription = nil_subscription()
+      _clear_timeout
+      _unsubscribe_at_pubnub
+      @_subscription = nil_subscription
     end
 
     def destroy
@@ -237,7 +239,7 @@ module RingCentralSdk::REST
         message = MultiJson.decode(plaintext, symbolize_keys: false)
       end
 
-      return message
+      message
     end
 
     def _encrypted?
@@ -246,7 +248,7 @@ module RingCentralSdk::REST
         delivery_mode['encryption']                        && \
         delivery_mode.has_key?('encryptionKey')            && \
         delivery_mode['encryptionKey']
-      return is_encrypted
+      is_encrypted
     end
 
     def _unsubscribe_at_pubnub

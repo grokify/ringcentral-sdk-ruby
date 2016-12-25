@@ -23,11 +23,11 @@ module RingCentralSdk::REST
         req.headers['Content-Type'] = 'application/json'
         req.body = {
           from: { phoneNumber: opts[:from].to_s },
-          to: [ { phoneNumber: opts[:to].to_s } ],
+          to: [{ phoneNumber: opts[:to].to_s }],
           text: opts[:text].to_s
         }
       end
-      return response
+      response
     end
   end
 end
@@ -39,8 +39,8 @@ module RingCentralSdk::REST
     end
 
     def create(opts)
-      fax = RingCentralSdk::REST::Request::Fax.new(opts)
-      return @client.send_request(fax)
+      fax = RingCentralSdk::REST::Request::Fax.new opts
+      return @client.send_request fax
     end
   end
 end
