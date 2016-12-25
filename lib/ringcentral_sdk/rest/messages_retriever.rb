@@ -24,9 +24,7 @@ module RingCentralSdk
           dateTo: (last_updated_dt + (@range / 1440.0)).to_s
         )
 
-        if event.new_sms_count > 0
-          params[:messageType] = 'SMS'
-        end
+        params[:messageType] = 'SMS' if event.new_sms_count > 0
 
         res = @client.http.get do |req|
           req.url url
@@ -38,9 +36,7 @@ module RingCentralSdk
         res.body['records'].each do |rec|
           rec_last_modified_time = rec['lastModifiedTime']
           rec_last_modified_time_dt = DateTime.iso8601(rec_last_modified_time)
-          if rec_last_modified_time_dt == last_updated_dt
-            messages.push rec
-          end
+          messages.push(rec) if rec_last_modified_time_dt == last_updated_dt
         end
         messages
       end

@@ -62,9 +62,7 @@ module RingCentralSdk
           end
         end
 
-        if token.to_s =~ /^\s*{/
-          @token = MultiJson.decode token
-        end
+        @token = MultiJson.decode(token) if token.to_s =~ /^\s*{/
       end
 
       def load_dotenv_rc

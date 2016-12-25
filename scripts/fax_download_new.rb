@@ -33,9 +33,7 @@ class RcEventFaxDownloader
         ext = att['contentType'] == 'application/pdf' ? '.pdf' : ''
         filename += ext
         response_file = @client.http.get url
-        @posters.each do |poster|
-          poster.write_file(filename, response_file)
-        end
+        @posters.each { |poster| poster.write_file(filename, response_file) }
       end
     end
   end
