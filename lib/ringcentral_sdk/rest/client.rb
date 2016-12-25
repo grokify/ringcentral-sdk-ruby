@@ -63,9 +63,7 @@ module RingCentralSdk
         built_url = ''
         has_http = !url.index('http://').nil? && !url.index('https://').nil?
 
-        if add_server && !has_http
-          built_url += @config.server_url
-        end
+        built_url += @config.server_url if add_server && !has_http
 
         if url.index(URL_PREFIX).nil? && !has_http
           built_url += URL_PREFIX + '/' + API_VERSION + '/'
@@ -89,9 +87,7 @@ module RingCentralSdk
       end
 
       def create_urls(urls, add_server = false, add_method = nil, add_token = false)
-        unless urls.is_a?(Array)
-          raise 'URLs is not an array'
-        end
+        raise ArgumentError.new('URLs is not an array') unless urls.is_a? Array
         built_urls = []
         urls.each do |url|
           built_urls.push(create_url(url, add_server, add_method, add_token))
@@ -180,21 +176,19 @@ module RingCentralSdk
         elsif client.is_a? OAuth2::Client
           @oauth2client = client
         else
-          fail 'client is not an OAuth2::Client'
+          raise ArgumentError.new('client is not an OAuth2::Client')
         end
       end
 
       def get_api_key
-        api_key = (@config.app_key.is_a?(String) && @config.app_secret.is_a?(String)) \
-          ? Base64.encode64("#{@config.app_key}:#{@config.app_secret}").gsub(/\s/, '') : ''
-        api_key
+        Base64.encode64("#{@config.app_key}:#{@config.app_secret}").gsub(/\s/, '')
       end
 
       def send_request(request_sdk = {})
         if request_sdk.is_a? Hash
-          request_sdk = RingCentralSdk::REST::Request::Simple.new(request_sdk)
+          request_sdk = RingCentralSdk::REST::Request::Simple.new request_sdk
         elsif !request_sdk.is_a? RingCentralSdk::REST::Request::Base
-          fail 'Request is not a RingCentralSdk::REST::Request::Base'
+          raise ArgumentError.new('Request is not a RingCentralSdk::REST::Request::Base')
         end
 
         method = request_sdk.method.to_s.downcase
