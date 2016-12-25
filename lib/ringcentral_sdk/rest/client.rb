@@ -8,8 +8,8 @@ require 'oauth2'
 module RingCentralSdk::REST
   class Client
     ACCESS_TOKEN_TTL  = 600             # 10 minutes
-    REFRESH_TOKEN_TTL = 36000           # 10 hours
-    REFRESH_TOKEN_TTL_REMEMBER = 604800 # 1 week
+    REFRESH_TOKEN_TTL = 36_000           # 10 hours
+    REFRESH_TOKEN_TTL_REMEMBER = 604_800 # 1 week
     ACCOUNT_PREFIX    = '/account/'.freeze
     ACCOUNT_ID        = '~'.freeze
     AUTHZ_ENDPOINT    = '/restapi/oauth/authorize'.freeze
@@ -85,7 +85,7 @@ module RingCentralSdk::REST
       built_url
     end
 
-    def create_urls(urls, add_server=false, add_method=nil, add_token=false)
+    def create_urls(urls, add_server = false, add_method = nil, add_token = false)
       unless urls.is_a?(Array)
         raise 'URLs is not an array'
       end

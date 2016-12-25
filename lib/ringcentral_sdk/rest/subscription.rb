@@ -195,11 +195,10 @@ module RingCentralSdk::REST
         },
         status: lambda do |envelope|
           @_client.logger.info "\n\n\n#{envelope.status}\n\n\n"
- 
           if envelope.error?
             @_client.logger.info "ERROR! #{envelope.status[:category]}"
-          else
-            @_client.logger.info('CONNECTED!') if envelope.status[:last_timetoken] == 0 # Connected!
+          elsif envelope.status[:last_timetoken] == 0 # Connected!
+            @_client.logger.info('CONNECTED!')
           end
         end
       )
