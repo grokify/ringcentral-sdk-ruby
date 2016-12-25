@@ -52,7 +52,7 @@ module RingCentralSdk::REST::Cache
         end
       end
       inflate_num2id()
-      return @extensions_hash
+      @extensions_hash
     end
 
     def retrieve_all()
@@ -63,12 +63,12 @@ module RingCentralSdk::REST::Cache
       num2id = {}
       @extensions_hash.each do |k,v|
         if v.key?('id') && v['id'] > 0 &&
-          v.key?('extensionNumber') && v['extensionNumber'].length>0
+          v.key?('extensionNumber') && !v['extensionNumber'].empty?
           num2id[v['extensionNumber']] = v['id'].to_s
         end
       end
       @extensions_num2id = num2id
-      return num2id
+      num2id
     end
 
     def get_extension_by_id(extension_id)
@@ -78,7 +78,7 @@ module RingCentralSdk::REST::Cache
       if @extensions_hash.key? extension_id
           return @extensions_hash[extension_id]
       end
-      return nil
+      nil
     end
 
     def get_extension_by_number(extension_number)
@@ -117,7 +117,7 @@ module RingCentralSdk::REST::Cache
         end
       end
 
-      return members
+      members
     end
   end
 end
