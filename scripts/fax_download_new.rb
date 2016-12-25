@@ -10,9 +10,7 @@ client = RingCentralSdk::REST::Client.new do |config|
   config.dotenv = true
 end
 
-# An SMS event poster. Takes a message store subscription
-# event and posts inbound SMS as chats.
-
+# RcEventFaxDownloader is a helper class to download faxes
 class RcEventFaxDownloader
   attr_accessor :event
   def initialize(client, posters=[], event_data={})
@@ -43,7 +41,7 @@ class RcEventFaxDownloader
   end
 end
 
-# An observer object that uses RcEventSMSChatPoster to post
+# An observer object that uses RcDownloadNewFaxObserver to post
 # to multiple chat posters
 class RcDownloadNewFaxObserver
   def initialize(client, posters)
@@ -60,6 +58,8 @@ class RcDownloadNewFaxObserver
   end
 end
 
+# RcFaxPosterFilesystem is a helper class that writes files
+# to the file system
 class RcFaxPosterFilesystem
   def initialize(dir = '.')
     @dir = dir

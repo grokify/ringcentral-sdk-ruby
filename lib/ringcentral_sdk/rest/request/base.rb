@@ -1,27 +1,31 @@
-module RingCentralSdk::REST::Request
-  class Base
-    def method
-      return 'get' # HTTP methods
-    end
+module RingCentralSdk
+  module REST
+    module Request
+      class Base
+        def method
+          'get' # HTTP methods
+        end
 
-    def url
-      return ''
-    end
+        def url
+          ''
+        end
 
-    def params
-      return {}
-    end
+        def params
+          {}
+        end
 
-    def headers
-      return {}
-    end
+        def headers
+          {}
+        end
 
-    def content_type
-      return ''
-    end
+        def content_type
+          ''
+        end
 
-    def body
-      return '' # '' || Hash
+        def body
+          '' # '' || Hash
+        end
+      end
     end
   end
 end

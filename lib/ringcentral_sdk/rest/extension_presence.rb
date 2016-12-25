@@ -43,7 +43,7 @@ module RingCentralSdk::REST
       return new_status
     end
 
-    def department_calls_enabled?(reload=false)
+    def department_calls_enabled?(reload = false)
       if reload
         retrieve()
       elsif !@presence_data.key?('dndStatus')
@@ -73,7 +73,7 @@ module RingCentralSdk::REST
         req.headers['Content-Type'] = 'application/json'
         req.body = body
       end
-      
+
       @presence_data = res.body
 
       return @presence_data

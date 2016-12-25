@@ -15,7 +15,7 @@ end
 def transcribe_recordings(rcsdk, vbsdk)
   # Retrieve voice call log records with recordings
   response = rcsdk.http.get do |req|
-    params = {type: 'Voice', withRecording: 'True', dateFrom: '2015-01-01'}
+    params = { type: 'Voice', withRecording: 'True', dateFrom: '2015-01-01' }
     req.url 'account/~/extension/~/call-log', params
   end
 
