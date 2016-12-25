@@ -58,7 +58,7 @@ module RingCentralSdk
         end
 
         def retrieve_all
-          retrieve {}, true
+          retrieve({}, true)
         end
 
         def inflate_num2id

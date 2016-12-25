@@ -19,11 +19,8 @@ module RingCentralSdk
         last_updated_s = event.doc.getAttr('body.lastUpdated')
         last_updated_dt = DateTime.iso8601(last_updated_s)
 
-        params.merge!(
-          dateFrom: (last_updated_dt - (@range / 1440.0)).to_s,
-          dateTo: (last_updated_dt + (@range / 1440.0)).to_s
-        )
-
+        params[:dateFrom] = (last_updated_dt - (@range / 1440.0)).to_s
+        params[:dateTo] = (last_updated_dt + (@range / 1440.0)).to_s
         params[:messageType] = 'SMS' if event.new_sms_count > 0
 
         res = @client.http.get do |req|
