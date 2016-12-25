@@ -12,12 +12,16 @@ client = RingCentralSdk::REST::Client.new do |config|
 end
 
 def build_coverpage
-  hbs = ENV['RC_DEMO_FAX_COVERPAGE_TEMPLATE'].strip
-  raise "Coverpage Template Does Not Exist: #{hbs}" unless File.exist? hbs
+  MIMEBuilder::Text.new(
+    build_template_html,
+    content_type: 'text/html',
+    content_id_disable: true,
+    is_attachment: true
+  ).mime
+end
 
-  handlebars = Handlebars::Context.new
-  template = handlebars.compile IO.read(hbs)
-
+def build_template_html
+  template = build_template
   html = template.call(
     fax_date: DateTime.now.to_s,
     fax_pages: ENV['RC_DEMO_FAX_PAGES'],
@@ -29,14 +33,16 @@ def build_coverpage
     fax_from_fax: ENV['RC_DEMO_FAX_FROM'],
     fax_coverpage_text: ENV['RC_DEMO_FAX_COVERPAGE_TEXT']
   )
+  return html
+end
 
-  builder = MIMEBuilder::Text.new \
-    html,
-    content_type: 'text/html',
-    content_id_disable: true,
-    is_attachment: true
+def build_template
+  hbs = ENV['RC_DEMO_FAX_COVERPAGE_TEMPLATE'].strip
+  raise "Coverpage Template Does Not Exist: #{hbs}" unless File.exist? hbs
 
-  builder.mime
+  handlebars = Handlebars::Context.new
+  template = handlebars.compile IO.read(hbs)
+  return template
 end
 
 # Get the coverpage as a MIME::Media object to pass into
