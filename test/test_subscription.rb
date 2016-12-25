@@ -43,7 +43,7 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     end
 
     sub.set_events([])
-    
+
     assert_raise do
       sub.subscribe
     end
