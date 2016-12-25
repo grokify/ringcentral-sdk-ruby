@@ -171,9 +171,8 @@ module RingCentralSdk
       end
 
       def _subscribe_at_pubnub
-        unless alive?
-          raise 'Subscription is not alive'
-        end
+        raise 'Subscription is not alive' unless alive?
+
         s_key = @_subscription['deliveryMode']['subscriberKey']
 
         @_pubnub = new_pubnub(s_key, false, '')
