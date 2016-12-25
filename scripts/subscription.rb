@@ -27,14 +27,14 @@ def run_subscription(client)
     '/restapi/v1.0/account/~/extension/~/presence'
   ])
 
-  sub.add_observer MyObserver.new()
+  sub.add_observer MyObserver.new
 
   puts 'Click any key to finish'
 
-  stop_script = gets
+  gets
 
   # End the subscription
-  sub.destroy()
+  sub.destroy
 end
 
 run_subscription client
