@@ -54,25 +54,19 @@ module RingCentralSdk
       end
 
       def add_events(events)
-        unless events.is_a? Array
-          raise 'Events is not an array.'
-        end
+        raise 'Events is not an array.' unless events.is_a? Array
         @event_filters.push(events) unless events.empty?
       end
 
       def set_events(events)
-        unless events.is_a? Array
-          raise 'Events is not an array.'
-        end
+        raise 'Events is not an array.' unless events.is_a? Array
         @event_filters = events
       end
 
       def subscribe(events = nil)
         set_events(events) if events.is_a? Array
 
-        if !@event_filters.is_a?(Array) || @event_filters.empty?
-          raise 'Events are undefined'
-        end
+        raise 'Events are undefined' unless @event_filters.is_a?(Array) && !@event_filters.empty?
 
         begin
           response = @_client.http.post do |req|
@@ -100,7 +94,7 @@ module RingCentralSdk
         set_events(events) if events.is_a? Array
 
         raise 'Subscription is not alive' unless alive?
-        raise 'Events are undefined' unless @event_filters.is_a?(Array) && !@event_filters.empty?
+        raise 'Events are undefined' if @event_filters.empty?
         _clear_timeout
 
         begin

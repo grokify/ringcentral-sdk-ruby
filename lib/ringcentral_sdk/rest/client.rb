@@ -52,7 +52,7 @@ module RingCentralSdk
 
       def init_attributes
         @http = nil
-        @user_agent = get_user_agent
+        @user_agent = build_user_agent
       end
 
       def api_version_url
@@ -188,7 +188,7 @@ module RingCentralSdk
         if request_sdk.is_a? Hash
           request_sdk = RingCentralSdk::REST::Request::Simple.new request_sdk
         elsif !request_sdk.is_a? RingCentralSdk::REST::Request::Base
-          raise ArgumentError.new('Request is not a RingCentralSdk::REST::Request::Base')
+          raise ArgumentError, 'Request is not a RingCentralSdk::REST::Request::Base'
         end
 
         method = request_sdk.method.to_s.downcase
@@ -206,7 +206,7 @@ module RingCentralSdk
         when 'put'
           res = @http.put { |req| req = inflate_request(req, request_sdk) }
         else
-          fail "method [#{method}] not supported"
+          raise "method [#{method}] not supported"
         end
 
         res
@@ -229,7 +229,7 @@ module RingCentralSdk
         req_faraday
       end
 
-      def get_user_agent
+      def build_user_agent
         ua = "ringcentral-sdk-ruby/#{RingCentralSdk::VERSION} %s/%s %s" % [
           (RUBY_ENGINE rescue nil || 'ruby'),
           RUBY_VERSION,
