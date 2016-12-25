@@ -1,6 +1,6 @@
 module RingCentralSdk
   module REST
-  	# Request is the module namespace for various API request helpers.
+    # Request is the module namespace for various API request helpers.
     module Request
       autoload :Base, 'ringcentral_sdk/rest/request/base'
       autoload :Fax, 'ringcentral_sdk/rest/request/fax'

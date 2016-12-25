@@ -140,24 +140,24 @@ class RingCentralSdkTestSubAuth
 
   def data_auth_token_with_refresh
     json = '{
-  "access_token": "my_test_access_token_with_refresh",
-  "token_type": "bearer",
-  "expires_in": 3599,
-  "refresh_token": "my_test_refresh_token",
-  "refresh_token_expires_in": 604799,
-  "scope": "ReadCallLog DirectRingOut EditCallLog ReadAccounts Contacts EditExtensions ReadContacts SMS EditPresence RingOut EditCustomData ReadPresence EditPaymentInfo Interoperability Accounts NumberLookup InternalMessages ReadCallRecording EditAccounts Faxes EditReportingSettings ReadClientInfo EditMessages VoipCalling ReadMessages",
-  "owner_id": "1234567890"
+      "access_token": "my_test_access_token_with_refresh",
+      "token_type": "bearer",
+      "expires_in": 3599,
+      "refresh_token": "my_test_refresh_token",
+      "refresh_token_expires_in": 604799,
+      "scope": "ReadCallLog DirectRingOut EditCallLog ReadAccounts Contacts EditExtensions ReadContacts SMS EditPresence RingOut EditCustomData ReadPresence EditPaymentInfo Interoperability Accounts NumberLookup InternalMessages ReadCallRecording EditAccounts Faxes EditReportingSettings ReadClientInfo EditMessages VoipCalling ReadMessages",
+      "owner_id": "1234567890"
       }'
     JSON.parse(json, symbolize_names: true)
   end
 
   def data_auth_token_without_refresh
     json = '{
-  "access_token": "my_test_access_token_without_refresh",
-  "token_type": "bearer",
-  "expires_in": 3599,
-  "scope": "ReadCallLog DirectRingOut EditCallLog ReadAccounts Contacts EditExtensions ReadContacts SMS EditPresence RingOut EditCustomData ReadPresence EditPaymentInfo Interoperability Accounts NumberLookup InternalMessages ReadCallRecording EditAccounts Faxes EditReportingSettings ReadClientInfo EditMessages VoipCalling ReadMessages",
-  "owner_id": "1234567890"
+      "access_token": "my_test_access_token_without_refresh",
+      "token_type": "bearer",
+      "expires_in": 3599,
+      "scope": "ReadCallLog DirectRingOut EditCallLog ReadAccounts Contacts EditExtensions ReadContacts SMS EditPresence RingOut EditCustomData ReadPresence EditPaymentInfo Interoperability Accounts NumberLookup InternalMessages ReadCallRecording EditAccounts Faxes EditReportingSettings ReadClientInfo EditMessages VoipCalling ReadMessages",
+      "owner_id": "1234567890"
       }'
     JSON.parse(json, symbolize_names: true)
   end
