@@ -137,14 +137,17 @@ module RingCentralSdk
 
       def alive?
         s = @_subscription
-        (s.key?('deliveryMode') && s['deliveryMode']) && \
-          (s['deliveryMode'].key?('subscriberKey') && s['deliveryMode']['subscriberKey']) && \
-          (
-            s['deliveryMode'].key?('address') && \
-            !s['deliveryMode']['address'].nil? && \
-            !s['deliveryMode']['address'].empty?
-          ) \
-          ? true : false
+        if
+          (s.key?('deliveryMode') && s['deliveryMode']) \
+          && (s['deliveryMode'].key?('subscriberKey') && s['deliveryMode']['subscriberKey']) \
+          && (
+            s['deliveryMode'].key?('address') \
+            && !s['deliveryMode']['address'].nil? \
+            && !s['deliveryMode']['address'].empty?
+          )
+          return true
+        end
+        false
       end
 
       def subscription
