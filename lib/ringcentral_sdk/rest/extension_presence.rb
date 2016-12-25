@@ -63,7 +63,7 @@ module RingCentralSdk::REST
         status_enabled[current_status] : nil
     end
 
-    def update(body=nil)
+    def update(body = nil)
       if body.nil?
         raise 'HTTP request body is required to update presence'
       end

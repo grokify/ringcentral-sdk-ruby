@@ -40,7 +40,8 @@ end
 
 vbsdk = VoiceBase::V1::Client.new(
   ENV['RC_DEMO_VB_API_KEY'],
-  ENV['RC_DEMO_VB_PASSWORD'])
+  ENV['RC_DEMO_VB_PASSWORD']
+)
 
 transcribe_recordings(client, vbsdk)
 
