@@ -82,7 +82,7 @@ module RingCentralSdk::REST::Cache
     end
 
     def get_extension_by_number(extension_number)
-      if !extension_number.is_a?(String)
+      unless extension_number.is_a? String
         extension_number = extension_number.to_s
       end
       if @extensions_num2id.key?(extension_number)

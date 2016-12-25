@@ -40,7 +40,7 @@ module RingCentralSdk::REST
 
     def create(opts)
       fax = RingCentralSdk::REST::Request::Fax.new opts
-      return @client.send_request fax
+      @client.send_request fax
     end
   end
 end

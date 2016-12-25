@@ -22,7 +22,7 @@ def run_subscription(client)
   # Create an observable subscription and add your observer
   sub = client.create_subscription()
   sub.subscribe([
-    "/restapi/v1.0/account/~/extension/~/message-store/instant?type=SMS",
+    "/restapi/v1.0/account/~/extension/~/message-store/instant?type=SMS"
   ])
 
   sub.add_observer MyObserver.new()

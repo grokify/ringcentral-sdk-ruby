@@ -23,7 +23,7 @@ class RcEventFaxDownloader
     @retriever.range = 0.5 # minutes
   end
 
-  def download_fax()
+  def download_fax
     puts @event.new_fax_count
     return unless @event.new_fax_count > 0
     messages = @retriever.retrieve_for_event @event, direction: 'Inbound', messageType: 'Fax'

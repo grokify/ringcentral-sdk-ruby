@@ -44,7 +44,7 @@ class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
       text: 'RingCentral fax demo using Ruby SDK!'
     )
 
-    assert_equal 'account/111111111/extension/222222222/fax', fax3.url()
+    assert_equal 'account/111111111/extension/222222222/fax', fax3.url
 
     fax4 = RingCentralSdk::REST::Request::Fax.new(
       accountId: 111111111,
@@ -52,7 +52,7 @@ class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
       to: '+16505551212","coverPageText":"RingCentral fax demo using Ruby SDK!"}',
       text: 'RingCentral fax demo using Ruby SDK!'
     )
-    assert_equal 'account/111111111/extension/222222222/fax', fax4.url()
+    assert_equal 'account/111111111/extension/222222222/fax', fax4.url
 
     fax5 = RingCentralSdk::REST::Request::Fax.new(
       accountId: 111111111,
@@ -60,7 +60,7 @@ class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
       coverPageText: "RingCentral fax demo using Ruby SDK!",
       text: 'RingCentral fax demo using Ruby SDK!'
     )
-    assert_equal 'account/111111111/extension/222222222/fax', fax5.url()
+    assert_equal 'account/111111111/extension/222222222/fax', fax5.url
 
     # assert_equal 'application/pdf', fax.get_file_content_type('example.pdf')
     # assert_equal 'attachment', fax.get_attachment_content_disposition()
@@ -85,13 +85,13 @@ class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
       accountId: 111111111,
       extensionId: 222222222, # Can be nil or {} for defaults '~'
       coverPageText: "RingCentral fax demo using Ruby SDK!",
-      parts: [{text: 'RingCentral fax demo using Ruby SDK!'}]
+      parts: [{ text: 'RingCentral fax demo using Ruby SDK!' }]
     )
-    assert_equal 'account/111111111/extension/222222222/fax', fax6.url()
+    assert_equal 'account/111111111/extension/222222222/fax', fax6.url
 
     fax7 = RingCentralSdk::REST::Request::Fax.new(
       coverPageText: "RingCentral fax demo using Ruby SDK!",
-      parts: [{text: 'RingCentral fax demo using Ruby SDK!'}]
+      parts: [{ text: 'RingCentral fax demo using Ruby SDK!' }]
     )
     assert_equal '~', fax7.account_id
     assert_equal '~', fax7.extension_id

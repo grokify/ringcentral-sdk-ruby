@@ -95,8 +95,7 @@ module RingCentralSdk::REST
           end
         end
       end
-      url = path.join('/')
-      return url
+      return path.join('/')
     end
   end
 end

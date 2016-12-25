@@ -21,14 +21,14 @@ module RingCentralSdk::REST
       hash.each do |k,v|
         return true if k.is_a? String
       end
-      return false
+      false
     end
 
     def _symbolize_keys(hash = {})
       if _hash_has_string_keys hash
         return MultiJson.decode(MultiJson.encode(hash), :symbolize_keys=>true)
       end
-      return hash
+      hash
     end
 
     def new_fax_count

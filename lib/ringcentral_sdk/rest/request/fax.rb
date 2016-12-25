@@ -5,13 +5,14 @@ require 'mime_builder'
 require 'multi_json'
 
 module RingCentralSdk::REST::Request
+  # Helper to create a fax request
   class Fax < RingCentralSdk::REST::Request::Base
     attr_reader :msg
 
     attr_reader :account_id
     attr_reader :extension_id
 
-    def initialize(opts={})
+    def initialize(opts = {})
       @metadata_part_encode_base64 = true
 
       @msg = MIME::Multipart::Mixed.new
@@ -24,18 +25,18 @@ module RingCentralSdk::REST::Request
       add_parts(opts[:parts])
     end
 
-    def add_path(opts={})
+    def add_path(opts = {})
       @account_id = opts[:accountId] ||= '~'
       @extension_id = opts[:extensionId] ||= '~'
     end
 
-    def add_part_meta(opts={})
+    def add_part_meta(opts = {})
       meta = create_metadata opts
       @msg.add MIMEBuilder::JSON.new(meta).mime
       true
     end
 
-    def create_metadata(opts={})
+    def create_metadata(opts = {})
       meta = {}
       return meta unless opts.is_a?(Hash)
 
@@ -58,14 +59,14 @@ module RingCentralSdk::REST::Request
       meta
     end
 
-    def add_part_text(text=nil, opts={})
-      return unless !text.nil? && text.to_s.length>0
+    def add_part_text(text = nil, opts = {})
+      return if text.nil? || text.to_s.empty?
       opts[:content_id_disable] = true
       text_part = MIMEBuilder::Text.new text, opts
       @msg.add text_part.mime
     end
 
-    def add_parts(parts=[])
+    def add_parts(parts = [])
       return if parts.nil?
       unless parts.is_a? Array
         raise 'invalid parameter[0]. needs to be an array'

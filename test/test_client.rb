@@ -81,7 +81,7 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
   end
 
   def test_authorize_url_explicit
-    authorize_url = @rcsdk.authorize_url({:redirect_uri => 'http://localhost:4567/oauth'})
+    authorize_url = @rcsdk.authorize_url({ redirect_uri: 'http://localhost:4567/oauth' })
 
     assert_equal 0, authorize_url.index(RingCentralSdk::RC_SERVER_SANDBOX)
     assert_equal true, (authorize_url.index('localhost') > 0) ? true : false
