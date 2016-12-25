@@ -13,7 +13,7 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
   end
 
   def test_main
-    assert_equal "bXlfYXBwX2tleTpteV9hcHBfc2VjcmV0", @rcsdk.send(:get_api_key)
+    assert_equal "bXlfYXBwX2tleTpteV9hcHBfc2VjcmV0", @rcsdk.send(:api_key)
   end
 
   def test_config
@@ -70,13 +70,13 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
       config.redirect_url = 'http://localhost:4567/oauth'
     end
 
-    authorize_url = rcsdk.authorize_url()
+    authorize_url = rcsdk.authorize_url
 
     puts authorize_url
 
     assert_equal true, authorize_url.is_a?(String)
     assert_equal 0, authorize_url.index(RingCentralSdk::RC_SERVER_PRODUCTION)
-    assert_equal true, (authorize_url.index('localhost') > 0) ? true : false
+    assert_equal true, authorize_url.index('localhost') > 0 ? true : false
   end
 
   def test_authorize_url_explicit
@@ -104,11 +104,11 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
   end
 
   def test_authorize_code
-    rcsdk = new_client()
-    rcsdk.set_oauth2_client()
+    rcsdk = new_client
+    rcsdk.set_oauth2_client
 
     stub_token_hash = data_auth_token_with_refresh
-    stub_token = OAuth2::AccessToken::from_hash(rcsdk.oauth2client, stub_token_hash)
+    stub_token = OAuth2::AccessToken.from_hash(rcsdk.oauth2client, stub_token_hash)
 
     rcsdk.oauth2client.auth_code.stubs(:get_token).returns(stub_token)
 
@@ -123,7 +123,7 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
       config.redirect_url = 'http://localhost:4567/oauth'
     end
 
-    rcsdk.set_oauth2_client()
+    rcsdk.set_oauth2_client
 
     stub_token_hash = data_auth_token_with_refresh
     stub_token = OAuth2::AccessToken::from_hash(rcsdk.oauth2client, stub_token_hash)
@@ -134,8 +134,8 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     assert_equal 'OAuth2::AccessToken', token.class.name
     assert_equal 'OAuth2::AccessToken', rcsdk.token.class.name
 
-    rcsdk = new_client()
-    rcsdk.set_oauth2_client()
+    rcsdk = new_client
+    rcsdk.set_oauth2_client
 
     stub_token_hash = data_auth_token
     stub_token = OAuth2::AccessToken::from_hash(rcsdk.oauth2client, stub_token_hash)
@@ -146,8 +146,8 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     assert_equal 'OAuth2::AccessToken', token.class.name
     assert_equal 'OAuth2::AccessToken', rcsdk.token.class.name
 
-    rcsdk = new_client()
-    rcsdk.set_oauth2_client()
+    rcsdk = new_client
+    rcsdk.set_oauth2_client
 
     stub_token_hash = data_auth_token
     stub_token = OAuth2::AccessToken::from_hash(rcsdk.oauth2client, stub_token_hash)
@@ -160,8 +160,8 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
   end
 
   def test_authorize_password_with_refresh
-    rcsdk = new_client()
-    rcsdk.set_oauth2_client()
+    rcsdk = new_client
+    rcsdk.set_oauth2_client
 
     stub_token_hash = data_auth_token_with_refresh
     stub_token = OAuth2::AccessToken::from_hash(rcsdk.oauth2client, stub_token_hash)
@@ -263,7 +263,7 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     ######
     request = RingCentralSdk::REST::Request::Simple.new(
       method: 'delete',
-      url: 'account/~/extension/~/message-store/11111111',
+      url: 'account/~/extension/~/message-store/11111111'
     )
     assert_equal 'delete', request.method
 
@@ -272,11 +272,11 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
   end
 
   def test_sms
-    client = new_client()
-    client.set_oauth2_client()
+    client = new_client
+    client.set_oauth2_client
 
     stub_token_hash = data_auth_token_with_refresh
-    stub_token = OAuth2::AccessToken::from_hash(client.oauth2client, stub_token_hash)
+    stub_token = OAuth2::AccessToken.from_hash(client.oauth2client, stub_token_hash)
 
     client.oauth2client.password.stubs(:get_token).returns(stub_token)
 

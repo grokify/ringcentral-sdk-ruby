@@ -13,7 +13,7 @@ module RingCentralSdk
 
       def retrieve_for_event(event, params = {})
         unless event.is_a? RingCentralSdk::REST::Event
-          fail 'retrieve_for_event requires RingCentralSdk::REST::Event argument'
+          raise ArgumentError, 'retrieve_for_event requires RingCentralSdk::REST::Event argument'
         end
         url = event.doc.getAttr :event
         last_updated_s = event.doc.getAttr('body.lastUpdated')

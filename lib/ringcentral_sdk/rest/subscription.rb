@@ -118,9 +118,7 @@ module RingCentralSdk
       end
 
       def remove
-        unless alive?
-          raise 'Subscription is not alive'
-        end
+        raise 'Subscription is not alive' unless alive?
 
         begin
           response = @_client.http.delete do |req|
