@@ -20,11 +20,11 @@ def transcribe_recordings(rcsdk, vbsdk)
   end
 
   # Save recording and metadata for each call log record
-  if response.body.has_key?('records')
+  if response.body.key?('records')
     response.body['records'].each_with_index do |record,i|
 
-      next unless record.has_key?('recording') &&
-        record['recording'].has_key?('contentUri')
+      next unless record.key?('recording') &&
+        record['recording'].key?('contentUri')
 
       content_uri = record['recording']['contentUri'].to_s
 

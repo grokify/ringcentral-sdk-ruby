@@ -22,7 +22,7 @@ def get_event_filters_for_extensions(extension_ids, account_id = '~')
       event_filters.push event_filter
     end
   end
-  return event_filters
+  event_filters
 end
 
 # An example observer object
@@ -35,7 +35,7 @@ end
 
 def run_subscription(client, event_filters)
   # Create an observable subscription and add your observer
-  sub = client.create_subscription()
+  sub = client.create_subscription
   res = sub.subscribe(event_filters)
 
   pp(res)
@@ -48,7 +48,7 @@ def run_subscription(client, event_filters)
   stop_script = gets
 
   # End the subscription
-  sub.destroy()
+  sub.destroy
 end
 
 # Get all extensions

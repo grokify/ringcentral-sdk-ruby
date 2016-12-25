@@ -12,7 +12,7 @@ module RingCentralSdk::REST::Cache
     def initialize(client)
       @client = client
       @account_id = '~'
-      flush()
+      flush
     end
 
     def flush
@@ -24,7 +24,7 @@ module RingCentralSdk::REST::Cache
     def retrieve(params={}, retrieve_all=true)
       @last_retrieved = Time.now.to_i
       uri = URI.parse "account/#{@account_id}/extension"
-      if params.length > 0 
+      if params.length > 0
         uri.query = URI.encode_www_form params
       end
       res = @client.http.get do |req|
@@ -72,7 +72,7 @@ module RingCentralSdk::REST::Cache
     end
 
     def get_extension_by_id(extension_id)
-      if !extension_id.is_a?(String)
+      unless extension_id.is_a? String
         extension_id = extension_id.to_s
       end
       if @extensions_hash.key? extension_id
@@ -95,7 +95,7 @@ module RingCentralSdk::REST::Cache
     end
 
     def get_department_members(department_id)
-      if !department_id.is_a?(String)
+      unless department_id.is_a? String
         department_id = department_id.to_s
       end
       if department_id !~ /^[0-9]+$/

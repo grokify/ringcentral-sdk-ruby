@@ -13,7 +13,7 @@ class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
       text: 'RingCentral fax demo using Ruby SDK!'
     )
 
-    assert_equal "RingCentralSdk::REST::Request::Fax", fax.class.name
+    assert_equal 'RingCentralSdk::REST::Request::Fax', fax.class.name
     assert_equal 'account/~/extension/~/fax', fax.url()
 
     fax2 = RingCentralSdk::REST::Request::Fax.new(
@@ -25,7 +25,7 @@ class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
       files: ['./scripts/test_file.pdf']
     )
 
-    assert_equal 'account/111111111/extension/222222222/fax', fax2.url()
+    assert_equal 'account/111111111/extension/222222222/fax', fax2.url
 
     assert_raise do
       fax2.add_file('non-existent_file_path')

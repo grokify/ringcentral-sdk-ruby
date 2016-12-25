@@ -9,7 +9,7 @@ require 'voicebase'
 require 'pp'
 
 =begin
-  
+
 This demo uploads MP3 recording files with the file format "recording_.*\.mp3"
 to VoiceBase for text transcription. This is the file format used by the
 call-recording_download.rb script.
@@ -27,7 +27,7 @@ client = RingCentralSdk::REST::Client.new do |config|
 end
 
 def upload_recordings(vbsdk, dir)
-  Dir.glob('recording_*.mp3').each_with_index do |file,i|
+  Dir.glob('recording_*.mp3').each_with_index do |file, i|
     puts file
     res = vbsdk.upload_media(filePath: file, fileContentType: 'audio/mpeg', desc: 'myfile')
     pp res.body

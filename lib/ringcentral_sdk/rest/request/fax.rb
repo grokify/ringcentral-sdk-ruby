@@ -88,19 +88,19 @@ module RingCentralSdk::REST::Request
       end
     end
 
-    def method()
+    def method
       'post'
     end
 
-    def url()
+    def url
       "account/#{@account_id.to_s}/extension/#{@extension_id.to_s}/fax"
     end
 
-    def content_type()
+    def content_type
       @msg.headers.get('Content-Type').to_s
     end
 
-    def body()
+    def body
       @msg.body.to_s
     end
   end

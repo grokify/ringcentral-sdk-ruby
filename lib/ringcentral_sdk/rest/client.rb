@@ -82,7 +82,7 @@ module RingCentralSdk::REST
         end
       end
 
-      return built_url
+      built_url
     end
 
     def create_urls(urls, add_server=false, add_method=nil, add_token=false)
@@ -93,7 +93,7 @@ module RingCentralSdk::REST
       urls.each do |url|
         built_urls.push(create_url(url, add_server, add_method, add_token))
       end
-      return built_urls
+      built_urls
     end
 
     def authorize_url(opts = {})
@@ -103,14 +103,14 @@ module RingCentralSdk::REST
     def authorize_code(code, params = {})
       token = @oauth2client.auth_code.get_token(code, _add_redirect_uri(params))
       set_token(token)
-      return token
+      token
     end
 
     def _add_redirect_uri(opts = {})
       if !opts.key?(:redirect_uri) && @config.redirect_url.to_s.length > 0
         opts[:redirect_uri] = @config.redirect_url.to_s
       end
-      return opts
+      opts
     end
 
     def authorize_password(username, extension = '', password = '', params = {})
@@ -118,7 +118,7 @@ module RingCentralSdk::REST
         extension: extension,
         headers: {'Authorization' => 'Basic ' + get_api_key()}}.merge(params))
       set_token(token)
-      return token
+      token
     end
 
     def authorize_user(user, params = {})
@@ -208,7 +208,7 @@ module RingCentralSdk::REST
         fail "method [#{method}] not supported"
       end
 
-      return res
+      res
     end
 
     def inflate_request(req_faraday, req_sdk)
@@ -225,7 +225,7 @@ module RingCentralSdk::REST
       if !ct.nil? && ct.to_s.length > 0
         req_faraday.headers['Content-Type'] = ct.to_s
       end
-      return req_faraday
+      req_faraday
     end
 
     def get_user_agent
@@ -234,15 +234,15 @@ module RingCentralSdk::REST
         RUBY_VERSION,
         RUBY_PLATFORM
       ]
-      return ua.strip
+      ua.strip
     end
 
     def create_subscription
-      return RingCentralSdk::REST::Subscription.new(self)
+      RingCentralSdk::REST::Subscription.new(self)
     end
 
-    alias_method :authorize, :authorize_password
-    alias_method :login, :authorize_password
+    alias authorize authorize_password
+    alias login authorize_password
     private :api_version_url
   end
 end

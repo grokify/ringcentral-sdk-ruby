@@ -41,7 +41,7 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
       site: RingCentralSdk::RC_SERVER_SANDBOX,
       token_url: rcsdk.class::TOKEN_ENDPOINT)
     rcsdk.set_oauth2_client(oauth2client)
-    assert_equal true, rcsdk.oauth2client.is_a?(OAuth2::Client) 
+    assert_equal true, rcsdk.oauth2client.is_a?(OAuth2::Client)
 
     assert_raise do
       @rcsdk.set_oauth2_client('test')
@@ -49,7 +49,7 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
   end
 
   def test_set_token
-    token_data = {access_token: 'test_token'}
+    token_data = { access_token: 'test_token' }
 
     @rcsdk.set_token(token_data)
 
@@ -192,7 +192,7 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
 
   def test_request
     assert_raise do
-      @rcsdk.request()
+      @rcsdk.request
     end
 
     client = new_client()
@@ -210,10 +210,10 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
 
     fax = RingCentralSdk::REST::Request::Fax.new(
       # phone numbers are in E.164 format with or without leading '+'
-      :to            => '+16505551212',
-      :faxResolution => 'High',
-      :coverPageText => 'RingCentral fax demo using Ruby SDK!',
-      :text          => 'RingCentral fax demo using Ruby SDK!'
+      to: '+16505551212',
+      faxResolution: 'High',
+      coverPageText: 'RingCentral fax demo using Ruby SDK!',
+      text: 'RingCentral fax demo using Ruby SDK!'
     )
     res = client.send_request(fax)
     assert_equal 'Faraday::Response', res.class.name
@@ -223,10 +223,10 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     end
 
     res = client.messages.fax.create(
-      :to            => '+16505551212',
-      :faxResolution => 'High',
-      :coverPageText => 'RingCentral fax demo using Ruby SDK!',
-      :text          => 'RingCentral fax demo using Ruby SDK!'
+      to: '+16505551212',
+      faxResolution: 'High',
+      coverPageText: 'RingCentral fax demo using Ruby SDK!',
+      text: 'RingCentral fax demo using Ruby SDK!'
     )
     assert_equal 'Faraday::Response', res.class.name
 
@@ -252,9 +252,7 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     request = RingCentralSdk::REST::Request::Simple.new(
       method: 'put',
       url: 'account/~/extension/~/message-store/11111111',
-      body: {
-        readStatus: 'Read'
-      }
+      body: { readStatus: 'Read' }
     )
     assert_equal 'put', request.method
 
@@ -296,8 +294,8 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
       method: 'post',
       url: 'account/~/extension/~/sms',
       body: {
-        from: {phoneNumber: '+16505551212'},
-        to: {phoneNumber: '+14155551212'},
+        from: { phoneNumber: '+16505551212' },
+        to: { phoneNumber: '+14155551212' },
         text: 'Hi there!'
       }
     )

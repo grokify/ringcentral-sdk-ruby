@@ -45,16 +45,16 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     sub.set_events([])
     
     assert_raise do
-      sub.subscribe()
+      sub.subscribe
     end
 
     assert_raise do
-      sub.renew()
+      sub.renew
     end
 
     # sub.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
 
-    sub_data = sub.subscription()
+    sub_data = sub.subscription
     assert_equal sub_data['deliveryMode']['transportType'], 'PubNub'
     assert_equal sub_data['deliveryMode']['encryption'], false
     sub_data['deliveryMode']['encryption'] = true
@@ -62,10 +62,10 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     sub_data = sub.subscription()
     assert_equal sub_data['deliveryMode']['encryption'], true
 
-    assert_equal nil, sub.pubnub()
+    assert_equal nil, sub.pubnub
 
-    sub.destroy()
-    sub_data = sub.subscription()
+    sub.destroy
+    sub_data = sub.subscription
     assert_equal sub_data['deliveryMode']['encryption'], false
   end
 
@@ -75,7 +75,7 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
       config.app_secret = 'my_app_secret'
       config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
     end
-    rcsdk.set_oauth2_client()
+    rcsdk.set_oauth2_client
 
     stub_token_hash = data_test_auth_token
     stub_token = OAuth2::AccessToken::from_hash(rcsdk.oauth2client, stub_token_hash)
@@ -95,9 +95,9 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     response.stubs(:body).returns(data)
     rcsdk.http.stubs(:post).returns(response)
     rcsdk.http.stubs(:put).returns(response)
-    responseDel = Faraday::Response.new
-    responseDel.stubs(:body).returns('')
-    rcsdk.http.stubs(:delete).returns(responseDel)
+    response_del = Faraday::Response.new
+    response_del.stubs(:body).returns('')
+    rcsdk.http.stubs(:delete).returns(response_del)
     # Stub Pubnub Response
     Pubnub::Client.any_instance.stubs(:subscribe).returns(nil)
     Pubnub::Client.any_instance.stubs(:unsubscribe).returns(nil)
@@ -126,7 +126,7 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     rcsdk2.http.stubs(:post).raises('error')
     rcsdk2.http.stubs(:put).raises('error')
     rcsdk2.http.stubs(:delete).raises('error')
-    sub2 = rcsdk2.create_subscription()
+    sub2 = rcsdk2.create_subscription
     assert_raise do
       sub2.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
     end
@@ -165,8 +165,7 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
   "scope": "ReadCallLog DirectRingOut EditCallLog ReadAccounts Contacts EditExtensions ReadContacts SMS EditPresence RingOut EditCustomData ReadPresence EditPaymentInfo Interoperability Accounts NumberLookup InternalMessages ReadCallRecording EditAccounts Faxes EditReportingSettings ReadClientInfo EditMessages VoipCalling ReadMessages",
   "owner_id": "1234567890"
       }'
-    data = JSON.parse(json, :symbolize_names=>true)
-    return data
+    JSON.parse(json, symbolize_names: true)
   end
 
   def data_test_subscribe
@@ -189,7 +188,7 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     "encryptionKey": "/UjxdHILResI0XWzhXIilQ=="
   }
 }'
-    return JSON.parse(json)
+    JSON.parse(json)
   end
 
   def test_pubnub

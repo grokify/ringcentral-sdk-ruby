@@ -17,14 +17,14 @@ module RingCentralSdk::REST
       end
     end
 
-    def _hash_has_string_keys(hash={})
+    def _hash_has_string_keys(hash = {})
       hash.each do |k,v|
         return true if k.is_a? String
       end
       return false
     end
 
-    def _symbolize_keys(hash={})
+    def _symbolize_keys(hash = {})
       if _hash_has_string_keys hash
         return MultiJson.decode(MultiJson.encode(hash), :symbolize_keys=>true)
       end
