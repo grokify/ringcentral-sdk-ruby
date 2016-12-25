@@ -24,23 +24,15 @@ module RingCentralSdk
 
       def send(request)
         return @client.request(request) if request.is_a? RingCentralSdk::Helpers::Request
-        if !request.is_a?(Hash)
-          raise 'Request is not a RingCentralSdk::Helpers::Request or Hash'
-        end
+        raise  ArgumentError.new('Request is not a ...Helpers::Request or Hash') unless request.is_a? Hash
 
         verb = request.key?(:verb) ? request[:verb].to_s.downcase : 'get'
 
-        if verb == 'get'
-          return get(request)
-        elsif verb == 'post'
-          return post(request)
-        elsif verb == 'put'
-          return put(request)
-        elsif verb == 'delete'
-          return delete(request)
-        else
-          raise 'Method not supported'
-        end
+        return get(request) if verb == 'get'
+        return post(request) if verb == 'post'
+        return put(request) if verb == 'put'
+        return delete(request) if verb == 'delete'
+        raise  ArgumentError.new("Method not supported #{verb}")
       end
 
       def delete(opts = {})
@@ -79,7 +71,7 @@ module RingCentralSdk
       end
 
       def build_url(path)
-        path = [path] if !path.is_a?(Array)
+        path = [path] unless path.is_a? Array
 
         unless path.empty?
           path0 = path[0].to_s
