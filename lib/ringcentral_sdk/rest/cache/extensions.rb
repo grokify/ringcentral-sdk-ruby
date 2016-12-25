@@ -21,7 +21,7 @@ module RingCentralSdk::REST::Cache
       @last_retrieved = -1
     end
 
-    def retrieve(params={}, retrieve_all=true)
+    def retrieve(params = {}, retrieve_all = true)
       @last_retrieved = Time.now.to_i
       uri = URI.parse "account/#{@account_id}/extension"
       if params.length > 0
@@ -51,17 +51,17 @@ module RingCentralSdk::REST::Cache
           end
         end
       end
-      inflate_num2id()
+      inflate_num2id
       @extensions_hash
     end
 
-    def retrieve_all()
+    def retrieve_all
       retrieve({}, true)
     end
 
-    def inflate_num2id()
+    def inflate_num2id
       num2id = {}
-      @extensions_hash.each do |k, v|
+      @extensions_hash.each do |_, v|
         if v.key?('id') && v['id'] > 0 &&
           v.key?('extensionNumber') && !v['extensionNumber'].empty?
           num2id[v['extensionNumber']] = v['id'].to_s
@@ -76,7 +76,7 @@ module RingCentralSdk::REST::Cache
         extension_id = extension_id.to_s
       end
       if @extensions_hash.key? extension_id
-          return @extensions_hash[extension_id]
+        return @extensions_hash[extension_id]
       end
       nil
     end

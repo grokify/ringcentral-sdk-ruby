@@ -3,8 +3,7 @@
 require './test/test_base.rb'
 
 class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
-  def testSetup
-
+  def test_setup
     fax = RingCentralSdk::REST::Request::Fax.new(
       # phone numbers are in E.164 format with or without leading '+'
       to: '+16505551212',
@@ -14,7 +13,7 @@ class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
     )
 
     assert_equal 'RingCentralSdk::REST::Request::Fax', fax.class.name
-    assert_equal 'account/~/extension/~/fax', fax.url()
+    assert_equal 'account/~/extension/~/fax', fax.url
 
     fax2 = RingCentralSdk::REST::Request::Fax.new(
       accountId: '111111111',
@@ -32,7 +31,7 @@ class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
     end
 
     # Test UTF-8 metadata and file MIME concatenation
-    body = fax2.body
+    # body = fax2.body
 
     fax3 = RingCentralSdk::REST::Request::Fax.new(
       accountId: 111_111_111,
@@ -57,7 +56,7 @@ class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
     fax5 = RingCentralSdk::REST::Request::Fax.new(
       accountId: 111_111_111,
       extensionId: 222_222_222, # Can be nil or {} for defaults '~'
-      coverPageText: "RingCentral fax demo using Ruby SDK!",
+      coverPageText: 'RingCentral fax demo using Ruby SDK!',
       text: 'RingCentral fax demo using Ruby SDK!'
     )
     assert_equal 'account/111111111/extension/222222222/fax', fax5.url
@@ -66,9 +65,9 @@ class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
     # assert_equal 'attachment', fax.get_attachment_content_disposition()
     # assert_equal 'attachment; filename="example.pdf"', fax.get_attachment_content_disposition('example.pdf')
     # assert_equal 'attachment; filename="example.pdf"', fax.get_attachment_content_disposition('/path/to/example.pdf')
-    assert_equal 'post', fax.method()
+    assert_equal 'post', fax.method
 
-    content_type = fax.content_type()
+    content_type = fax.content_type
     content_type_prefix = ''
     boundary = ''
     if content_type =~ %r{^(multipart/mixed;\s+boundary=)(.*)$}
