@@ -12,10 +12,8 @@ client = RingCentralSdk::REST::Client.new do |config|
 end
 
 def build_coverpage
-  hbs = ENV['RC_DEMO_FAX_COVERPAGE_TEMPLATE']
-  unless File.exist? hbs
-    raise "Coverpage Template Does Not Exist: #{hbs}"
-  end
+  hbs = ENV['RC_DEMO_FAX_COVERPAGE_TEMPLATE'].strip
+  raise "Coverpage Template Does Not Exist: #{hbs}" unless File.exist? hbs
 
   handlebars = Handlebars::Context.new
   template = handlebars.compile IO.read(hbs)

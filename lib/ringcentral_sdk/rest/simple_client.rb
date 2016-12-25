@@ -23,9 +23,8 @@ module RingCentralSdk
       end
 
       def send(request)
-        if request.is_a?(RingCentralSdk::Helpers::Request)
-          return @client.request(request)
-        elsif !request.is_a?(Hash)
+        return @client.request(request) if request.is_a? RingCentralSdk::Helpers::Request
+        if !request.is_a?(Hash)
           raise 'Request is not a RingCentralSdk::Helpers::Request or Hash'
         end
 
@@ -80,18 +79,13 @@ module RingCentralSdk
       end
 
       def build_url(path)
-        if !path.is_a?(Array)
-          path = [path]
-        end
+        path = [path] if !path.is_a?(Array)
+
         unless path.empty?
           path0 = path[0].to_s
-          if path0 !~ %r{/}
-            if path0.index('account') != 0
-              if path0.index('extension') != 0
-                path.unshift('extension/~')
-              end
-              path.unshift('account/~')
-            end
+          if path0.index('/').nil? && path0.index('account') != 0
+            path.unshift('extension/~') if path0.index('extension') != 0
+            path.unshift('account/~')
           end
         end
         path.join('/')

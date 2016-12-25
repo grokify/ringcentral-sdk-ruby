@@ -76,12 +76,8 @@ module RingCentralSdk
         end
 
         def get_extension_by_id(extension_id)
-          unless extension_id.is_a? String
-            extension_id = extension_id.to_s
-          end
-          if @extensions_hash.key? extension_id
-            return @extensions_hash[extension_id]
-          end
+          extension_id = extension_id.to_s unless extension_id.is_a? String
+          return @extensions_hash[extension_id] if @extensions_hash.key? extension_id
           nil
         end
 
@@ -99,9 +95,7 @@ module RingCentralSdk
         end
 
         def get_department_members(department_id)
-          unless department_id.is_a? String
-            department_id = department_id.to_s
-          end
+          department_id = department_id.to_s unless department_id.is_a? String
           if department_id !~ /^[0-9]+$/
             raise 'department_id parameter must be a positive integer'
           end
