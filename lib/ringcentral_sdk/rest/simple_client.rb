@@ -32,7 +32,7 @@ module RingCentralSdk
         return post(request) if verb == 'post'
         return put(request) if verb == 'put'
         return delete(request) if verb == 'delete'
-        raise  ArgumentError.new("Method not supported #{verb}")
+        raise  ArgumentError, "Method not supported #{verb}"
       end
 
       def delete(opts = {})
