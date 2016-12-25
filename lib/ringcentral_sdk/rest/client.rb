@@ -40,7 +40,7 @@ module RingCentralSdk::REST
       @instance_headers = @config.headers
       @oauth2client = new_oauth2_client
 
-      if @config.username.to_s.length > 0
+      unless @config.username.to_s.empty?
         authorize_password @config.username, @config.extension, @config.password
       end
 
@@ -70,12 +70,12 @@ module RingCentralSdk::REST
 
       if url.index('/') == 0
         if built_url =~ /\/$/
-          built_url += url.gsub(/^\//, '')
+          built_url += url.gsub(%r{^/+}, '')
         else
           built_url += url
         end
       else # no /
-        if built_url =~ /\/$/
+        if built_url =~ %r{/$}
           built_url += url
         else
           built_url += '/' + url

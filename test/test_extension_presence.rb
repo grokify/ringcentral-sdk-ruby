@@ -11,7 +11,7 @@ class RingCentralSdkRESTExtensionPresenceTest < Test::Unit::TestCase
   end
 
   def test_department_calls_enable
-    presence = RingCentralSdk::REST::ExtensionPresence.new(111111)
+    presence = RingCentralSdk::REST::ExtensionPresence.new(111_111)
 
     new_statuses = {
       enable: {
@@ -57,7 +57,7 @@ class RingCentralSdkRESTExtensionPresenceTest < Test::Unit::TestCase
     Faraday::Connection.any_instance.stubs(:get).returns(Faraday::Response.new)
     Faraday::Connection.any_instance.stubs(:put).returns(Faraday::Response.new)
 
-    presence = RingCentralSdk::REST::ExtensionPresence.new(111111, client: client)
+    presence = RingCentralSdk::REST::ExtensionPresence.new(111_111, client: client)
     presence.retrieve
     presence.presence_data = stub_presence
 
@@ -77,7 +77,7 @@ class RingCentralSdkRESTExtensionPresenceTest < Test::Unit::TestCase
       presence.update nil
     end
 
-    presence.update({dndStatus: 'TakeAllCalls'})
+    presence.update(dndStatus: 'TakeAllCalls')
 
     ######
     # Test with good data
@@ -120,8 +120,8 @@ class RingCentralSdkTestSubAuth
   end
 
   def new_client_with_auth()
-    client = new_client()
-    client.set_oauth2_client()
+    client = new_client
+    client.set_oauth2_client
 
     stub_token_hash = data_auth_token_with_refresh
     stub_token = OAuth2::AccessToken::from_hash(client.oauth2client, stub_token_hash)

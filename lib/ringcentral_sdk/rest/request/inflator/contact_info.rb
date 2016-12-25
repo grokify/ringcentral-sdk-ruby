@@ -5,7 +5,7 @@ module RingCentralSdk
         # ContactInfo class will inflate contact info to array
         class ContactInfo
           def inflate_to_array(any = nil)
-            contacts   = []
+            contacts = []
             if any.is_a?(Array)
               contacts = any
             elsif any.is_a?(Hash)

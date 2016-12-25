@@ -71,7 +71,7 @@ class RingCentralSdkHelperFaxTest < Test::Unit::TestCase
     content_type = fax.content_type()
     content_type_prefix = ''
     boundary = ''
-    if content_type =~ %r{^(multipart\/mixed;\s+boundary=)(.*)$}
+    if content_type =~ %r{^(multipart/mixed;\s+boundary=)(.*)$}
       content_type_prefix = $1
       boundary = $2
     end

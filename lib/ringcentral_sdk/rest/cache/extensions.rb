@@ -61,7 +61,7 @@ module RingCentralSdk::REST::Cache
 
     def inflate_num2id()
       num2id = {}
-      @extensions_hash.each do |k,v|
+      @extensions_hash.each do |k, v|
         if v.key?('id') && v['id'] > 0 &&
           v.key?('extensionNumber') && !v['extensionNumber'].empty?
           num2id[v['extensionNumber']] = v['id'].to_s
