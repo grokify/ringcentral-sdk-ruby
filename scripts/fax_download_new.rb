@@ -13,7 +13,7 @@ end
 # RcEventFaxDownloader is a helper class to download faxes
 class RcEventFaxDownloader
   attr_accessor :event
-  def initialize(client, posters=[], event_data={})
+  def initialize(client, posters = [], event_data = {})
     @client = client
     @posters = posters
     @event = RingCentralSdk::REST::Event.new event_data
@@ -28,15 +28,15 @@ class RcEventFaxDownloader
     messages.each do |message|
       pp message
       message['attachments'].each do |att|
-      url = att['uri']
-      filename = 'fax_' + url.gsub(%r{^.*restapi/v[^/]+/}, '').gsub(%r{/},'_')
-      ext = att['contentType'] == 'application/pdf' ? '.pdf' : ''
-      filename += ext
-      response_file = @client.http.get url
-      @posters.each do |poster|
-        poster.write_file(filename, response_file)
+        url = att['uri']
+        filename = 'fax_' + url.gsub(%r{^.*restapi/v[^/]+/}, '').gsub(%r{/}, '_')
+        ext = att['contentType'] == 'application/pdf' ? '.pdf' : ''
+        filename += ext
+        response_file = @client.http.get url
+        @posters.each do |poster|
+          poster.write_file(filename, response_file)
+        end
       end
-    end
     end
   end
 end

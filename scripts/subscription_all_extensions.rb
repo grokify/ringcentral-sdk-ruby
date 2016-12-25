@@ -29,7 +29,7 @@ end
 # An example observer object
 class MyObserver
   def update(message)
-    puts "Subscription Message Received"
+    puts 'Subscription Message Received'
     puts JSON.dump(message)
   end
 end
@@ -42,11 +42,11 @@ def run_subscription(client, event_filters)
   pp(res)
 
   # Add observer
-  sub.add_observer MyObserver.new()
+  sub.add_observer MyObserver.new
 
   # Run until user clicks key to finish
-  puts "Click any key to finish"
-  stop_script = gets
+  puts 'Click any key to finish'
+  gets
 
   # End the subscription
   sub.destroy
