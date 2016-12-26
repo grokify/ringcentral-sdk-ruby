@@ -5,9 +5,9 @@ version = $1
 #require File.expand_path('../lib/ringcentral_sdk/version', __FILE__)
 
 Gem::Specification.new do |s|
-  s.name        = 'ringcentral_sdk'
+  s.name        = lib
   s.version     = version
-  s.date        = '2016-09-05'
+  s.date        = '2016-12-26'
   s.summary     = 'RingCentral SDK - Ruby SDK for the RingCentral Connect Platform API'
   s.description = 'A Ruby SDK for the RingCentral Connect Platform API'
   s.authors     = ['John Wang']
@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'faraday', '~> 0', '>= 0'
   s.add_dependency 'faraday_middleware', '~> 0', '>= 0'
   s.add_dependency 'faraday_middleware-oauth2_refresh', '~> 0'
+  s.add_dependency 'faraday_middleware-request-retry', '~> 0.1', '>= 0.1.0'
   s.add_dependency 'jsondoc', '~> 0.1', '>= 0.1.0'
   s.add_dependency 'logger', '~> 1'
   s.add_dependency 'mime', '~> 0.4', '>= 0.4.3'

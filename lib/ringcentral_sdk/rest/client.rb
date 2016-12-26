@@ -2,6 +2,7 @@ require 'base64'
 require 'faraday'
 require 'faraday_middleware'
 require 'faraday_middleware/oauth2_refresh'
+require 'faraday_middleware-request-retry'
 require 'multi_json'
 require 'oauth2'
 
@@ -152,7 +153,10 @@ module RingCentralSdk
           conn.headers['RC-User-Agent'] = @user_agent
           conn.headers['SDK-User-Agent'] = @user_agent
           conn.response :json, content_type: /\bjson$/
-          conn.response :logger
+          conn.response :logger, @logger
+          if @config.retry
+            conn.use FaradayMiddleware::Request::Retry, logger: @logger
+          end
           conn.adapter Faraday.default_adapter
         end
 

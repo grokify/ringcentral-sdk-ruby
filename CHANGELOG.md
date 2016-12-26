@@ -1,6 +1,8 @@
 CHANGELOG
 ---------
 - **2016-12-12**: 2.0.0
+  - Add
+    - Add auto-retry request using `FaradayMiddleware::Request::Retry`
   - Update
     - Update config to block based config
     - Update `pubnub` dependency to `4.0.16` from `3.8.x`
