@@ -98,7 +98,8 @@ client = RingCentralSdk::REST::Client.new do |config|
   # Set a custom logger (optional)
   config.logger = Logger.new(STDOUT)
 
-  # Enable HTTP retries for 429 and 503 errors
+  # Enable HTTP retries for 429, 503, and 504 errors
+  # Set custom codes and retry after using retry_options
   config.retry = true
 end
 

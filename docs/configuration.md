@@ -67,7 +67,10 @@ end
 
 ## HTTP Request Retries 
 
+RingCentral SDK uses `FaradayMiddleware::Request::Retry` to handle HTTP request retries. By default it will retry on 429, 503 and 504 responses. A `Retry-After` header in seconds will be respected, falling back to a default retry after. The following can be set:
 
+* `:error_codes` to retry, default `[429, 503, 504]`
+* `:retry_after` seconds, default `10`
 
 ## Using Environment Variables
 

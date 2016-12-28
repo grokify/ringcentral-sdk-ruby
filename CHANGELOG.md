@@ -1,5 +1,10 @@
 CHANGELOG
 ---------
+- **2016-12-28**: 2.0.2
+  - Update
+    - Update to add retry for `504` error code as default in addition to `429`, `503`
+- **2016-12-28**: 2.0.1
+  - Minor fixes
 - **2016-12-28**: 2.0.0
   - Breaking Changes
     - New block-based config, replacing old method param and env config
