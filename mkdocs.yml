@@ -8,11 +8,10 @@ pages:
 - ['index.md', 'About', 'RingCentral SDK']
 - ['quickstart.md', 'About', 'Quickstart']
 
-## Authorization:
-- ['usage/authorization/Authorization.md', 'Authorization', 'Authorization']
-
-## Generic HTTP
-- ['usage/http-client.md', 'Generic Requests', 'HTTP Client']
+## Getting Started:
+- ['configuration.md', 'Getting Started', 'Configuration']
+- ['usage/authorization/Authorization.md', 'Getting Started', 'Authorization']
+- ['usage/http-client.md', 'Getting Started', 'HTTP Requests']
 
 ## Messaging:
 - ['usage/messages/SMS-Messages.md', 'Messaging', 'SMS Messages']

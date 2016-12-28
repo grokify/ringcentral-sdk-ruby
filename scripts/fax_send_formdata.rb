@@ -8,7 +8,7 @@ require 'mime/types'
 # Use the rc_config_sample.env.txt file as a scaffold
 
 client = RingCentralSdk::REST::Client.new do |config|
-  config.dotenv = true
+  config.load_env = true
 end
 
 res = client.http.post do |req|

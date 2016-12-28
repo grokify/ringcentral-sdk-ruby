@@ -6,11 +6,9 @@ module RingCentralSdk
   module REST
     # Configuration class populated by Client constructor block
     class Configuration
-      attr_accessor :dotenv
-
+      attr_accessor :server_url
       attr_accessor :app_key
       attr_accessor :app_secret
-      attr_accessor :server_url
       attr_accessor :redirect_url
 
       attr_accessor :username
@@ -19,56 +17,73 @@ module RingCentralSdk
       attr_accessor :token
       attr_accessor :token_file
 
+      attr_accessor :load_env
       attr_accessor :headers
       attr_accessor :retry
+      attr_accessor :retry_options
       attr_accessor :logger
 
-      attr_accessor :env
-
       def inflate
-        @env = {}
-        set_default_logger
-        load_dotenv
+        @logger = default_logger if !defined?(@logger) || @logger.nil?
+        load_environment if load_env
+        inflate_headers
+        inflate_retry
+        inflate_token
       end
 
-      def set_default_logger
-        return if defined? @logger
-        @logger = Logger.new STDOUT
-        @logger.level = Logger::WARN
+      def default_logger
+        logger = Logger.new STDOUT
+        logger.level = Logger::WARN
+        logger
       end
 
-      def load_dotenv
-        return unless dotenv
+      def load_environment
         Dotenv.load
-        @app_key = ENV['RC_APP_KEY']
-        @app_secret = ENV['RC_APP_SECRET']
-        @server_url = ENV['RC_APP_SERVER_URL']
-        @redirect_url = ENV['RC_APP_REDIRECT_URL']
-
-        @username = ENV['RC_USER_USERNAME']
-        @extension = ENV['RC_USER_EXTENSION']
-        @password = ENV['RC_USER_PASSWORD']
-
-        load_dotenv_token
-        load_dotenv_rc
+        @server_url = ENV['RC_SERVER_URL'] if ENV.key? 'RC_SERVER_URL'
+        @app_key = ENV['RC_APP_KEY'] if ENV.key? 'RC_APP_KEY'
+        @app_secret = ENV['RC_APP_SECRET'] if ENV.key? 'RC_APP_SECRET'
+        @redirect_url = ENV['RC_APP_REDIRECT_URL'] if ENV.key? 'RC_APP_REDIRECT_URL'
+        @username = ENV['RC_USER_USERNAME'] if ENV.key? 'RC_USER_USERNAME'
+        @extension = ENV['RC_USER_EXTENSION'] if ENV.key? 'RC_USER_EXTENSION'
+        @password = ENV['RC_USER_PASSWORD'] if ENV.key? 'RC_USER_PASSWORD'
+        @token = ENV['RC_TOKEN'] if ENV.key? 'RC_TOKEN'
+        @token_file = ENV['RC_TOKEN_FILE'] if ENV.key? 'RC_TOKEN_FILE'
+        @retry = ENV['RC_RETRY'] if ENV.key? 'RC_RETRY'
+        @retry_options = ENV['RC_RETRY_OPTIONS'] if ENV.key? 'RC_RETRY_OPTIONS'
+        @headers = ENV['RC_HEADERS'] if ENV.key? 'RC_HEADERS'
       end
 
-      def load_dotenv_token
-        token = ENV['RC_TOKEN']
-        if token.to_s.empty?
-          token_file = ENV['RC_TOKEN_FILE']
-          if !token_file.to_s.empty? && File.exist?(token_file)
-            token = IO.read token_file
-          end
+      def inflate_retry
+        if !defined?(@retry) || @retry.nil? || @retry.empty? || @retry.to_s.downcase == 'false'
+          @retry = false
+          @retry_options = {}
+          return
+        end
+        @retry = true
+        if !@retry_options.nil? && @retry_options.to_s =~ /^\s*{/
+          @retry_options = MultiJson.decode @retry_options.to_s, symbolize_keys: true
+        else
+          @retry_options = {}
+        end
+        @retry_options[:logger] = @logger
+      end
+
+      def inflate_headers
+        @headers = {} unless defined? @headers
+        if !@headers.nil? && @headers.is_a?(String) && @headers =~ /^\s*{/
+          @headers = MultiJson.decode @headers, symbolize_keys: true
+        end
+      end
+
+      def inflate_token
+        @token = nil unless defined? @token
+
+        if (@token.nil? || @token.empty?) && !token_file.nil? && !@token_file.empty?
+          @token = IO.read @token_file if File.exist? @token_file
         end
 
-        @token = MultiJson.decode(token) if token.to_s =~ /^\s*{/
-      end
-
-      def load_dotenv_rc
-        ENV.each do |k, v|
-          next unless k.index('RC_') == 0
-          @env[k] = v
+        if !defined?(@token) && !@token.nil? && @token.is_a?(String) && @token =~ /^\s*{/
+          @token = MultiJson.decode @token
         end
       end
     end

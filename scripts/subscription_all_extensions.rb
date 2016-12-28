@@ -8,7 +8,9 @@ require 'ringcentral_sdk'
 # Use the rc_config_sample.env.txt file as a scaffold
 
 client = RingCentralSdk::REST::Client.new do |config|
-  config.dotenv = true
+  config.load_env = true
+  config.logger = Logger.new STDOUT
+  config.logger.level = Logger::INFO
 end
 
 # Create an array of event_filters from the array of extensions

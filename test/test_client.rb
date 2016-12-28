@@ -6,9 +6,9 @@ require 'oauth2'
 class RingCentralSdkPlatformTest < Test::Unit::TestCase
   def setup
     @rcsdk = RingCentralSdk::REST::Client.new do |config|
+      config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
       config.app_key = 'my_app_key'
       config.app_secret = 'my_app_secret'
-      config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
     end
   end
 
@@ -19,9 +19,9 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
   def test_config
     redirect_url = 'http://localhost:4567/oauth'
     client = RingCentralSdk::REST::Client.new do |config|
+      config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
       config.app_key = 'my_app_key'
       config.app_secret = 'my_app_secret'
-      config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
       config.redirect_url = redirect_url
     end
     assert_equal redirect_url, client.config.redirect_url

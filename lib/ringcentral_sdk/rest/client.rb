@@ -2,6 +2,7 @@ require 'base64'
 require 'faraday'
 require 'faraday_middleware'
 require 'faraday_middleware/oauth2_refresh'
+require 'faraday_middleware-request-retry'
 require 'multi_json'
 require 'oauth2'
 
@@ -29,8 +30,6 @@ module RingCentralSdk
       attr_reader :user_agent
       attr_reader :messages
 
-      attr_reader :instance_headers
-
       def initialize
         init_attributes
 
@@ -40,7 +39,6 @@ module RingCentralSdk
         @config.inflate
 
         @logger = @config.logger
-        @instance_headers = @config.headers
         @oauth2client = new_oauth2_client
 
         unless @config.username.to_s.empty?
@@ -121,10 +119,6 @@ module RingCentralSdk
         token
       end
 
-      def authorize_user(user, params = {})
-        authorize_password(user.username, user.extension, user.password, params)
-      end
-
       def token
         @http ? @http.builder.app.oauth2_token : nil
       end
@@ -144,20 +138,23 @@ module RingCentralSdk
           conn.request :url_encoded
           conn.request :json
           conn.headers['User-Agent'] = @user_agent
-          if @instance_headers.is_a? Hash
-            @instance_headers.each do |k, v|
+          if @config.headers.is_a? Hash
+            @config.headers.each do |k, v|
               conn.headers[k] = v
             end
           end
           conn.headers['RC-User-Agent'] = @user_agent
           conn.headers['SDK-User-Agent'] = @user_agent
           conn.response :json, content_type: /\bjson$/
-          conn.response :logger
+          conn.response :logger, @config.logger
+          if @config.retry
+            conn.use FaradayMiddleware::Request::Retry, @config.retry_options
+          end
           conn.adapter Faraday.default_adapter
         end
 
-        token_string = MultiJson.encode(token.to_hash)
-        @logger.info("SET_TOKEN: #{token_string}")
+        token_string = MultiJson.encode token.to_hash
+        @config.logger.info("SET_TOKEN: #{token_string}")
       end
 
       def new_oauth2_client
@@ -239,7 +236,7 @@ module RingCentralSdk
       end
 
       def create_subscription
-        RingCentralSdk::REST::Subscription.new(self)
+        RingCentralSdk::REST::Subscription.new self
       end
 
       alias authorize authorize_password

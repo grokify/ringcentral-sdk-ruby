@@ -1,8 +1,12 @@
 CHANGELOG
 ---------
-- **2016-12-12**: 2.0.0
+- **2016-12-28**: 2.0.0
+  - Breaking Changes
+    - New block-based config, replacing old method param and env config
+  - Additions
+    - Add auto-retry request using `FaradayMiddleware::Request::Retry`
+    - Add configurable logger
   - Update
-    - Update config to block based config
     - Update `pubnub` dependency to `4.0.16` from `3.8.x`
     - Update `rake` dependency to `12.x.x` from `11.x.x`
     - Update gemspec to include dependency versions
