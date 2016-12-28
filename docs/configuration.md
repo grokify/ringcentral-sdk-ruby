@@ -58,6 +58,20 @@ end
 
 When deploying an app, it can be useful to store some variables outside of the app code. This is especially useful for app and user credentials that should not be checked into source control systems. The RingCentral SDK supports reading some information from the environment, either directly or via a `.env` file. To use this capability set `config.load_env = true`.
 
+The following environment variables will be loaded:
+
+| ENV variable | Config setting | Notes |
+|--------------|----------------|-------|
+| `RC_SERVER_URL` | `config.server_url` | Must be set to value of URL, not constant |
+| `RC_APP_KEY` | `config.app_key` |
+| `RC_APP_SECRET` | `config.app_secret` |
+| `RC_APP_REDIRECT_URL` | `config.app_redirect_url` |
+| `RC_USER_USERNAME` | `config.username` |
+| `RC_USER_EXTENSION` | `config.extension` |
+| `RC_USER_PASSWORD` | `config.password` |
+| `RC_TOKEN` | `config.token` | JSON token response |
+| `RC_TOKEN_FILE` | `config.token_file` | File containing JSON token response |
+
 Ruby file:
 
 ```ruby
@@ -68,16 +82,13 @@ client = RingCentralSdk::REST::Client.new do |config|
 end
 ```
 
-The following environment variables will be loaded:
+Example Environment Variables / .env file
 
-| ENV variable | Config setting | Notes |
-|--------------|----------------|-------|
-| `RC_SERVER_URL` | `config.server_url` |
-| `RC_APP_KEY` | `config.app_key` |
-| `RC_APP_SECRET` | `config.app_secret` |
-| `RC_APP_REDIRECT_URL` | `config.app_redirect_url` |
-| `RC_USER_USERNAME` | `config.username` |
-| `RC_USER_EXTENSION` | `config.extension` |
-| `RC_USER_PASSWORD` | `config.password` |
-| `RC_TOKEN` | `config.token` | JSON token response |
-| `RC_TOKEN_FILE` | `config.token_file` | File containing JSON token response |
+```
+RC_SERVER_URL=https://platform.ringcentral.com
+RC_APP_KEY=my_app_key
+RC_APP_SECRET=my_app_secret
+RC_USER_USERNAME=my_username
+RC_USER_EXTENSION=my_extension
+RC_USER_PASSWORD=my_password
+```

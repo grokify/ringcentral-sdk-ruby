@@ -7,6 +7,7 @@ This documentation is for version 1.0.0 of [ringcentral_sdk](https://github.com/
 1. [Introduction](index.md)
 2. [Quickstart](quickstart.md)
 3. User Guide
+  1. [Configuration](configuration.md)
   1. [Authorization](usage/authorization/Authorization.md)
   1. [Call Recordings](usage/messages/Call-Recordings.md)
   2. [Fax Messages](usage/messages/Fax-Messages.md)

@@ -6,7 +6,8 @@ resources. This allows you to select the best method for your use case. This pag
 1. Password Grant - 2-legged OAuth for servers without SSO support
 1. Authorization Code Grant - 3-legged OAuth for end users with SSO support
 1. Token Reuse - saving and reusing a token between SDK instances
-1. 
+1. Using OAuth2::AccessToken
+1. Implementation Notes
 
 ## Password Grant
 
