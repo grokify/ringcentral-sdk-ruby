@@ -65,6 +65,7 @@ module RingCentralSdk
         else
           @retry_options = {}
         end
+        @retry_options[:error_codes] = [429, 503, 504] unless @retry_options.key? :error_codes
         @retry_options[:logger] = @logger
       end
 
