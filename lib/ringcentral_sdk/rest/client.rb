@@ -38,7 +38,6 @@ module RingCentralSdk
         yield config
         @config.inflate
 
-        @logger = @config.logger
         @oauth2client = new_oauth2_client
 
         unless @config.username.to_s.empty?
