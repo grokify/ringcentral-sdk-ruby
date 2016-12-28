@@ -80,6 +80,32 @@ $ gem install ringcentral_sdk
 
 ## Usage
 
+### Synopsis
+
+```ruby
+require 'rinngcentral_sdk'
+
+client = RingCentralSdk::REST::Client.new do |config|
+  # App info (mandatory)
+  config.app_key = 'myAppKey'
+  config.app_secret = 'myAppSecret'
+  config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
+
+  # User info for password grant (optional)
+  config.username = 'myUsername'
+  config.extension = 'myExtension'
+  config.password = 'myPassword'
+end
+
+# Send SMS
+res = client.messages.sms.create(
+  from: '+16505551212',
+  to: '+14155551212',
+  text: 'Hi there!'
+)
+```
+
+
 ### Instantiation and Authorization
 
 How you instantiate the SDK can depend on whether you use OAuth 2.0 password grant or the authorization code grant which are both described here.

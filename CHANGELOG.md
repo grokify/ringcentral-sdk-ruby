@@ -1,7 +1,7 @@
 CHANGELOG
 ---------
 - **2016-12-12**: 2.0.0
-  - Add
+  - Additions
     - Add auto-retry request using `FaradayMiddleware::Request::Retry`
   - Update
     - Update config to block based config
