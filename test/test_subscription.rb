@@ -81,8 +81,7 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
     stub_token = OAuth2::AccessToken.from_hash(rcsdk.oauth2client, stub_token_hash)
 
     rcsdk.oauth2client.password.stubs(:get_token).returns(stub_token)
-
-    token = rcsdk.authorize('my_test_username', 'my_test_extension', 'my_test_password')
+    rcsdk.authorize('my_test_username', 'my_test_extension', 'my_test_password')
     rcsdk
   end
 

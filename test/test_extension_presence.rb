@@ -12,17 +12,6 @@ class RingCentralSdkRESTExtensionPresenceTest < Test::Unit::TestCase
   def test_department_calls_enable
     presence = RingCentralSdk::REST::ExtensionPresence.new(111_111)
 
-    new_statuses = {
-      enable: {
-        'DoNotAcceptAnyCalls' => 'TakeDepartmentCallsOnly',
-        'DoNotAcceptDepartmentCalls' => 'TakeAllCalls'
-      },
-      disable: {
-        'TakeAllCalls' => 'DoNotAcceptDepartmentCalls',
-        'TakeDepartmentCallsOnly' => 'DoNotAcceptAnyCalls'
-      }
-    }
-
     cur_status = 'TakeAllCalls'
     assert_equal \
       'DoNotAcceptDepartmentCalls', \
