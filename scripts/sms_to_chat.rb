@@ -9,7 +9,7 @@ require 'glip_poster'
 # Use the rc_config_sample.env.txt file as a scaffold
 
 client = RingCentralSdk::REST::Client.new do |config|
-  config.dotenv = true
+  config.load_env = true
 end
 
 # An SMS event poster. Takes a message store subscription

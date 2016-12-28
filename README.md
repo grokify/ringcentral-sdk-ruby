@@ -21,11 +21,7 @@ RingCentral SDK for Ruby
 2. [Documentation](#documentation)
 3. [Installation](#installation)
 4. [Usage](#usage)
-  1. [Instantiation](#instantiation)
-  1. [Authorization](#authorization)
-    1. [Password Grant](#password-grant)
-    1. [Authorization Code Grant](#authorization-code-grant)
-    1. [Token Reuse](#token-reuse)
+  1. [Synopsis](#synopsis)
   1. [API Requests](#api-requests)
     1. [Generic HTTP Requests](#generic-http-requests)
     2. [SMS Example](#sms-example)
@@ -41,12 +37,15 @@ RingCentral SDK for Ruby
 
 ## Overview
 
-##### :warning: YOU MUST HAVE A RINGCENTRAL ACCOUNT TO USE THE API :warning:
-##### Get an account at: https://developers.ringcentral.com/login.html
+A Ruby SDK for the [RingCentral REST API](https://developers.ringcentral.com).
 
-www.ringcentral.com - RingCentral Complete Cloud Communications System.
+## Important Notes
 
-A library for using the [RingCentral REST API](https://developers.ringcentral.com). [Click here to read the full documentation](http://ringcentral-sdk-ruby.readthedocs.org/).
+Version 2.0.0 introduces the following backward breaking changes:
+
+* SDK instantiation by moving to a block-based configuration
+* Removal of `RingCentralSdk::REST::Config` class
+* Removal of `RingCentralSdk::REST::Client.authorize_user` method
 
 ## Documentation
 
@@ -95,6 +94,12 @@ client = RingCentralSdk::REST::Client.new do |config|
   config.username = 'myUsername'
   config.extension = 'myExtension'
   config.password = 'myPassword'
+
+  # Set a custom logger (optional)
+  config.logger = Logger.new(STDOUT)
+
+  # Enable HTTP retries for 429 and 503 errors
+  config.retry = true
 end
 
 # Send SMS
@@ -105,91 +110,10 @@ res = client.messages.sms.create(
 )
 ```
 
-
-### Instantiation and Authorization
-
-How you instantiate the SDK can depend on whether you use OAuth 2.0 password grant or the authorization code grant which are both described here.
-
-It is also necessary to specify your RingCentral API end point URL which are included constants:
-
-* `RingCentralSdk::RC_SERVER_PRODUCTION`
-* `RingCentralSdk::RC_SERVER_SANDBOX`
-
-#### Password Grant
-
-The OAuth 2.0 resource owner password grant flow is designed for server applications where the app and resource owners are the same.
-
-```ruby
-require 'ringcentral_sdk'
-
-# Returns RingCentralSdk::Platform instance
-client = RingCentralSdk::REST::Client.new do |config|
-  # App info (mandatory)
-  config.app_key = 'myAppKey'
-  config.app_secret = 'myAppSecret'
-  config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
-
-  # User info for password grant (optional)
-  config.username = 'myUsername'
-  config.extension = 'myExtension'
-  config.password = 'myPassword'
-end
-
-# Password grant can also be performed after initialization
-# extension will default to company admin extension if not provided
-client.authorize_password('myUsername', 'myExtension', 'myPassword')
-```
-
-#### Authorization Code Grant
-
-The OAuth 2.0 authorization code grant is designed for where authorization needs to be granted by a 3rd party resource owner.
-
-Using the default authorization URL:
-
-```ruby
-# Initialize SDK with OAuth redirect URI
-client = RingCentralSdk::REST::Client.new do |config|
-  config.app_key = 'myAppKey'
-  config.app_secret = 'myAppSecret'
-  config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
-  config.redirect_url = 'http://example.com/oauth'
-end
-
-# Retrieve OAuth authorize url using default redirect URL
-auth_url = client.authorize_url()
-```
-
-On your redirect page, you can exchange your authorization code for an access token using the following:
-
-```ruby
-code  = params['code'] # e.g. using Sinatra to retrieve code param in Redirect URI
-client.authorize_code(code)
-```
-
 More information on the authorization code flow:
 
 1. [Full documentation](http://ringcentral-sdk-ruby.readthedocs.org/en/latest/usage/authorization/Authorization/#authorization-code-grant)
 2. [Sinatra example](scripts/oauth2-sinatra)
-
-#### Token Reuse
-
-The platform class performs token refresh procedure automatically if needed. To save the access and refresh tokens between instances of the SDK, you can save and reuse the token as follows:
-
-```ruby
-# Access `OAuth2::AccessToken` object as hash
-token_hash = client.token.to_hash
-```
-
-You can reload the token hash in another instance of the SDK as follows:
-
-```ruby
-# set_token() accepts a hash or OAuth2::AccessToken object
-client.set_token(token_hash)
-```
-
-Important! You have to manually maintain synchronization of SDK's between requests if you share authentication. When two simultaneous requests will perform refresh, only one will succeed. One of the solutions would be to have semaphor and pause other pending requests while one of them is performing refresh.
-
-See [the authorization docs](http://ringcentral-sdk-ruby.readthedocs.org/en/latest/usage/authorization/Authorization/) for more info including token reuse.
 
 ### API Requests
 

@@ -19,16 +19,16 @@ require 'ringcentral_sdk'
 
 client = RingCentralSdk::REST::Client.new do |config|
   # App info (mandatory)
-  config.app_key = 'myAppKey'
-  config.app_secret = 'myAppSecret'
+  config.app_key = 'my_app_key'
+  config.app_secret = 'my_app_secret'
   config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
 
   # User info for password grant (optional)
-  config.username = 'myUsername'
-  config.extension = 'myExtension'
-  config.password = 'myPassword'
+  config.username = 'my_username'
+  config.extension = 'my_extension'
+  config.password = 'my_password'
 
-  config.logger = Logger.new(STDOUT)
+  config.logger = Logger.new STDOUT
   config.retry = true
 end
 ```
@@ -40,19 +40,34 @@ require 'ringcentral_sdk'
 
 client = RingCentralSdk::REST::Client.new do |config|
   # App info (mandatory)
-  config.app_key = 'myAppKey'
-  config.app_secret = 'myAppSecret'
+  config.app_key = 'my_app_key'
+  config.app_secret = 'my_app_secret'
   config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
 
   # OAuth 2.0 authorization code grant (optional)
   # Can be set later
   config.redirect_url = 'http://example.com/oauth'
 
-  config.logger = Logger.new(STDOUT)
+  config.logger = Logger.new STDOUT
   config.retry = true
   config.retry_opts = { retry_after: 15, error_codes: [429, 503, 504] }
 end
 ```
+
+## Logging
+
+The RingCentral SDK either takes a Logger object or will create a default `Logger` object. The same object is passed to dependencies including the faraday HTTP client and the faraday request retry middleware gem. This is set using the logger config variable:
+
+```ruby
+client = RingCentral::REST::Client.new do |config|
+  config.logger = Logger.new STDOUT
+  ...
+end
+```
+
+## HTTP Request Retries 
+
+
 
 ## Using Environment Variables
 
@@ -71,6 +86,8 @@ The following environment variables will be loaded:
 | `RC_USER_PASSWORD` | `config.password` |
 | `RC_TOKEN` | `config.token` | JSON token response |
 | `RC_TOKEN_FILE` | `config.token_file` | File containing JSON token response |
+| `RC_RETRY` | `config.retry` | Set to `true` or `false` |
+| `RC_RETRY_OPTIONS` | `config.retry_options | JSON string for `FaradayMiddleware::Request::Retry` options |
 
 Ruby file:
 

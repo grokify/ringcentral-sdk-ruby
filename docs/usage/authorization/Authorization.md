@@ -82,6 +82,12 @@ token = client.authorize_code code
 token = client.authorize_code code, access_token_ttl: 600
 ```
 
+## Token Refresh
+
+Important! You have to manually maintain synchronization of SDK's between requests if you share authentication. When two simultaneous requests will perform refresh, only one will succeed. One of the solutions would be to have semaphor and pause other pending requests while one of them is performing refresh.
+
+See [the authorization docs](http://ringcentral-sdk-ruby.readthedocs.org/en/latest/usage/authorization/Authorization/) for more info including token reuse.
+
 ## Token Reuse
 
 To reuse an access token between sessions, you can save the hash of the token, 
@@ -102,7 +108,7 @@ client2 = RingCentralSdk.new(
 )
 
 # Method 1: Load token as hash
-client2.set_token(token_hash)
+client2.set_token token_hash
 
 # Method 2: Load token as OAuth2::AccessToken object
 oauth2 = OAuth2::Client.new(@app_key, @app_secret,
