@@ -18,7 +18,7 @@ module RingCentralSdk
       attr_reader :event_filters
 
       def initialize(client)
-        @_client = client
+        @client = client
         @event_filters = []
         @_timeout = nil
         @_subscription = nil_subscription
@@ -69,11 +69,11 @@ module RingCentralSdk
         raise 'Events are undefined' unless @event_filters.is_a?(Array) && !@event_filters.empty?
 
         begin
-          response = @_client.http.post do |req|
+          response = @client.http.post do |req|
             req.url 'subscription'
             req.headers['Content-Type'] = 'application/json'
             req.body = {
-              eventFilters: @_client.create_urls(@event_filters),
+              eventFilters: @client.create_urls(@event_filters),
               deliveryMode: { transportType: 'PubNub' }
             }
           end
@@ -98,7 +98,7 @@ module RingCentralSdk
         _clear_timeout
 
         begin
-          response = @_client.http.post do |req|
+          response = @client.http.post do |req|
             req.url uri_join(@_subscription['uri'], 'renew')
             req.headers['Content-Type'] = 'application/json'
           end
@@ -109,7 +109,7 @@ module RingCentralSdk
 
           return response
         rescue StandardError => e
-          @client.logger.warn "RingCentralSdk::REST::Subscription: RENEW_ERROR #{e}"
+          @client.config.logger.warn "RingCentralSdk::REST::Subscription: RENEW_ERROR #{e}"
           reset
           changed
           notify_observers e
@@ -121,7 +121,7 @@ module RingCentralSdk
         raise 'Subscription is not alive' unless alive?
 
         begin
-          response = @_client.http.delete do |req|
+          response = @client.http.delete do |req|
             req.url 'subscription/' + @_subscription['id'].to_s
           end
           reset
@@ -179,19 +179,19 @@ module RingCentralSdk
 
         callback = Pubnub::SubscribeCallback.new(
           message: ->(envelope) {
-            @_client.logger.debug "MESSAGE: #{envelope.result[:data]}"
+            @client.config.logger.debug "MESSAGE: #{envelope.result[:data]}"
             _notify envelope.result[:data][:message]
             changed
           },
           presence: ->(envelope) {
-            @_client.logger.info "PRESENCE: #{envelope.result[:data]}"
+            @client.config.logger.info "PRESENCE: #{envelope.result[:data]}"
           },
           status: lambda do |envelope|
-            @_client.logger.info "\n\n\n#{envelope.status}\n\n\n"
+            @client.config.logger.info "\n\n\n#{envelope.status}\n\n\n"
             if envelope.error?
-              @_client.logger.info "ERROR! #{envelope.status[:category]}"
+              @client.config.logger.info "ERROR! #{envelope.status[:category]}"
             elsif envelope.status[:last_timetoken] == 0 # Connected!
-              @_client.logger.info('CONNECTED!')
+              @client.config.logger.info('CONNECTED!')
             end
           end
         )
@@ -201,12 +201,12 @@ module RingCentralSdk
         @_pubnub.subscribe(
           channels: @_subscription['deliveryMode']['address']
         )
-        @_client.logger.debug('SUBSCRIBED')
+        @client.config.logger.debug('SUBSCRIBED')
       end
 
       def _notify(message)
         count = count_observers
-        @_client.logger.debug("RingCentralSdk::REST::Subscription NOTIFYING '#{count}' observers")
+        @client.config.logger.debug("RingCentralSdk::REST::Subscription NOTIFYING '#{count}' observers")
 
         message = _decrypt message
         changed
