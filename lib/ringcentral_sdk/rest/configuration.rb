@@ -28,6 +28,7 @@ module RingCentralSdk
         load_environment if load_env
         inflate_headers
         inflate_retry
+        inflate_retry_options
         inflate_token
       end
 
@@ -54,12 +55,20 @@ module RingCentralSdk
       end
 
       def inflate_retry
-        if !defined?(@retry) || @retry.nil? || @retry.empty? || @retry.to_s.downcase == 'false'
+        if !defined?(@retry) || @retry.nil?
           @retry = false
+        elsif @retry.is_a? String
+          @retry = @retry.to_s.strip.downcase == 'true' ? true : false
+        elsif ![true, false].include? @retry
+          @retry = @retry ? true : false
+        end
+      end
+
+      def inflate_retry_options
+        if @retry == false
           @retry_options = {}
           return
         end
-        @retry = true
         if !@retry_options.nil? && @retry_options.to_s =~ /^\s*{/
           @retry_options = MultiJson.decode @retry_options.to_s, symbolize_keys: true
         else

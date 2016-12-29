@@ -72,6 +72,8 @@ RingCentral SDK uses `FaradayMiddleware::Request::Retry` to handle HTTP request 
 * `:error_codes` to retry, default `[429, 503, 504]`
 * `:retry_after` seconds, default `10`
 
+Note, there may be issues replay certain types of requests, notably `Faraday::UploadIO` requests. To reply these requests you can use `FaradayMiddleware::Request::RetryUtil` separately as seen in [RingCentral::Avatars::Creator](https://github.com/grokify/ringcentral-avatars-ruby/blob/master/lib/ringcentral-avatars/creator.rb).
+
 ## Using Environment Variables
 
 When deploying an app, it can be useful to store some variables outside of the app code. This is especially useful for app and user credentials that should not be checked into source control systems. The RingCentral SDK supports reading some information from the environment, either directly or via a `.env` file. To use this capability set `config.load_env = true`.

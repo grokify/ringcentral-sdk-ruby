@@ -1,6 +1,6 @@
 # RingCentral SDK for Ruby
 
-This documentation is for version 2.0.0 of [ringcentral_sdk](https://github.com/grokify/ringcentral-sdk-ruby).
+This documentation is for version 2.x of [ringcentral_sdk](https://github.com/grokify/ringcentral-sdk-ruby).
 
 ## Table of Contents
 
