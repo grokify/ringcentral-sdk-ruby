@@ -1,6 +1,6 @@
 # RingCentralSdk is a SDK for the RingCentral REST API
 module RingCentralSdk
-  VERSION = '2.0.2'.freeze
+  VERSION = '2.0.3'.freeze
 
   RC_SERVER_PRODUCTION = 'https://platform.ringcentral.com'.freeze
   RC_SERVER_SANDBOX = 'https://platform.devtest.ringcentral.com'.freeze
