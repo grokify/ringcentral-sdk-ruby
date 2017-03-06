@@ -7,14 +7,14 @@ require 'ringcentral_sdk'
 # Enter config in .env file
 
 client = RingCentralSdk::REST::Client.new do |config|
-  config.dotenv = true
+  config.load_env = true
 end
 
 get '/' do
   erb :index, locals: {
-    app_key: config.app.key,
+    app_key: client.config.app_key,
     authorize_url: client.authorize_url,
-    redirect_uri: client.app_config.redirect_url
+    redirect_uri: client.config.redirect_url
   }
 end
 
