@@ -14,7 +14,7 @@ req = RingCentralSdk::REST::Request::SMS.new
 req.add_metadata({
   to: ENV['RC_DEMO_SMS_TO'],
   from: ENV['RC_DEMO_SMS_FROM'],
-  text: "Here's the bot!"
+  text: ENV['RC_DEMO_SMS_TEXT']
 })
 req.add_file ENV['RC_DEMO_MMS_FILE']
 
