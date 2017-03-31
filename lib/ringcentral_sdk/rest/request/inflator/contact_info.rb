@@ -15,6 +15,16 @@ module RingCentralSdk
             end
             contacts
           end
+
+          def inflate_to_object(any = nil)
+            contact = {}
+            if any.is_a?(Hash)
+              contact = any
+            elsif any.is_a?(String) || any.is_a?(Integer)
+              contact = { phoneNumber: any }
+            end
+            contact
+          end
         end
       end
     end
