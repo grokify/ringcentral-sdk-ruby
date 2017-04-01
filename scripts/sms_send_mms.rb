@@ -10,7 +10,7 @@ client = RingCentralSdk::REST::Client.new do |config|
   config.load_env = true
 end
 
-def send_mms_object client
+def send_mms_object(client)
   req = RingCentralSdk::REST::Request::SMS.new
   req.add_metadata({
     to: ENV['RC_DEMO_SMS_TO'],
@@ -21,7 +21,7 @@ def send_mms_object client
   res = client.send_request req
 end
 
-def send_mms_quick client
+def send_mms_quick(client)
   client.messages.sms.create(
     to: ENV['RC_DEMO_SMS_TO'],
     from: ENV['RC_DEMO_SMS_FROM'],

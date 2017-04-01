@@ -18,11 +18,11 @@ module RingCentralSdk
   module REST
     # MessagesSMS provides a helper for SMS and MMS messages
     class MessagesSMS
-      def initialize client
+      def initialize(client)
         @client = client
       end
 
-      def create opts
+      def create(opts)
         req = RingCentralSdk::REST::Request::SMS.new
         req.add_metadata({
           to: opts[:to],
