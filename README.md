@@ -24,8 +24,8 @@ RingCentral SDK for Ruby
   1. [Synopsis](#synopsis)
   1. [API Requests](#api-requests)
     1. [Generic HTTP Requests](#generic-http-requests)
-    2. [SMS Example](#sms-and-mms-example)
-    3. [Fax Example](#fax-example)
+    2. [SMS and MMS Examples](#sms-and-mms-examples)
+    3. [Fax Examples](#fax-examples)
   1. [Advanced Use Cases](#advanced-use-cases)
 5. [Supported Ruby Versions](#supported-ruby-versions)
 6. [Releases](#releases)
@@ -130,7 +130,7 @@ This is useful to access many API endpoints which do not have custom wrappers an
 http = client.http
 ```
 
-#### SMS and MMS Example
+#### SMS and MMS Examples
 
 SMS:
 
@@ -153,7 +153,7 @@ client.messages.sms.create(
 )
 ```
 
-#### Fax Example
+#### Fax Examples
 
 Fax files:
 
@@ -251,7 +251,7 @@ RingCentral Official SDKs
 
 RingCentral SDK is available under an MIT-style license. See [LICENSE.md](LICENSE.md) for details.
 
-RingCentral SDK &copy; 2015-2016 by John Wang
+RingCentral SDK &copy; 2015-2017 by John Wang
 
  [gem-version-svg]: https://badge.fury.io/rb/ringcentral_sdk.svg
  [gem-version-link]: http://badge.fury.io/rb/ringcentral_sdk
