@@ -130,7 +130,9 @@ This is useful to access many API endpoints which do not have custom wrappers an
 http = client.http
 ```
 
-#### SMS Example
+#### SMS/MMS Example
+
+SMS:
 
 ```ruby
 client.messages.sms.create(
@@ -140,7 +142,7 @@ client.messages.sms.create(
 )
 ```
 
-MMS with media file
+MMS with media file:
 
 ```ruby
 client.messages.sms.create(
