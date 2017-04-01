@@ -36,8 +36,8 @@ module RingCentralSdk
         end
 
         def path_params opts = {}
-          @account_id = opts[:account_id] ||= DEFAULT_ID
-          @extension_id = opts[:extension_id] ||= DEFAULT_ID
+          @account_id = opts[:account_id] ||= opts[:accountId] ||= DEFAULT_ID
+          @extension_id = opts[:extension_id] ||= opts[:extensionId] ||= DEFAULT_ID
         end
 
         def add_metadata data, opts = {}
