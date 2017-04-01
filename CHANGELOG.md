@@ -3,6 +3,8 @@ CHANGELOG
 - **2017-03-31**: 2.1.0
   - Additions
     - Add SMS/MMS helper and demo
+  - Update
+    - Refactor Fax helper
 - **2016-12-28**: 2.0.2
   - Update
     - Update to add retry for `504` error code as default in addition to `429`, `503`
