@@ -1,6 +1,6 @@
 CHANGELOG
 ---------
-- **2017-03-31**: 2.1.0
+- **2017-04-01**: 2.1.0
   - Additions
     - Add SMS/MMS helper and demo
   - Update
