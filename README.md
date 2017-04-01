@@ -24,7 +24,7 @@ RingCentral SDK for Ruby
   1. [Synopsis](#synopsis)
   1. [API Requests](#api-requests)
     1. [Generic HTTP Requests](#generic-http-requests)
-    2. [SMS Example](#sms-mms-example)
+    2. [SMS Example](#sms-and-mms-example)
     3. [Fax Example](#fax-example)
   1. [Advanced Use Cases](#advanced-use-cases)
 5. [Supported Ruby Versions](#supported-ruby-versions)
@@ -130,7 +130,7 @@ This is useful to access many API endpoints which do not have custom wrappers an
 http = client.http
 ```
 
-#### SMS / MMS Example
+#### SMS and MMS Example
 
 SMS:
 
