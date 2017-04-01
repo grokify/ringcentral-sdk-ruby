@@ -140,6 +140,17 @@ client.messages.sms.create(
 )
 ```
 
+MMS with media file
+
+```ruby
+client.messages.sms.create(
+  from: '+16505551212',
+  to: '+14155551212',
+  text: 'Hi there!',
+  media: '/filepath/to/file.ext'
+)
+```
+
 #### Fax Example
 
 Fax files:
