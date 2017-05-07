@@ -7,7 +7,9 @@ module RingCentralSdk
           def inflate_to_array(any = nil)
             contacts = []
             if any.is_a?(Array)
-              contacts = any
+              any.each do |contact|
+                contacts.push inflate_to_object(contact)
+              end
             elsif any.is_a?(Hash)
               contacts = [any]
             elsif any.is_a?(String) || any.is_a?(Integer)
