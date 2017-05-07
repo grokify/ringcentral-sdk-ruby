@@ -23,7 +23,7 @@ end
 
 def send_mms_quick(client)
   client.messages.sms.create(
-    to: ENV['RC_DEMO_SMS_TO'],
+    to: [ENV['RC_DEMO_SMS_TO']],
     from: ENV['RC_DEMO_SMS_FROM'],
     text: ENV['RC_DEMO_SMS_TEXT'],
     media: ENV['RC_DEMO_MMS_FILE']
