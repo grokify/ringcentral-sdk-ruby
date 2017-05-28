@@ -32,7 +32,8 @@ res.body['records'].each do |rec|
     pp att
     url = att['uri']
     filename = '_fax2_' + url.gsub(%r{^.*restapi/v[^/]+/}, '').gsub(%r{/}, '_')
-    ext = att['contentType'] == 'application/pdf' ? '.pdf' : ''
+    ext = att['contentType'] == 'application/pdf' ? '.pdf' :
+      att['contentType'] == 'image/tiff' ? '.tiff' : ''
     filename += ext
     puts filename
 
