@@ -3,7 +3,7 @@ module RingCentralSdk
     # Request is the module namespace for various API request helpers.
     module Request
       autoload :Base, 'ringcentral_sdk/rest/request/base'
-      autoload :BaseMultipart, 'ringcentral_sdk/rest/request/base_multipart'
+      autoload :Multipart, 'ringcentral_sdk/rest/request/multipart'
       autoload :Fax, 'ringcentral_sdk/rest/request/fax'
       autoload :Inflator, 'ringcentral_sdk/rest/request/inflator'
       autoload :Simple, 'ringcentral_sdk/rest/request/simple'

@@ -11,13 +11,13 @@ client = RingCentralSdk::REST::Client.new do |config|
 end
 
 def send_mms_object(client)
-  req = RingCentralSdk::REST::Request::SMS.new
-  req.add_metadata({
-    to: ENV['RC_DEMO_SMS_TO'],
-    from: ENV['RC_DEMO_SMS_FROM'],
-    text: ENV['RC_DEMO_SMS_TEXT']
-  })
-  req.add_file ENV['RC_DEMO_MMS_FILE']
+  req = RingCentralSdk::REST::Request::SMS.new.
+    add_metadata({
+      to: ENV['RC_DEMO_SMS_TO'],
+      from: ENV['RC_DEMO_SMS_FROM'],
+      text: ENV['RC_DEMO_SMS_TEXT']
+    }).
+    add_file ENV['RC_DEMO_MMS_FILE']
   res = client.send_request req
 end
 
@@ -30,7 +30,7 @@ def send_mms_quick(client)
   )
 end
 
-res = send_mms_quick client
+res = send_mms_object client
 
 pp res.body
 puts res.status

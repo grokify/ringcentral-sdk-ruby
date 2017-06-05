@@ -7,8 +7,8 @@ require 'multi_json'
 module RingCentralSdk
   module REST
     module Request
-      # BaseMultipart is a base reqwuest helper class for multipart/mixed messages
-      class BaseMultipart < RingCentralSdk::REST::Request::Base
+      # Multipart is a base request helper class for multipart/mixed messages
+      class Multipart < RingCentralSdk::REST::Request::Base
         CONTENT_ID_HEADER = 'Content-Id'.freeze
         DEFAULT_METHOD = 'post'.freeze
         DEFAULT_ID = '~'.freeze
@@ -27,6 +27,7 @@ module RingCentralSdk
           @mime.headers.delete CONTENT_ID_HEADER
 
           @method = opts[:method] ||= DEFAULT_METHOD
+          set_url(opts[:url]) if opts.key? :url
 
           @mime_part_params = {
             base64_encode: opts[:base64_encode] ||= DEFAULT_BASE64_ENCODE,
@@ -41,7 +42,7 @@ module RingCentralSdk
           @extension_id = opts[:extension_id] ||= opts[:extensionId] ||= DEFAULT_ID
         end
 
-        def add_metadata(data, opts = {})
+        def add_json(data, opts = {})
           if data.is_a? MIME::Media
             @mime.add data
           else
@@ -50,6 +51,12 @@ module RingCentralSdk
               @mime_part_params.merge(opts)
             ).mime
           end
+          self
+        end
+
+        def add_metadata(data, opts = {})
+          add_json(data, opts)
+          self
         end
 
         def add_text(text = nil, opts = {})
@@ -58,6 +65,7 @@ module RingCentralSdk
             text,
             @mime_part_params.merge(opts)
           ).mime
+          self
         end
 
         def add_file(file_path_or_part, opts = {})
@@ -69,16 +77,28 @@ module RingCentralSdk
               @mime_part_params.merge(opts).merge({is_attachment: true})
             ).mime
           end
+          self
         end
 
         def add_files(files = [], opts = {})
           files.each do |f|
             add_file f, opts
           end
+          self
+        end
+
+        def add_part(part)
+          @mime.add part
+          self
         end
 
         def url
-          "account/#{@account_id}/extension/#{@extension_id}/sms"
+          @_url
+        end
+
+        def set_url(url)
+          @_url = url
+          self
         end
 
         def content_type

@@ -1,8 +1,8 @@
 module RingCentralSdk
   module REST
     module Request
-      class SMS < RingCentralSdk::REST::Request::BaseMultipart
-        def add_metadata data, opts = {}
+      class SMS < RingCentralSdk::REST::Request::Multipart
+        def add_metadata(data, opts = {})
           if data.is_a? Hash
             inf = RingCentralSdk::REST::Request::Inflator::ContactInfo.new
             if data.key? :to
