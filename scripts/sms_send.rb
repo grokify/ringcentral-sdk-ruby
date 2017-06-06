@@ -17,5 +17,6 @@ res = client.messages.sms.create(
 )
 
 pp res.body
+pp res.status
 
 puts 'DONE'

@@ -1,5 +1,8 @@
 CHANGELOG
 ---------
+- **2017-06-05**: 2.2.0
+  - Additions
+    - Generic Multipart helper
 - **2017-04-01**: 2.1.0
   - Additions
     - Add SMS/MMS helper and demo
