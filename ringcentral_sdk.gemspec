@@ -7,12 +7,12 @@ version = $1
 Gem::Specification.new do |s|
   s.name        = lib
   s.version     = version
-  s.date        = '2017-04-01'
+  s.date        = '2017-06-20'
   s.summary     = 'RingCentral SDK - Ruby SDK for the RingCentral Connect Platform API'
   s.description = 'A Ruby SDK for the RingCentral Connect Platform API'
   s.authors     = ['John Wang']
   s.email       = 'johncwang@gmail.com'
-  s.homepage    = 'https://github.com/grokify/'
+  s.homepage    = 'https://github.com/grokify/ringcentral-sdk-ruby'
   s.licenses    = ['MIT']
   s.files       = Dir['lib/**/**/*']
   s.files      += Dir['[A-Z]*'] + Dir['test/**/*']

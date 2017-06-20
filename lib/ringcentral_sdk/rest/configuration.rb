@@ -1,6 +1,9 @@
 require 'dotenv'
+require 'fiddle'
 require 'logger'
 require 'multi_json'
+require 'ringcentral_sdk'
+require 'uri'
 
 module RingCentralSdk
   module REST
@@ -95,6 +98,12 @@ module RingCentralSdk
         if !defined?(@token) && !@token.nil? && @token.is_a?(String) && @token =~ /^\s*{/
           @token = MultiJson.decode @token
         end
+      end
+
+      def authorize_url
+        puts @server_url
+        puts RingCentralSdk::REST::Client::AUTHZ_ENDPOINT
+        URI.join(@server_url, RingCentralSdk::REST::Client::AUTHZ_ENDPOINT)
       end
     end
   end

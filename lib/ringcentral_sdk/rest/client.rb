@@ -161,7 +161,7 @@ module RingCentralSdk
           @config.app_key,
           @config.app_secret,
           site: @config.server_url,
-          authorize_url: AUTHZ_ENDPOINT,
+          authorize_url: @config.authorize_url,
           token_url: TOKEN_ENDPOINT
         )
       end

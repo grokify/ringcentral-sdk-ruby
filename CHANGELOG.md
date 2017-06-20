@@ -1,5 +1,9 @@
 CHANGELOG
 ---------
+- **2017-06-20**: 2.2.1
+  - Bugfixes
+    - Fix `client.authorize_url`
+    - Fix OAuth2 Sintra demo
 - **2017-06-05**: 2.2.0
   - Additions
     - Generic Multipart helper
