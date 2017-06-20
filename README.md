@@ -257,20 +257,20 @@ RingCentral SDK &copy; 2015-2017 by John Wang
  [gem-version-link]: http://badge.fury.io/rb/ringcentral_sdk
  [downloads-svg]: http://ruby-gem-downloads-badge.herokuapp.com/ringcentral_sdk
  [downloads-link]: https://rubygems.org/gems/ringcentral_sdk
- [build-status-svg]: https://api.travis-ci.org/ringcentral-ruby/ringcentral-sdk-ruby.svg?branch=master
- [build-status-link]: https://travis-ci.org/ringcentral-ruby/ringcentral-sdk-ruby
+ [build-status-svg]: https://api.travis-ci.org/grokify/ringcentral-sdk-ruby.svg?branch=master
+ [build-status-link]: https://travis-ci.org/grokify/ringcentral-sdk-ruby
  [coverage-status-svg]: https://coveralls.io/repos/grokify/ringcentral-sdk-ruby/badge.svg?branch=master
  [coverage-status-link]: https://coveralls.io/r/grokify/ringcentral-sdk-ruby?branch=master
  [dependency-status-svg]: https://gemnasium.com/grokify/ringcentral-sdk-ruby.svg
  [dependency-status-link]: https://gemnasium.com/grokify/ringcentral-sdk-ruby
  [codacy-svg]: https://api.codacy.com/project/badge/Grade/4792fe45b56b4841a7e6099c316ac0f8
- [codacy-link]: https://www.codacy.com/app/ringcentral-ruby/ringcentral-sdk-ruby
+ [codacy-link]: https://www.codacy.com/app/grokify/ringcentral-sdk-ruby
  [codeclimate-status-svg]: https://codeclimate.com/github/grokify/ringcentral-sdk-ruby/badges/gpa.svg
  [codeclimate-status-link]: https://codeclimate.com/github/grokify/ringcentral-sdk-ruby
  [scrutinizer-status-svg]: https://scrutinizer-ci.com/g/grokify/ringcentral-sdk-ruby/badges/quality-score.png?b=master
  [scrutinizer-status-link]: https://scrutinizer-ci.com/g/grokify/ringcentral-sdk-ruby/?branch=master
- [story-status-svg]: https://badge.waffle.io/ringcentral-ruby/ringcentral-sdk-ruby.svg?label=ready&title=Ready
- [story-status-link]: https://waffle.io/ringcentral-ruby/ringcentral-sdk-ruby
+ [story-status-svg]: https://badge.waffle.io/grokify/ringcentral-sdk-ruby.svg?label=ready&title=Ready
+ [story-status-link]: https://waffle.io/grokify/ringcentral-sdk-ruby
  [docs-readthedocs-svg]: https://img.shields.io/badge/docs-readthedocs-blue.svg
  [docs-readthedocs-link]: http://ringcentral-sdk-ruby.readthedocs.org/
  [docs-rubydoc-svg]: https://img.shields.io/badge/docs-rubydoc-blue.svg
