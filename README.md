@@ -1,20 +1,20 @@
 RingCentral SDK for Ruby
 ========================
 
-[![Gem Version][gem-version-svg]][gem-version-link]
-[![Build Status][build-status-svg]][build-status-link]
-[![Coverage Status][coverage-status-svg]][coverage-status-link]
-[![Dependency Status][dependency-status-svg]][dependency-status-link]
-[![Codacy Badge][codacy-svg]][codacy-link]
-[![Code Climate][codeclimate-status-svg]][codeclimate-status-link]
-[![Scrutinizer Code Quality][scrutinizer-status-svg]][scrutinizer-status-link]
-[![Downloads][downloads-svg]][downloads-link]
-[![Docs][docs-readthedocs-svg]][docs-readthedocs-link]
-[![Docs][docs-rubydoc-svg]][docs-rubydoc-link]
-[![License][license-svg]][license-link]
-[![Chat][chat-svg]][chat-link]
+[![Gem Version][gem-version-svg]][gem-version-url]
+[![Build Status][build-status-svg]][build-status-url]
+[![Coverage Status][coverage-status-svg]][coverage-status-url]
+[![Dependency Status][dependency-status-svg]][dependency-status-url]
+[![Codacy Badge][codacy-svg]][codacy-url]
+[![Code Climate][codeclimate-status-svg]][codeclimate-status-url]
+[![Scrutinizer Code Quality][scrutinizer-status-svg]][scrutinizer-status-url]
+[![Downloads][downloads-svg]][downloads-url]
+[![Docs][docs-readthedocs-svg]][docs-readthedocs-url]
+[![Docs][docs-rubydoc-svg]][docs-rubydoc-url]
+[![License][license-svg]][license-url]
+[![Chat][chat-svg]][chat-url]
 
-[![Stories in Ready][story-status-svg]][story-status-link]
+[![Stories in Ready][story-status-svg]][story-status-url]
 
 ## Table of contents
 
@@ -255,28 +255,28 @@ RingCentral SDK is available under an MIT-style license. See [LICENSE.md](LICENS
 RingCentral SDK &copy; 2015-2017 by John Wang
 
  [gem-version-svg]: https://badge.fury.io/rb/ringcentral_sdk.svg
- [gem-version-link]: http://badge.fury.io/rb/ringcentral_sdk
+ [gem-version-url]: http://badge.fury.io/rb/ringcentral_sdk
  [downloads-svg]: http://ruby-gem-downloads-badge.herokuapp.com/ringcentral_sdk
- [downloads-link]: https://rubygems.org/gems/ringcentral_sdk
+ [downloads-url]: https://rubygems.org/gems/ringcentral_sdk
  [build-status-svg]: https://api.travis-ci.org/grokify/ringcentral-sdk-ruby.svg?branch=master
- [build-status-link]: https://travis-ci.org/grokify/ringcentral-sdk-ruby
+ [build-status-url]: https://travis-ci.org/grokify/ringcentral-sdk-ruby
  [coverage-status-svg]: https://coveralls.io/repos/grokify/ringcentral-sdk-ruby/badge.svg?branch=master
- [coverage-status-link]: https://coveralls.io/r/grokify/ringcentral-sdk-ruby?branch=master
+ [coverage-status-url]: https://coveralls.io/r/grokify/ringcentral-sdk-ruby?branch=master
  [dependency-status-svg]: https://gemnasium.com/grokify/ringcentral-sdk-ruby.svg
- [dependency-status-link]: https://gemnasium.com/grokify/ringcentral-sdk-ruby
+ [dependency-status-url]: https://gemnasium.com/grokify/ringcentral-sdk-ruby
  [codacy-svg]: https://api.codacy.com/project/badge/Grade/4792fe45b56b4841a7e6099c316ac0f8
- [codacy-link]: https://www.codacy.com/app/grokify/ringcentral-sdk-ruby
+ [codacy-url]: https://www.codacy.com/app/grokify/ringcentral-sdk-ruby
  [codeclimate-status-svg]: https://codeclimate.com/github/grokify/ringcentral-sdk-ruby/badges/gpa.svg
- [codeclimate-status-link]: https://codeclimate.com/github/grokify/ringcentral-sdk-ruby
+ [codeclimate-status-url]: https://codeclimate.com/github/grokify/ringcentral-sdk-ruby
  [scrutinizer-status-svg]: https://scrutinizer-ci.com/g/grokify/ringcentral-sdk-ruby/badges/quality-score.png?b=master
- [scrutinizer-status-link]: https://scrutinizer-ci.com/g/grokify/ringcentral-sdk-ruby/?branch=master
+ [scrutinizer-status-url]: https://scrutinizer-ci.com/g/grokify/ringcentral-sdk-ruby/?branch=master
  [story-status-svg]: https://badge.waffle.io/grokify/ringcentral-sdk-ruby.svg?label=ready&title=Ready
- [story-status-link]: https://waffle.io/grokify/ringcentral-sdk-ruby
+ [story-status-url]: https://waffle.io/grokify/ringcentral-sdk-ruby
  [docs-readthedocs-svg]: https://img.shields.io/badge/docs-readthedocs-blue.svg
- [docs-readthedocs-link]: http://ringcentral-sdk-ruby.readthedocs.org/
+ [docs-readthedocs-url]: http://ringcentral-sdk-ruby.readthedocs.org/
  [docs-rubydoc-svg]: https://img.shields.io/badge/docs-rubydoc-blue.svg
- [docs-rubydoc-link]: http://www.rubydoc.info/gems/ringcentral_sdk/
+ [docs-rubydoc-url]: http://www.rubydoc.info/gems/ringcentral_sdk/
  [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
- [license-link]: https://github.com/grokify/ringcentral-sdk-ruby/blob/master/LICENSE.md
+ [license-url]: https://github.com/grokify/ringcentral-sdk-ruby/blob/master/LICENSE.md
  [chat-svg]: https://img.shields.io/badge/chat-on%20glip-orange.svg
- [chat-link]: https://glipped.herokuapp.com/
+ [chat-url]: https://glipped.herokuapp.com/
