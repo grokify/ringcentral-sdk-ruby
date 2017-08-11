@@ -12,6 +12,7 @@ RingCentral SDK for Ruby
 [![Docs][docs-readthedocs-svg]][docs-readthedocs-url]
 [![Docs][docs-rubydoc-svg]][docs-rubydoc-url]
 [![License][license-svg]][license-url]
+[![Stack Overflow][stackoverflow-svg]][stackoverflow-url]
 [![Chat][chat-svg]][chat-url]
 
 [![Stories in Ready][story-status-svg]][story-status-url]
@@ -280,3 +281,5 @@ RingCentral SDK &copy; 2015-2017 by John Wang
  [license-url]: https://github.com/grokify/ringcentral-sdk-ruby/blob/master/LICENSE.md
  [chat-svg]: https://img.shields.io/badge/chat-on%20glip-orange.svg
  [chat-url]: https://glipped.herokuapp.com/
+ [stackoverflow-svg]: https://img.shields.io/badge/Stack%20Overflow-ringcentral-orange.svg
+ [stackoverflow-url]: https://stackoverflow.com/questions/tagged/ringcentral
