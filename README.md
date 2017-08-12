@@ -12,6 +12,7 @@ RingCentral SDK for Ruby
 [![Docs][docs-readthedocs-svg]][docs-readthedocs-url]
 [![Docs][docs-rubydoc-svg]][docs-rubydoc-url]
 [![License][license-svg]][license-url]
+
 [![Stack Overflow][stackoverflow-svg]][stackoverflow-url]
 [![Chat][chat-svg]][chat-url]
 
