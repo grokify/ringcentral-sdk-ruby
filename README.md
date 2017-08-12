@@ -85,7 +85,7 @@ $ gem install ringcentral_sdk
 ### Synopsis
 
 ```ruby
-require 'rinngcentral_sdk'
+require 'ringcentral_sdk'
 
 client = RingCentralSdk::REST::Client.new do |config|
   # App info (mandatory)
