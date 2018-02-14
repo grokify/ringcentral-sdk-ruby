@@ -6,6 +6,10 @@ require 'pp'
 # Set your credentials in the .env file
 # Use the rc_config_sample.env.txt file as a scaffold
 
+envPath = ENV['ENV_PATH'] || '.env'
+puts envPath
+Dotenv.load envPath
+
 client = RingCentralSdk::REST::Client.new do |config|
   config.load_env = true
 end
