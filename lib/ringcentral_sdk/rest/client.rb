@@ -11,17 +11,17 @@ module RingCentralSdk
     # Client is the RingCentral REST API client class which handles
     # HTTP requests with built-in OAuth handling
     class Client
-      ACCESS_TOKEN_TTL = 600 # 10 minutes
+      ACCESS_TOKEN_TTL  = 600 # 10 minutes
       REFRESH_TOKEN_TTL = 36_000 # 10 hours
       REFRESH_TOKEN_TTL_REMEMBER = 604_800 # 1 week
-      ACCOUNT_PREFIX = '/account/'.freeze
-      ACCOUNT_ID = '~'.freeze
-      AUTHZ_ENDPOINT = '/restapi/oauth/authorize'.freeze
-      TOKEN_ENDPOINT = '/restapi/oauth/token'.freeze
-      REVOKE_ENDPOINT = '/restapi/oauth/revoke'.freeze
-      API_VERSION = 'v1.0'.freeze
-      URL_PREFIX = '/restapi'.freeze
-      DEFAULT_LANGUAGE = 'en-us'.freeze
+      ACCOUNT_PREFIX    = '/account/'.freeze
+      ACCOUNT_ID        = '~'.freeze
+      AUTHZ_ENDPOINT    = '/restapi/oauth/authorize'.freeze
+      TOKEN_ENDPOINT    = '/restapi/oauth/token'.freeze
+      REVOKE_ENDPOINT   = '/restapi/oauth/revoke'.freeze
+      API_VERSION       = 'v1.0'.freeze
+      URL_PREFIX        = '/restapi'.freeze
+      DEFAULT_LANGUAGE  = 'en-us'.freeze
 
       attr_reader :config
       attr_reader :http

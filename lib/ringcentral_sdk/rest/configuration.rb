@@ -101,7 +101,7 @@ module RingCentralSdk
       end
 
       def authorize_url
-        URI.join(@server_url, RingCentralSdk::REST::Client::AUTHZ_ENDPOINT)
+        URI.join @server_url, RingCentralSdk::REST::Client::AUTHZ_ENDPOINT
       end
     end
   end
