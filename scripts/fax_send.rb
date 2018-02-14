@@ -15,9 +15,9 @@ client = RingCentralSdk::REST::Client.new do |config|
 end
 
 res = client.messages.fax.create(
-  to: ENV['RC_DEMO_FAX_TO'],
+  to:            ENV['RC_DEMO_FAX_TO'],
   coverPageText: ENV['RC_DEMO_FAX_COVERPAGE_TEXT'],
-  files: [ENV['RC_DEMO_FAX_FILE']]
+  files:        [ENV['RC_DEMO_FAX_FILE']]
 )
 
 pp res.body
