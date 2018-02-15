@@ -75,9 +75,10 @@ module RingCentralSdk::REST
         response = @_client.http.post do |req|
           req.url 'subscription'
           req.body = {
-            eventFilters: @_client.create_urls(@event_filters),
+            eventFilters: @event_filters,
             deliveryMode: {
-              transportType: 'PubNub'
+              transportType: 'PubNub',
+              encryption: 'true'
             }
           }
         end
