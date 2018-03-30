@@ -25,7 +25,7 @@ module RingCentralSdk
       def create(opts)
         req = RingCentralSdk::REST::Request::SMS.new
         req.add_metadata({
-          to: opts[:to],
+          to:   opts[:to],
           from: opts[:from],
           text: opts[:text]
         })
@@ -51,7 +51,7 @@ module RingCentralSdk
       end
 
       def create(opts)
-        req = RingCentralSdk::REST::Request::Fax.new
+        req  = RingCentralSdk::REST::Request::Fax.new
         meta = {}
 
         skip = {text: 1, files: 1}

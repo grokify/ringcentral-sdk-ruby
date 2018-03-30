@@ -1,13 +1,23 @@
 #!ruby
 
+require 'dotenv'
 require 'multi_json'
 require 'ringcentral_sdk'
+
+env_path = ENV['ENV_PATH'] || './.env'
+Dotenv.load(env_path) if File.exists?(env_path)
 
 # Set your credentials in the .env file
 # Use the rc_config_sample.env.txt file as a scaffold
 
 client = RingCentralSdk::REST::Client.new do |config|
-  config.load_env = true
+  config.app_key       = ENV['RINGCENTRAL_CLIENT_ID']
+  config.app_secret    = ENV['RINGCENTRAL_CLIENT_SECRET']
+  config.server_url    = ENV['RINGCENTRAL_SERVER_URL']
+  config.username      = ENV['RINGCENTRAL_USERNAME']
+  config.extension     = ENV['RINGCENTRAL_EXTENSION']
+  config.password      = ENV['RINGCENTRAL_PASSWORD']
+
   config.logger = Logger.new STDOUT
   config.logger.level = Logger::INFO
 end

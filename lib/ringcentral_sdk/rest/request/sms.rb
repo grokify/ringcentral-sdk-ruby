@@ -17,7 +17,7 @@ module RingCentralSdk
         end
 
         def url
-          "account/#{@account_id}/extension/#{@extension_id}/sms"
+          "/restapi/v1.0/account/#{@account_id}/extension/#{@extension_id}/sms"
         end
       end
     end

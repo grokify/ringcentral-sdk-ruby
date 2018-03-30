@@ -43,18 +43,18 @@ module RingCentralSdk
 
       def load_environment
         Dotenv.load
-        @server_url = ENV['RC_SERVER_URL'] if ENV.key? 'RC_SERVER_URL'
-        @app_key = ENV['RC_APP_KEY'] if ENV.key? 'RC_APP_KEY'
-        @app_secret = ENV['RC_APP_SECRET'] if ENV.key? 'RC_APP_SECRET'
-        @redirect_url = ENV['RC_APP_REDIRECT_URL'] if ENV.key? 'RC_APP_REDIRECT_URL'
-        @username = ENV['RC_USER_USERNAME'] if ENV.key? 'RC_USER_USERNAME'
-        @extension = ENV['RC_USER_EXTENSION'] if ENV.key? 'RC_USER_EXTENSION'
-        @password = ENV['RC_USER_PASSWORD'] if ENV.key? 'RC_USER_PASSWORD'
-        @token = ENV['RC_TOKEN'] if ENV.key? 'RC_TOKEN'
-        @token_file = ENV['RC_TOKEN_FILE'] if ENV.key? 'RC_TOKEN_FILE'
-        @retry = ENV['RC_RETRY'] if ENV.key? 'RC_RETRY'
-        @retry_options = ENV['RC_RETRY_OPTIONS'] if ENV.key? 'RC_RETRY_OPTIONS'
-        @headers = ENV['RC_HEADERS'] if ENV.key? 'RC_HEADERS'
+        @server_url    = ENV['RINGCENTRAL_SERVER_URL']    if ENV.key? 'RINGCENTRAL_SERVER_URL'
+        @app_key       = ENV['RINGCENTRAL_CLIENT_ID']     if ENV.key? 'RINGCENTRAL_CLIENT_ID'
+        @app_secret    = ENV['RINGCENTRAL_CLIENT_SECRET'] if ENV.key? 'RINGCENTRAL_CLIENT_SECRET'
+        @redirect_url  = ENV['RINGCENTRAL_REDIRECT_URL']  if ENV.key? 'RINGCENTRAL_REDIRECT_URL'
+        @username      = ENV['RINGCENTRAL_USERNAME']      if ENV.key? 'RINGCENTRAL_USERNAME'
+        @extension     = ENV['RINGCENTRAL_EXTENSION']     if ENV.key? 'RINGCENTRAL_EXTENSION'
+        @password      = ENV['RINGCENTRAL_PASSWORD']      if ENV.key? 'RINGCENTRAL_PASSWORD'
+        @token         = ENV['RINGCENTRAL_TOKEN']         if ENV.key? 'RINGCENTRAL_TOKEN'
+        @token_file    = ENV['RINGCENTRAL_TOKEN_FILE']    if ENV.key? 'RINGCENTRAL_TOKEN_FILE'
+        @retry         = ENV['RINGCENTRAL_RETRY']         if ENV.key? 'RINGCENTRAL_RETRY'
+        @retry_options = ENV['RINGCENTRAL_RETRY_OPTIONS'] if ENV.key? 'RINGCENTRAL_RETRY_OPTIONS'
+        @headers       = ENV['RINGCENTRAL_HEADERS']       if ENV.key? 'RINGCENTRAL_HEADERS'
       end
 
       def inflate_retry

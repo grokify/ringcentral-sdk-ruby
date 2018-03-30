@@ -12,7 +12,7 @@ end
 
 res = client.messages.sms.create(
   from: ENV['RC_DEMO_SMS_FROM'],
-  to: ENV['RC_DEMO_SMS_TO'],
+  to:   ENV['RC_DEMO_SMS_TO'],
   text: ENV['RC_DEMO_SMS_TEXT']
 )
 
