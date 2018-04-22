@@ -4,41 +4,27 @@ require 'dotenv'
 require 'ringcentral_sdk'
 require 'pp'
 
-envPath = ENV['ENV_PATH'] || '.env'
-Dotenv.load envPath
+Dotenv.load ENV['ENV_PATH'] || '.env'
 
 # Set your credentials in the .env file
 # Use the rc_config_sample.env.txt file as a scaffold
 
-#client = RingCentralSdk::REST::Client.new do |config|
-#  config.load_env = true
-#end
-
-def EnvVal(envVar)
-  #envVar = envVar + '_2'
-  ENV[envVar]
-end
-
 client = RingCentralSdk::REST::Client.new do |config|
-  config.server_url = EnvVal('RINGCENTRAL_SERVER_URL')
-  config.app_key    = EnvVal('RINGCENTRAL_CLIENT_ID')
-  config.app_secret = EnvVal('RINGCENTRAL_CLIENT_SECRET')
-  config.username   = EnvVal('RINGCENTRAL_USERNAME')
-  config.extension  = EnvVal('RINGCENTRAL_EXTENSION')
-  config.password   = EnvVal('RINGCENTRAL_PASSWORD')
+  config.server_url = ENV['RINGCENTRAL_SERVER_URL']
+  config.app_key    = ENV['RINGCENTRAL_CLIENT_ID']
+  config.app_secret = ENV['RINGCENTRAL_CLIENT_SECRET']
+  config.username   = ENV['RINGCENTRAL_USERNAME']
+  config.extension  = ENV['RINGCENTRAL_EXTENSION']
+  config.password   = ENV['RINGCENTRAL_PASSWORD']
 end
 
-def handleResponse(res)
-  puts res.status
-  pp res.body
-end
-
-def ringout(client, accountId, extensionId, to, from, callerId)
+def ringout(client, accountId, extensionId, to, from, callerId,playPrompt)
   body = {
     to:       { phoneNumber: to },
     from:     { phoneNumber: from },
     callerId: { phoneNumber: callerId },
-    playPrompt: false
+    playPrompt: playPrompt,
+    country: {id: 1}
   }
   client.http.post do |req|
     req.url "account/#{accountId}/extension/#{extensionId}/ring-out"
@@ -47,4 +33,11 @@ def ringout(client, accountId, extensionId, to, from, callerId)
   end
 end
 
-handleResponse ringout(client, '~', '~', '+14155550100', '+16505550100', '+16505550100')
+res = ringout(client, '~', '~', 
+  ENV['RINGCENTRAL_DEMO_RINGOUT_TO'],
+  ENV['RINGCENTRAL_DEMO_RINGOUT_FROM'],
+  ENV['RINGCENTRAL_DEMO_RINGOUT_FROM'],
+  ENV['RINGCENTRAL_DEMO_RINGOUT_PROMPT'])
+
+puts res.status
+pp res.body
