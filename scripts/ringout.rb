@@ -41,3 +41,5 @@ res = ringout(client, '~', '~',
 
 puts res.status
 pp res.body
+
+puts 'DONE'
