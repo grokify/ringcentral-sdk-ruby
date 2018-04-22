@@ -1,5 +1,6 @@
 #!ruby
 
+require 'dotenv'
 require 'sinatra'
 require 'multi_json'
 require 'ringcentral_sdk'
@@ -7,8 +8,13 @@ require 'ringcentral_sdk'
 # Create and edit the .env file:
 # $ cp config-sample.env.txt .env
 
+Dotenv.load ENV['ENV_PATH'] || '.env'
+
 client = RingCentralSdk::REST::Client.new do |config|
-  config.load_env = true
+  config.server_url   = ENV['RINGCENTRAL_SERVER_URL']
+  config.app_key      = ENV['RINGCENTRAL_CLIENT_ID']
+  config.app_secret   = ENV['RINGCENTRAL_CLIENT_SECRET']
+  config.redirect_url = ENV['RINGCENTRAL_REDIRECT_URL']
 end
 
 set :logger, Logger.new(STDOUT)
@@ -27,7 +33,7 @@ get '/' do
     token_json: token_json}
 end
 
-get '/callback' do
+get '/oauth2callback' do
   code = params.key?('code') ? params['code'] : ''
   state = params.key?('state') ? params['state'] : ''
   logger.info("OAuth2 Callback Response State #{state}")
