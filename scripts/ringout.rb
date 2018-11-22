@@ -1,6 +1,7 @@
 #!ruby
 
 require 'dotenv'
+require 'multi_json'
 require 'ringcentral_sdk'
 require 'pp'
 
@@ -26,6 +27,9 @@ def ringout(client, accountId, extensionId, to, from, callerId,playPrompt)
     playPrompt: playPrompt,
     country: {id: 1}
   }
+
+  puts MultiJson.encode body, pretty: true
+
   client.http.post do |req|
     req.url "account/#{accountId}/extension/#{extensionId}/ring-out"
     req.headers['Content-Type'] = 'application/json'
@@ -40,6 +44,7 @@ res = ringout(client, '~', '~',
   ENV['RINGCENTRAL_DEMO_RINGOUT_PROMPT'])
 
 puts res.status
-pp res.body
+
+puts MultiJson.encode res.body, pretty: true
 
 puts 'DONE'
