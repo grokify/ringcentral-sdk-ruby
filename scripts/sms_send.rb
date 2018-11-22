@@ -22,7 +22,7 @@ end
 
 res = client.messages.sms.create(
   from: ENV['RINGCENTRAL_DEMO_SMS_FROM'],
-  to:   ENV['RINGCENTRAL_DEMO_SMS_TO'],
+  to:   [ENV['RINGCENTRAL_DEMO_SMS_TO']],
   text: ENV['RINGCENTRAL_DEMO_SMS_TEXT']
 )
 
