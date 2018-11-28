@@ -16,8 +16,6 @@ RingCentral SDK for Ruby
 [![Stack Overflow][stackoverflow-svg]][stackoverflow-url]
 [![Chat][chat-svg]][chat-url]
 
-[![Stories in Ready][story-status-svg]][story-status-url]
-
 ## Table of contents
 
 1. [Overview](#overview)
