@@ -4,7 +4,6 @@ RingCentral SDK for Ruby
 [![Gem Version][gem-version-svg]][gem-version-url]
 [![Build Status][build-status-svg]][build-status-url]
 [![Coverage Status][coverage-status-svg]][coverage-status-url]
-[![Dependency Status][dependency-status-svg]][dependency-status-url]
 [![Codacy Badge][codacy-svg]][codacy-url]
 [![Code Climate][codeclimate-status-svg]][codeclimate-status-url]
 [![Scrutinizer Code Quality][scrutinizer-status-svg]][scrutinizer-status-url]
