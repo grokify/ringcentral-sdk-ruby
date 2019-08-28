@@ -8,13 +8,13 @@ before_install:
 rvm:
   - 2.6.4
   - 2.5.6
-  - 2.4.7
+  - 2.4.6
   - 2.3.8
   - 2.2.9
   - ruby
   - ruby-head
-  - jruby-9.1.5.0
-  - jruby-9.0.5.0
+  - jruby-9.2.8.0
+  - jruby-9.1.17.0
   - jruby-head
   - rbx-2
   - rbx-head
@@ -25,7 +25,7 @@ matrix:
     - rvm: 2.2.9
     - rvm: ruby
     - rvm: ruby-head
-    - rvm: jruby-9.0.5.0
+    - rvm: jruby-9.1.17.0
     - rvm: jruby-head
     - rvm: rbx-2
     - rvm: rbx-head
