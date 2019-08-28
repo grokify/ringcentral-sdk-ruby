@@ -34,7 +34,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'oauth2', '~> 1.0', '>= 1.0.0'
   s.add_dependency 'pubnub', '~> 4.0'
 
-  s.add_development_dependency 'bundler', '~> 1'
+  s.add_development_dependency 'bundler', '~> 2'
   s.add_development_dependency 'coveralls', '~> 0'
   s.add_development_dependency 'mocha', '~> 1'
   s.add_development_dependency 'rake', '~> 12'
