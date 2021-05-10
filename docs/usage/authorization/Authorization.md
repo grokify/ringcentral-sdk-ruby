@@ -55,7 +55,7 @@ client = RingCentralSdk::REST::Client.new do |config|
   config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
   config.app_key = 'myAppKey'
   config.app_secret = 'myAppSecret'
-  config.app_redirect_url: 'http://example.com/oauth'
+  config.redirect_url = 'http://example.com/oauth'
 end
 
 # Retrieve OAuth authorize url using default redirect URL
