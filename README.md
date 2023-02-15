@@ -249,7 +249,7 @@ RingCentral Official SDKs
 
 RingCentral SDK is available under an MIT-style license. See [LICENSE.md](LICENSE.md) for details.
 
-RingCentral SDK &copy; 2015-2019 by John Wang
+RingCentral SDK &copy; 2015-2023 by John Wang
 
  [gem-version-svg]: https://badge.fury.io/rb/ringcentral_sdk.svg
  [gem-version-url]: http://badge.fury.io/rb/ringcentral_sdk
