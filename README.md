@@ -1,16 +1,19 @@
 RingCentral SDK for Ruby
 ========================
 
-[![Gem Version][gem-version-svg]][gem-version-link]
-[![Build Status][build-status-svg]][build-status-link]
-[![Coverage Status][coverage-status-svg]][coverage-status-link]
-[![Dependency Status][dependency-status-svg]][dependency-status-link]
-[![Code Climate][codeclimate-status-svg]][codeclimate-status-link]
-[![Scrutinizer Code Quality][scrutinizer-status-svg]][scrutinizer-status-link]
-[![Downloads][downloads-svg]][downloads-link]
-[![Docs][docs-readthedocs-svg]][docs-readthedocs-link]
-[![Docs][docs-rubydoc-svg]][docs-rubydoc-link]
-[![License][license-svg]][license-link]
+[![Gem Version][gem-version-svg]][gem-version-url]
+[![Build Status][build-status-svg]][build-status-url]
+[![Coverage Status][coverage-status-svg]][coverage-status-url]
+[![Codacy Badge][codacy-svg]][codacy-url]
+[![Code Climate][codeclimate-status-svg]][codeclimate-status-url]
+[![Scrutinizer Code Quality][scrutinizer-status-svg]][scrutinizer-status-url]
+[![Downloads][downloads-svg]][downloads-url]
+[![Docs][docs-readthedocs-svg]][docs-readthedocs-url]
+[![Docs][docs-rubydoc-svg]][docs-rubydoc-url]
+[![License][license-svg]][license-url]
+
+[![Stack Overflow][stackoverflow-svg]][stackoverflow-url]
+[![Chat][chat-svg]][chat-url]
 
 ## Table of contents
 
@@ -18,15 +21,11 @@ RingCentral SDK for Ruby
 2. [Documentation](#documentation)
 3. [Installation](#installation)
 4. [Usage](#usage)
-  1. [Instantiation](#instantiation)
-  1. [Authorization](#authorization)
-    1. [Password Grant](#password-grant)
-    1. [Authorization Code Grant](#authorization-code-grant)
-    1. [Token Reuse](#token-reuse)
+  1. [Synopsis](#synopsis)
   1. [API Requests](#api-requests)
     1. [Generic HTTP Requests](#generic-http-requests)
-    2. [SMS Example](#sms-example)
-    3. [Fax Example](#fax-example)
+    2. [SMS and MMS Examples](#sms-and-mms-examples)
+    3. [Fax Examples](#fax-examples)
   1. [Advanced Use Cases](#advanced-use-cases)
 5. [Supported Ruby Versions](#supported-ruby-versions)
 6. [Releases](#releases)
@@ -38,12 +37,15 @@ RingCentral SDK for Ruby
 
 ## Overview
 
-##### :warning: YOU MUST HAVE A RINGCENTRAL ACCOUNT TO USE THE API :warning:
-##### Get an account at: https://developers.ringcentral.com/login.html
+A Ruby SDK for the [RingCentral REST API](https://developers.ringcentral.com).
 
-www.ringcentral.com - RingCentral Complete Cloud Communications System.
+## Important Notes
 
-A library for using the [RingCentral REST API](https://developers.ringcentral.com). [Click here to read the full documentation](http://ringcentral-sdk-ruby.readthedocs.org/).
+Version 2.0.0 introduces the following backward breaking changes:
+
+* SDK instantiation by moving to a block-based configuration
+* Removal of `RingCentralSdk::REST::Config` class
+* Removal of `RingCentralSdk::REST::Client.authorize_user` method
 
 ## Documentation
 
@@ -77,83 +79,42 @@ $ gem install ringcentral_sdk
 
 ## Usage
 
-### Instantiation and Authorization
-
-How you instantiate the SDK can depend on whether you use OAuth 2.0 password grant or the authorization code grant which are both described here.
-
-It is also necessary to specify your RingCentral API end point URL which are included constants:
-
-* `RingCentralSdk::RC_SERVER_PRODUCTION`
-* `RingCentralSdk::RC_SERVER_SANDBOX`
-
-#### Password Grant
-
-The OAuth 2.0 resource owner password grant flow is designed for server applications where the app and resource owners are the same.
+### Synopsis
 
 ```ruby
 require 'ringcentral_sdk'
 
-# Returns RingCentralSdk::Platform instance
-client = RingCentralSdk::REST::Client.new(
-  'myAppKey',
-  'myAppSecret',
-  RingCentralSdk::RC_SERVER_SANDBOX
+client = RingCentralSdk::REST::Client.new do |config|
+  # App info (mandatory)
+  config.app_key = 'myAppKey'
+  config.app_secret = 'myAppSecret'
+  config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
+
+  # User info for password grant (optional)
+  config.username = 'myUsername'
+  config.extension = 'myExtension'
+  config.password = 'myPassword'
+
+  # Set a custom logger (optional)
+  config.logger = Logger.new(STDOUT)
+
+  # Enable HTTP retries for 429, 503, and 504 errors
+  # Set custom codes and retry after using retry_options
+  config.retry = true
+end
+
+# Send SMS
+res = client.messages.sms.create(
+  from: '+16505551212',
+  to: '+14155551212',
+  text: 'Hi there!'
 )
-
-# extension will default to company admin extension if not provided
-client.authorize_password('myUsername', 'myExtension', 'myPassword')
-```
-
-#### Authorization Code Grant
-
-The OAuth 2.0 authorization code grant is designed for where authorization needs to be granted by a 3rd party resource owner.
-
-Using the default authorization URL:
-
-```ruby
-# Initialize SDK with OAuth redirect URI
-client = RingCentralSdk::REST::Client.new(
-  'myAppKey',
-  'myAppSecret',
-  RingCentralSdk::RC_SERVER_SANDBOX,
-  {redirect_uri: 'http://example.com/oauth'}
-)
-
-# Retrieve OAuth authorize url using default redirect URL
-auth_url = client.authorize_url()
-```
-
-On your redirect page, you can exchange your authorization code for an access token using the following:
-
-```ruby
-code  = params['code'] # e.g. using Sinatra to retrieve code param in Redirect URI
-client.authorize_code(code)
 ```
 
 More information on the authorization code flow:
 
 1. [Full documentation](http://ringcentral-sdk-ruby.readthedocs.org/en/latest/usage/authorization/Authorization/#authorization-code-grant)
 2. [Sinatra example](scripts/oauth2-sinatra)
-
-#### Token Reuse
-
-The platform class performs token refresh procedure automatically if needed. To save the access and refresh tokens between instances of the SDK, you can save and reuse the token as follows:
-
-```ruby
-# Access `OAuth2::AccessToken` object as hash
-token_hash = client.token.to_hash
-```
-
-You can reload the token hash in another instance of the SDK as follows:
-
-```ruby
-# set_token() accepts a hash or OAuth2::AccessToken object
-client.set_token(token_hash)
-```
-
-Important! You have to manually maintain synchronization of SDK's between requests if you share authentication. When two simultaneous requests will perform refresh, only one will succeed. One of the solutions would be to have semaphor and pause other pending requests while one of them is performing refresh.
-
-See [the authorization docs](http://ringcentral-sdk-ruby.readthedocs.org/en/latest/usage/authorization/Authorization/) for more info including token reuse.
 
 ### API Requests
 
@@ -169,7 +130,9 @@ This is useful to access many API endpoints which do not have custom wrappers an
 http = client.http
 ```
 
-#### SMS Example
+#### SMS and MMS Examples
+
+SMS:
 
 ```ruby
 client.messages.sms.create(
@@ -179,7 +142,18 @@ client.messages.sms.create(
 )
 ```
 
-#### Fax Example
+MMS with media file:
+
+```ruby
+client.messages.sms.create(
+  from: '+16505551212',
+  to: '+14155551212',
+  text: 'Hi there!',
+  media: '/filepath/to/file.ext'
+)
+```
+
+#### Fax Examples
 
 Fax files:
 
@@ -209,20 +183,20 @@ To make subscriptions with RingCentral, use the SDK object to create subscriptio
 # Create an observer object
 class MyObserver
   def update(message)
-    puts "Subscription Message Received"
+    puts 'Subscription Message Received'
     puts JSON.dump(message)
   end
 end
 
 # Create an observable subscription and add your observer
-sub = client.create_subscription()
-sub.add_observer(MyObserver.new())
+sub = client.create_subscription
+sub.add_observer MyObserver.new
 
 # Subscribe to an arbitrary number of event filters
-sub.subscribe(['/restapi/v1.0/account/~/extension/~/presence'])
+sub.subscribe ['/restapi/v1.0/account/~/extension/~/presence']
 
 # End the subscription
-sub.destroy()
+sub.destroy
 ```
 
 ### Advanced Use Cases
@@ -232,17 +206,7 @@ sub.destroy()
 
 ## Supported Ruby Versions
 
-This library supports and is [tested against](https://travis-ci.org/grokify/ringcentral-sdk-ruby) the following Ruby implementations:
-
-1. Ruby 2.3.0
-2. Ruby 2.2.0
-3. Ruby 2.1.0
-4. Ruby 2.0.0
-5. Ruby 1.9.3
-6. [JRuby](http://jruby.org/)
-7. [Rubinius](http://rubinius.com/)
-
-Note: Ruby 1.8.7 works except for subscription support which relies on the `pubnub` gem. If there is a need for 1.8.7 support, consider creating a GitHub issue so we can evalute creating a separate library for subscription handling.
+This library is tested against [this list of Ruby implementations](https://travis-ci.org/grokify/ringcentral-sdk-ruby).
 
 ## Releases
 
@@ -285,27 +249,35 @@ RingCentral Official SDKs
 
 ## License
 
-RingCentral SDK is available under an MIT-style license. See [LICENSE.txt](LICENSE.txt) for details.
+RingCentral SDK is available under an MIT-style license. See [LICENSE.md](LICENSE.md) for details.
 
-RingCentral SDK &copy; 2015-2016 by John Wang
+RingCentral SDK &copy; 2015-2019 by John Wang
 
  [gem-version-svg]: https://badge.fury.io/rb/ringcentral_sdk.svg
- [gem-version-link]: http://badge.fury.io/rb/ringcentral_sdk
+ [gem-version-url]: http://badge.fury.io/rb/ringcentral_sdk
  [downloads-svg]: http://ruby-gem-downloads-badge.herokuapp.com/ringcentral_sdk
- [downloads-link]: https://rubygems.org/gems/ringcentral_sdk
+ [downloads-url]: https://rubygems.org/gems/ringcentral_sdk
  [build-status-svg]: https://api.travis-ci.org/grokify/ringcentral-sdk-ruby.svg?branch=master
- [build-status-link]: https://travis-ci.org/grokify/ringcentral-sdk-ruby
+ [build-status-url]: https://travis-ci.org/grokify/ringcentral-sdk-ruby
  [coverage-status-svg]: https://coveralls.io/repos/grokify/ringcentral-sdk-ruby/badge.svg?branch=master
- [coverage-status-link]: https://coveralls.io/r/grokify/ringcentral-sdk-ruby?branch=master
+ [coverage-status-url]: https://coveralls.io/r/grokify/ringcentral-sdk-ruby?branch=master
  [dependency-status-svg]: https://gemnasium.com/grokify/ringcentral-sdk-ruby.svg
- [dependency-status-link]: https://gemnasium.com/grokify/ringcentral-sdk-ruby
+ [dependency-status-url]: https://gemnasium.com/grokify/ringcentral-sdk-ruby
+ [codacy-svg]: https://api.codacy.com/project/badge/Grade/4792fe45b56b4841a7e6099c316ac0f8
+ [codacy-url]: https://www.codacy.com/app/grokify/ringcentral-sdk-ruby
  [codeclimate-status-svg]: https://codeclimate.com/github/grokify/ringcentral-sdk-ruby/badges/gpa.svg
- [codeclimate-status-link]: https://codeclimate.com/github/grokify/ringcentral-sdk-ruby
+ [codeclimate-status-url]: https://codeclimate.com/github/grokify/ringcentral-sdk-ruby
  [scrutinizer-status-svg]: https://scrutinizer-ci.com/g/grokify/ringcentral-sdk-ruby/badges/quality-score.png?b=master
- [scrutinizer-status-link]: https://scrutinizer-ci.com/g/grokify/ringcentral-sdk-ruby/?branch=master
+ [scrutinizer-status-url]: https://scrutinizer-ci.com/g/grokify/ringcentral-sdk-ruby/?branch=master
+ [story-status-svg]: https://badge.waffle.io/grokify/ringcentral-sdk-ruby.svg?label=ready&title=Ready
+ [story-status-url]: https://waffle.io/grokify/ringcentral-sdk-ruby
  [docs-readthedocs-svg]: https://img.shields.io/badge/docs-readthedocs-blue.svg
- [docs-readthedocs-link]: http://ringcentral-sdk-ruby.readthedocs.org/
+ [docs-readthedocs-url]: http://ringcentral-sdk-ruby.readthedocs.org/
  [docs-rubydoc-svg]: https://img.shields.io/badge/docs-rubydoc-blue.svg
- [docs-rubydoc-link]: http://www.rubydoc.info/gems/ringcentral_sdk/
+ [docs-rubydoc-url]: http://www.rubydoc.info/gems/ringcentral_sdk/
  [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
- [license-link]: https://github.com/grokify/ringcentral-sdk-ruby/blob/master/LICENSE.txt
+ [license-url]: https://github.com/grokify/ringcentral-sdk-ruby/blob/master/LICENSE.md
+ [chat-svg]: https://img.shields.io/badge/chat-on%20glip-orange.svg
+ [chat-url]: https://glipped.herokuapp.com/
+ [stackoverflow-svg]: https://img.shields.io/badge/Stack%20Overflow-ringcentral-orange.svg
+ [stackoverflow-url]: https://stackoverflow.com/questions/tagged/ringcentral

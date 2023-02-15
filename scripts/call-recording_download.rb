@@ -7,22 +7,22 @@ require 'pp'
 # Set your credentials in the .env file
 # Use the rc_config_sample.env.txt file as a scaffold
 
-config = RingCentralSdk::REST::Config.new.load_dotenv
-
-client = RingCentralSdk::REST::Client.new
-client.app_config = config.app
-client.authorize_user config.user
+client = RingCentralSdk::REST::Client.new do |config|
+  config.load_env = true
+  config.logger = Logger.new STDOUT
+  config.logger.level = Logger::INFO
+end
 
 def get_recordings(client)
   # Retrieve voice call log records with recordings
   response = client.http.get do |req|
-    params = {type: 'Voice', withRecording: 'True', dateFrom: '2015-01-01'}
+    params = { type: 'Voice', withRecording: 'True', dateFrom: '2015-01-01' }
     req.url 'account/~/extension/~/call-log', params
   end
 
   # Save recording and metadata for each call log record
   if response.body.key?('records')
-    response.body['records'].each_with_index do |record, i|
+    response.body['records'].each_with_index do |record, _i|
       # Retrieve call recording
 
       unless record.key?('recording') && record['recording'].key?('contentUri')
@@ -43,10 +43,9 @@ def get_recordings(client)
           req.url record['recording']['contentUri']
         end
       end
-      
+
       # Save call recording
-      ext = response_file.headers['Content-Type'].to_s == 'audio/mpeg' \
-        ? '.mp3' : '.wav'
+      ext = response_file.headers['Content-Type'].to_s == 'audio/mpeg' ? '.mp3' : '.wav'
 
       file_mp3 = 'recording_' + record['id'] + '_' + record['recording']['id'] + ext
       File.open(file_mp3, 'wb') { |fp| fp.write(response_file.body) }
@@ -58,6 +57,6 @@ def get_recordings(client)
   end
 end
 
-get_recordings(client)
+get_recordings client
 
-puts "DONE"
+puts 'DONE'

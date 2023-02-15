@@ -1,23 +1,29 @@
 #!ruby
 
+require 'dotenv'
 require 'ringcentral_sdk'
 require 'pp'
 
 # Set your credentials in the .env file
 # Use the rc_config_sample.env.txt file as a scaffold
 
-config = RingCentralSdk::REST::Config.new.load_dotenv
+Dotenv.load ENV['ENV_PATH'] || '.env'
 
-client = RingCentralSdk::REST::Client.new
-client.app_config = config.app
-client.authorize_user config.user
+client = RingCentralSdk::REST::Client.new do |config|
+  config.server_url = ENV['RINGCENTRAL_SERVER_URL']
+  config.app_key    = ENV['RINGCENTRAL_CLIENT_ID']
+  config.app_secret = ENV['RINGCENTRAL_CLIENT_SECRET']
+  config.username   = ENV['RINGCENTRAL_USERNAME']
+  config.extension  = ENV['RINGCENTRAL_EXTENSION']
+  config.password   = ENV['RINGCENTRAL_PASSWORD']
+end
 
 res = client.messages.fax.create(
-  to: config.env.data['RC_DEMO_FAX_TO'],
-  coverPageText: config.env.data['RC_DEMO_FAX_COVERPAGE_TEXT'],
-  files: [config.env.data['RC_DEMO_FAX_FILE']]
+  to:            ENV['RINGCENTRAL_DEMO_FAX_TO'],
+  coverPageText: ENV['RINGCENTRAL_DEMO_FAX_COVERPAGE_TEXT'],
+  files:        [ENV['RINGCENTRAL_DEMO_FAX_FILE']]
 )
 
 pp res.body
 
-puts "DONE"
+puts 'DONE'

@@ -1,8 +1,63 @@
 CHANGELOG
 ---------
-- **2016-02-17**: 1.2.0
+- **2017-06-20**: 2.2.1
+  - Additions
+    - Generic Multipart helper
+  - Bugfixes
+    - Fix `client.authorize_url`
+    - Fix OAuth2 Sintra demo
+- **2017-04-01**: 2.1.0
+  - Additions
+    - Add SMS/MMS helper and demo
+  - Update
+    - Refactor Fax helper
+- **2016-12-28**: 2.0.2
+  - Update
+    - Update to add retry for `504` error code as default in addition to `429`, `503`
+- **2016-12-28**: 2.0.1
+  - Minor fixes
+- **2016-12-28**: 2.0.0
+  - Breaking Changes
+    - New block-based config, replacing old method param and env config
+  - Additions
+    - Add auto-retry request using `FaradayMiddleware::Request::Retry`
+    - Add configurable logger
+  - Update
+    - Update `pubnub` dependency to `4.0.16` from `3.8.x`
+    - Update `rake` dependency to `12.x.x` from `11.x.x`
+    - Update gemspec to include dependency versions
+  - Bugfixes
+    - Fix `logger.level` default setting
+- **2016-09-05**: 1.3.4
+  - Bugfixes
+    - Fix `RingCentralSdk::REST::Subscription` renewal bug
+- **2016-09-04**: 1.3.2 & 1.3.3
+  - Bugfixes
+    - Fix `RingCentralSdk::REST::Subscription` renewal bug
+- **2016-08-24**: 1.3.1
+  - Updates
+    - Lock PubNub dependency to 3.x due to back compat issue with 4.x
+- **2016-08-23**: 1.3.0
+  - Additions
+    - Add OAuth 2.0 parameter support for `authorize_(code|password|user)` methods
+  - Bugfixes
+    - Fix `Client#token` to return token used by `FaradayMiddleware::OAuth2Refresh`
+- **2016-06-01**: 1.2.3
+  - Updates
+    - Update subscription for new header requirement
+- **2016-05-30**: 1.2.2
+  - Additions
+    - Add `RingCentralSdk::REST::Request::Fax` to support all `MIME::Media` MIME parts
+    - Add docs for call queue add / remove agents
+    - Add docs for fax `multipart/form-data` support
+    - Add demo for fax custom cover page
+- **2016-04-23**: 1.2.1
+  - Updates
+    - Update `RingCentral::REST::Client` `app_config =` to `set_app_config`
+- **2016-04-23**: 1.2.0
   - Additions
     - Add `RingCentral::REST::Client` custom instance headers support
+    - Add `RingCentral::REST::Client` `attr_reader` for `app_config`
     - Add docs for Answering Rules
   - Updates
     - Update Pubnub dependency to 3.8.0 from 3.7.3

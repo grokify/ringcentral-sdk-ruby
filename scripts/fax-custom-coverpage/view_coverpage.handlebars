@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Fax</title>
+		<style>
+			body {width:95%;margin:0 auto}
+			h1 {width:100%;color:#fff;background-color:#000;padding:0.2em 0.2em 0.2em 1.2em}
+			.bodyWrap {padding-left:1em}
+			.contactHeading {font-weight:bold;}
+			.itemLabel {font-weight:bold;}
+		</style>
+	</head>
+	<body>
+		<h1>FAX</h1>
+
+		<div class="bodyWrap">
+			<blockquote>
+				<p><span class="itemLabel">Date:</span> {{ fax_date }}</p>
+				<p><span class="itemLabel">Pages including cover sheet:</span> {{ fax_pages }}</p>
+			</blockquote>
+
+			<hr />
+			<h2 class="contactHeading">To</h2>
+			<blockquote>
+				<p><span class="itemLabel">Name:</span> {{ fax_to_name }}</p>
+				<p><span class="itemLabel">Phone:</span> {{ fax_to_phone }}</p>
+				<p><span class="itemLabel">Fax Number:</span> {{ fax_to_fax }}</p>
+			</blockquote>
+
+			<hr />
+			<h2 class="contactHeading">From</h2>
+			<blockquote>
+				<p><span class="itemLabel">Name:</span> {{ fax_from_name }}</p>
+				<p><span class="itemLabel">Phone:</span> {{ fax_from_phone }}</p>
+				<p><span class="itemLabel">Fax Number:</span> {{ fax_from_fax }}</p>
+			</blockquote>
+
+			<hr />
+			<h2 class="contactHeading">Note</h2>
+
+			{{ fax_coverpage_text }}
+		</div>
+	</body>
+</html>

@@ -2,50 +2,48 @@ require './test/test_base.rb'
 
 class RingCentralSdkRESTExtensionPresenceTest < Test::Unit::TestCase
   def new_client
-    client = RingCentralSdk::REST::Client.new(
-      'my_app_key',
-      'my_app_secret',
-      RingCentralSdk::RC_SERVER_SANDBOX
-    )
-    return client
+    RingCentralSdk::REST::Client.new do |config|
+      config.app_key = 'my_app_key'
+      config.app_secret = 'my_app_secret'
+      config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
+    end
   end
 
   def test_department_calls_enable
-    presence = RingCentralSdk::REST::ExtensionPresence.new(111111)
-
-    new_statuses = {
-      :enable => {
-        'DoNotAcceptAnyCalls' => 'TakeDepartmentCallsOnly',
-        'DoNotAcceptDepartmentCalls' => 'TakeAllCalls'
-      },
-      :disable => {
-        'TakeAllCalls' => 'DoNotAcceptDepartmentCalls',
-        'TakeDepartmentCallsOnly' => 'DoNotAcceptAnyCalls'
-      }
-    }
+    presence = RingCentralSdk::REST::ExtensionPresence.new(111_111)
 
     cur_status = 'TakeAllCalls'
-    assert_equal 'DoNotAcceptDepartmentCalls', \
+    assert_equal \
+      'DoNotAcceptDepartmentCalls', \
       presence.new_status_dnd_department_calls(cur_status, false)
-    assert_equal 'TakeAllCalls', \
+
+    assert_equal \
+      'TakeAllCalls', \
       presence.new_status_dnd_department_calls(cur_status, true)
 
     cur_status = 'TakeDepartmentCallsOnly'
-    assert_equal 'DoNotAcceptAnyCalls', \
+    assert_equal \
+      'DoNotAcceptAnyCalls', \
       presence.new_status_dnd_department_calls(cur_status, false)
-    assert_equal 'TakeDepartmentCallsOnly', \
+    assert_equal \
+      'TakeDepartmentCallsOnly', \
       presence.new_status_dnd_department_calls(cur_status, true)
 
     cur_status = 'DoNotAcceptAnyCalls'
-    assert_equal 'DoNotAcceptAnyCalls', \
+
+    assert_equal \
+      'DoNotAcceptAnyCalls', \
       presence.new_status_dnd_department_calls(cur_status, false)
-    assert_equal 'TakeDepartmentCallsOnly', \
+    assert_equal \
+      'TakeDepartmentCallsOnly', \
       presence.new_status_dnd_department_calls(cur_status, true)
 
     cur_status = 'DoNotAcceptDepartmentCalls'
-    assert_equal 'DoNotAcceptDepartmentCalls', \
+    assert_equal \
+      'DoNotAcceptDepartmentCalls', \
       presence.new_status_dnd_department_calls(cur_status, false)
-    assert_equal 'TakeAllCalls', \
+    assert_equal \
+      'TakeAllCalls', \
       presence.new_status_dnd_department_calls(cur_status, true)
   end
 
@@ -57,16 +55,16 @@ class RingCentralSdkRESTExtensionPresenceTest < Test::Unit::TestCase
     Faraday::Connection.any_instance.stubs(:get).returns(Faraday::Response.new)
     Faraday::Connection.any_instance.stubs(:put).returns(Faraday::Response.new)
 
-    presence = RingCentralSdk::REST::ExtensionPresence.new(111111, :client => client)
-    presence.retrieve()
+    presence = RingCentralSdk::REST::ExtensionPresence.new(111_111, client: client)
+    presence.retrieve
     presence.presence_data = stub_presence
 
     assert_equal 'TakeAllCalls', presence.presence_data['dndStatus']
 
     assert_equal true, presence.department_calls_enabled?
 
-    #new_status = presence.department_calls_enable false
-    #assert_equal 'DoNotAcceptDepartmentCalls', new_status
+    # new_status = presence.department_calls_enable false
+    # assert_equal 'DoNotAcceptDepartmentCalls', new_status
 
     presence.extension_id = 'abc'
     assert_raise do
@@ -77,7 +75,7 @@ class RingCentralSdkRESTExtensionPresenceTest < Test::Unit::TestCase
       presence.update nil
     end
 
-    presence.update({:dndStatus=>'TakeAllCalls'})
+    presence.update(dndStatus: 'TakeAllCalls')
 
     ######
     # Test with good data
@@ -104,59 +102,52 @@ class RingCentralSdkRESTExtensionPresenceTest < Test::Unit::TestCase
   "ringOnMonitoredCall": false,
   "pickUpCallsOnHold": false
 }'
-    data = JSON.parse(json, :symbolize_names=>false)
-    return data
+    JSON.parse json, symbolize_names: false
   end
 end
 
 class RingCentralSdkTestSubAuth
-
   def new_client
-    client = RingCentralSdk::REST::Client.new(
-      'my_app_key',
-      'my_app_secret',
-      RingCentralSdk::RC_SERVER_SANDBOX
-    )
-    return client
+    RingCentralSdk::REST::Client.new do |config|
+      config.app_key = 'my_app_key'
+      config.app_secret = 'my_app_secret'
+      config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
+    end
   end
 
-  def new_client_with_auth()
-    client = new_client()
-    client.set_oauth2_client()
+  def new_client_with_auth
+    client = new_client
+    client.set_oauth2_client
 
     stub_token_hash = data_auth_token_with_refresh
-    stub_token = OAuth2::AccessToken::from_hash(client.oauth2client, stub_token_hash)
+    stub_token = OAuth2::AccessToken.from_hash(client.oauth2client, stub_token_hash)
 
     client.oauth2client.password.stubs(:get_token).returns(stub_token)
-
-    token = client.authorize('my_test_username', 'my_test_extension', 'my_test_password')
-    return client
+    client.authorize('my_test_username', 'my_test_extension', 'my_test_password')
+    client
   end
 
-    def data_auth_token_with_refresh
-      json = '{
-  "access_token": "my_test_access_token_with_refresh",
-  "token_type": "bearer",
-  "expires_in": 3599,
-  "refresh_token": "my_test_refresh_token",
-  "refresh_token_expires_in": 604799,
-  "scope": "ReadCallLog DirectRingOut EditCallLog ReadAccounts Contacts EditExtensions ReadContacts SMS EditPresence RingOut EditCustomData ReadPresence EditPaymentInfo Interoperability Accounts NumberLookup InternalMessages ReadCallRecording EditAccounts Faxes EditReportingSettings ReadClientInfo EditMessages VoipCalling ReadMessages",
-  "owner_id": "1234567890"
+  def data_auth_token_with_refresh
+    json = '{
+      "access_token": "my_test_access_token_with_refresh",
+      "token_type": "bearer",
+      "expires_in": 3599,
+      "refresh_token": "my_test_refresh_token",
+      "refresh_token_expires_in": 604799,
+      "scope": "ReadCallLog DirectRingOut EditCallLog ReadAccounts Contacts EditExtensions ReadContacts SMS EditPresence RingOut EditCustomData ReadPresence EditPaymentInfo Interoperability Accounts NumberLookup InternalMessages ReadCallRecording EditAccounts Faxes EditReportingSettings ReadClientInfo EditMessages VoipCalling ReadMessages",
+      "owner_id": "1234567890"
       }'
-      data = JSON.parse(json, :symbolize_names=>true)
-      return data
-    end
+    JSON.parse(json, symbolize_names: true)
+  end
 
-    def data_auth_token_without_refresh
-      json = '{
-  "access_token": "my_test_access_token_without_refresh",
-  "token_type": "bearer",
-  "expires_in": 3599,
-  "scope": "ReadCallLog DirectRingOut EditCallLog ReadAccounts Contacts EditExtensions ReadContacts SMS EditPresence RingOut EditCustomData ReadPresence EditPaymentInfo Interoperability Accounts NumberLookup InternalMessages ReadCallRecording EditAccounts Faxes EditReportingSettings ReadClientInfo EditMessages VoipCalling ReadMessages",
-  "owner_id": "1234567890"
+  def data_auth_token_without_refresh
+    json = '{
+      "access_token": "my_test_access_token_without_refresh",
+      "token_type": "bearer",
+      "expires_in": 3599,
+      "scope": "ReadCallLog DirectRingOut EditCallLog ReadAccounts Contacts EditExtensions ReadContacts SMS EditPresence RingOut EditCustomData ReadPresence EditPaymentInfo Interoperability Accounts NumberLookup InternalMessages ReadCallRecording EditAccounts Faxes EditReportingSettings ReadClientInfo EditMessages VoipCalling ReadMessages",
+      "owner_id": "1234567890"
       }'
-      data = JSON.parse(json, :symbolize_names=>true)
-      return data
-    end
-
+    JSON.parse(json, symbolize_names: true)
+  end
 end

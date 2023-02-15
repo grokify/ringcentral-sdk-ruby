@@ -1,14 +1,15 @@
+_*
+.DS_Store
+.env
 Gemfile.lock
 coverage
 pubnub.log
 scripts/_*
 scripts/*.env
-scripts/Gemfile.lock
 scripts/credentials.json
 scripts/credentials[0-9].json
 scripts/env_test
 scripts/rc-credentials.json
 scripts/oauth2-sinatra/_*
 scripts/oauth2-sinatra/*.env
-scripts/oauth2-sinatra/Gemfile.lock
 *.gem

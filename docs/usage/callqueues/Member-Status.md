@@ -20,7 +20,7 @@ client.authorize_password ... # can be ROPC grant or authorization code grant
 # Retrieve a Call Queue Extension by Extension Number to Store in Your App
 call_queue_extension_number = 201
 
-extensions = RingCentralSdk::Cache::Extensions.new client
+extensions = RingCentralSdk::REST::Cache::Extensions.new client
 extensions.retrieve_all
 
 call_queue = extensions.get_extension_by_number call_queue_extension_number

@@ -1,52 +1,55 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-		<script>
-var auth_url = '<%= authorize_url %>';
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script>
 
-$.oauthpopup = function(options)
-{
-    options.windowName = options.windowName ||  'ConnectWithOAuth'; // should not include space for IE
-    options.windowOptions = options.windowOptions || 'location=0,status=0,width=400,height=660';
-    options.callback = options.callback || function(){ window.location.reload(); };
-    var that = this;
-    console.log(options.path);
-    that._oauthWindow = window.open(options.path, options.windowName, options.windowOptions);
-    that._oauthInterval = window.setInterval(function(){
-        if (that._oauthWindow.closed) {
-            window.clearInterval(that._oauthInterval);
-            options.callback();
-        }
-    }, 1000);
-};
+var config = {
+    authUri: '<%= authorize_uri %>',
+    redirectUri: '<%= redirect_uri %>',
+}
 
-function Auth3l(rcDemo) {
-    var t=this;
-    t.authorize = function() {
-        var urltoopen = '<%= authorize_url %>';
-        $.oauthpopup({
-            path: urltoopen,
-            callback: function()
-            {
-                console.log('callback');
+var OAuthCode = function(config) {
+    this.config = config;
+    this.loginPopup  = function() {
+        this.loginPopupUri(this.config['authUri'], this.config['redirectUri']);
+    }
+    this.loginPopupUri  = function(authUri, redirectUri) {
+        var win         = window.open(authUri, 'windowname1', 'width=800, height=600'); 
+
+        var pollOAuth   = window.setInterval(function() { 
+            try {
+                console.log(win.document.URL);
+                if (win.document.URL.indexOf(redirectUri) != -1) {
+                    window.clearInterval(pollOAuth);
+                    win.close();
+                    location.reload();
+                }
+            } catch(e) {
+                console.log(e)
             }
-        });
+        }, 100);
     }
 }
 
-var oauth = new Auth3l();
+var oauth = new OAuthCode(config);
 
-		</script>
-	</head>
-	<body>
-		<h1>3-Legged OAuth 2.0 Demo</h1>
-		<p>To run this demo use the following command:</p>
-		<p>$ ruby oauth.rb</p>
-		<p><input type="button" onclick="oauth.authorize()" value="Login with RingCentral"></p>
-        <p>App Key: <%= app_key %></p>
-		<p>Authorization URL: <%= authorize_url %></p>
-		<p>Redirect URL: <%= redirect_uri %></p>
-	</body>
+        </script>
+    </head>
+    <body>
+        <h1>RingCentral 3-Legged OAuth Demo in Ruby</h1>
+
+        <p><input type="button" onclick="oauth.loginPopup()" value="Login with RingCentral"></p>
+
+        <p>Access Token</p>
+        <pre style="background-color:#efefef;padding:1em;overflow-x:scroll"><%= token_json %></pre>
+
+        <p>More info:</p>
+        <ul>
+            <li><a href="https://developer.ringcentral.com/api-docs/latest/index.html#!#AuthorizationCodeFlow">RingCentral API Developer Guide</a></li>
+            <li><a href="https://github.com/grokify/ringcentral-oauth-demos">GitHub repo</a>
+            <li><a href="https://github.com/grokify/ringcentral-oauth-demos/tree/master/ruby-sinatra">GitHub repo Ruby README</a></p>
+        </ul>
+    </body>
 </html>

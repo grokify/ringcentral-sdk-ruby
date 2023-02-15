@@ -6,18 +6,14 @@ require 'pp'
 # Set your credentials in the .env file
 # Use the rc_config_sample.env.txt file as a scaffold
 
-config = RingCentralSdk::REST::Config.new.load_dotenv
+client = RingCentralSdk::REST::Client.new do |config|
+  config.load_env = true
+end
 
-client = RingCentralSdk::REST::Client.new
-client.app_config = config.app
-client.authorize_user config.user
-
-# An SMS event poster. Takes a message store subscription
-# event and posts inbound SMS as chats.
-
+# RcEventFaxDownloader is a helper class to download faxes
 class RcEventFaxDownloader
   attr_accessor :event
-  def initialize(client, posters=[], event_data={})
+  def initialize(client, posters = [], event_data = {})
     @client = client
     @posters = posters
     @event = RingCentralSdk::REST::Event.new event_data
@@ -25,27 +21,25 @@ class RcEventFaxDownloader
     @retriever.range = 0.5 # minutes
   end
 
-  def download_fax()
+  def download_fax
     puts @event.new_fax_count
     return unless @event.new_fax_count > 0
     messages = @retriever.retrieve_for_event @event, direction: 'Inbound', messageType: 'Fax'
     messages.each do |message|
       pp message
       message['attachments'].each do |att|
-      url = att['uri']
-      filename = 'fax_' + url.gsub(%r{^.*restapi/v[^/]+/}, '').gsub(%r{/},'_')
-      ext = att['contentType'] == 'application/pdf' ? '.pdf' : ''
-      filename += ext
-      response_file = @client.http.get url
-      @posters.each do |poster|
-        poster.write_file(filename, response_file)
+        url = att['uri']
+        filename = 'fax_' + url.gsub(%r{^.*restapi/v[^/]+/}, '').gsub(%r{/}, '_')
+        ext = att['contentType'] == 'application/pdf' ? '.pdf' : ''
+        filename += ext
+        response_file = @client.http.get url
+        @posters.each { |poster| poster.write_file(filename, response_file) }
       end
-    end
     end
   end
 end
 
-# An observer object that uses RcEventSMSChatPoster to post
+# An observer object that uses RcDownloadNewFaxObserver to post
 # to multiple chat posters
 class RcDownloadNewFaxObserver
   def initialize(client, posters)
@@ -54,7 +48,7 @@ class RcDownloadNewFaxObserver
   end
 
   def update(message)
-    puts "DEMO_RECEIVED_NEW_MESSAGE"
+    puts 'DEMO_RECEIVED_NEW_MESSAGE'
     pp message
     event = RcEventFaxDownloader.new @client, @posters, message
     event.download_fax
@@ -62,6 +56,8 @@ class RcDownloadNewFaxObserver
   end
 end
 
+# RcFaxPosterFilesystem is a helper class that writes files
+# to the file system
 class RcFaxPosterFilesystem
   def initialize(dir = '.')
     @dir = dir
@@ -73,7 +69,7 @@ class RcFaxPosterFilesystem
   end
 end
 
-def run_subscription(config, client)
+def run_subscription(client)
   # Create an observable subscription and add your observer
   sub = client.create_subscription
   sub.subscribe ['/restapi/v1.0/account/~/extension/~/message-store']
@@ -86,13 +82,13 @@ def run_subscription(config, client)
   sub.add_observer RcDownloadNewFaxObserver.new client, posters
 
   # Run until key is clicked
-  puts "Click any key to finish"
-  stop_script = gets
+  puts 'Click any key to finish'
+  gets
 
   # End the subscription
-  sub.destroy()
+  sub.destroy
 end
 
-run_subscription config, client
+run_subscription client
 
-puts "DONE"
+puts 'DONE'
