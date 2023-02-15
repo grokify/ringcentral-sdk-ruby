@@ -67,14 +67,17 @@ module RingCentralSdk
         set_events(events) if events.is_a? Array
 
         raise 'Events are undefined' unless @event_filters.is_a?(Array) && !@event_filters.empty?
-
+        
         begin
           response = @client.http.post do |req|
             req.url 'subscription'
             req.headers['Content-Type'] = 'application/json'
             req.body = {
-              eventFilters: @client.create_urls(@event_filters),
-              deliveryMode: { transportType: 'PubNub' }
+              eventFilters: @event_filters,
+              deliveryMode: {
+                transportType: 'PubNub',
+                encryption: 'true'
+              }
             }
           end
           set_subscription response.body
