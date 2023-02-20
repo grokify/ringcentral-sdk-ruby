@@ -5,7 +5,7 @@ require 'multi_json'
 require 'ringcentral_sdk'
 
 env_path = ENV['ENV_PATH'] || './.env'
-Dotenv.load(env_path) if File.exists?(env_path)
+Dotenv.load(env_path) if File.exist?(env_path)
 
 # Set your credentials in the .env file
 # Use the rc_config_sample.env.txt file as a scaffold
