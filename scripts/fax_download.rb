@@ -17,12 +17,12 @@ def EnvVal(envVar)
 end
 
 client = RingCentralSdk::REST::Client.new do |config|
-  config.server_url = EnvVal('RINGCENTRAL_SERVER_URL')
-  config.app_key    = EnvVal('RINGCENTRAL_CLIENT_ID')
-  config.app_secret = EnvVal('RINGCENTRAL_CLIENT_SECRET')
-  config.username   = EnvVal('RINGCENTRAL_USERNAME')
-  config.extension  = EnvVal('RINGCENTRAL_EXTENSION')
-  config.password   = EnvVal('RINGCENTRAL_PASSWORD')
+  config.server_url    = EnvVal('RINGCENTRAL_SERVER_URL')
+  config.client_id     = EnvVal('RINGCENTRAL_CLIENT_ID')
+  config.client_secret = EnvVal('RINGCENTRAL_CLIENT_SECRET')
+  config.username      = EnvVal('RINGCENTRAL_USERNAME')
+  config.extension     = EnvVal('RINGCENTRAL_EXTENSION')
+  config.password      = EnvVal('RINGCENTRAL_PASSWORD')
 end
 puts RingCentralSdk::VERSION
 

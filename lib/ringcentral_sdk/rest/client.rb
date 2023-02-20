@@ -158,8 +158,8 @@ module RingCentralSdk
 
       def new_oauth2_client
         OAuth2::Client.new(
-          @config.app_key,
-          @config.app_secret,
+          @config.client_id,
+          @config.client_secret,
           site: @config.server_url,
           authorize_url: @config.authorize_url,
           token_url: TOKEN_ENDPOINT
@@ -177,7 +177,7 @@ module RingCentralSdk
       end
 
       def api_key
-        Base64.encode64("#{@config.app_key}:#{@config.app_secret}").gsub(/\s/, '')
+        Base64.encode64("#{@config.client_id}:#{@config.client_secret}").gsub(/\s/, '')
       end
 
       def send_request(request_sdk = {})

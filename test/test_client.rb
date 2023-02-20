@@ -7,21 +7,21 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
   def setup
     @rcsdk = RingCentralSdk::REST::Client.new do |config|
       config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
-      config.app_key = 'my_app_key'
-      config.app_secret = 'my_app_secret'
+      config.client_id = 'my_app_client_id'
+      config.client_secret = 'my_app_client_secret'
     end
   end
 
   def test_main
-    assert_equal 'bXlfYXBwX2tleTpteV9hcHBfc2VjcmV0', @rcsdk.send(:api_key)
+    assert_equal 'bXlfYXBwX2NsaWVudF9pZDpteV9hcHBfY2xpZW50X3NlY3JldA==', @rcsdk.send(:api_key)
   end
 
   def test_config
     redirect_url = 'http://localhost:4567/oauth'
     client = RingCentralSdk::REST::Client.new do |config|
       config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
-      config.app_key = 'my_app_key'
-      config.app_secret = 'my_app_secret'
+      config.client_id = 'my_app_client_id'
+      config.client_secret = 'my_app_client_secret'
       config.redirect_url = redirect_url
     end
     assert_equal redirect_url, client.config.redirect_url
@@ -36,8 +36,8 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
 
     rcsdk = new_client
     oauth2client = OAuth2::Client.new(
-      'my_app_key',
-      'my_app_secret',
+      'my_app_client_id',
+      'my_app_client_secret',
       site: RingCentralSdk::RC_SERVER_SANDBOX,
       token_url: rcsdk.class::TOKEN_ENDPOINT
     )
@@ -64,8 +64,8 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
 
   def test_authorize_url_default
     rcsdk = RingCentralSdk::REST::Client.new do |config|
-      config.app_key = 'my_app_key'
-      config.app_secret = 'my_app_secret'
+      config.client_id = 'my_app_client_id'
+      config.client_secret = 'my_app_client_secret'
       config.server_url = RingCentralSdk::RC_SERVER_PRODUCTION
       config.redirect_url = 'http://localhost:4567/oauth'
     end
@@ -117,8 +117,8 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
     assert_equal 'OAuth2::AccessToken', rcsdk.token.class.name
 
     rcsdk = RingCentralSdk::REST::Client.new do |config|
-      config.app_key = 'my_app_key'
-      config.app_secret = 'my_app_secret'
+      config.client_id = 'my_app_client_id'
+      config.client_secret = 'my_app_client_secret'
       config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
       config.redirect_url = 'http://localhost:4567/oauth'
     end
@@ -303,8 +303,8 @@ class RingCentralSdkPlatformTest < Test::Unit::TestCase
 
   def new_client
     RingCentralSdk::REST::Client.new do |config|
-      config.app_key = 'my_app_key'
-      config.app_secret = 'my_app_secret'
+      config.client_id = 'my_app_client_id'
+      config.client_secret = 'my_app_client_secret'
       config.server_url = RingCentralSdk::RC_SERVER_PRODUCTION
     end
   end

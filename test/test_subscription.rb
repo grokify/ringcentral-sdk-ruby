@@ -3,8 +3,8 @@ require './test/test_base.rb'
 class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
   def setup
     @rcsdk = RingCentralSdk::REST::Client.new do |config|
-      config.app_key = 'my_app_key'
-      config.app_secret = 'my_app_secret'
+      config.client_id = 'my_app_client_id'
+      config.client_secret = 'my_app_client_secret'
       config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
     end
   end
@@ -71,8 +71,8 @@ class RingCentralSdkSubscriptionTest < Test::Unit::TestCase
 
   def build_rcsdk_authorized
     rcsdk = RingCentralSdk::REST::Client.new do |config|
-      config.app_key = 'my_app_key'
-      config.app_secret = 'my_app_secret'
+      config.client_id = 'my_app_client_id'
+      config.client_secret = 'my_app_client_secret'
       config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
     end
     rcsdk.set_oauth2_client

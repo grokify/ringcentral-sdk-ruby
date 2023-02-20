@@ -10,8 +10,8 @@ module RingCentralSdk
     # Configuration class populated by Client constructor block
     class Configuration
       attr_accessor :server_url
-      attr_accessor :app_key
-      attr_accessor :app_secret
+      attr_accessor :client_id
+      attr_accessor :client_secret
       attr_accessor :redirect_url
 
       attr_accessor :username
@@ -44,8 +44,8 @@ module RingCentralSdk
       def load_environment
         Dotenv.load
         @server_url    = ENV['RINGCENTRAL_SERVER_URL']    if ENV.key? 'RINGCENTRAL_SERVER_URL'
-        @app_key       = ENV['RINGCENTRAL_CLIENT_ID']     if ENV.key? 'RINGCENTRAL_CLIENT_ID'
-        @app_secret    = ENV['RINGCENTRAL_CLIENT_SECRET'] if ENV.key? 'RINGCENTRAL_CLIENT_SECRET'
+        @client_id     = ENV['RINGCENTRAL_CLIENT_ID']     if ENV.key? 'RINGCENTRAL_CLIENT_ID'
+        @client_secret = ENV['RINGCENTRAL_CLIENT_SECRET'] if ENV.key? 'RINGCENTRAL_CLIENT_SECRET'
         @redirect_url  = ENV['RINGCENTRAL_REDIRECT_URL']  if ENV.key? 'RINGCENTRAL_REDIRECT_URL'
         @username      = ENV['RINGCENTRAL_USERNAME']      if ENV.key? 'RINGCENTRAL_USERNAME'
         @extension     = ENV['RINGCENTRAL_EXTENSION']     if ENV.key? 'RINGCENTRAL_EXTENSION'

@@ -7,8 +7,8 @@ class RingCentralSdkTest < Test::Unit::TestCase
 
   def new_sdk
     RingCentralSdk::REST::Client.new do |config|
-      config.app_key = 'my_app_key'
-      config.app_secret = 'my_app_secret'
+      config.client_id = 'my_app_client_id'
+      config.client_secret = 'my_app_client_secret'
       config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
     end
   end
@@ -31,8 +31,8 @@ class RingCentralSdkTest < Test::Unit::TestCase
     OAuth2::Strategy::Password.any_instance.stubs(:get_token).returns(stub_token)
 
     rcsdk = RingCentralSdk::REST::Client.new do |config|
-      config.app_key = 'my_app_key'
-      config.app_secret = 'my_app_secret'
+      config.client_id = 'my_app_client_id'
+      config.client_secret = 'my_app_client_secret'
       config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
       config.username = 'my_username'
       config.password = 'my_password'

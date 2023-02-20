@@ -10,12 +10,12 @@ require 'pp'
 Dotenv.load ENV['ENV_PATH'] || '.env'
 
 client = RingCentralSdk::REST::Client.new do |config|
-  config.server_url = ENV['RINGCENTRAL_SERVER_URL']
-  config.app_key    = ENV['RINGCENTRAL_CLIENT_ID']
-  config.app_secret = ENV['RINGCENTRAL_CLIENT_SECRET']
-  config.username   = ENV['RINGCENTRAL_USERNAME']
-  config.extension  = ENV['RINGCENTRAL_EXTENSION']
-  config.password   = ENV['RINGCENTRAL_PASSWORD']
+  config.server_url    = ENV['RINGCENTRAL_SERVER_URL']
+  config.client_id     = ENV['RINGCENTRAL_CLIENT_ID']
+  config.client_secret = ENV['RINGCENTRAL_CLIENT_SECRET']
+  config.username      = ENV['RINGCENTRAL_USERNAME']
+  config.extension     = ENV['RINGCENTRAL_EXTENSION']
+  config.password      = ENV['RINGCENTRAL_PASSWORD']
 end
 
 res = client.messages.fax.create(

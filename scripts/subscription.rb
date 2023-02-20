@@ -11,8 +11,8 @@ Dotenv.load(env_path) if File.exist?(env_path)
 # Use the credentials_sample.env.txt file as a scaffold
 
 client = RingCentralSdk::REST::Client.new do |config|
-  config.app_key       = ENV['RINGCENTRAL_CLIENT_ID']
-  config.app_secret    = ENV['RINGCENTRAL_CLIENT_SECRET']
+  config.client_id     = ENV['RINGCENTRAL_CLIENT_ID']
+  config.client_secret = ENV['RINGCENTRAL_CLIENT_SECRET']
   config.server_url    = ENV['RINGCENTRAL_SERVER_URL']
   config.username      = ENV['RINGCENTRAL_USERNAME']
   config.extension     = ENV['RINGCENTRAL_EXTENSION']
