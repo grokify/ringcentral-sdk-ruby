@@ -29,8 +29,8 @@ def upload_recordings(vbsdk, dir)
 end
 
 vbsdk = VoiceBase::V1::Client.new(
-  ENV['RC_DEMO_VB_API_KEY'],
-  ENV['RC_DEMO_VB_PASSWORD']
+  ENV['RINGCENTRAL_DEMO_VB_API_KEY'],
+  ENV['RINGCENTRAL_DEMO_VB_PASSWORD']
 )
 
 upload_recordings(vbsdk, '.')

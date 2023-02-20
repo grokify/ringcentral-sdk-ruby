@@ -13,11 +13,11 @@ end
 
 res = client.http.post do |req|
   req.url 'account/~/extension/~/fax'
-  filepath = ENV['RC_DEMO_FAX_FILE']
+  filepath = ENV['RINGCENTRAL_DEMO_FAX_FILE']
   ct = MIME::Types.type_for(filepath).first.content_type \
     || 'application/octet-stream'
   req.body = {
-    to: ENV['RC_DEMO_FAX_TO'],
+    to: ENV['RINGCENTRAL_DEMO_FAX_TO'],
     coverPageText: 'Ruby REST Client Formdata',
     attachment: Faraday::UploadIO.new(filepath, ct)
   }
