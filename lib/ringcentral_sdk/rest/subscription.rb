@@ -73,7 +73,7 @@ module RingCentralSdk
             req.url 'subscription'
             req.headers['Content-Type'] = 'application/json'
             req.body = {
-              eventFilters: @event_filters
+              eventFilters: @event_filters,
               deliveryMode: {
                 transportType: 'PubNub',
                 encryption: 'true'
