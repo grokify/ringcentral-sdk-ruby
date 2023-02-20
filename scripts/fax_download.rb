@@ -5,7 +5,7 @@ require 'ringcentral_sdk'
 require 'pp'
 
 # Set your credentials in the .env file
-# Use the rc_config_sample.env.txt file as a scaffold
+# Use the credentials_sample.env.txt file as a scaffold
 
 envPath = ENV['ENV_PATH'] || '.env'
 puts envPath
@@ -28,7 +28,7 @@ puts RingCentralSdk::VERSION
 
 req = RingCentralSdk::REST::Request::Simple.new(
   method: 'get',
-  url: 'account/~/extension/~/message-store',
+  url: '/restapi/v1.0/account/~/extension/~/message-store',
   params: {
     direction:   'Outbound',
     messageType: 'Fax',

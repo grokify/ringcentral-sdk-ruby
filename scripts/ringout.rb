@@ -8,7 +8,7 @@ require 'pp'
 Dotenv.load ENV['ENV_PATH'] || '.env'
 
 # Set your credentials in the .env file
-# Use the rc_config_sample.env.txt file as a scaffold
+# Use the credentials_sample.env.txt file as a scaffold
 
 client = RingCentralSdk::REST::Client.new do |config|
   config.server_url = ENV['RINGCENTRAL_SERVER_URL']
@@ -31,7 +31,7 @@ def ringout(client, accountId, extensionId, to, from, callerId,playPrompt)
   puts MultiJson.encode body, pretty: true
 
   client.http.post do |req|
-    req.url "account/#{accountId}/extension/#{extensionId}/ring-out"
+    req.url "/restapi/v1.0/account/#{accountId}/extension/#{extensionId}/ring-out"
     req.headers['Content-Type'] = 'application/json'
     req.body = body
   end
