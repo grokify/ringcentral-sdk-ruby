@@ -4,7 +4,7 @@ require 'multi_json'
 require 'ringcentral_sdk'
 
 # Set your credentials in the .env file
-# Use the rc_config_sample.env.txt file as a scaffold
+# Use the credentials_sample.env.txt file as a scaffold
 
 client = RingCentralSdk::REST::Client.new do |config|
   config.load_env = true

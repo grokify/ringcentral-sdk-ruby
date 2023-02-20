@@ -15,4 +15,4 @@ the beginning of your source describing what it does.
 
 Many of the scripts in this folder use a `.env` file to hold application and
 user credentials. To create your own file, copy the sample file
-`rc_config_sample.json` to `.env` and add your own information.
+`credentials_sample.env.txt` to `.env` and add your own information.
