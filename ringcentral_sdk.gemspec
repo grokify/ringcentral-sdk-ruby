@@ -7,7 +7,7 @@ version = $1
 Gem::Specification.new do |s|
   s.name        = lib
   s.version     = version
-  s.date        = '2023-02-15'
+  s.date        = '2023-02-20'
   s.summary     = 'RingCentral SDK - Ruby SDK for the RingCentral Connect Platform API'
   s.description = 'A Ruby SDK for the RingCentral Connect Platform API'
   s.authors     = ['John Wang']
@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'mime_builder', '~> 0.1', '>= 0.1.1'
   s.add_dependency 'multi_json', '~> 1.3'
   s.add_dependency 'oauth2', '~> 2.0', '>= 2.0.9'
-  s.add_dependency 'pubnub', '~> 5.0', '>= 5.2.1'
+  s.add_dependency 'pubnub', '~> 4.0', '>= 4.8.0'
 
   s.add_development_dependency 'bundler', '~> 2'
   s.add_development_dependency 'coveralls', '~> 0'

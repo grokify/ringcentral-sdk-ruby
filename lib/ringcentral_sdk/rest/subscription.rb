@@ -73,13 +73,14 @@ module RingCentralSdk
             req.url 'subscription'
             req.headers['Content-Type'] = 'application/json'
             req.body = {
-              eventFilters: @event_filters,
+              eventFilters: @client.create_urls(@event_filters),
               deliveryMode: {
                 transportType: 'PubNub',
                 encryption: 'true'
               }
             }
           end
+          puts response.body
           set_subscription response.body
           _subscribe_at_pubnub
           changed
@@ -257,7 +258,9 @@ module RingCentralSdk
       def _set_timeout
         _clear_timeout
 
-        time_to_expiration = @_subscription['expiresIn'] - RENEW_HANDICAP
+        if @_subscription && !@_subscription.empty? && @_subscription.key?('expiresIn')
+          time_to_expiration = (@_subscription['expiresIn'] - RENEW_HANDICAP)
+        end
 
         @_timeout = Thread.new do
           sleep time_to_expiration
