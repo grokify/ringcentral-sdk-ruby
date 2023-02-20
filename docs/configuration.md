@@ -19,8 +19,8 @@ require 'ringcentral_sdk'
 
 client = RingCentralSdk::REST::Client.new do |config|
   # App info (mandatory)
-  config.app_key = 'my_app_key'
-  config.app_secret = 'my_app_secret'
+  config.client_id = 'my_app_client_id'
+  config.client_secret = 'my_app_client_secret'
   config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
 
   # User info for password grant (optional)
@@ -40,8 +40,8 @@ require 'ringcentral_sdk'
 
 client = RingCentralSdk::REST::Client.new do |config|
   # App info (mandatory)
-  config.app_key = 'my_app_key'
-  config.app_secret = 'my_app_secret'
+  config.client_id = 'my_app_client_id'
+  config.client_secret = 'my_app_client_secret'
   config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
 
   # OAuth 2.0 authorization code grant (optional)
@@ -82,17 +82,17 @@ The following environment variables will be loaded:
 
 | ENV variable | Config setting | Notes |
 |--------------|----------------|-------|
-| `RC_SERVER_URL` | `config.server_url` | Must be set to value of URL, not constant |
-| `RC_APP_KEY` | `config.app_key` |
-| `RC_APP_SECRET` | `config.app_secret` |
-| `RC_APP_REDIRECT_URL` | `config.app_redirect_url` |
-| `RC_USER_USERNAME` | `config.username` |
-| `RC_USER_EXTENSION` | `config.extension` |
-| `RC_USER_PASSWORD` | `config.password` |
-| `RC_TOKEN` | `config.token` | JSON token response |
-| `RC_TOKEN_FILE` | `config.token_file` | File containing JSON token response |
-| `RC_RETRY` | `config.retry` | Set to `true` or `false` |
-| `RC_RETRY_OPTIONS` | `config.retry_options | JSON string for `FaradayMiddleware::Request::Retry` options |
+| `RINGCENTRAL_SERVER_URL` | `config.server_url` | Must be set to value of URL, not constant |
+| `RINGCENTRAL_CLIENT_ID` | `config.client_id` |
+| `RINGCENTRAL_CLIENT_SECRET` | `config.client_secret` |
+| `RINGCENTRAL_REDIRECT_URL` | `config.app_redirect_url` |
+| `RINGCENTRAL_USERNAME` | `config.username` |
+| `RINGCENTRAL_EXTENSION` | `config.extension` |
+| `RINGCENTRAL_PASSWORD` | `config.password` |
+| `RINGCENTRAL_TOKEN` | `config.token` | JSON token response |
+| `RINGCENTRAL_TOKEN_FILE` | `config.token_file` | File containing JSON token response |
+| `RINGCENTRAL_RETRY` | `config.retry` | Set to `true` or `false` |
+| `RINGCENTRAL_RETRY_OPTIONS` | `config.retry_options | JSON string for `FaradayMiddleware::Request::Retry` options |
 
 Ruby file:
 
@@ -107,10 +107,10 @@ end
 Example Environment Variables / .env file
 
 ```
-RC_SERVER_URL=https://platform.ringcentral.com
-RC_APP_KEY=my_app_key
-RC_APP_SECRET=my_app_secret
-RC_USER_USERNAME=my_username
-RC_USER_EXTENSION=my_extension
-RC_USER_PASSWORD=my_password
+RINGCENTRAL_SERVER_URL=https://platform.ringcentral.com
+RINGCENTRAL_CLIENT_ID=my_app_client_id
+RINGCENTRAL_CLIENT_SECRET=my_app_client_secret
+RINGCENTRAL_USERNAME=my_username
+RINGCENTRAL_EXTENSION=my_extension
+RINGCENTRAL_PASSWORD=my_password
 ```

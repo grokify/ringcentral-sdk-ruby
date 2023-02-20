@@ -21,8 +21,8 @@ RingCentral SDKs:
 ```ruby
 client = RingCentralSdk::REST::Client do |config|
   config.server_url = RingCentralSdk::Sdk::RC_SERVER_SANDBOX
-  config.app_key = 'my_app_key'
-  config.app_secret = 'my_app_secret'
+  config.client_id = 'my_app_client_id'
+  config.client_secret = 'my_app_client_secret'
 
   config.username = 'my_username'
   config.extension = 'my_extension'
@@ -53,8 +53,8 @@ In addition to the synopsis below, an example Sinatra app is available in the re
 # Initialize SDK with OAuth redirect URI
 client = RingCentralSdk::REST::Client.new do |config|
   config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
-  config.app_key = 'myAppKey'
-  config.app_secret = 'myAppSecret'
+  config.client_id = 'myAppClientID'
+  config.client_secret = 'myAppClientSecret'
   config.redirect_url = 'http://example.com/oauth'
 end
 
@@ -95,7 +95,7 @@ store it, and then reuse it in another SDK instance.
 
 ```ruby
 client = RingCentralSdk.new(
-  'my_app_key', 'my_app_secret', RingCentralSdk::RC_SERVER_SANDBOX
+  'my_app_client_id', 'my_app_client_secret', RingCentralSdk::RC_SERVER_SANDBOX
 )
 client.authorize( 'my_username', 'my_extension', 'my_password' )
 
@@ -104,14 +104,14 @@ token_hash = client.token.to_hash
 
 # New SDK Instance
 client2 = RingCentralSdk.new(
-  'my_app_key', 'my_app_secret', RingCentralSdk::RC_SERVER_SANDBOX
+  'my_app_client_id', 'my_app_client_secret', RingCentralSdk::RC_SERVER_SANDBOX
 )
 
 # Method 1: Load token as hash
 client2.set_token token_hash
 
 # Method 2: Load token as OAuth2::AccessToken object
-oauth2 = OAuth2::Client.new(@app_key, @app_secret,
+oauth2 = OAuth2::Client.new(@client_id, @client_secret,
   site:      client2.server_url,
   token_url: client2.class::TOKEN_ENDPOINT)
 
@@ -128,13 +128,13 @@ provided, allowing you more flexibility.
 ```ruby
 client = RingCentralSdk::REST::Client do |config|
   config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
-  config.app_key = 'my_app_key'
-  config.app_secret = 'my_app_secret'
+  config.client_id = 'my_app_client_id'
+  config.client_secret = 'my_app_clinet_secret'
 )
 
 oauth2 = OAuth2::Client.new(
-  'my_app_key',
-  'my_app_secret',
+  'my_app_client_id',
+  'my_app_client_secret',
   site:      RingCentralSdk::Sdk::RC_SERVER_SANDBOX,
   token_url: RingCentralSdk::Platform::Platform::TOKEN_ENDPOINT
 )

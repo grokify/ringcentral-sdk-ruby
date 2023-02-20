@@ -9,8 +9,8 @@ require 'ringcentral_sdk'
 
 client = RingCentralSdk::REST::Client.new do |config|
   config.server_url = 'https://platform.ringcentral.com'
-  config.app_key = 'my_app_key',
-  config.app_secret = 'my_app_secret'
+  config.client_id = 'my_app_client_id',
+  config.client_secret = 'my_app_client_secret'
 
   config.username = 'my_username'
   config.extension = 'my_extension'

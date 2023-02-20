@@ -84,8 +84,8 @@ require 'ringcentral_sdk'
 
 client = RingCentralSdk::REST::Client.new do |config|
   # App info (mandatory)
-  config.app_key = 'myAppKey'
-  config.app_secret = 'myAppSecret'
+  config.client_id = 'myAppClientID'
+  config.client_secret = 'myAppClientSecret'
   config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
 
   # User info for password grant (optional)
