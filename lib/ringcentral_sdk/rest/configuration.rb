@@ -19,6 +19,7 @@ module RingCentralSdk
       attr_accessor :password
       attr_accessor :token
       attr_accessor :token_file
+      attr_accessor :jwt
 
       attr_accessor :load_env
       attr_accessor :headers
@@ -52,6 +53,7 @@ module RingCentralSdk
         @password      = ENV['RINGCENTRAL_PASSWORD']      if ENV.key? 'RINGCENTRAL_PASSWORD'
         @token         = ENV['RINGCENTRAL_TOKEN']         if ENV.key? 'RINGCENTRAL_TOKEN'
         @token_file    = ENV['RINGCENTRAL_TOKEN_FILE']    if ENV.key? 'RINGCENTRAL_TOKEN_FILE'
+        @jwt           = ENV['RINGCENTRAL_JWT']           if ENV.key? 'RINGCENTRAL_JWT'
         @retry         = ENV['RINGCENTRAL_RETRY']         if ENV.key? 'RINGCENTRAL_RETRY'
         @retry_options = ENV['RINGCENTRAL_RETRY_OPTIONS'] if ENV.key? 'RINGCENTRAL_RETRY_OPTIONS'
         @headers       = ENV['RINGCENTRAL_HEADERS']       if ENV.key? 'RINGCENTRAL_HEADERS'
