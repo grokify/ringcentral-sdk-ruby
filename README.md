@@ -93,6 +93,9 @@ client = RingCentralSdk::REST::Client.new do |config|
   config.extension = 'myExtension'
   config.password = 'myPassword'
 
+    # JWT (optional)
+  config.jwt = 'myJwt'
+
   # Set a custom logger (optional)
   config.logger = Logger.new(STDOUT)
 
