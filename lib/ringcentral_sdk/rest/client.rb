@@ -44,6 +44,8 @@ module RingCentralSdk
           authorize_password @config.username, @config.extension, @config.password
         end
 
+        authorize_jwt(@config.jwt) if @config.jwt.present?
+
         @messages = RingCentralSdk::REST::Messages.new self
       end
 
@@ -114,6 +116,15 @@ module RingCentralSdk
           extension: extension,
           headers: { 'Authorization' => 'Basic ' + api_key }
         }.merge(params))
+        set_token token
+        token
+      end
+
+      def authorize_jwt(jwt)
+        token = @oauth2client.get_token({
+          grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+          assertion: jwt,
+        })
         set_token token
         token
       end
