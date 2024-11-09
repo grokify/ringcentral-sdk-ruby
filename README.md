@@ -187,6 +187,12 @@ sub.subscribe ['/restapi/v1.0/account/~/extension/~/presence']
 sub.destroy
 ```
 
+### Examples
+
+See examples in the [`scripts`](scripts) folder.
+
+A simple read only script is `account-extensions.rb` which can be used to validate your app configuration.
+
 ### Advanced Use Cases
 
 1. [Subscribing to All Extensions](http://ringcentral-sdk-ruby.readthedocs.org/en/latest/usage/notifications/Subscriptions-All-Extensions/)
