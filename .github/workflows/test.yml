@@ -18,10 +18,10 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - name: Set up Ruby 2.7
+    - name: Set up Ruby 3.2
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 2.7
+        ruby-version: 3.2
 
     - name: Rubocop
       run: |
@@ -43,7 +43,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: ['2.4', '2.5', '2.6', '2.7', '3.0']
+        ruby: ['3.3', '3.2']
+        # ruby: ['2.4', '2.5', '2.6', '2.7', '3.0']
 
     steps:
     - uses: actions/checkout@v1
