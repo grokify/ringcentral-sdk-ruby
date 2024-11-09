@@ -11,6 +11,15 @@ To contribute to community adoption of the RingCentral Ruby SDK, please add
 your scripts and programs to this folder. Include a brief comment at
 the beginning of your source describing what it does.
 
+## Installation
+
+### Install Dependencies
+
+```
+% gem install bundler
+% bundle install
+```
+
 ## Credentials
 
 Many of the scripts in this folder use a `.env` file to hold application and

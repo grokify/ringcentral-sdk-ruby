@@ -37,14 +37,6 @@ RingCentral SDK for Ruby
 
 A Ruby SDK for the [RingCentral REST API](https://developers.ringcentral.com).
 
-## Important Notes
-
-Version 2.0.0 introduces the following backward breaking changes:
-
-* SDK instantiation by moving to a block-based configuration
-* Removal of `RingCentralSdk::REST::Config` class
-* Removal of `RingCentralSdk::REST::Client.authorize_user` method
-
 ## Documentation
 
 Full documentation and resources are available at:
@@ -88,12 +80,7 @@ client = RingCentralSdk::REST::Client.new do |config|
   config.client_secret = 'myAppClientSecret'
   config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
 
-  # User info for password grant (optional)
-  config.username = 'myUsername'
-  config.extension = 'myExtension'
-  config.password = 'myPassword'
-
-    # JWT (optional)
+  # JWT Bearer Grant (optional)
   config.jwt = 'myJwt'
 
   # Set a custom logger (optional)
@@ -248,11 +235,25 @@ RingCentral Official SDKs
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
+### Development
+
+To build local development copy of the gem use:
+
+```
+% gem build ringcentral_sdk.gemspec
+```
+
+This will produce a file like: `ringcentral_sdk-3.1.0.gem` which you can install with:
+
+```
+% gem install ringcentral_sdk-3.1.0.gem
+```
+
 ## License
 
-RingCentral SDK is available under an MIT-style license. See [LICENSE.md](LICENSE.md) for details.
+RingCentral SDK is available under an MIT-style license. See [LICENSE](LICENSE) for details.
 
-RingCentral SDK &copy; 2015-2023 by John Wang
+RingCentral SDK &copy; 2015-2024 by John Wang
 
  [gem-version-svg]: https://badge.fury.io/rb/ringcentral_sdk.svg
  [gem-version-url]: http://badge.fury.io/rb/ringcentral_sdk
@@ -277,7 +278,7 @@ RingCentral SDK &copy; 2015-2023 by John Wang
  [docs-rubydoc-svg]: https://img.shields.io/badge/docs-rubydoc-blue.svg
  [docs-rubydoc-url]: http://www.rubydoc.info/gems/ringcentral_sdk/
  [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
- [license-url]: https://github.com/grokify/ringcentral-sdk-ruby/blob/master/LICENSE.md
+ [license-url]: https://github.com/grokify/ringcentral-sdk-ruby/blob/master/LICENSE
  [chat-svg]: https://img.shields.io/badge/chat-on%20glip-orange.svg
  [chat-url]: https://glipped.herokuapp.com/
  [stackoverflow-svg]: https://img.shields.io/badge/Stack%20Overflow-ringcentral-orange.svg
