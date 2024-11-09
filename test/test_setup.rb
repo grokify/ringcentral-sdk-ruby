@@ -34,8 +34,7 @@ class RingCentralSdkTest < Test::Unit::TestCase
       config.client_id = 'my_app_client_id'
       config.client_secret = 'my_app_client_secret'
       config.server_url = RingCentralSdk::RC_SERVER_SANDBOX
-      config.username = 'my_username'
-      config.password = 'my_password'
+      config.jwt = 'my_jwt'
     end
 
     assert_equal 'my_test_access_token', rcsdk.token.to_hash[:access_token]
