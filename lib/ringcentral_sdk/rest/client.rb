@@ -40,11 +40,12 @@ module RingCentralSdk
 
         @oauth2client = new_oauth2_client
 
-        unless @config.username.to_s.empty?
-          authorize_password @config.username, @config.extension, @config.password
-        end
+        # Remove Password Grant
+        # unless @config.username.to_s.empty?
+        #  authorize_password @config.username, @config.extension, @config.password
+        # end
 
-        authorize_jwt(@config.jwt) if @config.jwt.present?
+        authorize_jwt(@config.jwt) unless @config.jwt.to_s.empty?
 
         @messages = RingCentralSdk::REST::Messages.new self
       end
