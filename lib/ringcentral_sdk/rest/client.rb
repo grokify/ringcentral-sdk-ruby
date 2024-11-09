@@ -112,14 +112,14 @@ module RingCentralSdk
         opts
       end
 
-      def authorize_password(username, extension = '', password = '', params = {})
-        token = @oauth2client.password.get_token(username, password, {
-          extension: extension,
-          headers: { 'Authorization' => 'Basic ' + api_key }
-        }.merge(params))
-        set_token token
-        token
-      end
+      #def authorize_password(username, extension = '', password = '', params = {})
+      #  token = @oauth2client.password.get_token(username, password, {
+      #    extension: extension,
+      #    headers: { 'Authorization' => 'Basic ' + api_key }
+      #  }.merge(params))
+      #  set_token token
+      #  token
+      #end
 
       def authorize_jwt(jwt)
         token = @oauth2client.get_token({
@@ -250,8 +250,10 @@ module RingCentralSdk
         RingCentralSdk::REST::Subscription.new self
       end
 
-      alias authorize authorize_password
-      alias login authorize_password
+      # alias authorize authorize_password
+      # alias login authorize_password
+      alias authorize authorize_jwt
+      alias login authorize_jwt
       private :api_version_url
     end
   end
