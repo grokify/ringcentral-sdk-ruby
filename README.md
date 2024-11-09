@@ -257,7 +257,7 @@ This will produce a file like: `ringcentral_sdk-3.1.0.gem` which you can install
 
 ## License
 
-RingCentral SDK is available under an MIT-style license. See [LICENSE](LICENSE) for details.
+RingCentral SDK is available under the MIT license. See [LICENSE](LICENSE) for details.
 
 RingCentral SDK &copy; 2015-2024 by John Wang
 
