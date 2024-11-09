@@ -38,7 +38,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'coveralls', '~> 0'
   s.add_development_dependency 'mocha', '~> 2'
   s.add_development_dependency 'rake', '~> 13'
-  s.add_development_dependency 'rubocop', '~> 1.68'
+  s.add_dependency 'rubocop', '~> 1.68'
   s.add_development_dependency 'simplecov', '~> 0'
   s.add_development_dependency 'test-unit', '~> 3'
 end
