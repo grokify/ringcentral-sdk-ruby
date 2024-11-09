@@ -9,23 +9,13 @@ module RingCentralSdk
   module REST
     # Configuration class populated by Client constructor block
     class Configuration
-      attr_accessor :server_url
-      attr_accessor :client_id
-      attr_accessor :client_secret
-      attr_accessor :redirect_url
-
-      attr_accessor :username
-      attr_accessor :extension
-      attr_accessor :password
-      attr_accessor :token
-      attr_accessor :token_file
-      attr_accessor :jwt
-
-      attr_accessor :load_env
-      attr_accessor :headers
-      attr_accessor :retry
-      attr_accessor :retry_options
-      attr_accessor :logger
+      attr_accessor :server_url,
+                    :client_id, :client_secret,
+                    :redirect_url,
+                    :jwt, :token, :token_file,
+                    :load_env,
+                    :headers, :retry, :retry_options
+                    :logger
 
       def inflate
         @logger = default_logger if !defined?(@logger) || @logger.nil?
@@ -51,9 +41,9 @@ module RingCentralSdk
         # @username      = ENV['RINGCENTRAL_USERNAME']      if ENV.key? 'RINGCENTRAL_USERNAME'
         # @extension     = ENV['RINGCENTRAL_EXTENSION']     if ENV.key? 'RINGCENTRAL_EXTENSION'
         # @password      = ENV['RINGCENTRAL_PASSWORD']      if ENV.key? 'RINGCENTRAL_PASSWORD'
+        @jwt           = ENV['RINGCENTRAL_JWT']           if ENV.key? 'RINGCENTRAL_JWT'
         @token         = ENV['RINGCENTRAL_TOKEN']         if ENV.key? 'RINGCENTRAL_TOKEN'
         @token_file    = ENV['RINGCENTRAL_TOKEN_FILE']    if ENV.key? 'RINGCENTRAL_TOKEN_FILE'
-        @jwt           = ENV['RINGCENTRAL_JWT']           if ENV.key? 'RINGCENTRAL_JWT'
         @retry         = ENV['RINGCENTRAL_RETRY']         if ENV.key? 'RINGCENTRAL_RETRY'
         @retry_options = ENV['RINGCENTRAL_RETRY_OPTIONS'] if ENV.key? 'RINGCENTRAL_RETRY_OPTIONS'
         @headers       = ENV['RINGCENTRAL_HEADERS']       if ENV.key? 'RINGCENTRAL_HEADERS'

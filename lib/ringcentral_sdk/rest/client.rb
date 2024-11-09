@@ -23,12 +23,7 @@ module RingCentralSdk
       URL_PREFIX        = '/restapi'.freeze
       DEFAULT_LANGUAGE  = 'en-us'.freeze
 
-      attr_reader :config
-      attr_reader :http
-      attr_reader :logger
-      attr_reader :oauth2client
-      attr_reader :user_agent
-      attr_reader :messages
+      attr_reader :config, :http, :logger, :messages, :oauth2client, :user_agent
 
       def initialize
         init_attributes
