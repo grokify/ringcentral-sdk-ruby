@@ -15,12 +15,9 @@ module RingCentralSdk
         DEFAULT_BASE64_ENCODE = true
         DEFAULT_CONTENT_ID_DISABLE = true
 
-        attr_accessor :method
-        attr_accessor :mime_part_params
+        attr_accessor :method, :mime_part_params
 
-        attr_reader :mime
-        attr_reader :account_id
-        attr_reader :extension_id
+        attr_reader :mime, :account_id, :extension_id
 
         def initialize(opts = {})
           @mime = MIME::Multipart::Mixed.new
