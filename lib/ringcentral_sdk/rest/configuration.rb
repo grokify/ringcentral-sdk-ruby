@@ -14,7 +14,7 @@ module RingCentralSdk
                     :redirect_url,
                     :jwt, :token, :token_file,
                     :load_env,
-                    :headers, :retry, :retry_options
+                    :headers, :retry, :retry_options,
                     :logger
 
       def inflate

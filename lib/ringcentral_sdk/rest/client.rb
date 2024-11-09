@@ -107,19 +107,19 @@ module RingCentralSdk
         opts
       end
 
-      #def authorize_password(username, extension = '', password = '', params = {})
+      # def authorize_password(username, extension = '', password = '', params = {})
       #  token = @oauth2client.password.get_token(username, password, {
       #    extension: extension,
       #    headers: { 'Authorization' => 'Basic ' + api_key }
       #  }.merge(params))
       #  set_token token
       #  token
-      #end
+      # end
 
       def authorize_jwt(jwt)
         token = @oauth2client.get_token({
           grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
-          assertion: jwt,
+          assertion: jwt
         })
         set_token token
         token
