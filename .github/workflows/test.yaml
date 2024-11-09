@@ -6,11 +6,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: ['3.3', '3.2', '2.5', '2.6', '2.7', 'jruby-head', 'ruby-head']
+        ruby: ['3.3', '3.2', 'jruby-head', 'ruby-head']
         gemfile: ['Gemfile']
         exclude:
-          - ruby: 2.7
-            gemfile: activesupport-4.2.x
           - ruby: ruby-head
             gemfile: activesupport-4.2.x
           - ruby: jruby-head
