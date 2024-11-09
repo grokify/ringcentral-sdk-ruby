@@ -7,11 +7,8 @@ module RingCentralSdk
       # Extensions cache is a local store that can retrieve all
       # extensions for use locally
       class Extensions
-        attr_accessor :client
-        attr_accessor :account_id
-        attr_reader :extensions_hash
-        attr_reader :extensions_num2id
-        attr_reader :last_retrieved
+        attr_accessor :client, :account_id
+        attr_reader :extensions_hash, :extensions_num2id, :last_retrieved
 
         def initialize(client)
           @client = client
