@@ -265,7 +265,7 @@ RingCentral SDK &copy; 2015-2024 by John Wang
  [gem-version-url]: http://badge.fury.io/rb/ringcentral_sdk
  [downloads-svg]: http://ruby-gem-downloads-badge.herokuapp.com/ringcentral_sdk
  [downloads-url]: https://rubygems.org/gems/ringcentral_sdk
- [build-status-svg]: https://github.com/grokify/ringcentral-sdk-ruby/workflows/test/badge.svg?branch=master
+ [build-status-svg]: https://github.com/grokify/ringcentral-sdk-ruby/workflows/test/badge.svg
  [build-status-url]: https://github.com/grokify/ringcentral-sdk-ruby/actions/workflows/test.yaml
  [coverage-status-svg]: https://coveralls.io/repos/grokify/ringcentral-sdk-ruby/badge.svg?branch=master
  [coverage-status-url]: https://coveralls.io/r/grokify/ringcentral-sdk-ruby?branch=master
